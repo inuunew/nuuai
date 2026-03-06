@@ -1,42 +1,49 @@
-export default async function handler(req,res){
+export default async function handler(req, res) {
 
-const API_KEY=process.env.OPENAI_API_KEY
+const API_KEY = process.env.OPENAI_API_KEY
 
-const {message,history}=req.body
+const { message, history = [] } = req.body
 
-const response=await fetch("https://api.openai.com/v1/chat/completions",{
+try {
 
-method:"POST",
+const response = await fetch("https://api.openai.com/v1/chat/completions", {
 
-headers:{
-"Content-Type":"application/json",
-"Authorization":"Bearer "+API_KEY
+method: "POST",
+
+headers: {
+"Content-Type": "application/json",
+"Authorization": "Bearer " + API_KEY
 },
 
-body:JSON.stringify({
-
-model:"gpt-4o-mini",
-
-messages:[
-
-{role:"system",content:"Kamu adalah AI super assistant untuk coding, membuat website, membuat game, dan membantu pengguna."},
-
+body: JSON.stringify({
+model: "gpt-4o-mini",
+messages: [
+{
+role: "system",
+content: "Kamu adalah AI super assistant untuk coding, membuat website, membuat game, dan membantu pengguna."
+},
 ...history,
-
-{role:"user",content:message}
-
+{
+role: "user",
+content: message
+}
 ]
-
 })
 
 })
 
-const data=await response.json()
+const data = await response.json()
 
 res.status(200).json({
-
-reply:data.choices[0].message.content
-
+reply: data.choices[0].message.content
 })
+
+} catch (error) {
+
+res.status(500).json({
+error: error.message
+})
+
+}
 
 }
