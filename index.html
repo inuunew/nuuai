@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AI GOD MODE v3</title>
+
+<link rel="stylesheet" href="/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="sidebar">
+
+<h2>⚡ AI GOD</h2>
+
+<button onclick="newChat()">New Chat</button>
+<button onclick="toggleTheme()">Theme</button>
+<button onclick="voice()">Voice</button>
+<button onclick="upload()">Upload</button>
+
+<hr>
+
+<h4>AI Tools</h4>
+
+<button onclick="quick('Buat website modern landing page')">Website</button>
+
+<button onclick="quick('Buat game HTML sederhana')">Game</button>
+
+<button onclick="quick('Buat script Python automation')">Python</button>
+
+<button onclick="quick('Analisa kode berikut')">Code Review</button>
+
+</div>
+
+<div class="main">
+
+<div id="chat" class="chat"></div>
+
+<div class="inputArea">
+
+<input id="msg" placeholder="Tanya AI..." />
+
+<button onclick="send()">➤</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="/script.js"></script>
+
+</body>
+</html>
