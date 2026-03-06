@@ -1,63 +1,194 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AI GOD MODE v3</title>
+<title>AI Assistant</title>
 
-<link rel="stylesheet" href="/style.css">
+<style>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+body{
+margin:0;
+font-family:Arial;
+background:#070b1f;
+color:white;
+}
 
+.container{
+max-width:500px;
+margin:auto;
+padding:20px;
+}
+
+h1{
+font-size:32px;
+background:linear-gradient(90deg,#7b5cff,#ff4db8);
+-webkit-background-clip:text;
+color:transparent;
+}
+
+.subtitle{
+color:#aaa;
+margin-bottom:20px;
+}
+
+.card{
+background:#0f1435;
+padding:20px;
+border-radius:20px;
+margin-bottom:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+}
+
+.card:hover{
+background:#171c44;
+}
+
+.chat-box{
+height:300px;
+overflow:auto;
+margin-bottom:20px;
+}
+
+.message{
+margin:10px 0;
+}
+
+.user{
+text-align:right;
+color:#7b5cff;
+}
+
+.ai{
+text-align:left;
+color:#ffffff;
+}
+
+.input-area{
+display:flex;
+gap:10px;
+}
+
+input{
+flex:1;
+padding:15px;
+border-radius:20px;
+border:none;
+background:#0f1435;
+color:white;
+}
+
+button{
+padding:15px;
+border:none;
+border-radius:20px;
+background:#7b5cff;
+color:white;
+cursor:pointer;
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-<div class="sidebar">
+<h1>Halo, selamat datang!</h1>
+<div class="subtitle">Ada yang bisa saya bantu?</div>
 
-<h2>⚡ AI GOD</h2>
-
-<button onclick="newChat()">New Chat</button>
-<button onclick="toggleTheme()">Theme</button>
-<button onclick="voice()">Voice</button>
-<button onclick="upload()">Upload</button>
-
-<hr>
-
-<h4>AI Tools</h4>
-
-<button onclick="quick('Buat website modern landing page')">Website</button>
-
-<button onclick="quick('Buat game HTML sederhana')">Game</button>
-
-<button onclick="quick('Buat script Python automation')">Python</button>
-
-<button onclick="quick('Analisa kode berikut')">Code Review</button>
-
+<div class="card" onclick="quick('Apa cuaca hari ini?')">
+Apa cuaca hari ini?
 </div>
 
-<div class="main">
+<div class="card" onclick="quick('Rekomendasi film terbaru')">
+Rekomendasi film terbaru
+</div>
 
-<div id="chat" class="chat"></div>
+<div class="card" onclick="quick('Cara membuat kue bolu')">
+Cara membuat kue bolu
+</div>
 
-<div class="inputArea">
+<div class="card" onclick="quick('Tips belajar yang efektif')">
+Tips belajar yang efektif
+</div>
 
-<input id="msg" placeholder="Tanya AI..." />
+<div class="chat-box" id="chat"></div>
 
-<button onclick="send()">➤</button>
-
+<div class="input-area">
+<input id="input" placeholder="Tanyakan sesuatu...">
+<button onclick="send()">Kirim</button>
 </div>
 
 </div>
 
-</div>
+<script>
 
-<script src="/script.js"></script>
+const API_URL="/api/chat"
+
+let history=[]
+
+function addMessage(text,cls){
+
+const chat=document.getElementById("chat")
+
+const div=document.createElement("div")
+
+div.className="message "+cls
+
+div.innerText=text
+
+chat.appendChild(div)
+
+chat.scrollTop=chat.scrollHeight
+
+}
+
+async function send(){
+
+const input=document.getElementById("input")
+
+const message=input.value
+
+if(!message)return
+
+addMessage(message,"user")
+
+input.value=""
+
+const response=await fetch(API_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:message,
+history:history
+})
+})
+
+const data=await response.json()
+
+addMessage(data.reply,"ai")
+
+history.push({role:"user",content:message})
+history.push({role:"assistant",content:data.reply})
+
+}
+
+function quick(text){
+
+document.getElementById("input").value=text
+
+send()
+
+}
+
+</script>
 
 </body>
 </html>
