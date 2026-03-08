@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#1b0b2e;
+color:white;
+margin:0;
+}
+
+.container{
+max-width:400px;
+margin:auto;
+padding:20px;
+}
+
+input{
+
+width:100%;
+padding:10px;
+
+margin:8px 0;
+
+border-radius:8px;
+border:none;
+
+}
+
+button{
+
+width:100%;
+padding:12px;
+
+background:#25D366;
+
+border:none;
+
+border-radius:10px;
+
+color:white;
+font-size:16px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Checkout</h2>
+
+<p id="game"></p>
+<p id="package"></p>
+
+<label>User ID</label>
+<input type="text" id="userId">
+
+<label>Server (optional)</label>
+<input type="text" id="server">
+
+<button onclick="order()">Order via WhatsApp</button>
+
+</div>
+
+<script>
+
+const game = localStorage.getItem("game")
+const pkg = localStorage.getItem("package")
+
+document.getElementById("game").innerText = "Game: " + game
+document.getElementById("package").innerText = "Paket: " + pkg
+
+function order(){
+
+let userId = document.getElementById("userId").value
+let server = document.getElementById("server").value
+
+if(userId === ""){
+alert("Masukkan User ID")
+return
+}
+
+let message =
+`Halo Admin saya ingin top up
+
+Game: ${game}
+User ID: ${userId}
+Server: ${server}
+Paket: ${pkg}
+
+Mohon diproses`
+
+let phone="6281234567890"
+
+let url=
+`https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+
+window.open(url,"_blank")
+
+}
+
+</script>
+
+</body>
+</html>
