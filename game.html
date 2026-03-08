@@ -5,9 +5,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Top Up Game</title>
+<title>Pilih Top Up</title>
 
-<link rel="stylesheet" href="css/style.css">
+<style>
+
+body{
+font-family:Arial;
+background:#1b0b2e;
+color:white;
+margin:0;
+}
+
+.container{
+max-width:400px;
+margin:auto;
+padding:20px;
+}
+
+.packages label{
+
+display:block;
+background:#2d1448;
+
+padding:12px;
+margin:8px 0;
+
+border-radius:8px;
+cursor:pointer;
+
+}
+
+button{
+
+width:100%;
+padding:12px;
+
+margin-top:15px;
+
+background:#7c3aed;
+
+border:none;
+border-radius:10px;
+
+color:white;
+font-size:16px;
+
+}
+
+</style>
 
 </head>
 
@@ -17,22 +62,92 @@
 
 <h2 id="gameTitle"></h2>
 
-<label>User ID</label>
-<input type="text" id="userId" placeholder="Masukkan User ID">
-
-<label>Server ID (opsional)</label>
-<input type="text" id="serverId" placeholder="Masukkan Server ID">
-
 <h3>Pilih Top Up</h3>
 
-<div class="packages" id="packageList"></div>
+<div id="packageList"></div>
 
-<button onclick="orderWhatsApp()">Order via WhatsApp</button>
+<button onclick="checkout()">Lanjut Checkout</button>
 
 </div>
 
-<script src="js/packages.js"></script>
-<script src="js/script.js"></script>
+<script>
+
+const params = new URLSearchParams(window.location.search)
+const game = params.get("game")
+
+document.getElementById("gameTitle").innerText = game
+
+const packages = {
+
+"Free Fire":[
+"5 Diamond - Rp1.500",
+"12 Diamond - Rp2.500",
+"50 Diamond - Rp8.000",
+"70 Diamond - Rp10.000",
+"100 Diamond - Rp15.000",
+"140 Diamond - Rp18.000",
+"210 Diamond - Rp27.000",
+"300 Diamond - Rp41.000",
+"355 Diamond - Rp44.000",
+"500 Diamond - Rp65.000"
+],
+
+"Mobile Legends":[
+"86 Diamonds - Rp20.000",
+"172 Diamonds - Rp39.000",
+"257 Diamonds - Rp58.000",
+"344 Diamonds - Rp77.000"
+],
+
+"PUBG Mobile":[
+"60 UC - Rp16.000",
+"120 UC - Rp31.000",
+"325 UC - Rp79.000"
+],
+
+"Genshin Impact":[
+"60 Crystal - Rp16.000",
+"300 Crystal - Rp79.000",
+"980 Crystal - Rp249.000"
+]
+
+}
+
+const container = document.getElementById("packageList")
+
+packages[game].forEach(p => {
+
+let label = document.createElement("label")
+
+label.innerHTML = `
+<input type="radio" name="pkg" value="${p}">
+${p}
+`
+
+container.appendChild(label)
+
+})
+
+function checkout(){
+
+let selected =
+document.querySelector('input[name="pkg"]:checked')
+
+if(!selected){
+
+alert("Pilih paket dulu")
+return
+
+}
+
+localStorage.setItem("game",game)
+localStorage.setItem("package",selected.value)
+
+window.location.href="checkout.html"
+
+}
+
+</script>
 
 </body>
 </html>
