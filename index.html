@@ -127,6 +127,7 @@ margin-bottom:10px;
 
 /* GAME GRID */
 
+
 .game-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -143,19 +144,12 @@ padding:12px;
 cursor:pointer;
 border:1px solid #ecfdf5;
 box-shadow:0 6px 14px rgba(0,0,0,0.05);
-transition:box-shadow 0.2s ease;
+transition:all 0.2s ease;
 display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
-
--webkit-tap-highlight-color: transparent;
-outline:none;
-position:relative;
-z-index:1;
 }
-
-/* LINK */
 
 .game-card a{
 text-decoration:none;
@@ -163,23 +157,10 @@ color:inherit;
 display:block;
 }
 
-/* HOVER (hanya efek bayangan) */
-
 .game-card:hover{
-box-shadow:0 8px 16px rgba(0,0,0,0.08);
-}
-
-/* SAAT DITEKAN DI HP */
-
-.game-card:active{
-transform:none;
-box-shadow:0 6px 14px rgba(0,0,0,0.05);
-}
-
-/* HILANGKAN FOCUS */
-
-.game-card:focus{
-outline:none;
+transform:translateY(-4px);
+box-shadow:0 12px 22px rgba(22,163,74,0.15);
+border-color:#bbf7d0;
 }
 
 .topup-modal{
