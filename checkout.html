@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f3f4f6;
+margin:0;
+padding:0;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+align-items:center;
+padding:15px;
+background:white;
+box-shadow:0 2px 5px rgba(0,0,0,0.05);
+}
+
+.back{
+font-size:22px;
+margin-right:10px;
+cursor:pointer;
+}
+
+.title{
+font-weight:bold;
+font-size:18px;
+}
+
+/* CARD */
+
+.card{
+background:white;
+margin:15px;
+padding:15px;
+border-radius:14px;
+box-shadow:0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* PRODUK */
+
+.product{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.product img{
+width:60px;
+border-radius:10px;
+}
+
+.badge{
+background:#e6f7ed;
+color:#1ea55b;
+font-size:12px;
+padding:3px 8px;
+border-radius:6px;
+display:inline-block;
+margin-bottom:5px;
+}
+
+.price{
+color:#555;
+}
+
+/* INPUT */
+
+.label{
+font-weight:bold;
+margin-bottom:6px;
+display:block;
+}
+
+.input-group{
+display:flex;
+align-items:center;
+border:1px solid #ddd;
+border-radius:10px;
+overflow:hidden;
+}
+
+.input-group input{
+flex:1;
+border:none;
+padding:12px;
+outline:none;
+}
+
+.search{
+background:#e8eef7;
+border:none;
+padding:12px 15px;
+cursor:pointer;
+}
+
+/* RINCIAN */
+
+.row{
+display:flex;
+justify-content:space-between;
+margin:8px 0;
+}
+
+.total{
+font-size:20px;
+color:#16a34a;
+font-weight:bold;
+}
+
+/* FOOTER */
+
+.footer{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:white;
+padding:15px;
+box-shadow:0 -2px 10px rgba(0,0,0,0.05);
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.pay{
+background:#16a34a;
+color:white;
+border:none;
+padding:12px 30px;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.bill{
+color:#16a34a;
+font-weight:bold;
+font-size:18px;
+}
+
+.loading{
+font-size:13px;
+color:#555;
+margin-top:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<div class="header">
+<div class="back" onclick="goHome()">←</div>
+<div class="title">Detail Pesanan</div>
+</div>
+
+<!-- PRODUK -->
+
+<div class="card">
+
+<div class="product">
+
+<img id="gameImage">
+
+<div>
+<div class="badge">GAMES</div>
+<div id="itemName"></div>
+<div class="price" id="price"></div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- USER ID -->
+
+<div class="card" id="userIdBox">
+
+<label class="label">USER ID</label>
+
+<div class="input-group">
+<input type="text" placeholder="Masukkan ID Player" id="userId">
+<button class="search">🔍</button>
+</div>
+
+<div id="nicknameBox" style="
+margin-top:8px;
+font-size:13px;
+color:#16a34a;
+display:none;
+">
+Nickname : <span id="nickname"></span>
+</div>
+
+<!-- SERVER -->
+
+<div id="serverBox" style="margin-top:10px;display:none;">
+
+<label class="label">SERVER</label>
+
+<div class="input-group">
+<input type="text" placeholder="Masukkan Server" id="serverId">
+</div>
+
+</div>
+
+<p style="font-size:12px;color:#888;margin-top:5px;">
+Masukkan ID Player Game
+</p>
+
+</div>
+
+
+<!-- RINCIAN -->
+
+<div class="card">
+
+<h4>RINCIAN TRANSAKSI</h4>
+
+<div class="row">
+<span>Subtotal Produk</span>
+<span id="subtotal"></span>
+</div>
+
+<hr>
+
+<div class="row">
+<span>Total Pembayaran</span>
+<span class="total" id="total"></span>
+</div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<div class="footer">
+
+<div>
+<div style="font-size:12px;color:#777;">TOTAL TAGIHAN</div>
+<div class="bill" id="bill"></div>
+</div>
+
+<button class="pay" onclick="bayar()">Bayar</button>
+
+</div>
+
+
+<script>
+
+/* AMBIL DATA URL */
+
+const params = new URLSearchParams(window.location.search)
+
+const game = params.get("game")
+const item = params.get("item")
+const price = params.get("price")
+const image = params.get("image")
+const type = params.get("type")
+
+
+/* TAMPILKAN DATA */
+
+document.getElementById("itemName").innerText = game + " " + item
+
+document.getElementById("price").innerText =
+"Rp " + Number(price).toLocaleString("id-ID")
+
+document.getElementById("subtotal").innerText =
+"Rp " + Number(price).toLocaleString("id-ID")
+
+document.getElementById("total").innerText =
+"Rp " + Number(price).toLocaleString("id-ID")
+
+document.getElementById("bill").innerText =
+"Rp " + Number(price).toLocaleString("id-ID")
+
+document.getElementById("gameImage").src = image
+
+
+/* CEK TYPE GAME */
+
+if(type === "voucher"){
+document.getElementById("userIdBox").style.display = "none"
+}
+
+if(type === "uid"){
+document.querySelector("#userIdBox .label").innerText = "USER UID"
+document.getElementById("userId").placeholder = "Masukkan UID"
+}
+
+if(type === "id"){
+document.querySelector("#userIdBox .label").innerText = "USER ID"
+document.getElementById("userId").placeholder = "Masukkan ID Player"
+}
+
+if(type === "idserver"){
+document.querySelector("#userIdBox .label").innerText = "USER ID"
+document.getElementById("userId").placeholder = "Masukkan ID"
+document.getElementById("serverBox").style.display = "block"
+}
+
+
+/* SIMULASI CEK NICKNAME */
+
+document.querySelector(".search").onclick = function(){
+
+const id = document.getElementById("userId").value
+const nickBox = document.getElementById("nicknameBox")
+
+if(!id){
+alert("Masukkan ID dulu")
+return
+}
+
+nickBox.style.display = "block"
+nickBox.innerHTML = '<span class="loading">Mengecek nickname...</span>'
+
+setTimeout(()=>{
+
+const nickname = "Player_" + id
+
+nickBox.innerHTML = 'Nickname : <b>'+nickname+'</b>'
+
+},1200)
+
+}
+
+
+/* BACK */
+
+function goHome(){
+window.location.href = "index.html"
+}
+
+
+/* BAYAR */
+
+const adminWa = "6283160556330"
+
+function bayar(){
+
+const id = document.getElementById("userId")?.value || "-"
+const server = document.getElementById("serverId")?.value || "-"
+const gameName = game
+const itemName = item
+const harga = Number(price).toLocaleString("id-ID")
+
+if(type !== "voucher" && !id){
+alert("Masukkan ID / UID dulu")
+return
+}
+
+if(type === "idserver" && !server){
+alert("Masukkan Server dulu")
+return
+}
+
+let pesan = 
+`*ORDER TOP UP*\n\n` +
+`Game : ${gameName}\n` +
+`Produk : ${itemName}\n` +
+`Harga : Rp ${harga}\n`
+
+if(type === "uid"){
+pesan += `UID : ${id}\n`
+}
+
+if(type === "id"){
+pesan += `ID : ${id}\n`
+}
+
+if(type === "idserver"){
+pesan += `ID : ${id}\n`
+pesan += `Server : ${server}\n`
+}
+
+pesan += `\nMohon diproses admin 🙏`
+
+const url =
+`https://wa.me/${adminWa}?text=${encodeURIComponent(pesan)}`
+
+window.open(url)
+
+}
+
+</script>
+
+</body>
+</html>
