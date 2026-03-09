@@ -712,8 +712,13 @@ renderItems()
 
 document.getElementById("topupModal").style.display="flex"
 
+document.getElementById("topupModal").onclick = function(e){
+if(e.target.id === "topupModal"){
+closeTopup()
+}
 }
 
+}
 
 /* RENDER ITEMS */
 
@@ -795,13 +800,20 @@ renderItems()
 
 function goCheckout(){
 
-if(!selectedItem) return
+if(!selectedItem){
+return;
+}
 
-alert(
-"Item dipilih:\n"+
-selectedItem.name+"\n"+
-selectedItem.price
-)
+const gameData = database[currentGame];
+
+const gameName = gameData.name;
+const itemName = selectedItem.name;
+const price = selectedItem.price.replace(/[^\d]/g,'');
+const image = gameData.image;
+const type = gameData.type;
+
+window.location.href =
+`checkout.html?game=${encodeURIComponent(gameName)}&item=${encodeURIComponent(itemName)}&price=${price}&image=${encodeURIComponent(image)}&type=${type}`;
 
 }
 
