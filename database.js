@@ -20,7 +20,7 @@ const database = {
 
   ml: {
     name: "Mobile Legends",
-    type: "id",
+    type: "idserver",
     image: "assets/ml.png",
 
     regular: [
