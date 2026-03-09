@@ -1,44 +1,62 @@
 const database = {
 
-ff:{
-name:"Free Fire",
-type:"id",
-image:"assets/ff.png",
-items:[
-{name:"5 Diamond Free Fire",price:"Rp1.130"},
-{name:"12 Diamond Free Fire",price:"Rp2.070"},
-{name:"50 Diamond Free Fire",price:"Rp6.638"}
-]
-},
+  ff: {
+    name: "Free Fire",
+    type: "id",
+    image: "assets/ff.png",
 
-ml:{
-name:"Mobile Legends",
-type:"id",
-image:"assets/ml.png",
-items:[
-{name:"86 Diamond ML",price:"Rp20.000"},
-{name:"172 Diamond ML",price:"Rp40.000"}
-]
-},
+    regular: [
+      { name: "5 Diamond Free Fire", price: "Rp1.130" },
+      { name: "12 Diamond Free Fire", price: "Rp2.070" },
+      { name: "50 Diamond Free Fire", price: "Rp6.638" }
+    ],
 
-pubg:{
-name:"PUBG Mobile",
-type:"voucher",
-image:"assets/pubg.png",
-items:[
-{name:"60 UC Voucher",price:"Rp15.000"},
-{name:"325 UC Voucher",price:"Rp75.000"}
-]
-},
+    membership: [
+      { name: "Weekly Membership", price: "Rp27.000" },
+      { name: "Monthly Membership", price: "Rp80.000" }
+    ]
+  },
 
-genshin:{
-name:"Genshin Impact",
-type:"uid",
-image:"assets/genshin.png",
-items:[
-{name:"60 Genesis Crystal",price:"Rp16.000"},
-{name:"300 Genesis Crystal",price:"Rp79.000"}
-]
-}
 
-}
+  ml: {
+    name: "Mobile Legends",
+    type: "id",
+    image: "assets/ml.png",
+
+    regular: [
+      { name: "86 Diamond ML", price: "Rp20.000" },
+      { name: "172 Diamond ML", price: "Rp40.000" }
+    ],
+
+    membership: []
+  },
+
+
+  pubg: {
+    name: "PUBG Mobile",
+    type: "voucher",
+    image: "assets/pubg.png",
+
+    regular: [
+      { name: "60 UC Voucher", price: "Rp15.000" },
+      { name: "325 UC Voucher", price: "Rp75.000" }
+    ],
+
+    membership: []
+  },
+
+
+  genshin: {
+    name: "Genshin Impact",
+    type: "uid",
+    image: "assets/genshin.png",
+
+    regular: [
+      { name: "60 Genesis Crystal", price: "Rp16.000" },
+      { name: "300 Genesis Crystal", price: "Rp79.000" }
+    ],
+
+    membership: []
+  }
+
+};
