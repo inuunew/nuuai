@@ -154,6 +154,16 @@ color:#555;
 margin-top:8px;
 }
 
+.payment-option{
+padding:10px;
+border:1px solid #eee;
+border-radius:10px;
+margin-top:8px;
+display:flex;
+align-items:center;
+gap:8px;
+cursor:pointer;
+}
 </style>
 </head>
 
@@ -205,6 +215,33 @@ display:none;
 Nickname : <span id="nickname"></span>
 </div>
 
+<!-- PAYMENT -->
+
+<div class="card">
+
+<h4>METODE PEMBAYARAN</h4>
+
+<div class="payment-option">
+<input type="radio" name="pay" value="QRIS" checked> QRIS
+</div>
+
+<div class="payment-option">
+<input type="radio" name="pay" value="DANA"> DANA
+</div>
+
+<div class="payment-option">
+<input type="radio" name="pay" value="OVO"> OVO
+</div>
+
+<div class="payment-option">
+<input type="radio" name="pay" value="GoPay"> GoPay
+</div>
+
+<div class="payment-option">
+<input type="radio" name="pay" value="Transfer Bank"> Transfer Bank
+</div>
+
+</div>
 <!-- SERVER -->
 
 <div id="serverBox" style="margin-top:10px;display:none;">
@@ -358,6 +395,7 @@ const server = document.getElementById("serverId")?.value || "-"
 const gameName = game
 const itemName = item
 const harga = Number(price).toLocaleString("id-ID")
+const pay = document.querySelector('input[name="pay"]:checked').value
 
 if(type !== "voucher" && !id){
 alert("Masukkan ID / UID dulu")
@@ -373,7 +411,8 @@ let pesan =
 `*ORDER TOP UP*\n\n` +
 `Game : ${gameName}\n` +
 `Produk : ${itemName}\n` +
-`Harga : Rp ${harga}\n`
+`Harga : Rp ${harga}\n` +
+`Pembayaran : ${pay}\n`
 
 if(type === "uid"){
 pesan += `UID : ${id}\n`
