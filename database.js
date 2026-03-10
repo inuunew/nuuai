@@ -6,15 +6,24 @@ const database = {
     image: "assets/ff.png",
 
     regular: [
-      { name: "7 Diamond Free Fire", price: "Rp1.500" },
-      { name: "18 Diamond Free Fire", price: "Rp3.200" },
-      { name: "37 Diamond Free Fire", price: "Rp6.100" },
-      { name: "79 Diamond Free Fire", price: "Rp12.900" },
-      { name: "143 Diamond Free Fire", price: "Rp22.800" },
-      { name: "278 Diamond Free Fire", price: "Rp43.500" },
-      { name: "512 Diamond Free Fire", price: "Rp79.000" },
-      { name: "1045 Diamond Free Fire", price: "Rp158.000" }
-    ],
+  { name: "5 Diamond Free Fire", price: "Rp1.500" },
+  { name: "12 Diamond Free Fire", price: "Rp2.500" },
+  { name: "50 Diamond Free Fire", price: "Rp8.000" },
+  { name: "70 Diamond Free Fire", price: "Rp10.000" },
+  { name: "100 Diamond Free Fire", price: "Rp15.000" },
+  { name: "140 Diamond Free Fire", price: "Rp18.000" },
+  { name: "210 Diamond Free Fire", price: "Rp27.000" },
+  { name: "300 Diamond Free Fire", price: "Rp41.000" },
+  { name: "355 Diamond Free Fire", price: "Rp44.000" },
+  { name: "500 Diamond Free Fire", price: "Rp65.000" },
+  { name: "720 Diamond Free Fire", price: "Rp89.000" },
+  { name: "1000 Diamond Free Fire", price: "Rp126.000" },
+  { name: "1450 Diamond Free Fire", price: "Rp176.000" },
+  { name: "2180 Diamond Free Fire", price: "Rp265.000" },
+  { name: "3640 Diamond Free Fire", price: "Rp438.000" },
+  { name: "4000 Diamond Free Fire", price: "Rp498.000" },
+  { name: "7290 Diamond Free Fire", price: "Rp905.000" }
+],
 
     membership: [
       { name: "Weekly Membership", price: "Rp27.000" },
