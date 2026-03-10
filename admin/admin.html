@@ -14,11 +14,16 @@ background:#f3f4f6;
 padding:15px;
 }
 
+h2{
+margin-bottom:10px;
+}
+
 .card{
 background:white;
-padding:15px;
 border-radius:10px;
+padding:15px;
 margin-bottom:15px;
+box-shadow:0 2px 5px rgba(0,0,0,0.05);
 }
 
 input,select{
@@ -40,17 +45,32 @@ flex:1;
 }
 
 button{
-padding:10px;
 border:none;
+padding:10px;
 border-radius:6px;
 margin-top:10px;
+cursor:pointer;
 }
 
-.add{background:#2563eb;color:white;}
-.del{background:red;color:white;}
-.save{background:green;color:white;width:100%;}
+.add{
+background:#2563eb;
+color:white;
+}
 
-.hidden{display:none;}
+.delete{
+background:red;
+color:white;
+}
+
+.save{
+background:#16a34a;
+color:white;
+width:100%;
+}
+
+.hidden{
+display:none;
+}
 
 </style>
 </head>
@@ -62,41 +82,43 @@ margin-top:10px;
 <div class="card">
 
 <select id="mode">
+
 <option value="">Pilih Mode</option>
 <option value="add">Add Game</option>
 <option value="delete">Delete Game</option>
+
 </select>
 
 </div>
-
 
 <div id="deleteBox" class="card hidden">
 
 <select id="gameList"></select>
 
-<button class="del" onclick="deleteGame()">Delete Game</button>
+<button class="delete" onclick="deleteGame()">Delete Game</button>
 
 </div>
-
-
 
 <div id="addBox" class="hidden">
 
 <div class="card">
 
 <input id="gameId" placeholder="Game ID">
+
 <input id="gameName" placeholder="Nama Game">
+
 <input id="gameImage" placeholder="assets/game.png">
 
 <select id="gameType">
+
 <option value="id">ID</option>
 <option value="idserver">ID + Server</option>
 <option value="uid">UID</option>
 <option value="voucher">Voucher</option>
+
 </select>
 
 </div>
-
 
 <div class="card">
 
@@ -108,7 +130,6 @@ margin-top:10px;
 
 </div>
 
-
 <div class="card">
 
 <h3>Membership</h3>
@@ -119,7 +140,6 @@ margin-top:10px;
 
 </div>
 
-
 <div class="card">
 
 <button class="save" onclick="saveGame()">Konfirmasi</button>
@@ -128,12 +148,16 @@ margin-top:10px;
 
 </div>
 
-
 <script src="../database.js"></script>
 
 <script>
 
-let db = JSON.parse(localStorage.getItem("database")) || database
+let db = database
+
+const GITHUB_TOKEN = "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"
+const OWNER = "inuunew"
+const REPO = "inuunew-nuuai"
+const PATH = "database.js"
 
 const mode=document.getElementById("mode")
 const addBox=document.getElementById("addBox")
@@ -144,9 +168,7 @@ mode.onchange=()=>{
 addBox.classList.add("hidden")
 deleteBox.classList.add("hidden")
 
-if(mode.value=="add"){
-addBox.classList.remove("hidden")
-}
+if(mode.value=="add") addBox.classList.remove("hidden")
 
 if(mode.value=="delete"){
 deleteBox.classList.remove("hidden")
@@ -154,7 +176,6 @@ loadGames()
 }
 
 }
-
 
 function loadGames(){
 
@@ -164,7 +185,6 @@ select.innerHTML=""
 for(let key in db){
 
 let opt=document.createElement("option")
-
 opt.value=key
 opt.textContent=db[key].name
 
@@ -174,8 +194,6 @@ select.appendChild(opt)
 
 }
 
-
-
 function addItem(){
 
 let div=document.createElement("div")
@@ -183,7 +201,7 @@ let div=document.createElement("div")
 div.className="row"
 
 div.innerHTML=`
-<input placeholder="Item">
+<input placeholder="Item Name">
 <input placeholder="Price">
 <button onclick="this.parentElement.remove()">X</button>
 `
@@ -191,8 +209,6 @@ div.innerHTML=`
 document.getElementById("items").appendChild(div)
 
 }
-
-
 
 function addMember(){
 
@@ -209,8 +225,6 @@ div.innerHTML=`
 document.getElementById("members").appendChild(div)
 
 }
-
-
 
 function saveGame(){
 
@@ -249,13 +263,9 @@ price:i[1].value
 
 })
 
-localStorage.setItem("database",JSON.stringify(db))
-
-alert("Database berhasil disimpan")
+updateGithub()
 
 }
-
-
 
 function deleteGame(){
 
@@ -263,11 +273,41 @@ let id=document.getElementById("gameList").value
 
 delete db[id]
 
-localStorage.setItem("database",JSON.stringify(db))
+updateGithub()
 
-alert("Game dihapus")
+}
 
-loadGames()
+async function updateGithub(){
+
+const content="const database = "+JSON.stringify(db,null,2)
+
+const encoded=btoa(unescape(encodeURIComponent(content)))
+
+const res=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
+
+const data=await res.json()
+
+await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`,{
+
+method:"PUT",
+
+headers:{
+Authorization:"token "+GITHUB_TOKEN,
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+message:"update database",
+
+content:encoded,
+sha:data.sha
+
+})
+
+})
+
+alert("Database berhasil diupdate")
 
 }
 
