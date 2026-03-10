@@ -3,7 +3,7 @@ const database = {
   ff: {
     name: "Free Fire",
     type: "id",
-    image: "assets/ff.png",
+    image: "https://files.catbox.moe/tv1rv6.jpeg",
 
     regular: [
   { name: "5 Diamond Free Fire", price: "Rp1.500" },
