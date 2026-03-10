@@ -1,0 +1,493 @@
+<!DOCTYPE html><html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Panel</title><style>
+
+body{
+font-family:Arial;
+background:#f3f4f6;
+padding:20px;
+}
+
+/* LOGIN */
+
+#loginPage{
+max-width:400px;
+margin:auto;
+margin-top:120px;
+}
+
+h2{
+text-align:center;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+input,select{
+width:100%;
+padding:10px;
+border:1px solid #ddd;
+border-radius:6px;
+margin-top:8px;
+}
+
+.row{
+display:flex;
+gap:6px;
+margin-top:8px;
+}
+
+.row input{
+flex:1;
+}
+
+button{
+border:none;
+padding:10px;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.add{
+background:#2563eb;
+color:white;
+}
+
+.delete{
+background:#dc2626;
+color:white;
+}
+
+.save{
+background:#16a34a;
+color:white;
+width:100%;
+}
+
+.hidden{
+display:none;
+}
+
+/* LOADING */
+
+.loading{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:22px;
+z-index:999;
+}
+
+</style></head><body><!-- LOGIN PAGE --><div id="loginPage"><h2>Admin Login</h2><div class="card"><input type="password" id="adminPass" placeholder="Password Admin"><button class="save" onclick="login()">Login</button>
+
+</div></div><!-- ADMIN PANEL --><div id="adminPanel" class="hidden"><h2>Admin Database</h2><div class="card"><select id="mode"><option value="">Pilih Menu</option>
+<option value="add">Add Game</option>
+<option value="delete">Delete Game</option>
+<option value="edit">Edit Game</option></select></div><!-- DELETE GAME --><div id="deleteBox" class="card hidden"><select id="gameList"></select>
+
+<button class="delete" onclick="deleteGame()">Delete Game</button>
+
+</div><!-- ADD GAME --><div id="addBox" class="hidden"><div class="card"><input id="gameName" placeholder="Nama Game">
+<input id="gameImage" placeholder="assets/game.png"><select id="gameType">
+<option value="id">ID</option>
+<option value="idserver">ID + Server</option>
+<option value="uid">UID</option>
+<option value="voucher">Voucher</option>
+</select></div><div class="card"><h3>Items</h3><div id="items"></div><button class="add" onclick="addItem()">Add Item</button>
+
+</div><div class="card"><h3>Membership</h3><div id="members"></div><button class="add" onclick="addMember()">Add Membership</button>
+
+</div><div class="card"><button class="save" onclick="saveGame()">Konfirmasi</button>
+
+</div></div><!-- EDIT GAME --><div id="editBox" class="hidden"><div class="card"><select id="editGameList"></select>
+
+</div><div class="card"><input id="editGameName">
+<input id="editGameImage"><select id="editGameType">
+<option value="id">ID</option>
+<option value="idserver">ID + Server</option>
+<option value="uid">UID</option>
+<option value="voucher">Voucher</option>
+</select></div><div class="card"><h3>Items</h3><div id="editItems"></div><button class="add" onclick="addEditItem()">Add Item</button>
+
+</div><div class="card"><h3>Membership</h3><div id="editMembers"></div><button class="add" onclick="addEditMember()">Add Membership</button>
+
+</div><div class="card"><button class="save" onclick="saveEditGame()">Konfirmasi Edit</button>
+
+</div></div></div><!-- LOADING --><div id="loading" class="loading hidden">
+Updating Database...
+</div><script src="../database.js"></script><script>
+
+/* CONFIG */
+
+const ADMIN_PASSWORD="admin123"
+
+const TOKEN="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"
+const OWNER="inuunew"
+const REPO="inuunew-nuuai"
+const PATH="database.js"
+
+let db = database
+
+/* LOGIN */
+
+function login(){
+
+let pass=document.getElementById("adminPass").value
+
+if(pass===ADMIN_PASSWORD){
+
+sessionStorage.setItem("adminLogin","true")
+
+document.getElementById("loginPage").style.display="none"
+document.getElementById("adminPanel").classList.remove("hidden")
+
+}else{
+
+alert("Password salah")
+
+}
+
+}
+
+if(sessionStorage.getItem("adminLogin")==="true"){
+
+document.getElementById("loginPage").style.display="none"
+document.getElementById("adminPanel").classList.remove("hidden")
+
+}
+
+/* MENU */
+
+const mode=document.getElementById("mode")
+
+const addBox=document.getElementById("addBox")
+const deleteBox=document.getElementById("deleteBox")
+const editBox=document.getElementById("editBox")
+
+mode.onchange=()=>{
+
+addBox.classList.add("hidden")
+deleteBox.classList.add("hidden")
+editBox.classList.add("hidden")
+
+if(mode.value==="add") addBox.classList.remove("hidden")
+
+if(mode.value==="delete"){
+deleteBox.classList.remove("hidden")
+loadGames()
+}
+
+if(mode.value==="edit"){
+editBox.classList.remove("hidden")
+loadEditGames()
+}
+
+}
+
+/* LOAD GAME */
+
+function loadGames(){
+
+let select=document.getElementById("gameList")
+select.innerHTML=""
+
+for(let key in db){
+
+let opt=document.createElement("option")
+
+opt.value=key
+opt.textContent=db[key].name
+
+select.appendChild(opt)
+
+}
+
+}
+
+/* ADD ITEM */
+
+function addItem(){
+
+let div=document.createElement("div")
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Item Name">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+items.appendChild(div)
+
+}
+
+/* ADD MEMBER */
+
+function addMember(){
+
+let div=document.createElement("div")
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Membership">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+members.appendChild(div)
+
+}
+
+/* SAVE GAME */
+
+function saveGame(){
+
+let name=document.getElementById("gameName").value
+
+let id=name.toLowerCase().replace(/\s/g,"")
+
+db[id]={
+
+name:name,
+type:document.getElementById("gameType").value,
+image:document.getElementById("gameImage").value,
+regular:[],
+membership:[]
+
+}
+
+document.querySelectorAll("#items .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].regular.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+document.querySelectorAll("#members .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].membership.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+updateGithub()
+
+}
+
+/* DELETE GAME */
+
+function deleteGame(){
+
+let id=document.getElementById("gameList").value
+
+delete db[id]
+
+updateGithub()
+
+}
+
+/* EDIT GAME */
+
+function loadEditGames(){
+
+let select=document.getElementById("editGameList")
+
+select.innerHTML=""
+
+for(let key in db){
+
+let opt=document.createElement("option")
+
+opt.value=key
+opt.textContent=db[key].name
+
+select.appendChild(opt)
+
+}
+
+loadGameData()
+
+}
+
+document.getElementById("editGameList").onchange=loadGameData
+
+function loadGameData(){
+
+let id=document.getElementById("editGameList").value
+
+let game=db[id]
+
+editGameName.value=game.name
+editGameImage.value=game.image
+editGameType.value=game.type
+
+editItems.innerHTML=""
+editMembers.innerHTML=""
+
+game.regular.forEach(i=>{
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input value="${i.name}">
+<input value="${i.price}">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+editItems.appendChild(div)
+
+})
+
+game.membership.forEach(i=>{
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input value="${i.name}">
+<input value="${i.price}">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+editMembers.appendChild(div)
+
+})
+
+}
+
+/* ADD EDIT */
+
+function addEditItem(){
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Item Name">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+editItems.appendChild(div)
+
+}
+
+function addEditMember(){
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Membership">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+editMembers.appendChild(div)
+
+}
+
+/* SAVE EDIT */
+
+function saveEditGame(){
+
+let id=document.getElementById("editGameList").value
+
+db[id].name=editGameName.value
+db[id].image=editGameImage.value
+db[id].type=editGameType.value
+
+db[id].regular=[]
+db[id].membership=[]
+
+document.querySelectorAll("#editItems .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].regular.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+document.querySelectorAll("#editMembers .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].membership.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+updateGithub()
+
+}
+
+/* UPDATE GITHUB */
+
+async function updateGithub(){
+
+document.getElementById("loading").classList.remove("hidden")
+
+const content="const database = "+JSON.stringify(db,null,2)
+
+const encoded=btoa(unescape(encodeURIComponent(content)))
+
+const res=await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`)
+const data=await res.json()
+
+await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${PATH}`,{
+
+method:"PUT",
+
+headers:{
+Authorization:"token "+TOKEN,
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+message:"update database",
+content:encoded,
+sha:data.sha
+
+})
+
+})
+
+location.reload()
+
+}
+
+</script></body>
+</html>
