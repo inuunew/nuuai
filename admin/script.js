@@ -1,16 +1,15 @@
 let db;
 
-fetch("../database.js")
-.then(res=>res.text())
-.then(text=>{
+fetch("database.json")
+.then(res=>res.json())
+.then(data=>{
 
-let clean=text.replace("const database =","").replace(";","");
-
-db=eval("(" + clean + ")");
+db=data;
 
 loadGames();
 
 });
+
 
 function loadGames(){
 
@@ -21,7 +20,6 @@ for(let key in db){
 let option=document.createElement("option");
 
 option.value=key;
-
 option.innerText=db[key].name;
 
 select.appendChild(option);
@@ -33,6 +31,7 @@ select.onchange=showProducts;
 showProducts();
 
 }
+
 
 function showProducts(){
 
@@ -66,6 +65,7 @@ list.appendChild(div);
 
 }
 
+
 function updateName(i,val){
 
 db[gameSelect.value].regular[i].name=val;
@@ -78,6 +78,7 @@ db[gameSelect.value].regular[i].price=val;
 
 }
 
+
 function deleteProduct(i){
 
 db[gameSelect.value].regular.splice(i,1);
@@ -86,43 +87,25 @@ showProducts();
 
 }
 
+
 function addProduct(){
 
 db[gameSelect.value].regular.push({
+
 name:"Produk Baru",
 price:"Rp0"
+
 });
 
 showProducts();
 
 }
 
-async function saveDatabase(){
 
-const token="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";
-const repo="inuunew/nuuai";
-const path="database.js";
+function saveDatabase(){
 
-let content="const database = "+JSON.stringify(db,null,2);
+console.log(db);
 
-let encoded=btoa(content);
-
-await fetch(`https://api.github.com/repos/${repo}/contents/${path}`,{
-
-method:"PUT",
-
-headers:{
-Authorization:"token "+token,
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-message:"update database",
-content:encoded
-})
-
-});
-
-alert("Database berhasil diupdate");
+alert("Database siap dikirim ke GitHub");
 
 }
