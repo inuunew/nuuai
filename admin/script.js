@@ -1,6 +1,6 @@
 let db;
 
-fetch("database.json")
+fetch("database.js")
 .then(res=>res.json())
 .then(data=>{
 
