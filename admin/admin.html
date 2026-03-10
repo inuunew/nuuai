@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f3f4f6;
+padding:15px;
+}
+
+.card{
+background:white;
+padding:15px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:8px;
+border-radius:6px;
+border:1px solid #ddd;
+}
+
+.row{
+display:flex;
+gap:6px;
+margin-top:8px;
+}
+
+.row input{
+flex:1;
+}
+
+button{
+padding:10px;
+border:none;
+border-radius:6px;
+margin-top:10px;
+}
+
+.add{background:#2563eb;color:white;}
+.del{background:red;color:white;}
+.save{background:green;color:white;width:100%;}
+
+.hidden{display:none;}
+
+</style>
+</head>
+
+<body>
+
+<h2>Admin Database</h2>
+
+<div class="card">
+
+<select id="mode">
+<option value="">Pilih Mode</option>
+<option value="add">Add Game</option>
+<option value="delete">Delete Game</option>
+</select>
+
+</div>
+
+
+<div id="deleteBox" class="card hidden">
+
+<select id="gameList"></select>
+
+<button class="del" onclick="deleteGame()">Delete Game</button>
+
+</div>
+
+
+
+<div id="addBox" class="hidden">
+
+<div class="card">
+
+<input id="gameId" placeholder="Game ID">
+<input id="gameName" placeholder="Nama Game">
+<input id="gameImage" placeholder="assets/game.png">
+
+<select id="gameType">
+<option value="id">ID</option>
+<option value="idserver">ID + Server</option>
+<option value="uid">UID</option>
+<option value="voucher">Voucher</option>
+</select>
+
+</div>
+
+
+<div class="card">
+
+<h3>Items</h3>
+
+<div id="items"></div>
+
+<button class="add" onclick="addItem()">Add Item</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Membership</h3>
+
+<div id="members"></div>
+
+<button class="add" onclick="addMember()">Add Membership</button>
+
+</div>
+
+
+<div class="card">
+
+<button class="save" onclick="saveGame()">Konfirmasi</button>
+
+</div>
+
+</div>
+
+
+<script src="../database.js"></script>
+
+<script>
+
+let db = JSON.parse(localStorage.getItem("database")) || database
+
+const mode=document.getElementById("mode")
+const addBox=document.getElementById("addBox")
+const deleteBox=document.getElementById("deleteBox")
+
+mode.onchange=()=>{
+
+addBox.classList.add("hidden")
+deleteBox.classList.add("hidden")
+
+if(mode.value=="add"){
+addBox.classList.remove("hidden")
+}
+
+if(mode.value=="delete"){
+deleteBox.classList.remove("hidden")
+loadGames()
+}
+
+}
+
+
+function loadGames(){
+
+let select=document.getElementById("gameList")
+select.innerHTML=""
+
+for(let key in db){
+
+let opt=document.createElement("option")
+
+opt.value=key
+opt.textContent=db[key].name
+
+select.appendChild(opt)
+
+}
+
+}
+
+
+
+function addItem(){
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Item">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+document.getElementById("items").appendChild(div)
+
+}
+
+
+
+function addMember(){
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Membership">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+document.getElementById("members").appendChild(div)
+
+}
+
+
+
+function saveGame(){
+
+let id=document.getElementById("gameId").value
+
+db[id]={
+
+name:document.getElementById("gameName").value,
+type:document.getElementById("gameType").value,
+image:document.getElementById("gameImage").value,
+
+regular:[],
+membership:[]
+
+}
+
+document.querySelectorAll("#items .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].regular.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+document.querySelectorAll("#members .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].membership.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+localStorage.setItem("database",JSON.stringify(db))
+
+alert("Database berhasil disimpan")
+
+}
+
+
+
+function deleteGame(){
+
+let id=document.getElementById("gameList").value
+
+delete db[id]
+
+localStorage.setItem("database",JSON.stringify(db))
+
+alert("Game dihapus")
+
+loadGames()
+
+}
+
+</script>
+
+</body>
+</html>
