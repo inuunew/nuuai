@@ -154,15 +154,36 @@ color:#555;
 margin-top:8px;
 }
 
-.payment-option{
+.payment-select{
+display:flex;
+justify-content:space-between;
+align-items:center;
+border:1px solid #ddd;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+background:#fafafa;
+}
+
+.payment-arrow{
+font-size:12px;
+}
+
+.payment-list{
+display:none;
+margin-top:10px;
+}
+
+.payment-item{
 padding:10px;
 border:1px solid #eee;
 border-radius:10px;
-margin-top:8px;
-display:flex;
-align-items:center;
-gap:8px;
+margin-bottom:8px;
 cursor:pointer;
+}
+
+.payment-item:hover{
+background:#f5f5f5;
 }
 </style>
 </head>
@@ -221,24 +242,33 @@ Nickname : <span id="nickname"></span>
 
 <h4>METODE PEMBAYARAN</h4>
 
-<div class="payment-option">
-<input type="radio" name="pay" value="QRIS" checked> QRIS
+<div class="payment-select" onclick="togglePayment()">
+<div id="paymentSelected">Pilih Metode Pembayaran</div>
+<div class="payment-arrow">▼</div>
 </div>
 
-<div class="payment-option">
-<input type="radio" name="pay" value="DANA"> DANA
+<div class="payment-list" id="paymentList">
+
+<div class="payment-item" onclick="selectPayment('QRIS')">
+QRIS
 </div>
 
-<div class="payment-option">
-<input type="radio" name="pay" value="OVO"> OVO
+<div class="payment-item" onclick="selectPayment('DANA')">
+DANA
 </div>
 
-<div class="payment-option">
-<input type="radio" name="pay" value="GoPay"> GoPay
+<div class="payment-item" onclick="selectPayment('OVO')">
+OVO
 </div>
 
-<div class="payment-option">
-<input type="radio" name="pay" value="Transfer Bank"> Transfer Bank
+<div class="payment-item" onclick="selectPayment('GoPay')">
+GoPay
+</div>
+
+<div class="payment-item" onclick="selectPayment('Transfer Bank')">
+Transfer Bank
+</div>
+
 </div>
 
 </div>
@@ -395,8 +425,10 @@ const server = document.getElementById("serverId")?.value || "-"
 const gameName = game
 const itemName = item
 const harga = Number(price).toLocaleString("id-ID")
-const pay = document.querySelector('input[name="pay"]:checked').value
-
+if(!selectedPayment){
+alert("Pilih metode pembayaran dulu")
+return
+}
 if(type !== "voucher" && !id){
 alert("Masukkan ID / UID dulu")
 return
@@ -412,7 +444,7 @@ let pesan =
 `Game : ${gameName}\n` +
 `Produk : ${itemName}\n` +
 `Harga : Rp ${harga}\n` +
-`Pembayaran : ${pay}\n`
+`Pembayaran : ${selectedPayment}\n`
 
 if(type === "uid"){
 pesan += `UID : ${id}\n`
@@ -437,6 +469,30 @@ window.open(url)
 }
 
 </script>
+<script>
+let selectedPayment = ""
 
+function togglePayment(){
+
+const list = document.getElementById("paymentList")
+
+if(list.style.display === "block"){
+list.style.display = "none"
+}else{
+list.style.display = "block"
+}
+
+}
+
+function selectPayment(name){
+
+selectedPayment = name
+
+document.getElementById("paymentSelected").innerText = name
+
+document.getElementById("paymentList").style.display = "none"
+
+}
+</script>
 </body>
 </html>
