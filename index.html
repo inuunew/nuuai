@@ -825,5 +825,17 @@ document.getElementById("topupModal").style.display="none"
 }
 
 </script>
+<script src="database.js"></script>
+
+<script>
+
+// cek apakah ada database dari admin
+const savedDB = localStorage.getItem("database")
+
+if(savedDB){
+window.database = JSON.parse(savedDB)
+}
+
+</script>
 </body>
 </html>
