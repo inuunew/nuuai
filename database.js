@@ -1,204 +1,188 @@
 const database = {
 
-  // 1
   ff: {
     name: "Free Fire",
     type: "id",
-    image: "https://seeklogo.com/images/F/free-fire-logo-672E1756F3-seeklogo.com.png",
+    image: "assets/ff.png",
+
     regular: [
-      { name: "5 Diamond", price: "Rp1.130" },
-      { name: "12 Diamond", price: "Rp2.070" },
-      { name: "50 Diamond", price: "Rp6.638" },
-      { name: "70 Diamond", price: "Rp9.200" },
-      { name: "140 Diamond", price: "Rp18.000" },
-      { name: "355 Diamond", price: "Rp45.000" },
-      { name: "720 Diamond", price: "Rp90.000" },
-      { name: "1440 Diamond", price: "Rp180.000" },
-      { name: "2880 Diamond", price: "Rp360.000" },
-      { name: "6000 Diamond", price: "Rp720.000" }
+      { name: "7 Diamond Free Fire", price: "Rp1.500" },
+      { name: "18 Diamond Free Fire", price: "Rp3.200" },
+      { name: "37 Diamond Free Fire", price: "Rp6.100" },
+      { name: "79 Diamond Free Fire", price: "Rp12.900" },
+      { name: "143 Diamond Free Fire", price: "Rp22.800" },
+      { name: "278 Diamond Free Fire", price: "Rp43.500" },
+      { name: "512 Diamond Free Fire", price: "Rp79.000" },
+      { name: "1045 Diamond Free Fire", price: "Rp158.000" }
     ],
-    membership: []
+
+    membership: [
+      { name: "Weekly Membership", price: "Rp27.000" },
+      { name: "Monthly Membership", price: "Rp80.000" }
+    ]
   },
 
-  // 2
+
   ml: {
     name: "Mobile Legends",
     type: "idserver",
-    image: "https://seeklogo.com/images/M/mobile-legends-bang-bang-logo-DD3B317A12-seeklogo.com.png",
+    image: "assets/ml.png",
+
     regular: [
-      { name: "86 Diamond", price: "Rp20.000" },
-      { name: "172 Diamond", price: "Rp40.000" },
-      { name: "257 Diamond", price: "Rp60.000" },
-      { name: "344 Diamond", price: "Rp80.000" },
-      { name: "430 Diamond", price: "Rp100.000" },
-      { name: "515 Diamond", price: "Rp120.000" },
-      { name: "600 Diamond", price: "Rp140.000" },
-      { name: "720 Diamond", price: "Rp170.000" },
-      { name: "860 Diamond", price: "Rp200.000" },
-      { name: "1000 Diamond", price: "Rp230.000" }
+      { name: "59 Diamond ML", price: "Rp15.000" },
+      { name: "127 Diamond ML", price: "Rp30.000" },
+      { name: "241 Diamond ML", price: "Rp55.000" },
+      { name: "402 Diamond ML", price: "Rp90.000" },
+      { name: "688 Diamond ML", price: "Rp150.000" },
+      { name: "973 Diamond ML", price: "Rp210.000" },
+      { name: "1446 Diamond ML", price: "Rp310.000" }
     ],
-    membership: []
+
+    membership: [
+      { name: "Monthly Card", price: "Rp50.000" }
+    ]
   },
 
-  // 3
+
   pubg: {
     name: "PUBG Mobile",
     type: "voucher",
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/PUBG_Mobile_Logo.png",
+    image: "assets/pubg.png",
+
     regular: [
-      { name: "60 UC", price: "Rp15.000" },
-      { name: "300 UC", price: "Rp75.000" },
-      { name: "600 UC", price: "Rp140.000" },
-      { name: "1200 UC", price: "Rp280.000" },
-      { name: "1800 UC", price: "Rp420.000" },
-      { name: "2500 UC", price: "Rp580.000" },
-      { name: "3000 UC", price: "Rp700.000" },
-      { name: "4000 UC", price: "Rp920.000" },
-      { name: "5000 UC", price: "Rp1.140.000" },
-      { name: "6000 UC", price: "Rp1.360.000" }
+      { name: "71 UC Voucher", price: "Rp16.000" },
+      { name: "148 UC Voucher", price: "Rp32.000" },
+      { name: "347 UC Voucher", price: "Rp75.000" },
+      { name: "689 UC Voucher", price: "Rp145.000" },
+      { name: "1097 UC Voucher", price: "Rp225.000" }
     ],
+
     membership: []
   },
 
-  // 4
+
   genshin: {
     name: "Genshin Impact",
     type: "uid",
-    image: "https://upload.wikimedia.org/wikipedia/en/d/db/Genshin_Impact_cover_art.jpg",
+    image: "assets/genshin.png",
+
     regular: [
-      { name: "60 Genesis Crystal", price: "Rp16.000" },
-      { name: "300 Genesis Crystal", price: "Rp79.000" },
-      { name: "600 Genesis Crystal", price: "Rp155.000" },
-      { name: "1200 Genesis Crystal", price: "Rp310.000" },
-      { name: "1800 Genesis Crystal", price: "Rp460.000" },
-      { name: "2700 Genesis Crystal", price: "Rp680.000" },
-      { name: "3280 Genesis Crystal", price: "Rp820.000" },
-      { name: "6480 Genesis Crystal", price: "Rp1.600.000" },
-      { name: "9800 Genesis Crystal", price: "Rp2.400.000" },
-      { name: "19800 Genesis Crystal", price: "Rp4.800.000" }
+      { name: "63 Genesis Crystal", price: "Rp17.000" },
+      { name: "128 Genesis Crystal", price: "Rp34.000" },
+      { name: "309 Genesis Crystal", price: "Rp80.000" },
+      { name: "642 Genesis Crystal", price: "Rp162.000" },
+      { name: "1247 Genesis Crystal", price: "Rp320.000" }
     ],
-    membership: []
+
+    membership: [
+      { name: "Blessing of the Welkin Moon", price: "Rp79.000" }
+    ]
   },
 
-  // 5
-  roblox: {
-    name: "Roblox",
+
+  hok: {
+    name: "Honor of Kings",
     type: "id",
-    image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Roblox_Logo.png",
+    image: "assets/hok.png",
+
     regular: [
-      { name: "400 Robux", price: "Rp55.000" },
-      { name: "800 Robux", price: "Rp110.000" },
-      { name: "1700 Robux", price: "Rp220.000" },
-      { name: "4500 Robux", price: "Rp580.000" },
-      { name: "10000 Robux", price: "Rp1.120.000" },
-      { name: "22500 Robux", price: "Rp2.400.000" },
-      { name: "50000 Robux", price: "Rp5.100.000" },
-      { name: "100000 Robux", price: "Rp10.000.000" },
-      { name: "150000 Robux", price: "Rp14.800.000" },
-      { name: "200000 Robux", price: "Rp19.500.000" }
+      { name: "46 Tokens HOK", price: "Rp12.000" },
+      { name: "117 Tokens HOK", price: "Rp28.000" },
+      { name: "236 Tokens HOK", price: "Rp54.000" },
+      { name: "418 Tokens HOK", price: "Rp95.000" },
+      { name: "735 Tokens HOK", price: "Rp165.000" },
+      { name: "1298 Tokens HOK", price: "Rp285.000" }
     ],
+
     membership: []
   },
 
-  // 6
+
   valorant: {
     name: "Valorant",
     type: "voucher",
-    image: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Valorant_logo.png",
+    image: "assets/valo.png",
+
     regular: [
-      { name: "100 VP", price: "Rp15.000" },
-      { name: "500 VP", price: "Rp70.000" },
-      { name: "1000 VP", price: "Rp130.000" },
-      { name: "1700 VP", price: "Rp210.000" },
-      { name: "2500 VP", price: "Rp300.000" },
-      { name: "4000 VP", price: "Rp460.000" },
-      { name: "6000 VP", price: "Rp650.000" },
-      { name: "10000 VP", price: "Rp1.000.000" },
-      { name: "17000 VP", price: "Rp1.600.000" },
-      { name: "25000 VP", price: "Rp2.400.000" }
+      { name: "412 VP", price: "Rp70.000" },
+      { name: "843 VP", price: "Rp140.000" },
+      { name: "1765 VP", price: "Rp290.000" },
+      { name: "3642 VP", price: "Rp590.000" },
+      { name: "7594 VP", price: "Rp1.190.000" }
     ],
+
     membership: []
   },
 
-  // 7
-  clashroyale: {
-    name: "Clash Royale",
+
+  fcmobile: {
+    name: "FC Mobile",
     type: "id",
-    image: "https://seeklogo.com/images/C/clash-royale-logo-8F746DDF82-seeklogo.com.png",
+    image: "assets/fcm.png",
+
     regular: [
-      { name: "500 Gems", price: "Rp50.000" },
-      { name: "1000 Gems", price: "Rp90.000" },
-      { name: "2500 Gems", price: "Rp200.000" },
-      { name: "5000 Gems", price: "Rp380.000" },
-      { name: "7500 Gems", price: "Rp550.000" },
-      { name: "10000 Gems", price: "Rp700.000" },
-      { name: "15000 Gems", price: "Rp1.000.000" },
-      { name: "20000 Gems", price: "Rp1.300.000" },
-      { name: "30000 Gems", price: "Rp1.900.000" },
-      { name: "50000 Gems", price: "Rp3.000.000" }
+      { name: "94 FC Points", price: "Rp15.000" },
+      { name: "203 FC Points", price: "Rp33.000" },
+      { name: "451 FC Points", price: "Rp70.000" },
+      { name: "902 FC Points", price: "Rp138.000" },
+      { name: "1847 FC Points", price: "Rp275.000" }
     ],
+
     membership: []
   },
 
-  // 8
-  fortnite: {
-    name: "Fortnite",
+
+  codm: {
+    name: "Call of Duty",
+    type: "idserver",
+    image: "assets/cod.png",
+
+    regular: [
+      { name: "134 CP", price: "Rp20.000" },
+      { name: "286 CP", price: "Rp42.000" },
+      { name: "598 CP", price: "Rp85.000" },
+      { name: "1234 CP", price: "Rp170.000" },
+      { name: "2489 CP", price: "Rp335.000" }
+    ],
+
+    membership: []
+  },
+
+
+  coc: {
+    name: "Clash of Clans",
     type: "id",
-    image: "https://seeklogo.com/images/F/fortnite-logo-2841FE4B54-seeklogo.com.png",
+    image: "assets/coc.png",
+
     regular: [
-      { name: "1000 V-Bucks", price: "Rp140.000" },
-      { name: "2800 V-Bucks", price: "Rp350.000" },
-      { name: "5000 V-Bucks", price: "Rp600.000" },
-      { name: "7500 V-Bucks", price: "Rp850.000" },
-      { name: "10000 V-Bucks", price: "Rp1.100.000" },
-      { name: "13500 V-Bucks", price: "Rp1.500.000" },
-      { name: "20000 V-Bucks", price: "Rp2.200.000" },
-      { name: "30000 V-Bucks", price: "Rp3.000.000" },
-      { name: "40000 V-Bucks", price: "Rp3.800.000" },
-      { name: "50000 V-Bucks", price: "Rp4.500.000" }
+      { name: "88 Gems COC", price: "Rp16.000" },
+      { name: "214 Gems COC", price: "Rp35.000" },
+      { name: "497 Gems COC", price: "Rp79.000" },
+      { name: "1036 Gems COC", price: "Rp158.000" },
+      { name: "2145 Gems COC", price: "Rp320.000" },
+      { name: "4689 Gems COC", price: "Rp640.000" }
     ],
-    membership: []
+
+    membership: [
+      { name: "Gold Pass", price: "Rp89.000" }
+    ]
   },
 
-  // 9
-  apex: {
-    name: "Apex Legends",
-    type: "voucher",
-    image: "https://seeklogo.com/images/A/apex-legends-logo-F8559F6158-seeklogo.com.png",
-    regular: [
-      { name: "100 Apex Coins", price: "Rp25.000" },
-      { name: "300 Apex Coins", price: "Rp60.000" },
-      { name: "500 Apex Coins", price: "Rp120.000" },
-      { name: "1000 Apex Coins", price: "Rp220.000" },
-      { name: "1500 Apex Coins", price: "Rp320.000" },
-      { name: "2400 Apex Coins", price: "Rp520.000" },
-      { name: "3500 Apex Coins", price: "Rp720.000" },
-      { name: "5000 Apex Coins", price: "Rp1.000.000" },
-      { name: "7000 Apex Coins", price: "Rp1.300.000" },
-      { name: "10000 Apex Coins", price: "Rp1.800.000" }
-    ],
-    membership: []
-  },
 
-  // 10
-  dota2: {
-    name: "Dota 2",
-    type: "voucher",
-    image: "https://seeklogo.com/images/D/dota-2-logo-5FEE389871-seeklogo.com.png",
-    regular: [
-      { name: "500 Dota Points", price: "Rp50.000" },
-      { name: "1000 Dota Points", price: "Rp90.000" },
-      { name: "2000 Dota Points", price: "Rp160.000" },
-      { name: "3000 Dota Points", price: "Rp230.000" },
-      { name: "5000 Dota Points", price: "Rp360.000" },
-      { name: "8000 Dota Points", price: "Rp550.000" },
-      { name: "10000 Dota Points", price: "Rp680.000" },
-      { name: "15000 Dota Points", price: "Rp980.000" },
-      { name: "20000 Dota Points", price: "Rp1.200.000" },
-      { name: "30000 Dota Points", price: "Rp1.700.000" }
-    ],
-    membership: []
-  },
+  asphalt9: {
+    name: "Asphalt 9",
+    type: "id",
+    image: "assets/asphalt.png",
 
-  // … **lanjut 20 game berikutnya**
+    regular: [
+      { name: "54 Tokens Asphalt", price: "Rp14.000" },
+      { name: "149 Tokens Asphalt", price: "Rp36.000" },
+      { name: "318 Tokens Asphalt", price: "Rp70.000" },
+      { name: "706 Tokens Asphalt", price: "Rp145.000" },
+      { name: "1498 Tokens Asphalt", price: "Rp290.000" }
+    ],
+
+    membership: []
+  }
+
 };
