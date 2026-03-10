@@ -5,62 +5,46 @@ background:#0f172a;
 color:white;
 }
 
-/* LOGIN */
-
-.login{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+.hero{
 background:linear-gradient(135deg,#2563eb,#7c3aed);
-}
-
-.loginBox{
-background:white;
-color:black;
 padding:30px;
-border-radius:10px;
 text-align:center;
 }
 
-.loginBox input{
-padding:10px;
-width:200px;
-margin-top:10px;
-}
-
-/* DASHBOARD */
-
-.sidebar{
-width:220px;
-background:#1e293b;
-height:100vh;
-position:fixed;
+.container{
+max-width:700px;
+margin:auto;
 padding:20px;
 }
 
-.sidebar button,select{
+select{
+padding:10px;
 width:100%;
-margin-top:10px;
-padding:10px;
+margin-bottom:20px;
 }
-
-.content{
-margin-left:240px;
-padding:20px;
-}
-
-/* CARD */
 
 .card{
 background:#1e293b;
 padding:15px;
-margin-bottom:15px;
 border-radius:10px;
+margin-bottom:15px;
 }
 
 .card input{
 width:100%;
 padding:8px;
 margin-top:5px;
+border:none;
+border-radius:5px;
+}
+
+button{
+padding:10px;
+margin-top:10px;
+margin-right:10px;
+border:none;
+border-radius:6px;
+background:#2563eb;
+color:white;
+cursor:pointer;
 }
