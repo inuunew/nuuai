@@ -82,14 +82,16 @@ display:none;
 <div class="card">
 
 <select id="mode">
-
 <option value="">Pilih Mode</option>
 <option value="add">Add Game</option>
 <option value="delete">Delete Game</option>
-
+<option value="edit">Edit Game</option>
 </select>
 
 </div>
+
+
+<!-- DELETE GAME -->
 
 <div id="deleteBox" class="card hidden">
 
@@ -98,6 +100,9 @@ display:none;
 <button class="delete" onclick="deleteGame()">Delete Game</button>
 
 </div>
+
+
+<!-- ADD GAME -->
 
 <div id="addBox" class="hidden">
 
@@ -108,15 +113,14 @@ display:none;
 <input id="gameImage" placeholder="assets/game.png">
 
 <select id="gameType">
-
 <option value="id">ID</option>
 <option value="idserver">ID + Server</option>
 <option value="uid">UID</option>
 <option value="voucher">Voucher</option>
-
 </select>
 
 </div>
+
 
 <div class="card">
 
@@ -128,6 +132,7 @@ display:none;
 
 </div>
 
+
 <div class="card">
 
 <h3>Membership</h3>
@@ -138,6 +143,7 @@ display:none;
 
 </div>
 
+
 <div class="card">
 
 <button class="save" onclick="saveGame()">Konfirmasi</button>
@@ -145,6 +151,64 @@ display:none;
 </div>
 
 </div>
+
+
+<!-- EDIT GAME -->
+
+<div id="editBox" class="hidden">
+
+<div class="card">
+
+<select id="editGameList"></select>
+
+</div>
+
+<div class="card">
+
+<input id="editGameName">
+
+<input id="editGameImage">
+
+<select id="editGameType">
+<option value="id">ID</option>
+<option value="idserver">ID + Server</option>
+<option value="uid">UID</option>
+<option value="voucher">Voucher</option>
+</select>
+
+</div>
+
+
+<div class="card">
+
+<h3>Items</h3>
+
+<div id="editItems"></div>
+
+<button class="add" onclick="addEditItem()">Add Item</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Membership</h3>
+
+<div id="editMembers"></div>
+
+<button class="add" onclick="addEditMember()">Add Membership</button>
+
+</div>
+
+
+<div class="card">
+
+<button class="save" onclick="saveEditGame()">Konfirmasi Edit</button>
+
+</div>
+
+</div>
+
 
 <script src="../database.js"></script>
 
@@ -160,11 +224,13 @@ const PATH = "database.js"
 const mode=document.getElementById("mode")
 const addBox=document.getElementById("addBox")
 const deleteBox=document.getElementById("deleteBox")
+const editBox=document.getElementById("editBox")
 
 mode.onchange=()=>{
 
 addBox.classList.add("hidden")
 deleteBox.classList.add("hidden")
+editBox.classList.add("hidden")
 
 if(mode.value=="add") addBox.classList.remove("hidden")
 
@@ -173,7 +239,15 @@ deleteBox.classList.remove("hidden")
 loadGames()
 }
 
+if(mode.value=="edit"){
+editBox.classList.remove("hidden")
+loadEditGames()
 }
+
+}
+
+
+/* LOAD GAME */
 
 function loadGames(){
 
@@ -192,6 +266,9 @@ select.appendChild(opt)
 
 }
 
+
+/* ADD ITEM */
+
 function addItem(){
 
 let div=document.createElement("div")
@@ -204,9 +281,12 @@ div.innerHTML=`
 <button onclick="this.parentElement.remove()">X</button>
 `
 
-document.getElementById("items").appendChild(div)
+items.appendChild(div)
 
 }
+
+
+/* ADD MEMBER */
 
 function addMember(){
 
@@ -220,15 +300,22 @@ div.innerHTML=`
 <button onclick="this.parentElement.remove()">X</button>
 `
 
-document.getElementById("members").appendChild(div)
+members.appendChild(div)
 
 }
 
+
+/* SAVE GAME */
+
 function saveGame(){
+
+let name=document.getElementById("gameName").value
+
+let id=name.toLowerCase().replace(/\s+/g,"")
 
 db[id]={
 
-name:document.getElementById("gameName").value,
+name:name,
 type:document.getElementById("gameType").value,
 image:document.getElementById("gameImage").value,
 
@@ -263,6 +350,9 @@ updateGithub()
 
 }
 
+
+/* DELETE GAME */
+
 function deleteGame(){
 
 let id=document.getElementById("gameList").value
@@ -272,6 +362,164 @@ delete db[id]
 updateGithub()
 
 }
+
+
+/* EDIT GAME */
+
+function loadEditGames(){
+
+let select=document.getElementById("editGameList")
+
+select.innerHTML=""
+
+for(let key in db){
+
+let opt=document.createElement("option")
+
+opt.value=key
+opt.textContent=db[key].name
+
+select.appendChild(opt)
+
+}
+
+loadGameData()
+
+}
+
+document.getElementById("editGameList").onchange=loadGameData
+
+
+function loadGameData(){
+
+let id=document.getElementById("editGameList").value
+
+let game=db[id]
+
+document.getElementById("editGameName").value=game.name
+document.getElementById("editGameImage").value=game.image
+document.getElementById("editGameType").value=game.type
+
+let items=document.getElementById("editItems")
+items.innerHTML=""
+
+game.regular.forEach(i=>{
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input value="${i.name}">
+<input value="${i.price}">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+items.appendChild(div)
+
+})
+
+let members=document.getElementById("editMembers")
+members.innerHTML=""
+
+game.membership.forEach(i=>{
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input value="${i.name}">
+<input value="${i.price}">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+members.appendChild(div)
+
+})
+
+}
+
+
+/* ADD EDIT ITEM */
+
+function addEditItem(){
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Item Name">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+editItems.appendChild(div)
+
+}
+
+
+/* ADD EDIT MEMBER */
+
+function addEditMember(){
+
+let div=document.createElement("div")
+
+div.className="row"
+
+div.innerHTML=`
+<input placeholder="Membership">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+editMembers.appendChild(div)
+
+}
+
+
+/* SAVE EDIT */
+
+function saveEditGame(){
+
+let id=document.getElementById("editGameList").value
+
+db[id].name=document.getElementById("editGameName").value
+db[id].image=document.getElementById("editGameImage").value
+db[id].type=document.getElementById("editGameType").value
+
+db[id].regular=[]
+db[id].membership=[]
+
+document.querySelectorAll("#editItems .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].regular.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+document.querySelectorAll("#editMembers .row").forEach(r=>{
+
+let i=r.querySelectorAll("input")
+
+db[id].membership.push({
+name:i[0].value,
+price:i[1].value
+})
+
+})
+
+updateGithub()
+
+}
+
+
+/* UPDATE GITHUB */
 
 async function updateGithub(){
 
@@ -295,7 +543,6 @@ Authorization:"token "+GITHUB_TOKEN,
 body:JSON.stringify({
 
 message:"update database",
-
 content:encoded,
 sha:data.sha
 
