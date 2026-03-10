@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Database</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f3f4f6;
+margin:0;
+padding:15px;
+}
+
+.header{
+font-size:20px;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:15px;
+margin-bottom:15px;
+box-shadow:0 2px 5px rgba(0,0,0,0.05);
+}
+
+label{
+font-weight:bold;
+font-size:14px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:8px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+.itemRow{
+display:flex;
+gap:8px;
+margin-top:8px;
+}
+
+.itemRow input{
+flex:1;
+}
+
+.itemRow button{
+background:red;
+color:white;
+border:none;
+border-radius:6px;
+padding:10px;
+}
+
+.btn{
+background:#16a34a;
+color:white;
+border:none;
+padding:12px;
+border-radius:8px;
+width:100%;
+margin-top:10px;
+font-weight:bold;
+}
+
+.smallBtn{
+background:#2563eb;
+color:white;
+border:none;
+padding:10px;
+border-radius:6px;
+margin-top:10px;
+}
+
+.hidden{
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">Admin Database Editor</div>
+
+
+<div class="card">
+
+<label>Select Type</label>
+
+<select id="mode">
+<option value="">Pilih</option>
+<option value="add">Add Game</option>
+<option value="delete">Delete Game</option>
+</select>
+
+</div>
+
+
+
+<div id="deleteCard" class="card hidden">
+
+<label>Delete Game</label>
+
+<select id="deleteGame"></select>
+
+<button class="btn" onclick="deleteGame()">Konfirmasi Hapus</button>
+
+</div>
+
+
+
+<div id="addCard" class="hidden">
+
+
+<div class="card">
+
+<label>Game ID</label>
+<input id="gameId">
+
+<label>Nama Game</label>
+<input id="gameName">
+
+<label>Image</label>
+<input id="gameImage" placeholder="assets/game.png">
+
+<label>Type</label>
+
+<select id="gameType">
+<option value="id">ID</option>
+<option value="idserver">ID + Server</option>
+<option value="uid">UID</option>
+<option value="voucher">Voucher</option>
+</select>
+
+</div>
+
+
+
+<div class="card">
+
+<label>Items</label>
+
+<div id="items"></div>
+
+<button class="smallBtn" onclick="addItem()">Add Item</button>
+
+</div>
+
+
+
+<div class="card">
+
+<label>Membership</label>
+
+<div id="members"></div>
+
+<button class="smallBtn" onclick="addMember()">Add Membership</button>
+
+</div>
+
+
+
+<div class="card">
+
+<button class="btn" onclick="saveGame()">Konfirmasi</button>
+
+</div>
+
+</div>
+
+
+
+<script src="database.js"></script>
+
+<script>
+
+const mode=document.getElementById("mode")
+const addCard=document.getElementById("addCard")
+const deleteCard=document.getElementById("deleteCard")
+
+mode.onchange=()=>{
+
+addCard.classList.add("hidden")
+deleteCard.classList.add("hidden")
+
+if(mode.value=="add"){
+addCard.classList.remove("hidden")
+}
+
+if(mode.value=="delete"){
+deleteCard.classList.remove("hidden")
+loadGames()
+}
+
+}
+
+
+
+function loadGames(){
+
+let select=document.getElementById("deleteGame")
+select.innerHTML=""
+
+for(let key in database){
+
+let opt=document.createElement("option")
+
+opt.value=key
+opt.textContent=database[key].name
+
+select.appendChild(opt)
+
+}
+
+}
+
+
+
+function addItem(){
+
+let div=document.createElement("div")
+
+div.className="itemRow"
+
+div.innerHTML=`
+<input placeholder="Item Name">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+document.getElementById("items").appendChild(div)
+
+}
+
+
+
+function addMember(){
+
+let div=document.createElement("div")
+
+div.className="itemRow"
+
+div.innerHTML=`
+<input placeholder="Membership">
+<input placeholder="Price">
+<button onclick="this.parentElement.remove()">X</button>
+`
+
+document.getElementById("members").appendChild(div)
+
+}
+
+
+
+function saveGame(){
+
+let id=document.getElementById("gameId").value
+let name=document.getElementById("gameName").value
+let image=document.getElementById("gameImage").value
+let type=document.getElementById("gameType").value
+
+let items=[]
+let members=[]
+
+document.querySelectorAll("#items .itemRow").forEach(row=>{
+
+let input=row.querySelectorAll("input")
+
+items.push({
+name:input[0].value,
+price:input[1].value
+})
+
+})
+
+document.querySelectorAll("#members .itemRow").forEach(row=>{
+
+let input=row.querySelectorAll("input")
+
+members.push({
+name:input[0].value,
+price:input[1].value
+})
+
+})
+
+database[id]={
+name:name,
+type:type,
+image:image,
+regular:items,
+membership:members
+}
+
+download()
+
+}
+
+
+
+function deleteGame(){
+
+let id=document.getElementById("deleteGame").value
+
+delete database[id]
+
+download()
+
+}
+
+
+
+function download(){
+
+let text="const database = "+JSON.stringify(database,null,2)
+
+let blob=new Blob([text],{type:"text/javascript"})
+
+let a=document.createElement("a")
+
+a.href=URL.createObjectURL(blob)
+
+a.download="database.js"
+
+a.click()
+
+}
+
+</script>
+
+</body>
+</html>
