@@ -201,37 +201,71 @@ const databaseOther = {
 
 pulsa:{
 name:"Pulsa",
-image:"https://files.catbox.moe/0qwcuo.png",
+image:"https://files.catbox.moe/8n6v7k.png",
 
 items:[
-{ name:"Pulsa 5.000", price:"Rp6.000" },
-{ name:"Pulsa 10.000", price:"Rp11.000" },
-{ name:"Pulsa 20.000", price:"Rp21.000" },
-{ name:"Pulsa 50.000", price:"Rp51.000" }
+
+{ name:"Pulsa 5.000", price:"Rp6.500" },
+{ name:"Pulsa 10.000", price:"Rp11.500" },
+{ name:"Pulsa 15.000", price:"Rp16.500" },
+{ name:"Pulsa 20.000", price:"Rp21.500" },
+{ name:"Pulsa 25.000", price:"Rp26.500" },
+{ name:"Pulsa 50.000", price:"Rp51.500" },
+{ name:"Pulsa 100.000", price:"Rp101.500" }
+
 ]
 
 },
 
 pln:{
 name:"Token Listrik",
-image:"https://files.catbox.moe/0qwcuo.png",
+image:"https://files.catbox.moe/q2c3s9.png",
 
 items:[
+
 { name:"Token 20.000", price:"Rp21.000" },
 { name:"Token 50.000", price:"Rp51.000" },
-{ name:"Token 100.000", price:"Rp101.000" }
+{ name:"Token 100.000", price:"Rp101.000" },
+{ name:"Token 200.000", price:"Rp201.000" },
+{ name:"Token 500.000", price:"Rp501.000" }
+
 ]
 
 },
 
 ewallet:{
-name:"E-Wallet",
-image:"https://files.catbox.moe/0qwcuo.png",
+name:"Topup E-Wallet",
+image:"https://files.catbox.moe/6m6n4e.png",
 
 items:[
+
 { name:"DANA 10.000", price:"Rp11.000" },
 { name:"DANA 20.000", price:"Rp21.000" },
-{ name:"DANA 50.000", price:"Rp51.000" }
+{ name:"DANA 50.000", price:"Rp51.000" },
+
+{ name:"OVO 10.000", price:"Rp11.000" },
+{ name:"OVO 20.000", price:"Rp21.000" },
+{ name:"OVO 50.000", price:"Rp51.000" },
+
+{ name:"GoPay 10.000", price:"Rp11.000" },
+{ name:"GoPay 20.000", price:"Rp21.000" },
+{ name:"GoPay 50.000", price:"Rp51.000" }
+
+]
+
+},
+
+data:{
+name:"Paket Data",
+image:"https://files.catbox.moe/1r2s3d.png",
+
+items:[
+
+{ name:"Paket Data 1GB", price:"Rp10.000" },
+{ name:"Paket Data 2GB", price:"Rp18.000" },
+{ name:"Paket Data 5GB", price:"Rp40.000" },
+{ name:"Paket Data 10GB", price:"Rp70.000" }
+
 ]
 
 }
