@@ -698,19 +698,56 @@ ${total} Layanan
 });
 
 
+/* LOAD PRODUK LAIN */
+
+const otherGrid = document.getElementById("otherGrid");
+
+if(typeof databaseOther !== "undefined"){
+
+Object.keys(databaseOther).forEach(key => {
+
+const item = databaseOther[key];
+
+otherGrid.innerHTML += `
+
+<div class="game-card" onclick="openOther('${key}')">
+
+<div class="game-img">
+<img src="${item.image}">
+</div>
+
+<div class="game-name">
+${item.name}
+</div>
+
+<div class="game-service">
+${item.items.length} Produk
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
 /* GLOBAL VARIABLES */
 
 let currentGame = null
 let currentType = "regular"
 let selectedItem = null
+let isOtherProduct = false
 
 
-/* OPEN TOPUP */
+/* OPEN GAME TOPUP */
 
 function openTopup(game){
 
 const data = database[game]
 
+isOtherProduct = false
 currentGame = game
 currentType = "regular"
 selectedItem = null
@@ -733,7 +770,60 @@ closeTopup()
 
 }
 
-/* RENDER ITEMS */
+
+/* OPEN PRODUK LAIN */
+
+function openOther(key){
+
+const data = databaseOther[key]
+
+isOtherProduct = true
+currentGame = key
+selectedItem = null
+
+document.getElementById("gameName").innerText = data.name
+document.getElementById("gameIcon").src = data.image
+
+const container = document.getElementById("topupItems")
+container.innerHTML=""
+
+data.items.forEach(item=>{
+
+const div = document.createElement("div")
+div.className="item"
+
+div.innerHTML = `
+<span class="status online"></span>
+${item.name}
+<div class="price">${item.price}</div>
+`
+
+div.onclick = function(){
+
+document.querySelectorAll(".item").forEach(i=>{
+i.style.border="1px solid #eee"
+})
+
+div.style.border="2px solid #16a34a"
+
+selectedItem = item
+
+const btn = document.getElementById("confirmBtn")
+btn.disabled = false
+btn.classList.add("active")
+
+}
+
+container.appendChild(div)
+
+})
+
+document.getElementById("topupModal").style.display="flex"
+
+}
+
+
+/* RENDER GAME ITEMS */
 
 function renderItems(){
 
@@ -742,8 +832,6 @@ container.innerHTML=""
 
 const data = database[currentGame]
 const items = data[currentType]
-
-/* JIKA KOSONG */
 
 if(!items || items.length === 0){
 
@@ -755,8 +843,6 @@ Membership belum tersedia
 
 return
 }
-
-/* LOOP ITEMS */
 
 items.forEach(item=>{
 
@@ -809,7 +895,7 @@ renderItems()
 }
 
 
-/* KONFIRMASI */
+/* KONFIRMASI KE CHECKOUT */
 
 function goCheckout(){
 
@@ -817,16 +903,33 @@ if(!selectedItem){
 return;
 }
 
-const gameData = database[currentGame];
+let gameName
+let image
+let type
 
-const gameName = gameData.name;
-const itemName = selectedItem.name;
-const price = selectedItem.price.replace(/[^\d]/g,'');
-const image = gameData.image;
-const type = gameData.type;
+if(isOtherProduct){
+
+const data = databaseOther[currentGame]
+
+gameName = data.name
+image = data.image
+type = "other"
+
+}else{
+
+const gameData = database[currentGame]
+
+gameName = gameData.name
+image = gameData.image
+type = gameData.type
+
+}
+
+const itemName = selectedItem.name
+const price = selectedItem.price.replace(/[^\d]/g,'')
 
 window.location.href =
-`checkout.html?game=${encodeURIComponent(gameName)}&item=${encodeURIComponent(itemName)}&price=${price}&image=${encodeURIComponent(image)}&type=${type}`;
+`checkout.html?game=${encodeURIComponent(gameName)}&item=${encodeURIComponent(itemName)}&price=${price}&image=${encodeURIComponent(image)}&type=${type}`
 
 }
 
@@ -837,88 +940,6 @@ function closeTopup(){
 document.getElementById("topupModal").style.display="none"
 }
 
-</script>
-<script>
-/* LOAD PRODUK LAIN */
-
-const otherGrid = document.getElementById("otherGrid");
-
-if(typeof databaseOther !== "undefined"){
-
-Object.keys(databaseOther).forEach(key => {
-
-const item = databaseOther[key];
-
-otherGrid.innerHTML += `
-
-<div class="game-card" onclick="openOther('${key}')">
-
-<div class="game-img">
-<img src="${item.image}">
-</div>
-
-<div class="game-name">
-${item.name}
-</div>
-
-<div class="game-service">
-${item.items.length} Produk
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-function openOther(key){
-
-const data = databaseOther[key]
-
-document.getElementById("gameName").innerText = data.name
-document.getElementById("gameIcon").src = data.image
-
-selectedItem = null
-
-const container = document.getElementById("topupItems")
-container.innerHTML=""
-
-data.items.forEach(item=>{
-
-const div = document.createElement("div")
-div.className="item"
-
-div.innerHTML = `
-<span class="status online"></span>
-${item.name}
-<div class="price">${item.price}</div>
-`
-
-div.onclick = function(){
-
-document.querySelectorAll(".item").forEach(i=>{
-i.style.border="1px solid #eee"
-})
-
-div.style.border="2px solid #16a34a"
-
-selectedItem = item
-
-const btn = document.getElementById("confirmBtn")
-btn.disabled = false
-btn.classList.add("active")
-
-}
-
-container.appendChild(div)
-
-})
-
-document.getElementById("topupModal").style.display="flex"
-
-}
 </script>
 </body>
 </html>
