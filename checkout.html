@@ -380,6 +380,39 @@ document.getElementById("userId").placeholder = "Masukkan ID"
 document.getElementById("serverBox").style.display = "block"
 }
 
+/* PRODUK LAIN (PULSA / PLN / E-WALLET) */
+
+if(type === "other"){
+
+let label = "Nomor Tujuan"
+let placeholder = "Masukkan nomor tujuan"
+
+/* DETEKSI PRODUK */
+
+if(game.toLowerCase().includes("pulsa")){
+label = "Nomor HP"
+placeholder = "Contoh 08123456789"
+}
+
+if(game.toLowerCase().includes("listrik") || game.toLowerCase().includes("pln")){
+label = "Nomor Meter"
+placeholder = "Masukkan nomor meter PLN"
+}
+
+if(game.toLowerCase().includes("wallet") || 
+   game.toLowerCase().includes("dana") ||
+   game.toLowerCase().includes("ovo") ||
+   game.toLowerCase().includes("gopay")){
+label = "Nomor Akun"
+placeholder = "Masukkan nomor akun"
+}
+
+/* UBAH INPUT */
+
+document.querySelector("#userIdBox .label").innerText = label
+document.getElementById("userId").placeholder = placeholder
+
+}
 
 /* SIMULASI CEK NICKNAME */
 
