@@ -195,3 +195,45 @@ const database = {
   }
 
 };
+
+
+const databaseOther = {
+
+pulsa:{
+name:"Pulsa",
+image:"https://files.catbox.moe/0qwcuo.png",
+
+items:[
+{ name:"Pulsa 5.000", price:"Rp6.000" },
+{ name:"Pulsa 10.000", price:"Rp11.000" },
+{ name:"Pulsa 20.000", price:"Rp21.000" },
+{ name:"Pulsa 50.000", price:"Rp51.000" }
+]
+
+},
+
+pln:{
+name:"Token Listrik",
+image:"https://files.catbox.moe/0qwcuo.png",
+
+items:[
+{ name:"Token 20.000", price:"Rp21.000" },
+{ name:"Token 50.000", price:"Rp51.000" },
+{ name:"Token 100.000", price:"Rp101.000" }
+]
+
+},
+
+ewallet:{
+name:"E-Wallet",
+image:"https://files.catbox.moe/0qwcuo.png",
+
+items:[
+{ name:"DANA 10.000", price:"Rp11.000" },
+{ name:"DANA 20.000", price:"Rp21.000" },
+{ name:"DANA 50.000", price:"Rp51.000" }
+]
+
+}
+
+}
