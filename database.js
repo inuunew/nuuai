@@ -33,7 +33,7 @@ const database = {
   ml: {
     name: "Mobile Legends",
     type: "idserver",
-    serverType: "number",
+   
     image: "assets/ml.png",
     regular: [
       { name: "3 Diamond ML", price: "Rp1.500" },
@@ -131,8 +131,7 @@ const database = {
 
   genshin: {
     name: "Genshin Impact",
-    type: "uid", // ubah ke uid supaya konsisten dengan UID + region
-    serverType: "select", // region select
+    type: "idserver", // ubah ke uid supaya konsisten dengan UID + rregio
     image: "assets/genshin.png",
     regular: [
       { name: "60 Genesis Crystals", price: "Rp15.000" },
