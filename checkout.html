@@ -216,10 +216,6 @@ background:#f5f5f5;
 </div>
 
 
-<!-- USER ID -->
-
-<!-- USER ID -->
-
 <!-- SERVER -->
 <div class="card" id="serverBox" style="display:none;">
   <label class="label">SERVER</label>
@@ -247,6 +243,22 @@ background:#f5f5f5;
 </div>
 
 <script>
+if(type === "idserver"){
+    document.getElementById("serverBox").style.display = "block";
+    const gameNameLower = game.toLowerCase();
+
+    // Mobile Legends
+    if(gameNameLower.includes("mobile legends")){
+        document.getElementById("mlServer").style.display = "flex";
+        document.getElementById("genshinServer").style.display = "none";
+    }
+    // Genshin Impact
+    else if(gameNameLower.includes("genshin")){
+        document.getElementById("genshinServer").style.display = "flex";
+        document.getElementById("mlServer").style.display = "none";
+    }
+}
+</script>
 
 <!-- PAYMENT -->
 
