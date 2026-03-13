@@ -6,6 +6,8 @@
 
 <title>Game Top Up</title>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -469,9 +471,91 @@ background:#f9fafb;
 border-radius:12px;
 border:1px dashed #d1d5db;
 }
+
+.nav-right{
+display:flex;
+gap:15px;
+}
+
+.icon{
+font-size:20px;
+cursor:pointer;
+color:#333;
+transition:0.2s;
+}
+
+.icon:hover{
+color:#25D366;
+transform:scale(1.2);
+}
+
 </style>
+<style>
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.popup-box{
+background:white;
+padding:20px;
+border-radius:10px;
+width:300px;
+text-align:center;
+animation:fade 0.3s;
+}
+
+.popup-btn{
+margin-top:15px;
+display:flex;
+gap:10px;
+justify-content:center;
+}
+
+.popup-btn button{
+padding:8px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.popup-btn .wa{
+background:#25D366;
+color:white;
+}
+
+@keyframes fade{
+from{transform:scale(0.8);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+</style>
+
 </head>
 <body>
+<!-- POPUP -->
+<div id="popupAdmin" class="popup">
+<div class="popup-box">
+
+<h3>Hubungi Admin</h3>
+<p>Apakah kamu ingin menghubungi admin melalui WhatsApp?</p>
+
+<div class="popup-btn">
+<button onclick="closePopup()">Batal</button>
+<button class="wa" onclick="goWhatsapp()">Hubungi</button>
+</div>
+
+</div>
+</div>
 <div id="topupModal" class="topup-modal">
 
   <div class="topup-content">
@@ -525,10 +609,24 @@ Konfirmasi
 
 <div class="nav-right">
 
-<div class="icon">🧾</div>
-<div class="icon">🧩</div>
-<div class="icon">🔔</div>
+<!-- HUBUNGI ADMIN -->
+<div class="icon" onclick="openPopup()">
+<i class="fab fa-whatsapp"></i>
+</div>
 
+<!-- INFO ADMIN -->
+<div class="icon" onclick="showAdmin()">
+<i class="fas fa-circle-info"></i>
+</div>
+
+<!-- PUSAT BANTUAN -->
+<a href="bantuan.html" class="icon">
+<i class="fas fa-headset"></i>
+</a>
+
+<!-- NOTIFIKASI -->
+<div class="icon" onclick="showNotif()">
+<i class="fas fa-bell"></i>
 </div>
 
 </div>
@@ -611,7 +709,7 @@ Selamat datang di Ryuzen Shop • Top Up Game Murah & Produk Lainnya • Promo R
 <!-- FOOTER -->
 
 <div class="footer">
-Powered by <span>InuuProject</span><br>
+Powered by <span>RyuzenShop</span><br>
 © 2026 All rights reserved
 </div>
 
@@ -938,6 +1036,29 @@ window.location.href =
 
 function closeTopup(){
 document.getElementById("topupModal").style.display="none"
+}
+
+</script>
+<script>
+
+function openPopup(){
+document.getElementById("popupAdmin").style.display="flex";
+}
+
+function closePopup(){
+document.getElementById("popupAdmin").style.display="none";
+}
+
+function goWhatsapp(){
+window.open("https://wa.me/6281234567890","_blank");
+}
+
+function showAdmin(){
+alert("Admin Top Up\nJam Online: 08:00 - 22:00");
+}
+
+function showNotif(){
+alert("🎉 Selamat datang di Website Top Up!\nNikmati layanan top up cepat dan aman.");
 }
 
 </script>
