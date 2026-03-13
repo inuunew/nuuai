@@ -542,6 +542,33 @@ to{transform:scale(1);opacity:1;}
 
 </head>
 <body>
+<!-- POPUP OVERLAY -->
+<div id="overlay" class="popup">
+
+  <!-- POPUP NOTIF -->
+  <div id="notifBox" class="popup-box" style="display:none;">
+    <h3>🔔 Notifikasi</h3>
+    <p>🎉 Selamat datang di Ryuzen Shop!<br>
+    Nikmati layanan top up cepat dan aman.</p>
+
+    <div class="popup-btn">
+      <button onclick="closePopup()">Tutup</button>
+    </div>
+  </div>
+
+  <!-- POPUP ADMIN -->
+  <div id="adminBox" class="popup-box" style="display:none;">
+    <h3>ℹ️ Informasi Admin</h3>
+    <p>Admin Top Up<br>
+    Jam Online: 08:00 - 22:00</p>
+
+    <div class="popup-btn">
+      <button class="wa" onclick="goWhatsapp()">WhatsApp</button>
+      <button onclick="closePopup()">Tutup</button>
+    </div>
+  </div>
+
+</div>
 <div id="topupModal" class="topup-modal">
 
   <div class="topup-content">
@@ -1022,24 +1049,32 @@ document.getElementById("topupModal").style.display="none"
 </script>
 <script>
 
-function openPopup(){
-document.getElementById("popupAdmin").style.display="flex";
-}
-
-function closePopup(){
-document.getElementById("popupAdmin").style.display="none";
-}
-
-function goWhatsapp(){
-window.open("https://wa.me/6281234567890","_blank");
-}
-
 function showAdmin(){
-alert("Admin Top Up\nJam Online: 08:00 - 22:00");
+
+document.getElementById("overlay").style.display="flex"
+document.getElementById("adminBox").style.display="block"
+document.getElementById("notifBox").style.display="none"
+
 }
 
 function showNotif(){
-alert("🎉 Selamat datang di Website Top Up!\nNikmati layanan top up cepat dan aman.");
+
+document.getElementById("overlay").style.display="flex"
+document.getElementById("notifBox").style.display="block"
+document.getElementById("adminBox").style.display="none"
+
+}
+
+function closePopup(){
+
+document.getElementById("overlay").style.display="none"
+document.getElementById("adminBox").style.display="none"
+document.getElementById("notifBox").style.display="none"
+
+}
+
+function goWhatsapp(){
+window.open("https://wa.me/6281234567890","_blank")
 }
 
 </script>
