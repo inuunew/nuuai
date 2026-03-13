@@ -24,16 +24,17 @@ const database = {
       { name: "7290 Diamond Free Fire", price: "Rp905.000" }
     ],
     membership: [
-      { name: "Membership Level up Pass", price: "Rp15.000" },
+      { name: "Membership harian", price: "Rp15.000" },
       { name: "Membership Mingguan 50 DM", price: "Rp30.000" }, 
-      { name: "Monthly Membership", price: "Rp84.000" }
+      { name: "membership bulanan", price: "Rp84.000" }
+      { name: "Boyah Pass", price: "Rp44.000" }
     ]
   },
 
   ml: {
     name: "Mobile Legends",
     type: "idserver",
-   
+    serverType: "number",
     image: "assets/ml.png",
     regular: [
       { name: "3 Diamond ML", price: "Rp1.500" },
@@ -131,7 +132,8 @@ const database = {
 
   genshin: {
     name: "Genshin Impact",
-    type: "idserver", // ubah ke uid supaya konsisten dengan UID + rregio
+    type: "uid", // ubah ke uid supaya konsisten dengan UID + region
+    serverType: "select", // region select
     image: "assets/genshin.png",
     regular: [
       { name: "60 Genesis Crystals", price: "Rp15.000" },
