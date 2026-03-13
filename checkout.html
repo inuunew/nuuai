@@ -218,6 +218,8 @@ background:#f5f5f5;
 
 <!-- USER ID -->
 
+<!-- USER ID -->
+
 <div class="card" id="userIdBox">
 
 <label class="label">USER ID</label>
@@ -235,6 +237,44 @@ display:none;
 ">
 Nickname : <span id="nickname"></span>
 </div>
+
+</div>
+
+
+<!-- SERVER -->
+
+<div class="card" id="serverBox" style="display:none;">
+
+<label class="label">SERVER</label>
+
+<!-- SERVER MOBILE LEGENDS -->
+<div class="input-group" id="mlServer" style="display:none;">
+<input 
+type="number"
+placeholder="Server ID (Contoh: 1234)"
+id="serverId"
+style="flex:1;border:none;padding:12px;outline:none;"
+>
+</div>
+
+<!-- SERVER GENSHIN -->
+<div class="input-group" id="genshinServer" style="display:none;">
+<select id="serverRegion" style="
+flex:1;
+border:none;
+padding:12px;
+outline:none;
+">
+
+<option value="">Pilih Server</option>
+<option value="Asia">Asia</option>
+<option value="America">America</option>
+<option value="Europe">Europe</option>
+<option value="TW / HK / MO">TW / HK / MO</option>
+
+</select>
+</div>
+
 </div>
 <!-- PAYMENT -->
 
@@ -276,21 +316,6 @@ note: belum termasuk biaya admin!
 </div>
 
 </div>
-<!-- SERVER -->
-
-<div id="serverBox" style="margin-top:10px;display:none;">
-
-<label class="label">SERVER</label>
-
-<div class="input-group">
-<input type="text" placeholder="Masukkan Server" id="serverId">
-</div>
-
-</div>
-
-</div>
-
-
 <!-- RINCIAN -->
 
 <div class="card">
@@ -360,24 +385,31 @@ document.getElementById("gameImage").src = image
 
 /* CEK TYPE GAME */
 
-if(type === "voucher"){
-document.getElementById("userIdBox").style.display = "none"
-}
-
-if(type === "uid"){
-document.querySelector("#userIdBox .label").innerText = "USER UID"
-document.getElementById("userId").placeholder = "Masukkan UID"
-}
-
 if(type === "id"){
 document.querySelector("#userIdBox .label").innerText = "USER ID"
 document.getElementById("userId").placeholder = "Masukkan ID Player"
 }
 
 if(type === "idserver"){
+
 document.querySelector("#userIdBox .label").innerText = "USER ID"
 document.getElementById("userId").placeholder = "Masukkan ID"
 document.getElementById("serverBox").style.display = "block"
+
+const gameName = game.toLowerCase()
+
+if(gameName.includes("mobile legends")){
+
+document.getElementById("mlServer").style.display = "flex"
+
+}
+
+else if(gameName.includes("genshin")){
+
+document.getElementById("genshinServer").style.display = "flex"
+
+}
+
 }
 
 /* PRODUK LAIN (PULSA / PLN / E-WALLET) */
@@ -454,7 +486,18 @@ const adminWa = "6283160556330"
 function bayar(){
 
 const id = document.getElementById("userId")?.value || "-"
-const server = document.getElementById("serverId")?.value || "-"
+let server = "-"
+
+const ml = document.getElementById("serverId")
+const genshin = document.getElementById("serverRegion")
+
+if(ml && ml.value){
+server = ml.value
+}
+
+if(genshin && genshin.value){
+server = genshin.value
+}
 const gameName = game
 const itemName = item
 const harga = Number(price).toLocaleString("id-ID")
