@@ -236,6 +236,19 @@ display:none;
 Nickname : <span id="nickname"></span>
 </div>
 </div>
+
+<!-- USERNAME -->
+
+<div class="card" id="usernameBox" style="display:none;">
+
+<label class="label">USERNAME</label>
+
+<div class="input-group">
+<input type="text" placeholder="Masukkan Username" id="username">
+</div>
+
+</div>
+
 <!-- PAYMENT -->
 
 <div class="card">
@@ -360,6 +373,11 @@ document.getElementById("gameImage").src = image
 
 /* CEK TYPE GAME */
 
+if(type === "usn"){
+document.getElementById("userIdBox").style.display = "none"
+document.getElementById("usernameBox").style.display = "block"
+}
+
 if(type === "voucher"){
 document.getElementById("userIdBox").style.display = "none"
 }
@@ -420,15 +438,24 @@ const adminWa = "6283160556330"
 
 function bayar(){
 
+const username = document.getElementById("username")?.value || "-"
 const id = document.getElementById("userId")?.value || "-"
 const server = document.getElementById("serverId")?.value || "-"
 const gameName = game
 const itemName = item
 const harga = Number(price).toLocaleString("id-ID")
+
+
 if(!selectedPayment){
 alert("Pilih metode pembayaran dulu")
 return
 }
+
+if(type === "usn" && !username){
+alert("Masukkan Username dulu")
+return
+}
+
 if(type !== "voucher" && !id){
 alert("Masukkan ID / UID dulu")
 return
@@ -440,11 +467,15 @@ return
 }
 
 let pesan = 
-`*ORDER TOP UP*\n\n` +
-`Game : ${gameName}\n` +
+`*ADA YANG ORDER*\n\n` +
+`Layanan : ${gameName}\n` +
 `Produk : ${itemName}\n` +
 `Harga : Rp ${harga}\n` +
 `Pembayaran : ${selectedPayment}\n`
+
+if(type === "usn"){
+pesan += `Username : ${username}\n`
+}
 
 if(type === "uid"){
 pesan += `UID : ${id}\n`
