@@ -201,6 +201,7 @@ const database = {
 const databaseOther = {
   pulsa: {
     name: "Pulsa & Paket Data",
+    type: "usn", 
     image: "https://files.catbox.moe/7h9pqr.png",
     items: [
       { name: "Pulsa 5.000", price: "Rp5.000" },
