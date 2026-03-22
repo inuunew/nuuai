@@ -165,6 +165,16 @@ box-shadow:0 12px 22px rgba(22,163,74,0.15);
 border-color:#bbf7d0;
 }
 
+.game-card.premium{
+border:1px solid rgba(250,204,21,0.6);
+box-shadow:0 0 15px rgba(250,204,21,0.25);
+}
+
+/* HOVER LEBIH GLOW */
+.game-card.premium:hover{
+box-shadow:0 0 25px rgba(250,204,21,0.6);
+transform:translateY(-6px) scale(1.02);
+}
 .topup-modal{
 z-index:9999;
 }
@@ -538,6 +548,65 @@ from{transform:scale(0.8);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
 
+/* badge */
+.badge{
+position:absolute;
+top:6px;
+left:6px;
+font-size:10px;
+padding:3px 6px;
+border-radius:6px;
+color:white;
+font-weight:600;
+}
+
+.badge-premium{
+position:absolute;
+top:6px;
+right:6px;
+background:linear-gradient(135deg,#facc15,#f59e0b);
+color:#000;
+font-size:10px;
+font-weight:700;
+padding:4px 8px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(250,204,21,0.8);
+overflow:hidden;
+}
+
+/* SHINE EFFECT */
+.badge-premium::after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:100%;
+background:linear-gradient(120deg, transparent, rgba(255,255,255,0.8), transparent);
+animation:shine 2s infinite;
+}
+
+@keyframes shine{
+0%{ left:-100%; }
+100%{ left:100%; }
+}
+/* PREMIUM */
+.badge-premium{
+background:linear-gradient(135deg,#facc15,#f59e0b);
+color:#000;
+right:6px;
+left:auto;
+}
+
+.game-img{
+position:relative;
+}
+
+.badge-premium{
+background:linear-gradient(135deg,#facc15,#f59e0b);
+color:#000;
+box-shadow:0 0 8px rgba(250,204,21,0.6);
+}
 </style>
 
 </head>
@@ -609,11 +678,11 @@ Konfirmasi
 
 <div class="nav-left">
 
-<img src="https://files.catbox.moe/0qwcuo.png" class="logo">
+<img src="https://files.catbox.moe/tv1rv6.jpeg" class="logo">
 
 <div class="logo-text">
-<div class="store">Ryuzen <span>Shop</span></div>
-<div class="sub">Top Up Games</div>
+<div class="store">INUU <span>MARKET</span></div>
+<div class="sub">Menyediakan Berbagai Layanan</div>
 </div>
 
 </div>
@@ -646,16 +715,13 @@ Konfirmasi
 <div class="slider">
 
 <div class="slide active">
-<img src="https://files.catbox.moe/kv98v7.jpg">
+<img src="https://files.catbox.moe/x1geon.png">
 </div>
 
 <div class="slide">
-<img src="https://files.catbox.moe/kv98v7.jpg">
+<img src="https://files.catbox.moe/l5pwag.png">
 </div>
 
-<div class="slide">
-<img src="https://files.catbox.moe/kv98v7.jpg">
-</div>
 
 </div>
 
@@ -666,10 +732,8 @@ Konfirmasi
 </div>
 
 <marquee class="info-text" scrollamount="5">
-Selamat datang di Ryuzen Shop • Top Up Game Murah & Cepat • Promo Ramadhan Diskon Besar • Proses Otomatis 24 Jam
+Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam
 </marquee>
-
-</div>
 
 </div>
 
@@ -690,7 +754,6 @@ Selamat datang di Ryuzen Shop • Top Up Game Murah & Cepat • Promo Ramadhan D
 
 <div class="title-text">
 <h2>Pilih Game</h2>
-<p>Katalog Ramadhan 1447H</p>
 </div>
 
 </div>
@@ -700,12 +763,25 @@ Selamat datang di Ryuzen Shop • Top Up Game Murah & Cepat • Promo Ramadhan D
 <div class="game-grid" id="gameGrid"></div>
 <!-- PRODUK LAIN -->
 
+<div class="game-title">
+
+<div class="title-bar"></div>
+
+<div class="title-text">
+<h2>Produk Lain</h2>
+<p>Pulsa, Token Listrik & Lainnya</p>
+</div>
+
+</div>
+
+<div class="game-grid" id="otherGrid"></div>
+<!-- FOOTER -->
 
 
 <!-- FOOTER -->
 
 <div class="footer">
-Powered by <span>RyuzenShop</span><br>
+Powered by <span>InuuMarket</span><br>
 © 2026 All rights reserved
 </div>
 
@@ -768,27 +844,23 @@ Object.keys(database).forEach(key => {
 
 const game = database[key];
 const total = game.regular.length;
+const premium = game.premium === true;
 
 grid.innerHTML += `
 
-<div class="game-card" onclick="openTopup('${key}')">
+<div class="game-card ${premium ? 'premium' : ''}" onclick="openTopup('${key}')">
 
 <div class="game-img">
-<img src="${game.image}">
+  ${premium ? `<div class="badge badge-premium">🔥</div>` : ``}
+  <img src="${game.image}">
 </div>
 
-<div class="game-name">
-${game.name}
-</div>
-
-<div class="game-service">
-${total} Layanan
-</div>
+<div class="game-name">${game.name}</div>
+<div class="game-service">${total} Layanan</div>
 
 </div>
 
 `;
-
 });
 
 
