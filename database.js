@@ -162,7 +162,7 @@ const database = {
 
   coc: {
     name: "Clash of Clans",
-    type: "id",
+    type: "usn",
     image: "assets/coc.png",
 
     regular: [
