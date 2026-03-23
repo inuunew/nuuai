@@ -761,6 +761,19 @@ Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Dis
 <!-- GAME GRID -->
 
 <div class="game-grid" id="gameGrid"></div>
+
+<!-- PANEL BOT -->
+
+<div class="game-title">
+<div class="title-bar"></div>
+
+<div class="title-text">
+<h2>Panel Bot</h2>
+<p>Layanan Panel Pterodactyl & Bot</p>
+</div>
+</div>
+
+<div class="game-grid" id="panelGrid"></div>
 <!-- PRODUK LAIN -->
 
 <div class="game-title">
@@ -826,7 +839,7 @@ games.forEach(game=>{
 let name = game.innerText.toLowerCase();
 
 if(name.includes(keyword)){
-game.style.display="block";
+game.style.display = "";
 }else{
 game.style.display="none";
 }
@@ -898,6 +911,39 @@ ${item.items.length} Produk
 
 }
 
+/* LOAD PANEL BOT */
+
+const panelGrid = document.getElementById("panelGrid");
+
+if(typeof databasePanel !== "undefined"){
+
+Object.keys(databasePanel).forEach(key => {
+
+const panel = databasePanel[key];
+
+panelGrid.innerHTML += `
+
+<div class="game-card" onclick="openPanel('${key}')">
+
+<div class="game-img">
+<img src="${panel.image}">
+</div>
+
+<div class="game-name">
+${panel.name}
+</div>
+
+<div class="game-service">
+${panel.items.length} Paket
+</div>
+
+</div>
+
+`;
+
+});
+
+}
 
 /* GLOBAL VARIABLES */
 
@@ -905,6 +951,7 @@ let currentGame = null
 let currentType = "regular"
 let selectedItem = null
 let isOtherProduct = false
+let isPanel = false
 
 
 /* OPEN GAME TOPUP */
@@ -914,6 +961,7 @@ function openTopup(game){
 const data = database[game]
 
 isOtherProduct = false
+isPanel = false
 currentGame = game
 currentType = "regular"
 selectedItem = null
@@ -937,6 +985,21 @@ closeTopup()
 }
 
 
+/* OPEN PANEL PRODUK */
+function openPanel(key){
+
+const data = databasePanel[key]
+
+/* contoh ambil item pertama */
+const item = data.items[0]
+
+const url =
+`checkout.html?game=${data.name}&item=${item.item}&price=${item.price}&image=${data.image}&type=panel`
+
+window.location.href = url
+
+}
+
 /* OPEN PRODUK LAIN */
 
 function openOther(key){
@@ -944,6 +1007,8 @@ function openOther(key){
 const data = databaseOther[key]
 
 isOtherProduct = true
+isPanel = false
+
 currentGame = key
 selectedItem = null
 
@@ -1073,7 +1138,16 @@ let gameName
 let image
 let type
 
-if(isOtherProduct){
+
+if(isPanel){
+
+const data = databasePanel[currentGame]
+
+gameName = data.name
+image = data.image
+type = "panel"
+
+}else if(isOtherProduct){
 
 const data = databaseOther[currentGame]
 
@@ -1092,7 +1166,13 @@ type = gameData.type
 }
 
 const itemName = selectedItem.name
-const price = selectedItem.price.replace(/[^\d]/g,'')
+let price
+
+if(typeof selectedItem.price === "number"){
+price = selectedItem.price
+}else{
+price = selectedItem.price.replace(/[^\d]/g,'')
+}
 
 window.location.href =
 `checkout.html?game=${encodeURIComponent(gameName)}&item=${encodeURIComponent(itemName)}&price=${price}&image=${encodeURIComponent(image)}&type=${type}`
