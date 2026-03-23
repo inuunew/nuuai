@@ -261,15 +261,20 @@ Nickname : <span id="nickname"></span>
 </div>
 
 <!-- SERVER -->
-
-<div id="serverBox" style="margin-top:10px;display:none;">
-
+<div class="card" id="serverBox" style="display:none;">
 <label class="label">SERVER</label>
-
-<div class="input-group">
-<input type="text" placeholder="Masukkan Server" id="serverId">
+<div class="input-group" id="mlServer" style="display:none;">
+<input type="number" placeholder="Server ID (Contoh: 1234)" id="serverId">
 </div>
-
+<div class="input-group" id="genshinServer" style="display:none;">
+<select id="serverRegion">
+<option value="">Pilih Server</option>
+<option value="Asia">Asia</option>
+<option value="America">America</option>
+<option value="Europe">Europe</option>
+<option value="TW / HK / MO">TW / HK / MO</option>
+</select>
+</div>
 </div>
 <!-- PAYMENT -->
 
@@ -309,10 +314,6 @@ Transfer Bank
 </div>
 
 </div>
-
-</div>
-
-
 </div>
 
 
@@ -410,11 +411,16 @@ document.getElementById("userId").placeholder = "Masukkan ID Player"
 }
 
 if(type === "idserver"){
-document.querySelector("#userIdBox .label").innerText = "USER ID"
-document.getElementById("userId").placeholder = "Masukkan ID"
-document.getElementById("serverBox").style.display = "block"
+    document.getElementById("serverBox").style.display = "block";
+    const gameNameLower = game.toLowerCase();
+    if(gameNameLower.includes("mobile legends")){
+        document.getElementById("mlServer").style.display = "flex";
+        document.getElementById("genshinServer").style.display = "none";
+    } else if(gameNameLower.includes("genshin")){
+        document.getElementById("genshinServer").style.display = "flex";
+        document.getElementById("mlServer").style.display = "none";
+    }
 }
-
 
 /* SIMULASI CEK NICKNAME */
 
