@@ -74,7 +74,7 @@ const database = {
 
   genshin: {
     name: "Genshin Impact",
-    type: "uid",
+    type: "idserver",
     image: "assets/genshin.png",
 
     regular: [
