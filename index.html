@@ -989,14 +989,14 @@ closeTopup()
 function openPanel(key){
 
 const data = databasePanel[key]
-
-/* contoh ambil item pertama */
 const item = data.items[0]
 
-const url =
-`checkout.html?game=${data.name}&item=${item.item}&price=${item.price}&image=${data.image}&type=panel`
-
-window.location.href = url
+window.location.href =
+`checkout.html?game=${encodeURIComponent(data.name)}
+&item=${encodeURIComponent(item.name)}
+&price=${item.price}
+&image=${encodeURIComponent(data.image)}
+&type=usn`
 
 }
 
