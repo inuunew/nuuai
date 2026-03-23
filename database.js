@@ -162,7 +162,7 @@ const database = {
 
   coc: {
     name: "Clash of Clans",
-    type: "usn",
+    type: "id",
     image: "assets/coc.png",
 
     regular: [
@@ -201,7 +201,6 @@ const database = {
 const databaseOther = {
   pulsa: {
     name: "Pulsa & Paket Data",
-    type: "usn", 
     image: "https://files.catbox.moe/7h9pqr.png",
     items: [
       { name: "Pulsa 5.000", price: "Rp5.000" },
@@ -234,3 +233,17 @@ const databaseOther = {
     ]
   }
 };
+
+const databasePanel = {
+
+panel1: {
+name: "Panel Bot",
+image: "img/panel.jpg",
+items: [
+{ item: "1GB", price: 5000 },
+{ item: "2GB", price: 8000 },
+{ item: "Unlimited", price: 15000 }
+]
+}
+
+}
