@@ -249,6 +249,28 @@ Nickname : <span id="nickname"></span>
 
 </div>
 
+<!-- NOMOR HP -->
+<div class="card" id="phoneBox" style="display:none;">
+
+<label class="label">NOMOR TELEPON</label>
+
+<div class="input-group">
+<input type="number" placeholder="Masukkan Nomor HP" id="phone">
+</div>
+
+</div>
+
+<!-- SERVER -->
+
+<div id="serverBox" style="margin-top:10px;display:none;">
+
+<label class="label">SERVER</label>
+
+<div class="input-group">
+<input type="text" placeholder="Masukkan Server" id="serverId">
+</div>
+
+</div>
 <!-- PAYMENT -->
 
 <div class="card">
@@ -289,17 +311,7 @@ Transfer Bank
 </div>
 
 </div>
-<!-- SERVER -->
 
-<div id="serverBox" style="margin-top:10px;display:none;">
-
-<label class="label">SERVER</label>
-
-<div class="input-group">
-<input type="text" placeholder="Masukkan Server" id="serverId">
-</div>
-
-</div>
 
 </div>
 
@@ -373,6 +385,11 @@ document.getElementById("gameImage").src = image
 
 /* CEK TYPE GAME */
 
+if(type === "pulsa"){
+document.getElementById("userIdBox").style.display = "none"
+document.getElementById("usernameBox").style.display = "none"
+document.getElementById("phoneBox").style.display = "block"
+}
 if(type === "usn"){
 document.getElementById("userIdBox").style.display = "none"
 document.getElementById("usernameBox").style.display = "block"
@@ -438,6 +455,7 @@ const adminWa = "6283160556330"
 
 function bayar(){
 
+const phone = document.getElementById("phone")?.value || "-"
 const username = document.getElementById("username")?.value || "-"
 const id = document.getElementById("userId")?.value || "-"
 const server = document.getElementById("serverId")?.value || "-"
@@ -448,6 +466,11 @@ const harga = Number(price).toLocaleString("id-ID")
 
 if(!selectedPayment){
 alert("Pilih metode pembayaran dulu")
+return
+}
+
+if(type === "pulsa" && !phone){
+alert("Masukkan nomor HP dulu")
 return
 }
 
@@ -473,6 +496,9 @@ let pesan =
 `Harga : Rp ${harga}\n` +
 `Pembayaran : ${selectedPayment}\n`
 
+if(type === "pulsa"){
+pesan += `No HP : ${phone}\n`
+}
 if(type === "usn"){
 pesan += `Username : ${username}\n`
 }
