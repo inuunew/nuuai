@@ -240,7 +240,7 @@ panel1: {
 name: "Panel Bot 1GB",
 image: "img/panel.jpg",
 items: [
-{ name: "1GB", price: 5000 }
+{ price: 5000 }
 ]
 }
 
