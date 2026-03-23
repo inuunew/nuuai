@@ -469,12 +469,6 @@ const gameName = game
 const itemName = item
 const harga = Number(price).toLocaleString("id-ID")
 
-const id = document.getElementById("userId").value || "-"
-    let server = "-"
-    const ml = document.getElementById("serverId")
-    const genshin = document.getElementById("serverRegion")
-    if(ml && ml.value) server = ml.value
-    if(genshin && genshin.value) server = genshin.value
 if(!selectedPayment){
 alert("Pilih metode pembayaran dulu")
 return
