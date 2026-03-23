@@ -237,12 +237,10 @@ const databaseOther = {
 const databasePanel = {
 
 panel1: {
-name: "Panel Bot",
+name: "Panel Bot 1GB",
 image: "img/panel.jpg",
 items: [
-{ item: "1GB", price: 5000 },
-{ item: "2GB", price: 8000 },
-{ item: "Unlimited", price: 15000 }
+{ name: "1GB", price: 5000 }
 ]
 }
 
