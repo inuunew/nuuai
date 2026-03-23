@@ -263,7 +263,9 @@ background:#f5f5f5;
 
 <script>
 const params = new URLSearchParams(window.location.search)
-
+const phone = document.getElementById("phone")
+const username = document.getElementById("username")
+const userId = document.getElementById("userId")
 const game = params.get("game") || "-"
 const item = params.get("item") || "-"
 const price = params.get("price")
@@ -283,10 +285,15 @@ if(type === "pulsa"){
 userIdBox.style.display="none"
 phoneBox.style.display="block"
 }
+if(type === "voucher"){
+    userIdBox.style.display = "none"
+    serverBox.style.display = "none"
+}
 if(type === "usn"){
 userIdBox.style.display="none"
 usernameBox.style.display="block"
 }
+
 if(type === "idserver"){
 serverBox.style.display="block"
 if(game.toLowerCase().includes("mobile")){
@@ -344,12 +351,63 @@ server=serverRegion.value
 }
 }
 
-if(!selectedPayment) return alert("Pilih pembayaran")
+// VALIDASI INPUT
+if(type === "pulsa" && !phone.value){
+    alert("Masukkan nomor HP")
+    btn.innerText="Bayar"
+    btn.disabled=false
+    return
+}
 
-let pesan = `*ORDER*\n\nGame: ${game}\nItem: ${item}\nHarga: Rp ${safePrice.toLocaleString("id-ID")}\nBayar: ${selectedPayment}\n`
+if(type === "usn" && !username.value){
+    alert("Masukkan username")
+    btn.innerText="Bayar"
+    btn.disabled=false
+    return
+}
 
-pesan += `ID: ${userId.value || "-"}\nServer: ${server}\n`
+if(type !== "voucher" && type !== "pulsa" && type !== "usn" && !userId.value){
+    alert("Masukkan ID")
+    btn.innerText="Bayar"
+    btn.disabled=false
+    return
+}
 
+if(type === "idserver" && !server){
+    alert("Masukkan server")
+    btn.innerText="Bayar"
+    btn.disabled=false
+    return
+}
+if(!selectedPayment){
+    alert("Pilih pembayaran")
+    btn.innerText="Bayar"
+    btn.disabled=false
+    return
+}
+
+let pesan = `*ORDER*\n\n`
+pesan += `Game: ${game}\n`
+pesan += `Item: ${item}\n`
+pesan += `Harga: Rp ${safePrice.toLocaleString("id-ID")}\n`
+pesan += `Bayar: ${selectedPayment}\n`
+
+if(type === "pulsa"){
+    pesan += `No HP: ${phone.value}\n`
+}
+else if(type === "usn"){
+    pesan += `Username: ${username.value}\n`
+}
+else if(type === "voucher"){
+    pesan += `Tipe: Voucher (tanpa ID)\n`
+}
+else{
+    pesan += `ID: ${userId.value}\n`
+}
+
+if(type === "idserver"){
+    pesan += `Server: ${server}\n`
+}
 window.open(`https://wa.me/6283160556330?text=${encodeURIComponent(pesan)}`)
 }
 </script>
