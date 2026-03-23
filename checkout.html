@@ -7,15 +7,12 @@
 <title>Checkout</title>
 
 <style>
-
 body{
 font-family: Arial, sans-serif;
 background:#f3f4f6;
 margin:0;
 padding:0;
 }
-
-/* HEADER */
 
 .header{
 display:flex;
@@ -36,8 +33,6 @@ font-weight:bold;
 font-size:18px;
 }
 
-/* CARD */
-
 .card{
 background:white;
 margin:15px;
@@ -45,8 +40,6 @@ padding:15px;
 border-radius:14px;
 box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
-
-/* PRODUK */
 
 .product{
 display:flex;
@@ -73,8 +66,6 @@ margin-bottom:5px;
 color:#555;
 }
 
-/* INPUT */
-
 .label{
 font-weight:bold;
 margin-bottom:6px;
@@ -89,7 +80,7 @@ border-radius:10px;
 overflow:hidden;
 }
 
-.input-group input{
+.input-group input, .input-group select{
 flex:1;
 border:none;
 padding:12px;
@@ -103,8 +94,6 @@ padding:12px 15px;
 cursor:pointer;
 }
 
-/* RINCIAN */
-
 .row{
 display:flex;
 justify-content:space-between;
@@ -116,8 +105,6 @@ font-size:20px;
 color:#16a34a;
 font-weight:bold;
 }
-
-/* FOOTER */
 
 .footer{
 position:fixed;
@@ -165,10 +152,6 @@ cursor:pointer;
 background:#fafafa;
 }
 
-.payment-arrow{
-font-size:12px;
-}
-
 .payment-list{
 display:none;
 margin-top:10px;
@@ -190,372 +173,186 @@ background:#f5f5f5;
 
 <body>
 
-<!-- HEADER -->
-
 <div class="header">
 <div class="back" onclick="goHome()">←</div>
 <div class="title">Detail Pesanan</div>
 </div>
 
-<!-- PRODUK -->
-
 <div class="card">
-
 <div class="product">
-
-<img id="gameImage">
-
+<img id="gameImage" onerror="this.src='default.png'">
 <div>
 <div class="badge">GAMES</div>
 <div id="itemName"></div>
 <div class="price" id="price"></div>
 </div>
-
 </div>
-
 </div>
-
-
-<!-- USER ID -->
 
 <div class="card" id="userIdBox">
-
 <label class="label">USER ID</label>
-
 <div class="input-group">
 <input type="text" placeholder="Masukkan ID Player" id="userId">
 <button class="search">🔍</button>
 </div>
-
-<div id="nicknameBox" style="
-margin-top:8px;
-font-size:13px;
-color:#16a34a;
-display:none;
-">
-Nickname : <span id="nickname"></span>
+<div id="nicknameBox" style="margin-top:8px;font-size:13px;color:#16a34a;display:none;"></div>
 </div>
-</div>
-
-<!-- USERNAME -->
 
 <div class="card" id="usernameBox" style="display:none;">
-
 <label class="label">USERNAME</label>
-
 <div class="input-group">
 <input type="text" placeholder="Masukkan Username" id="username">
 </div>
-
 </div>
 
-<!-- NOMOR HP -->
 <div class="card" id="phoneBox" style="display:none;">
-
 <label class="label">NOMOR TELEPON</label>
-
 <div class="input-group">
-<input type="number" placeholder="Masukkan Nomor HP" id="phone">
+<input type="tel" placeholder="Masukkan Nomor HP" id="phone">
+</div>
 </div>
 
-</div>
-
-<!-- SERVER -->
 <div class="card" id="serverBox" style="display:none;">
 <label class="label">SERVER</label>
 <div class="input-group" id="mlServer" style="display:none;">
-<input type="number" placeholder="Server ID (Contoh: 1234)" id="serverId">
+<input type="number" placeholder="Server ID" id="serverId">
 </div>
 <div class="input-group" id="genshinServer" style="display:none;">
 <select id="serverRegion">
 <option value="">Pilih Server</option>
-<option value="Asia">Asia</option>
-<option value="America">America</option>
-<option value="Europe">Europe</option>
-<option value="TW / HK / MO">TW / HK / MO</option>
+<option>Asia</option>
+<option>America</option>
+<option>Europe</option>
+<option>TW / HK / MO</option>
 </select>
 </div>
 </div>
-<!-- PAYMENT -->
 
 <div class="card">
-
 <h4>METODE PEMBAYARAN</h4>
 
 <div class="payment-select" onclick="togglePayment()">
 <div id="paymentSelected">Pilih Metode Pembayaran</div>
-<div class="payment-arrow">▼</div>
+<div>▼</div>
 </div>
 
 <div class="payment-list" id="paymentList">
-
-<div class="payment-item" onclick="selectPayment('QRIS')">
-QRIS
-</div>
-
-<div class="payment-item" onclick="selectPayment('DANA')">
-DANA
-</div>
-
-<div class="payment-item" onclick="selectPayment('OVO')">
-OVO
-</div>
-
-<div class="payment-item" onclick="selectPayment('GoPay')">
-GoPay
-</div>
-
-<div class="payment-item" onclick="selectPayment('Shoopepay')">
-Shoopepay
-</div>
-
-<div class="payment-item" onclick="selectPayment('Transfer Bank')">
-Transfer Bank
-</div>
-
+<div class="payment-item" onclick="selectPayment('QRIS')">QRIS</div>
+<div class="payment-item" onclick="selectPayment('DANA')">DANA</div>
+<div class="payment-item" onclick="selectPayment('OVO')">OVO</div>
+<div class="payment-item" onclick="selectPayment('GoPay')">GoPay</div>
+<div class="payment-item" onclick="selectPayment('ShopeePay')">ShopeePay</div>
+<div class="payment-item" onclick="selectPayment('Transfer Bank')">Transfer Bank</div>
 </div>
 </div>
-
-
-<!-- RINCIAN -->
 
 <div class="card">
-
 <h4>RINCIAN TRANSAKSI</h4>
-
-<div class="row">
-<span>Subtotal Produk</span>
-<span id="subtotal"></span>
-</div>
-
+<div class="row"><span>Subtotal</span><span id="subtotal"></span></div>
 <hr>
-
-<div class="row">
-<span>Total Pembayaran</span>
-<span class="total" id="total"></span>
+<div class="row"><span>Total</span><span class="total" id="total"></span></div>
 </div>
-
-</div>
-
-
-<!-- FOOTER -->
 
 <div class="footer">
-
 <div>
-<div style="font-size:12px;color:#777;">TOTAL TAGIHAN</div>
+<div style="font-size:12px;color:#777;">TOTAL</div>
 <div class="bill" id="bill"></div>
 </div>
-
 <button class="pay" onclick="bayar()">Bayar</button>
-
 </div>
 
-
 <script>
-
-/* AMBIL DATA URL */
-
 const params = new URLSearchParams(window.location.search)
 
-const game = params.get("game")
-const item = params.get("item")
+const game = params.get("game") || "-"
+const item = params.get("item") || "-"
 const price = params.get("price")
 const image = params.get("image")
 const type = params.get("type")
 
-
-/* TAMPILKAN DATA */
+const safePrice = isNaN(price) ? 0 : Number(price)
 
 document.getElementById("itemName").innerText = game + " " + item
-
-document.getElementById("price").innerText =
-"Rp " + Number(price).toLocaleString("id-ID")
-
-document.getElementById("subtotal").innerText =
-"Rp " + Number(price).toLocaleString("id-ID")
-
-document.getElementById("total").innerText =
-"Rp " + Number(price).toLocaleString("id-ID")
-
-document.getElementById("bill").innerText =
-"Rp " + Number(price).toLocaleString("id-ID")
-
+document.getElementById("price").innerText = "Rp " + safePrice.toLocaleString("id-ID")
+document.getElementById("subtotal").innerText = "Rp " + safePrice.toLocaleString("id-ID")
+document.getElementById("total").innerText = "Rp " + safePrice.toLocaleString("id-ID")
+document.getElementById("bill").innerText = "Rp " + safePrice.toLocaleString("id-ID")
 document.getElementById("gameImage").src = image
 
-
-/* CEK TYPE GAME */
-
 if(type === "pulsa"){
-document.getElementById("userIdBox").style.display = "none"
-document.getElementById("usernameBox").style.display = "none"
-document.getElementById("phoneBox").style.display = "block"
+userIdBox.style.display="none"
+phoneBox.style.display="block"
 }
 if(type === "usn"){
-document.getElementById("userIdBox").style.display = "none"
-document.getElementById("usernameBox").style.display = "block"
+userIdBox.style.display="none"
+usernameBox.style.display="block"
 }
-
-if(type === "voucher"){
-document.getElementById("userIdBox").style.display = "none"
-}
-
-if(type === "uid"){
-document.querySelector("#userIdBox .label").innerText = "USER UID"
-document.getElementById("userId").placeholder = "Masukkan UID"
-}
-
-if(type === "id"){
-document.querySelector("#userIdBox .label").innerText = "USER ID"
-document.getElementById("userId").placeholder = "Masukkan ID Player"
-}
-
 if(type === "idserver"){
-    document.getElementById("serverBox").style.display = "block";
-    const gameNameLower = game.toLowerCase();
-    if(gameNameLower.includes("mobile legends")){
-        document.getElementById("mlServer").style.display = "flex";
-        document.getElementById("genshinServer").style.display = "none";
-    } else if(gameNameLower.includes("genshin")){
-        document.getElementById("genshinServer").style.display = "flex";
-        document.getElementById("mlServer").style.display = "none";
-    }
+serverBox.style.display="block"
+if(game.toLowerCase().includes("mobile")){
+mlServer.style.display="flex"
+}else{
+genshinServer.style.display="flex"
 }
-
-/* SIMULASI CEK NICKNAME */
+}
 
 document.querySelector(".search").onclick = function(){
+const id = userId.value
+if(!id) return alert("Masukkan ID")
 
-const id = document.getElementById("userId").value
-const nickBox = document.getElementById("nicknameBox")
-
-if(!id){
-alert("Masukkan ID dulu")
-return
-}
-
-nickBox.style.display = "block"
-nickBox.innerHTML = '<span class="loading">Mengecek id...</span>'
+nicknameBox.style.display="block"
+nicknameBox.innerHTML = "Mengecek..."
 
 setTimeout(()=>{
-
-const nickname = "ID Terdaftar silahkan cek kembali"
-
-nickBox.innerHTML = 'Status : <b>'+nickname+'</b>'
-
-},1200)
-
+nicknameBox.innerHTML = "Nickname: <b>Player_"+id+"</b>"
+},1000)
 }
-
-
-/* BACK */
 
 function goHome(){
-window.location.href = "index.html"
+window.location.href="index.html"
 }
 
-
-/* BAYAR */
-
-const adminWa = "6283160556330"
-
-function bayar(){
-
-const phone = document.getElementById("phone")?.value || "-"
-const username = document.getElementById("username")?.value || "-"
-const id = document.getElementById("userId")?.value || "-"
-const server = document.getElementById("serverId")?.value || "-"
-const gameName = game
-const itemName = item
-const harga = Number(price).toLocaleString("id-ID")
-
-if(!selectedPayment){
-alert("Pilih metode pembayaran dulu")
-return
-}
-
-if(type === "pulsa" && !phone){
-alert("Masukkan nomor HP dulu")
-return
-}
-
-if(type === "usn" && !username){
-alert("Masukkan Username dulu")
-return
-}
-
-if(type !== "voucher" && !id){
-alert("Masukkan ID / UID dulu")
-return
-}
-
-if(type === "idserver" && !server){
-alert("Masukkan Server dulu")
-return
-}
-
-let pesan = 
-`*ADA YANG ORDER*\n\n` +
-`Layanan : ${gameName}\n` +
-`Produk : ${itemName}\n` +
-`Harga : Rp ${harga}\n` +
-`Pembayaran : ${selectedPayment}\n`
-
-
-if(type === "pulsa"){
-pesan += `No HP : ${phone}\n`
-}
-if(type === "usn"){
-pesan += `Username : ${username}\n`
-}
-
-if(type === "uid"){
-pesan += `UID : ${id}\n`
-}
-
-if(type === "id"){
-pesan += `ID : ${id}\n`
-}
-
-if(type === "idserver"){
-pesan += `ID : ${id}\n`
-pesan += `Server : ${server}\n`
-}
-
-pesan += `\nMohon diproses admin`
-
-const url =
-`https://wa.me/${adminWa}?text=${encodeURIComponent(pesan)}`
-
-window.open(url)
-
-}
-
-</script>
-<script>
-let selectedPayment = ""
+let selectedPayment=""
 
 function togglePayment(){
-
-const list = document.getElementById("paymentList")
-
-if(list.style.display === "block"){
-list.style.display = "none"
-}else{
-list.style.display = "block"
-}
-
+paymentList.style.display = paymentList.style.display==="block"?"none":"block"
 }
 
 function selectPayment(name){
+selectedPayment=name
+paymentSelected.innerText=name
+paymentList.style.display="none"
+}
 
-selectedPayment = name
+document.addEventListener("click", e=>{
+if(!e.target.closest(".payment-select")){
+paymentList.style.display="none"
+}
+})
 
-document.getElementById("paymentSelected").innerText = name
+function bayar(){
+const btn=document.querySelector(".pay")
+btn.innerText="Memproses..."
+btn.disabled=true
 
-document.getElementById("paymentList").style.display = "none"
+let server="-"
+if(type==="idserver"){
+if(game.toLowerCase().includes("mobile")){
+server=serverId.value
+}else{
+server=serverRegion.value
+}
+}
 
+if(!selectedPayment) return alert("Pilih pembayaran")
+
+let pesan = `*ORDER*\n\nGame: ${game}\nItem: ${item}\nHarga: Rp ${safePrice.toLocaleString("id-ID")}\nBayar: ${selectedPayment}\n`
+
+pesan += `ID: ${userId.value || "-"}\nServer: ${server}\n`
+
+window.open(`https://wa.me/6283160556330?text=${encodeURIComponent(pesan)}`)
 }
 </script>
+
 </body>
 </html>
