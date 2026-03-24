@@ -74,7 +74,7 @@ const database = {
 
   genshin: {
     name: "Genshin Impact",
-    type: "idserver",
+    type: "uid",
     image: "assets/genshin.png",
 
     regular: [
@@ -235,13 +235,84 @@ const databaseOther = {
 };
 
 const databasePanel = {
-
-panel1: {
-name: "Panel Bot 1GB",
+  panel1: {
+    name: "Panel Bot",
+    image: "img/panel.jpg",
+    desc: "Panel bot full akses",
+    detail: "✔ Anti delay\n✔ 24 jam aktif\n✔ Full akses",
+    items: [
+      { name: "1GB", price: 5000 }
+    ]
+  }
+}
+panel2: {
+name: "Panel Bot 2GB",
+image: "img/panel.jpg",
+items: [
+{ price: 3000 }
+]
+}
+panel3: {
+name: "Panel Bot 3GB",
+image: "img/panel.jpg",
+items: [
+{ price: 4000 }
+]
+}
+panel4: {
+name: "Panel Bot 4GB",
 image: "img/panel.jpg",
 items: [
 { price: 5000 }
 ]
 }
-
+panel5: {
+name: "Panel Bot 5GB",
+image: "img/panel.jpg",
+items: [
+{ price: 6000 }
+]
+}
+panel6: {
+name: "Panel Bot 6GB",
+image: "img/panel.jpg",
+items: [
+{ price: 7000 }
+]
+}
+panel7: {
+name: "Panel Bot 7GB",
+image: "img/panel.jpg",
+items: [
+{ price: 8000 }
+]
+}
+panel8: {
+name: "Panel Bot 8GB",
+image: "img/panel.jpg",
+items: [
+{ price: 9000 }
+]
+}
+panel8: {
+name: "Panel Bot Unlimited",
+image: "img/panel.jpg",
+items: [
+{ price: 10000 }
+]
+}
+panel8: {
+name: "Resseler panel",
+image: "img/panel.jpg",
+items: [
+{ price: 15000 }
+]
+}
+panel9: {
+name: "Admin Panel",
+image: "img/panel.jpg",
+items: [
+{ price: 20000 }
+]
+}
 }
