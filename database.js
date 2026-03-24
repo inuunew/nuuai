@@ -244,7 +244,6 @@ const databasePanel = {
       { name: "1GB", price: 5000 }
     ]
   }
-}
 panel2: {
 name: "Panel Bot 2GB",
 image: "img/panel.jpg",
