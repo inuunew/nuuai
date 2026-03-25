@@ -607,6 +607,13 @@ background:linear-gradient(135deg,#facc15,#f59e0b);
 color:#000;
 box-shadow:0 0 8px rgba(250,204,21,0.6);
 }
+.item.offline {
+opacity: 0.5;
+pointer-events: none;
+}
+.item.online:hover {
+  border: 2px solid #16a34a;
+}
 </style>
 
 </head>
@@ -617,7 +624,7 @@ box-shadow:0 0 8px rgba(250,204,21,0.6);
   <!-- POPUP NOTIF -->
   <div id="notifBox" class="popup-box" style="display:none;">
     <h3>🔔 Notifikasi</h3>
-    <p>🎉 Selamat datang di Ryuzen Shop!<br>
+    <p>🎉 Selamat datang di Inuu Market!<br>
     Nikmati layanan top up cepat dan aman.</p>
 
     <div class="popup-btn">
@@ -656,7 +663,7 @@ box-shadow:0 0 8px rgba(250,204,21,0.6);
 Item Reguler
 </button>
 
-<button class="tab" onclick="switchTab('membership',this)">
+<button id="membershipTab" class="tab" onclick="switchTab('membership',this)">
 Membership
 </button>
 
@@ -969,18 +976,21 @@ selectedItem = null
 document.getElementById("gameName").innerText = data.name
 document.getElementById("gameIcon").src = data.image
 
+// 🔥 CEK ADA MEMBERSHIP ATAU TIDAK
+const membershipTab = document.getElementById("membershipTab")
+
+if(data.membership && data.membership.length > 0){
+membershipTab.style.display = "block"
+}else{
+membershipTab.style.display = "none"
+}
+
 document.getElementById("confirmBtn").disabled = true
 document.getElementById("confirmBtn").classList.remove("active")
 
 renderItems()
 
 document.getElementById("topupModal").style.display="flex"
-
-document.getElementById("topupModal").onclick = function(e){
-if(e.target.id === "topupModal"){
-closeTopup()
-}
-}
 
 }
 
@@ -1016,21 +1026,35 @@ selectedItem = null
 document.getElementById("gameName").innerText = data.name
 document.getElementById("gameIcon").src = data.image
 
+// 🔥 TAMBAHAN FIX
+document.getElementById("membershipTab").style.display = "none"
+currentType = "regular"
+
+document.querySelectorAll(".tab").forEach(t=>{
+t.classList.remove("active")
+})
+document.querySelector(".tab").classList.add("active")
+
 const container = document.getElementById("topupItems")
 container.innerHTML=""
 
 data.items.forEach(item=>{
 
 const div = document.createElement("div")
-div.className="item"
+div.className = `item ${item.status}`
 
+// UI + status
 div.innerHTML = `
-<span class="status online"></span>
+<span class="status ${item.status}"></span>
 ${item.name}
 <div class="price">${item.price}</div>
+${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
 `
 
 div.onclick = function(){
+
+// ⛔ STOP kalau stok habis
+if(item.status === "offline") return;
 
 document.querySelectorAll(".item").forEach(i=>{
 i.style.border="1px solid #eee"
@@ -1051,7 +1075,6 @@ container.appendChild(div)
 })
 
 document.getElementById("topupModal").style.display="flex"
-
 }
 
 
@@ -1079,15 +1102,19 @@ return
 items.forEach(item=>{
 
 const div = document.createElement("div")
-div.className="item"
+div.className = `item ${item.status}`
 
 div.innerHTML = `
-<span class="status online"></span>
+<span class="status ${item.status}"></span>
 ${item.name}
 <div class="price">${item.price}</div>
+${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
 `
 
 div.onclick = function(){
+
+// ⛔ BLOK kalau stok habis
+if(item.status === "offline") return;
 
 document.querySelectorAll(".item").forEach(i=>{
 i.style.border="1px solid #eee"
@@ -1113,6 +1140,12 @@ container.appendChild(div)
 /* SWITCH TAB */
 
 function switchTab(type,btn){
+
+// ⛔ kalau membership tidak ada, jangan bisa diklik
+const data = database[currentGame]
+if(type === "membership" && (!data.membership || data.membership.length === 0)){
+return;
+}
 
 currentType = type
 
