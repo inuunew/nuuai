@@ -243,7 +243,7 @@ const databasePanel = {
       { name: "8GB", price: 9000, status: "online" },
       { name: "Unlimited", price: 10000, status: "online" }
     ]
-  }
+  }, 
   panel10: {
     name: "Reseller Panel",
     image: "img/panel.jpg",
