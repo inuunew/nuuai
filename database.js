@@ -229,83 +229,27 @@ const databaseOther = {
 };
 
 const databasePanel = {
-  panel1: {
-    name: "Panel Bot 1GB",
+  panel: {
+    name: "Panel Bot",
     image: "img/panel.jpg",
     items: [
-      { name: "1GB", price: 5000, status: "online" }
-    ]
-  },
-
-  panel2: {
-    name: "Panel Bot 2GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "2GB", price: 3000, status: "online" }
-    ]
-  },
-
-  panel3: {
-    name: "Panel Bot 3GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "3GB", price: 4000, status: "offline" }
-    ]
-  },
-
-  panel4: {
-    name: "Panel Bot 4GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "4GB", price: 5000, status: "online" }
-    ]
-  },
-
-  panel5: {
-    name: "Panel Bot 5GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "5GB", price: 6000, status: "online" }
-    ]
-  },
-
-  panel6: {
-    name: "Panel Bot 6GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "6GB", price: 7000, status: "offline" }
-    ]
-  },
-
-  panel7: {
-    name: "Panel Bot 7GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "7GB", price: 8000, status: "online" }
-    ]
-  },
-
-  panel8: {
-    name: "Panel Bot 8GB",
-    image: "img/panel.jpg",
-    items: [
-      { name: "8GB", price: 9000, status: "online" }
-    ]
-  },
-
-  panel9: {
-    name: "Panel Bot Unlimited",
-    image: "img/panel.jpg",
-    items: [
+      { name: "1GB", price: 5000, status: "online" },
+      { name: "2GB", price: 3000, status: "online" },
+      { name: "3GB", price: 4000, status: "offline" },
+      { name: "4GB", price: 5000, status: "online" },
+      { name: "5GB", price: 6000, status: "online" },
+      { name: "6GB", price: 7000, status: "offline" },
+      { name: "7GB", price: 8000, status: "online" },
+      { name: "8GB", price: 9000, status: "online" },
       { name: "Unlimited", price: 10000, status: "online" }
     ]
-  },
-
+  }
   panel10: {
     name: "Reseller Panel",
     image: "img/panel.jpg",
     items: [
-      { name: "Reseller", price: 15000, status: "offline" }
+      { name: "Reseller public", price: 15000, status: "online" },
+      { name: "Reseller private", price: 20000, status: "online" }
     ]
   },
 
