@@ -414,10 +414,49 @@ margin-top:20px;
 }
 
 .item{
+display:flex;
+flex-direction:column;
+justify-content:center;
+gap:4px;
+height:100px;
+overflow:hidden;
+}
+
+.item div:first-child{
+font-size:13px;
+line-height:1.2;
+max-height:2.4em;
+overflow:hidden;
+}
+
+.item:hover{
+border:1px solid #16a34a;
+background:#f0fdf4;
+transform:scale(1.02);
+}
+
+
+.item.offline:hover{
+transform:none;
 background:#f9fafb;
-border-radius:14px;
-padding:12px;
-border:1px solid #eee;
+border:1px solid #fee2e2;
+cursor:not-allowed;
+}
+.item.selected{
+border:2px solid #16a34a;
+background:#ecfdf5;
+}
+
+/* ONLINE */
+.item.online{
+background:#f9fafb;
+border:1px solid #d1fae5;
+}
+
+.item.offline{
+background:#f9fafb;
+border:1px solid #fee2e2;
+opacity:0.6;
 }
 
 .price{
@@ -606,13 +645,6 @@ position:relative;
 background:linear-gradient(135deg,#facc15,#f59e0b);
 color:#000;
 box-shadow:0 0 8px rgba(250,204,21,0.6);
-}
-.item.offline {
-opacity: 0.5;
-pointer-events: none;
-}
-.item.online:hover {
-  border: 2px solid #16a34a;
 }
 </style>
 
@@ -1041,12 +1073,11 @@ container.innerHTML=""
 data.items.forEach(item=>{
 
 const div = document.createElement("div")
-div.className = `item ${item.status}`
+div.className = `item ${item.status || 'online'}`
 
 // UI + status
 div.innerHTML = `
-<span class="status ${item.status}"></span>
-${item.name}
+<span class="status ${item.status || 'online'}"></span>
 <div class="price">${item.price}</div>
 ${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
 `
@@ -1057,11 +1088,10 @@ div.onclick = function(){
 if(item.status === "offline") return;
 
 document.querySelectorAll(".item").forEach(i=>{
-i.style.border="1px solid #eee"
+i.classList.remove("selected")
 })
 
-div.style.border="2px solid #16a34a"
-
+div.classList.add("selected")
 selectedItem = item
 
 const btn = document.getElementById("confirmBtn")
@@ -1117,11 +1147,10 @@ div.onclick = function(){
 if(item.status === "offline") return;
 
 document.querySelectorAll(".item").forEach(i=>{
-i.style.border="1px solid #eee"
+i.classList.remove("selected")
 })
 
-div.style.border="2px solid #16a34a"
-
+div.classList.add("selected")
 selectedItem = item
 
 const btn = document.getElementById("confirmBtn")
