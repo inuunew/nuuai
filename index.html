@@ -414,34 +414,26 @@ margin-top:20px;
 }
 
 .item{
+height:90px; /* tinggi fix biar sama */
+padding:12px;
+border-radius:16px;
+border:1px solid #e5e7eb;
 display:flex;
 flex-direction:column;
 justify-content:center;
 gap:4px;
-height:100px;
-overflow:hidden;
+background:#f9fafb;
+transition:0.2s;
 }
 
-.item div:first-child{
-font-size:13px;
-line-height:1.2;
-max-height:2.4em;
-overflow:hidden;
-}
 
+/* HOVER */
 .item:hover{
 border:1px solid #16a34a;
 background:#f0fdf4;
-transform:scale(1.02);
 }
 
-
-.item.offline:hover{
-transform:none;
-background:#f9fafb;
-border:1px solid #fee2e2;
-cursor:not-allowed;
-}
+/* SAAT DIPILIH */
 .item.selected{
 border:2px solid #16a34a;
 background:#ecfdf5;
@@ -450,27 +442,33 @@ background:#ecfdf5;
 /* ONLINE */
 .item.online{
 background:#f9fafb;
-border:1px solid #d1fae5;
 }
 
+/* OFFLINE */
 .item.offline{
 background:#f9fafb;
-border:1px solid #fee2e2;
-opacity:0.6;
+opacity:0.5;
+}
+
+
+.item span{
+font-size:14px;
+font-weight:500;
+color:#111827;
 }
 
 .price{
-color:#18a558;
-font-weight:bold;
-margin-top:5px;
+color:#16a34a;
+font-weight:700;
+font-size:15px;
 }
 
 .status{
-width:8px;
-height:8px;
+width:6px;
+height:6px;
 border-radius:50%;
 display:inline-block;
-margin-right:5px;
+margin-right:6px;
 }
 
 .online{
