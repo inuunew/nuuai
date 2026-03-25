@@ -115,13 +115,45 @@ padding:10px;
 border-radius:8px;
 border:1px solid #ddd;
 }
+/*qris*/
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.popup img{
+width:90%;
+max-width:400px;
+border-radius:15px;
+}
+
+.popup.active{
+display:flex;
+}
+.close{
+position:absolute;
+top:20px;
+right:25px;
+font-size:30px;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
 </style>
 
 </head>
 
 <body>
 
-<div class="header">QRIS Ajaib</div>
+<div class="header">INUU MARKET</div>
 
 <div class="container">
 
@@ -131,6 +163,10 @@ border:1px solid #ddd;
 
 <div class="qr">
 <img src="qris.jpg">
+</div>
+<div id="popupQR" class="popup">
+  <span class="close" onclick="tutupQR()">×</span>
+  <img src="qris.jpg">
 </div>
 
 <button class="btn">Lihat / Perbesar QRIS</button>
@@ -166,6 +202,15 @@ QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
 
 </div>
 
+<script>
+function bukaQR(){
+document.getElementById("popupQR").classList.add("active")
+}
+
+function tutupQR(){
+document.getElementById("popupQR").classList.remove("active")
+}
+</script>
 <script>
 const params = new URLSearchParams(location.search)
 
