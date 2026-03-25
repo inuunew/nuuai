@@ -1070,18 +1070,68 @@ document.getElementById("topupModal").style.display="flex"
 
 /* OPEN PANEL PRODUK */
 function openPanel(key){
+function openPanel(key){
 
 const data = databasePanel[key]
-const item = data.items[0]
 
-window.location.href =
-`checkout.html?game=${encodeURIComponent(data.name)}
-&item=${encodeURIComponent(item.name)}
-&key=${key}
-&price=${item.price}
-&image=${encodeURIComponent(data.image)}
-&type=usn`
+isPanel = true
+isOtherProduct = false
 
+currentGame = key
+selectedItem = null
+
+document.getElementById("gameName").innerText = data.name
+document.getElementById("gameIcon").src = data.image
+
+// sembunyikan membership
+document.getElementById("membershipTab").style.display = "none"
+currentType = "regular"
+
+// reset tab
+document.querySelectorAll(".tab").forEach(t=>{
+t.classList.remove("active")
+})
+document.querySelector(".tab").classList.add("active")
+
+const container = document.getElementById("topupItems")
+container.innerHTML=""
+
+// render item panel
+data.items.forEach(item=>{
+
+const div = document.createElement("div")
+div.className = `item ${item.status || 'online'}`
+
+div.innerHTML = `
+<span class="status ${item.status || 'online'}"></span>
+${item.name}
+<div class="price">${item.price}</div>
+${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
+`
+
+div.onclick = function(){
+
+if(item.status === "offline") return;
+
+document.querySelectorAll(".item").forEach(i=>{
+i.classList.remove("selected")
+})
+
+div.classList.add("selected")
+selectedItem = item
+
+const btn = document.getElementById("confirmBtn")
+btn.disabled = false
+btn.classList.add("active")
+
+}
+
+container.appendChild(div)
+
+})
+
+// tampilkan modal
+document.getElementById("topupModal").style.display="flex"
 }
 
 /* OPEN PRODUK LAIN */
@@ -1280,7 +1330,12 @@ price = selectedItem.price.replace(/[^\d]/g,'')
 }
 
 window.location.href =
-`checkout.html?game=${encodeURIComponent(gameName)}&item=${encodeURIComponent(itemName)}&price=${price}&image=${encodeURIComponent(image)}&type=${type}`
+`checkout.html?game=${encodeURIComponent(gameName)}
+&item=${encodeURIComponent(itemName)}
+&price=${price}
+&image=${encodeURIComponent(image)}
+&type=${type}
+&key=${currentGame}`
 
 }
 
