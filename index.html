@@ -644,6 +644,34 @@ background:linear-gradient(135deg,#facc15,#f59e0b);
 color:#000;
 box-shadow:0 0 8px rgba(250,204,21,0.6);
 }
+/*CLOSE BTN*/
+.close-btn{
+margin-left:auto;
+width:36px;
+height:36px;
+border:none;
+border-radius:10px;
+background:#f3f4f6;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:0.2s;
+font-size:14px;
+color:#374151;
+}
+
+/* HOVER */
+.close-btn:hover{
+background:#fee2e2;
+color:#dc2626;
+transform:scale(1.1);
+}
+
+/* ACTIVE (saat diklik) */
+.close-btn:active{
+transform:scale(0.95);
+}
 </style>
 
 </head>
@@ -684,7 +712,9 @@ box-shadow:0 0 8px rgba(250,204,21,0.6);
         <span class="instant">Instant Process</span>
       </div>
 
-      <button onclick="closeTopup()">✕</button>
+      <button class="close-btn" onclick="closeTopup()">
+  <i class="fas fa-times"></i>
+</button>
     </div>
 
 <div class="tabs">
