@@ -138,8 +138,8 @@ return
 }
 
 // 🔥 TELEGRAM CONFIG
-const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
-const CHAT_ID = "7314158034"
+const BOT_TOKEN = "ISI_BOT_TOKEN"
+const CHAT_ID = "ISI_CHAT_ID"
 
 // kirim text
 let text = `
@@ -170,12 +170,15 @@ text: text
 // kirim foto
 let form = new FormData()
 form.append("chat_id", CHAT_ID)
-form.append("photo", file)
+form.append("photo", file, file.name)
 
-await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{
-method:"POST",
-body: form
+const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+  method: "POST",
+  body: form
 })
+
+const result = await res.json()
+console.log(result)
 
 alert("Berhasil dikirim ke admin!")
 }
