@@ -363,17 +363,29 @@ transition:0.1s;
 
 <script src="database.js"></script>
 <script>
+
 const params = new URLSearchParams(window.location.search)
 const phone = document.getElementById("phone")
 const username = document.getElementById("username")
 const userId = document.getElementById("userId")
+const userIdBox = document.getElementById("userIdBox")
+const phoneBox = document.getElementById("phoneBox")
+const usernameBox = document.getElementById("usernameBox")
+const serverBox = document.getElementById("serverBox")
+const mlServer = document.getElementById("mlServer")
+const genshinServer = document.getElementById("genshinServer")
+const nicknameBox = document.getElementById("nicknameBox")
+const serverId = document.getElementById("serverId")
+const serverRegion = document.getElementById("serverRegion")
+const paymentList = document.getElementById("paymentList")
+const paymentSelected = document.getElementById("paymentSelected")
 const game = params.get("game") || "-"
 const item = params.get("item") || "-"
 const price = params.get("price")
 const image = params.get("image")
 const type = params.get("type")
 
-const safePrice = isNaN(price) ? 0 : Number(price)
+const safePrice = Number(price) || 0
 
 document.getElementById("itemName").innerText = game + " " + item
 document.getElementById("price").innerText = "Rp " + safePrice.toLocaleString("id-ID")
@@ -432,10 +444,13 @@ paymentSelected.innerText=name
 paymentList.style.display="none"
 }
 
-document.addEventListener("click", e=>{
-if(!e.target.closest(".payment-select")){
-paymentList.style.display="none"
-}
+document.addEventListener("click", e => {
+  if (
+    !e.target.closest(".payment-select") &&
+    !e.target.closest(".payment-list")
+  ) {
+    paymentList.style.display = "none"
+  }
 })
 
 function bayar(){
@@ -444,7 +459,7 @@ btn.innerHTML="⏳ Memproses..."
 btn.disabled=true
 btn.style.opacity="0.7"
 
-let server="-"
+let server=""
 if(type==="idserver"){
 if(game.toLowerCase().includes("mobile")){
 server=serverId.value
@@ -462,34 +477,34 @@ function resetBtn(){
 // VALIDASI INPUT
 if(type === "pulsa" && !phone.value){
     alert("Masukkan nomor HP")
-    btn.innerText="Bayar"
+    btn.innerHTML="Bayar"
     btn.disabled=false
     return
 }
 
 if(type === "usn" && !username.value){
     alert("Masukkan username")
-    btn.innerText="Bayar"
+    btn.innerHTML="Bayar"
     btn.disabled=false
     return
 }
 
 if(type !== "voucher" && type !== "pulsa" && type !== "usn" && !userId.value){
     alert("Masukkan ID")
-    btn.innerText="Bayar"
+    btn.innerHTML="Bayar"
     btn.disabled=false
     return
 }
 
 if(type === "idserver" && !server){
     alert("Masukkan server")
-    btn.innerText="Bayar"
+    btn.innerHTML="Bayar"
     btn.disabled=false
     return
 }
 if(!selectedPayment){
     alert("Pilih pembayaran")
-    btn.innerText="Bayar"
+    btn.innerHTML="Bayar"
     btn.disabled=false
     return
 }
@@ -516,19 +531,17 @@ else{
 if(type === "idserver"){
     pesan += `Server: ${server}\n`
 }
-window.location.href = `
-invoice.html?
-game=${encodeURIComponent(game)}
-&item=${encodeURIComponent(item)}
-&price=${safePrice}
-&type=${type}
-&userId=${userId.value || ''}
-&username=${username.value || ''}
-&phone=${phone.value || ''}
-&server=${server || ''}
-&payment=${selectedPayment}
-`
-
+window.location.href =
+"invoice.html?game=" + encodeURIComponent(game) +
+"&item=" + encodeURIComponent(item) +
+"&price=" + safePrice +
+"&type=" + type +
+"&userId=" + (userId.value || '') +
+"&username=" + (username.value || '') +
+"&phone=" + (phone.value || '') +
+"&server=" + (server || '') +
+"&payment=" + selectedPayment;
+}
 </script>
 <script>
 function openInfo(){
