@@ -170,9 +170,9 @@ text: text
 // kirim foto
 let form = new FormData()
 form.append("chat_id", CHAT_ID)
-form.append("photo", file, file.name)
+form.append("photo", file)
 
-const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+await fetch("/api/send", {
   method: "POST",
   body: form
 })
