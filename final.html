@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Final Payment</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  padding: 15px;
+}
+.message {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-top: 30px;
+  text-align: center;
+}
+.input-group {
+  margin-top: 15px;
+  text-align: left;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+.btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #5b7cff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.note-box {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 15px;
+  color: #555;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+}
+.back-box {
+  margin-top: 15px;
+  background: #eee;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  transition: 0.2s;
+}
+.back-box:hover {
+  background: #ddd;
+}
+.contact-box {
+  margin-top: 15px;
+  background: #eee;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+}
+.contact-box:hover {
+  background: #ddd;
+}
+.contact-box img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.contact-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.contact-text span:first-child {
+  font-weight: bold;
+}
+.contact-text span:last-child {
+  font-size: 13px;
+  color: #555;
+  word-break: break-all;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="message">
+    <h2>Pembayaran Telah Dikirim!</h2>
+    <p>Silahkan tunggu produk Anda dikirim oleh admin.</p>
+
+    <!-- CATATAN PENTING DALAM BOX -->
+    <div class="note-box">
+      ⚠️ Harap isi nomor WhatsApp Anda dengan benar!<br>
+      Ini wajib agar admin dapat menghubungi Anda untuk konfirmasi atau pengiriman produk.
+    </div>
+
+    <div class="input-group">
+      <label>Nomor WhatsApp Anda:</label>
+      <input type="tel" id="whatsapp" placeholder="Contoh: 08123456789">
+    </div>
+
+    <button class="btn" id="sendWA">Kirim Nomor ke Admin</button>
+
+    <!-- BOX KEMBALI KE BERANDA -->
+    <div class="back-box" onclick="window.location.href='index.html'">
+      ← Kembali ke Beranda
+    </div>
+
+    <!-- BOX KONTAK ADMIN -->
+    <div class="contact-box" onclick="window.open('https://inuu-social-information.vercel.app', '_blank')">
+      <img src="https://img.icons8.com/fluency/48/000000/customer-support.png" alt="CS Logo">
+      <div class="contact-text">
+        <span>Kontak Admin</span>
+        <span>berisi web admin dan nomor bantuan</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const sendBtn = document.getElementById("sendWA")
+sendBtn.onclick = async () => {
+  const wa = document.getElementById("whatsapp").value.trim()
+  if(!wa) return alert("Masukkan nomor WhatsApp Anda!")
+
+  const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
+  const CHAT_ID = "7314158034"
+
+  // Hanya kirim nomor WhatsApp saja
+  const pesan = `📌 Nomor WhatsApp User: ${wa}`
+
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: pesan
+    })
+  })
+
+  alert("Nomor WhatsApp Anda berhasil dikirim ke admin!")
+}
+</script>
+</body>
+</html>
