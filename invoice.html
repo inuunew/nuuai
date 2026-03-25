@@ -302,17 +302,13 @@ confirmBtn.onclick = () => {
     window.location.href = "final.html?" + params.toString()
   }, 2000)
 }
-</script>
 
-<script>
 const data = {
 price: parseInt(params.get("price")) || 1000,
 item: params.get("item") || "Produk Tidak Diketahui",
 game: params.get("game") || ""
 }
 
-// tampilkan produk
-document.getElementById("produk").innerText = `${data.game} - ${data.item} (${data.type})`
 
 function bukaQR(){
 document.getElementById("popupQR").classList.add("active")
@@ -321,8 +317,7 @@ document.getElementById("popupQR").classList.add("active")
 function tutupQR(){
 document.getElementById("popupQR").classList.remove("active")
 }
-</script>
-<script>
+
 document.getElementById("bukti").addEventListener("change", function(){
 const fileName = this.files[0]?.name || "Klik untuk upload gambar"
 document.getElementById("uploadText").innerText = fileName
@@ -364,7 +359,6 @@ const intervalId = setInterval(() => {
     clearInterval(intervalId)
     return
   }
-
   let m = Math.floor(time / 60)
   let s = time % 60
   timerEl.innerText = `Batas Waktu: ${m}:${s < 10 ? "0" : ""}${s}`
@@ -372,12 +366,8 @@ const intervalId = setInterval(() => {
 }, 1000)
 
 // === QR popup ===
-function bukaQR(){
-  document.getElementById("popupQR").classList.add("active")
-}
-function tutupQR(){
-  document.getElementById("popupQR").classList.remove("active")
-}
+function bukaQR(){ document.getElementById("popupQR").classList.add("active") }
+function tutupQR(){ document.getElementById("popupQR").classList.remove("active") }
 
 // === Upload bukti transfer ===
 document.getElementById("bukti").addEventListener("change", function(){
@@ -454,6 +444,6 @@ Metode Bayar: ${data.payment}
     alert("Gagal mengirim ke admin. Silakan coba lagi.")
   }
 }
-
+</script>
 </body>
 </html>
