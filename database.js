@@ -242,7 +242,8 @@ const databasePanel = {
       { name: "7GB", price: 8000, status: "online" },
       { name: "8GB", price: 9000, status: "online" },
       { name: "Unlimited", price: 10000, status: "online" }
-    ]
+    ], 
+membership: []
   }, 
   panel10: {
     name: "Reseller Panel",
@@ -250,7 +251,8 @@ const databasePanel = {
     items: [
       { name: "Reseller public", price: 15000, status: "online" },
       { name: "Reseller private", price: 20000, status: "online" }
-    ]
+    ], 
+membership: []
   },
 
   panel11: {
@@ -258,6 +260,7 @@ const databasePanel = {
     image: "img/panel.jpg",
     items: [
       { name: "Admin", price: 20000, status: "online" }
-    ]
+    ], 
+membership: []
   }
 };
