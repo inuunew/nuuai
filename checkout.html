@@ -215,6 +215,11 @@ line-height:1.5;
 from{transform:scale(0.9);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
+.card > div:active{
+transform:scale(0.97);
+opacity:0.85;
+transition:0.1s;
+}
 </style>
 </head>
 
@@ -249,6 +254,32 @@ to{transform:scale(1);opacity:1;}
 <div class="price" id="price"></div>
 </div>
 </div>
+</div>
+
+<div class="card" style="text-align:center; padding:12px;">
+  <div onclick="openInfo()" style="cursor:pointer;">
+    
+    <div style="
+      width:50px;
+      height:50px;
+      background:#ecfdf5;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      margin:auto;
+      color:#16a34a;
+      box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    ">
+      ℹ️
+    </div>
+
+    <div style="font-size:13px; margin-top:6px; font-weight:500;">
+      Info Produk
+    </div>
+
+  </div>
 </div>
 
 <div class="card" id="userIdBox">
@@ -409,8 +440,9 @@ paymentList.style.display="none"
 
 function bayar(){
 const btn=document.querySelector(".pay")
-btn.innerText="Memproses..."
+btn.innerHTML="⏳ Memproses..."
 btn.disabled=true
+btn.style.opacity="0.7"
 
 let server="-"
 if(type==="idserver"){
@@ -421,6 +453,12 @@ server=serverRegion.value
 }
 }
 
+function resetBtn(){
+  const btn = document.querySelector(".pay")
+  btn.innerHTML = "Bayar"
+  btn.disabled = false
+  btn.style.opacity = "1"
+}
 // VALIDASI INPUT
 if(type === "pulsa" && !phone.value){
     alert("Masukkan nomor HP")
@@ -478,8 +516,19 @@ else{
 if(type === "idserver"){
     pesan += `Server: ${server}\n`
 }
-window.open(`https://wa.me/6283160556330?text=${encodeURIComponent(pesan)}`)
-}
+window.location.href = `
+invoice.html?
+game=${encodeURIComponent(game)}
+&item=${encodeURIComponent(item)}
+&price=${safePrice}
+&type=${type}
+&userId=${userId.value || ''}
+&username=${username.value || ''}
+&phone=${phone.value || ''}
+&server=${server || ''}
+&payment=${selectedPayment}
+`
+
 </script>
 <script>
 function openInfo(){
@@ -487,30 +536,56 @@ const modal = document.getElementById("infoModal")
 const body = document.getElementById("modalBody")
 
 const key = params.get("key")
-
 let found = null
 
-if(typeof databasePanel !== "undefined" && databasePanel[key]){
-found = databasePanel[key]
+// PRIORITAS 1: panel
+if(key && typeof databasePanel !== "undefined" && databasePanel[key]){
+  found = databasePanel[key]
 }
 
-if(typeof databaseProduk !== "undefined" && databaseProduk[key]){
-found = databaseProduk[key]
+// PRIORITAS 2: databaseProduk (pakai nama item)
+if(!found && typeof databaseProduk !== "undefined"){
+  for(let k in databaseProduk){
+   if(databaseProduk[k].name.toLowerCase().includes(game.toLowerCase())){
+      found = databaseProduk[k]
+      break
+    }
+  }
 }
 
+// OUTPUT
 if(found){
-body.innerHTML = `
-<img src="${image}" style="width:100%;border-radius:10px;margin-bottom:10px;">
-<h3>${found.name}</h3>
-<p>${found.desc || '-'}</p>
-<hr>
-<p>${found.detail || '-'}</p>
-`
+  body.innerHTML = `
+  <img src="${image}" style="width:100%;border-radius:10px;margin-bottom:10px;">
+  <h3>${found.name}</h3>
+  <p>${found.desc || '-'}</p>
+  <hr>
+  <p>${found.detail || '-'}</p>
+  `
 }else{
-body.innerHTML = "Detail produk tidak tersedia"
+  body.innerHTML = `
+<h3>${game} - ${item}</h3>
+
+<p style="margin-top:10px;">
+✅ Proses otomatis 1-30 detik<br>
+✅ Tanpa login akun<br>
+✅ Aman & terpercaya<br>
+✅ Layanan 24 jam
+</p>
+
+<hr>
+
+<p style="margin-top:10px;color:#16a34a;">
+Pastikan data yang kamu input sudah benar sebelum checkout.
+Kesalahan input bukan tanggung jawab admin.
+</p>
+`
 }
 
 modal.style.display = "flex"
+}
+function closeInfo(){
+  document.getElementById("infoModal").style.display = "none"
 }
 </script>
 </body>
