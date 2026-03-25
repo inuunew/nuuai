@@ -147,6 +147,79 @@ color:white;
 font-weight:bold;
 cursor:pointer;
 }
+/*box*/
+.field{
+margin-top:15px;
+}
+
+.field label{
+font-size:13px;
+font-weight:bold;
+color:#555;
+display:block;
+margin-bottom:5px;
+}
+
+/* INPUT NOMINAL */
+.input-box{
+display:flex;
+align-items:center;
+background:#f1f3f6;
+border-radius:10px;
+padding:10px;
+border:2px solid transparent;
+transition:0.2s;
+}
+
+.input-box span{
+margin-right:5px;
+color:#888;
+}
+
+.input-box input{
+border:none;
+background:none;
+outline:none;
+width:100%;
+font-size:16px;
+}
+
+/* efek saat klik */
+.input-box:focus-within{
+border-color:#5b7cff;
+background:#fff;
+}
+
+/* UPLOAD */
+.upload-box{
+display:block;
+background:#f1f3f6;
+padding:15px;
+border-radius:10px;
+text-align:center;
+cursor:pointer;
+border:2px dashed #ccc;
+transition:0.2s;
+}
+
+.upload-box:hover{
+border-color:#5b7cff;
+background:#eef1ff;
+}
+/*produk*/
+.product{
+margin-top:15px;
+background:#eef1ff;
+padding:12px;
+border-radius:10px;
+font-size:14px;
+}
+
+.product b{
+display:block;
+margin-bottom:5px;
+color:#333;
+}
 </style>
 
 </head>
@@ -164,15 +237,20 @@ cursor:pointer;
 <div class="qr">
 <img src="qris.jpg">
 </div>
-<div id="popupQR" class="popup">
+<div id="popupQR" class="popup" onclick="tutupQR()">
   <span class="close" onclick="tutupQR()">×</span>
-  <img src="qris.jpg">
+  <img src="qris.jpg" onclick="event.stopPropagation()">
 </div>
 
 <button class="btn" onclick="bukaQR()">Lihat / Perbesar QRIS</button>
 
 <div class="warning">
 QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
+</div>
+
+<div class="product">
+  <div><b>Produk</b></div>
+  <div id="produk">-</div>
 </div>
 
 <div class="total">
@@ -182,19 +260,26 @@ QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
 
 <div class="detail">
 <div><span>Jumlah</span><span id="jumlah">Rp 0</span></div>
-<div><span>Kode Unik</span><span id="kode">-</span></div>
-<div><span>Biaya Admin</span><span>Rp 0</span></div>
+<div><span>Biaya Admin</span><span id="kode"></span></div>
 </div>
 
-<div class="input">
-<input type="number" id="nominal" placeholder="Masukkan Nominal">
+
+
+<div class="field">
+  <label>Upload Bukti Transfer</label>
+  <label class="upload-box">
+    <input type="file" id="bukti" hidden>
+    <span id="uploadText">Klik untuk upload gambar</span>
+  </label>
 </div>
 
-<div class="upload">
-<input type="file" id="bukti">
+<button class="btn" id="confirmBtn">Konfirmasi</button>
+
+<div id="loading" style="display:none; text-align:center; margin-top:15px;">
+  <div style="font-weight:bold; color:#5b7cff;">⏳ Memproses pembayaran...</div>
 </div>
 
-<button class="btn" onclick="kirim()">Konfirmasi Pembayaran</button>
+
 
 <button class="cancel">Batalkan</button>
 
@@ -203,6 +288,32 @@ QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
 </div>
 
 <script>
+const confirmBtn = document.getElementById("confirmBtn")
+const loading = document.getElementById("loading")
+
+confirmBtn.onclick = () => {
+  // tampilkan loading
+  confirmBtn.style.display = "none"
+  loading.style.display = "block"
+
+  // redirect ke final.html setelah 2 detik, bawa data via query string
+  const params = new URLSearchParams(window.location.search)
+  setTimeout(()=>{
+    window.location.href = "final.html?" + params.toString()
+  }, 2000)
+}
+</script>
+
+<script>
+const data = {
+price: parseInt(params.get("price")) || 1000,
+item: params.get("item") || "Produk Tidak Diketahui",
+game: params.get("game") || ""
+}
+
+// tampilkan produk
+document.getElementById("produk").innerText = data.game + " - " + data.item
+
 function bukaQR(){
 document.getElementById("popupQR").classList.add("active")
 }
@@ -212,69 +323,104 @@ document.getElementById("popupQR").classList.remove("active")
 }
 </script>
 <script>
+document.getElementById("bukti").addEventListener("change", function(){
+const fileName = this.files[0]?.name || "Klik untuk upload gambar"
+document.getElementById("uploadText").innerText = fileName
+})
+</script>
+<script>
 const params = new URLSearchParams(location.search)
 
+// Ambil semua data checkout dari query string
 const data = {
-price: parseInt(params.get("price")) || 1000
+  game: params.get("game") || "-",
+  item: params.get("item") || "-",
+  price: parseInt(params.get("price")) || 0,
+  type: params.get("type") || "-",
+  userId: params.get("userId") || "-",
+  username: params.get("username") || "-",
+  phone: params.get("phone") || "-",
+  server: params.get("server") || "-",
+  payment: params.get("payment") || "-"
 }
 
-// generate kode unik
-const kodeUnik = Math.floor(Math.random()*900)+100
+// generate kode unik / biaya admin kecil (50-100)
+const admin = Math.floor(Math.random() * 51) + 50
+const total = data.price + admin
 
-const total = data.price + kodeUnik
-
+document.getElementById("produk").innerText = `${data.game} - ${data.item}`
 document.getElementById("jumlah").innerText = "Rp " + data.price.toLocaleString()
-document.getElementById("kode").innerText = kodeUnik
+document.getElementById("kode").innerText = "Rp " + admin.toLocaleString()
 document.getElementById("total").innerText = "Rp " + total.toLocaleString()
 
 // TIMER
 let time = 1800
 const timerEl = document.getElementById("timer")
 
-setInterval(()=>{
-let m = Math.floor(time/60)
-let s = time%60
+setInterval(() => {
+  let m = Math.floor(time / 60)
+  let s = time % 60
 
-timerEl.innerText = `Batas Waktu: ${m}:${s<10?"0":""}${s}`
-time--
+  timerEl.innerText = `Batas Waktu: ${m}:${s < 10 ? "0" : ""}${s}`
+  time--
 
-if(time <= 0){
-timerEl.innerText = "QRIS EXPIRED"
-}
-},1000)
+  if (time <= 0) {
+    timerEl.innerText = "QRIS EXPIRED"
+  }
+}, 1000)
 
-// KIRIM TELEGRAM
-async function kirim(){
-const nominal = document.getElementById("nominal").value
-const file = document.getElementById("bukti").files[0]
+// Fungsi kirim ke Telegram lengkap
+async function kirim() {
+  const file = document.getElementById("bukti").files[0]
 
-if(!nominal || !file){
-alert("Lengkapi data!")
-return
-}
+  if (!file) {
+    alert("Upload bukti transfer terlebih dahulu!")
+    return
+  }
 
-const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
-const CHAT_ID = "7314158034"
+  const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
+  const CHAT_ID = "7314158034"
 
-await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-chat_id: CHAT_ID,
-text: `Pembayaran Masuk\nNominal: Rp ${nominal}`
-})
-})
+  // Buat pesan lengkap
+  const pesan = `
+📌 *PEMBAYARAN MASUK* 📌
 
-let form = new FormData()
-form.append("chat_id", CHAT_ID)
-form.append("photo", file)
+Game: ${data.game}
+Item: ${data.item}
+Harga: Rp ${data.price.toLocaleString()}
+Biaya Admin: Rp ${admin.toLocaleString()}
+Total Bayar: Rp ${total.toLocaleString()}
+Tipe: ${data.type}
+User ID: ${data.userId}
+Username: ${data.username}
+No HP: ${data.phone}
+Server: ${data.server}
+Metode Bayar: ${data.payment}
+  `
 
-await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-method: "POST",
-body: form
-})
+  // Kirim pesan teks
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: pesan,
+      parse_mode: "Markdown"
+    })
+  })
 
-alert("Berhasil dikirim!")
+  // Kirim foto bukti dengan caption
+  let form = new FormData()
+  form.append("chat_id", CHAT_ID)
+  form.append("photo", file)
+  form.append("caption", `Bukti Transfer: ${data.game} - ${data.item}\nTotal: Rp ${total.toLocaleString()}`)
+
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+    method: "POST",
+    body: form
+  })
+
+  alert("Berhasil dikirim ke admin!")
 }
 </script>
 
