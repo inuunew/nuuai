@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice Pembayaran</title>
+
+<style>
+body{
+font-family:Arial;
+background:#fff;
+margin:0;
+}
+
+.header{
+background:#ff6a00;
+color:white;
+padding:15px;
+font-size:18px;
+text-align:center;
+}
+
+.container{
+padding:15px;
+}
+
+.qris-box{
+background:#fff3e8;
+border-radius:20px;
+padding:15px;
+text-align:center;
+}
+
+.qris-box img{
+width:100%;
+max-width:280px;
+border-radius:15px;
+}
+
+.input{
+margin-top:15px;
+}
+
+.input input{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+.upload{
+margin-top:10px;
+}
+
+.upload input{
+width:100%;
+}
+
+.btn{
+margin-top:15px;
+width:100%;
+padding:14px;
+background:#ff6a00;
+border:none;
+color:white;
+font-size:16px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.info{
+margin-top:20px;
+background:#f3f4f6;
+padding:15px;
+border-radius:10px;
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">QRIS Pembayaran</div>
+
+<div class="container">
+
+<div class="qris-box">
+<h3>Scan QRIS</h3>
+
+<!-- GANTI KE FILE KAMU -->
+<img src="qris.jpg">
+
+<div class="input">
+<input type="number" id="nominal" placeholder="Masukkan Nominal">
+</div>
+
+<div class="upload">
+<input type="file" id="bukti">
+</div>
+
+<button class="btn" onclick="kirim()">Konfirmasi</button>
+
+</div>
+
+<div class="info">
+<b>Langkah:</b><br>
+1. Scan QRIS<br>
+2. Transfer sesuai nominal<br>
+3. Upload bukti<br>
+4. Tunggu proses
+</div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(location.search)
+
+const data = {
+game: params.get("game"),
+item: params.get("item"),
+price: params.get("price"),
+userId: params.get("userId"),
+username: params.get("username"),
+phone: params.get("phone"),
+server: params.get("server"),
+payment: params.get("payment")
+}
+
+async function kirim(){
+
+const nominal = document.getElementById("nominal").value
+const file = document.getElementById("bukti").files[0]
+
+if(!nominal || !file){
+alert("Lengkapi data!")
+return
+}
+
+// 🔥 TELEGRAM CONFIG
+const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
+const CHAT_ID = "7314158034"
+
+// kirim text
+let text = `
+📥 ORDER BARU
+
+Game: ${data.game}
+Item: ${data.item}
+Harga: Rp ${data.price}
+Metode: ${data.payment}
+
+UserID: ${data.userId}
+Username: ${data.username}
+No HP: ${data.phone}
+Server: ${data.server}
+
+Nominal TF: Rp ${nominal}
+`
+
+await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+chat_id: CHAT_ID,
+text: text
+})
+})
+
+// kirim foto
+let form = new FormData()
+form.append("chat_id", CHAT_ID)
+form.append("photo", file)
+
+await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`,{
+method:"POST",
+body: form
+})
+
+alert("Berhasil dikirim ke admin!")
+}
+</script>
+
+</body>
+</html>
