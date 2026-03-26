@@ -364,7 +364,12 @@ transition:0.1s;
 <script src="database.js"></script>
 <script>
 
+
 const params = new URLSearchParams(window.location.search)
+const key = params.get("key")
+const produk = databaseProduk[key] || {}
+
+const required = produk.require || []
 const phone = document.getElementById("phone")
 const username = document.getElementById("username")
 const userId = document.getElementById("userId")
@@ -394,27 +399,10 @@ document.getElementById("total").innerText = "Rp " + safePrice.toLocaleString("i
 document.getElementById("bill").innerText = "Rp " + safePrice.toLocaleString("id-ID")
 document.getElementById("gameImage").src = image
 
-if(type === "pulsa"){
-userIdBox.style.display="none"
-phoneBox.style.display="block"
-}
-if(type === "voucher"){
-    userIdBox.style.display = "none"
-    serverBox.style.display = "none"
-}
-if(type === "usn"){
-userIdBox.style.display="none"
-usernameBox.style.display="block"
-}
-
-if(type === "idserver"){
-serverBox.style.display="block"
-if(game.toLowerCase().includes("mobile")){
-mlServer.style.display="flex"
-}else{
-genshinServer.style.display="flex"
-}
-}
+userIdBox.style.display = required.includes("userId") ? "block" : "none"
+phoneBox.style.display = required.includes("phone") ? "block" : "none"
+usernameBox.style.display = required.includes("username") ? "block" : "none"
+serverBox.style.display = required.includes("server") ? "block" : "none"
 
 document.querySelector(".search").onclick = function(){
 const id = userId.value
@@ -459,49 +447,47 @@ btn.innerHTML="⏳ Memproses..."
 btn.disabled=true
 btn.style.opacity="0.7"
 
-let server=""
-if(type==="idserver"){
-if(game.toLowerCase().includes("mobile")){
-server=serverId.value
-}else{
-server=serverRegion.value
-}
+let server = ""
+
+if (required.includes("server")) {
+  if (produk.serverType === "id") {
+    server = serverId.value
+  } else {
+    server = serverRegion.value
+  }
 }
 
 function resetBtn(){
-  const btn = document.querySelector(".pay")
   btn.innerHTML = "Bayar"
   btn.disabled = false
   btn.style.opacity = "1"
 }
-// VALIDASI INPUT
-if(type === "pulsa" && !phone.value){
-    alert("Masukkan nomor HP")
-    btn.innerHTML="Bayar"
-    btn.disabled=false
-    return
+
+// VALIDASI DINAMIS
+if (required.includes("phone") && !phone.value) {
+  alert("Masukkan nomor HP")
+  resetBtn()
+  return
 }
 
-if(type === "usn" && !username.value){
-    alert("Masukkan username")
-    btn.innerHTML="Bayar"
-    btn.disabled=false
-    return
+if (required.includes("username") && !username.value) {
+  alert("Masukkan username")
+  resetBtn()
+  return
 }
 
-if(type !== "voucher" && type !== "pulsa" && type !== "usn" && !userId.value){
-    alert("Masukkan ID")
-    btn.innerHTML="Bayar"
-    btn.disabled=false
-    return
+if (required.includes("userId") && !userId.value) {
+  alert("Masukkan ID")
+  resetBtn()
+  return
 }
 
-if(type === "idserver" && !server){
-    alert("Masukkan server")
-    btn.innerHTML="Bayar"
-    btn.disabled=false
-    return
+if (required.includes("server") && !server) {
+  alert("Masukkan server")
+  resetBtn()
+  return
 }
+
 if(!selectedPayment){
     alert("Pilih pembayaran")
     btn.innerHTML="Bayar"
@@ -528,11 +514,21 @@ else{
     pesan += `ID: ${userId.value}\n`
 }
 
-if(type === "idserver"){
-    pesan += `Server: ${server}\n`
+if (required.includes("server")) {
+  serverBox.style.display = "block"
+
+  if (produk.serverType === "id") {
+    mlServer.style.display = "flex"
+    genshinServer.style.display = "none"
+  } 
+  else if (produk.serverType === "region") {
+    mlServer.style.display = "none"
+    genshinServer.style.display = "flex"
+  }
 }
 window.location.href =
-"invoice.html?game=" + encodeURIComponent(game) +
+"invoice.html?key=" + key +
+"&game=" + encodeURIComponent(game) +
 "&item=" + encodeURIComponent(item) +
 "&price=" + safePrice +
 "&type=" + type +
@@ -541,7 +537,6 @@ window.location.href =
 "&phone=" + (phone.value || '') +
 "&server=" + (server || '') +
 "&payment=" + selectedPayment;
-}
 </script>
 <script>
 function openInfo(){
