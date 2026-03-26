@@ -288,46 +288,11 @@ QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
 </div>
 
 <script>
-const confirmBtn = document.getElementById("confirmBtn")
-const loading = document.getElementById("loading")
+// ===============================
+// AMBIL PARAMETER URL
+// ===============================
+const params = new URLSearchParams(window.location.search)
 
-confirmBtn.onclick = () => {
-  // tampilkan loading
-  confirmBtn.style.display = "none"
-  loading.style.display = "block"
-
-  // redirect ke final.html setelah 2 detik, bawa data via query string
-  const params = new URLSearchParams(window.location.search)
-  setTimeout(()=>{
-    window.location.href = "final.html?" + params.toString()
-  }, 2000)
-}
-
-const data = {
-price: parseInt(params.get("price")) || 1000,
-item: params.get("item") || "Produk Tidak Diketahui",
-game: params.get("game") || ""
-}
-
-
-function bukaQR(){
-document.getElementById("popupQR").classList.add("active")
-}
-
-function tutupQR(){
-document.getElementById("popupQR").classList.remove("active")
-}
-
-document.getElementById("bukti").addEventListener("change", function(){
-const fileName = this.files[0]?.name || "Klik untuk upload gambar"
-document.getElementById("uploadText").innerText = fileName
-})
-</script>
-<script>
-// === Ambil parameter dari URL ===
-const params = new URLSearchParams(location.search)
-
-// === Ambil data checkout dari query string ===
 const data = {
   game: params.get("game") || "-",
   item: params.get("item") || "-",
@@ -340,73 +305,110 @@ const data = {
   payment: params.get("payment") || "-"
 }
 
-// === generate biaya admin kecil (50-100) dan total ===
+// ===============================
+// HITUNG TOTAL
+// ===============================
 const admin = Math.floor(Math.random() * 51) + 50
 const total = data.price + admin
 
-// === tampilkan produk & total ===
-document.getElementById("produk").innerText = `${data.game} - ${data.item} (${data.type})`
-document.getElementById("jumlah").innerText = "Rp " + data.price.toLocaleString()
-document.getElementById("kode").innerText = "Rp " + admin.toLocaleString()
-document.getElementById("total").innerText = "Rp " + total.toLocaleString()
+// ===============================
+// TAMPILKAN DATA
+// ===============================
+document.getElementById("produk").innerText =
+  `${data.game} - ${data.item} (${data.type})`
 
-// === TIMER 30 menit (1800 detik) ===
+document.getElementById("jumlah").innerText =
+  "Rp " + data.price.toLocaleString("id-ID")
+
+document.getElementById("kode").innerText =
+  "Rp " + admin.toLocaleString("id-ID")
+
+document.getElementById("total").innerText =
+  "Rp " + total.toLocaleString("id-ID")
+
+// ===============================
+// TIMER
+// ===============================
 let time = 1800
 const timerEl = document.getElementById("timer")
-const intervalId = setInterval(() => {
+
+const interval = setInterval(() => {
   if (time <= 0) {
     timerEl.innerText = "QRIS EXPIRED"
-    clearInterval(intervalId)
+    clearInterval(interval)
     return
   }
+
   let m = Math.floor(time / 60)
   let s = time % 60
+
   timerEl.innerText = `Batas Waktu: ${m}:${s < 10 ? "0" : ""}${s}`
   time--
 }, 1000)
 
-// === QR popup ===
-function bukaQR(){ document.getElementById("popupQR").classList.add("active") }
-function tutupQR(){ document.getElementById("popupQR").classList.remove("active") }
+// ===============================
+// QR POPUP
+// ===============================
+function bukaQR(){
+  document.getElementById("popupQR").classList.add("active")
+}
 
-// === Upload bukti transfer ===
+function tutupQR(){
+  document.getElementById("popupQR").classList.remove("active")
+}
+
+// ===============================
+// UPLOAD FILE
+// ===============================
 document.getElementById("bukti").addEventListener("change", function(){
   const fileName = this.files[0]?.name || "Klik untuk upload gambar"
   document.getElementById("uploadText").innerText = fileName
 })
 
-// === Konfirmasi tombol ===
+// ===============================
+// KONFIRMASI + LOADING + REDIRECT
+// ===============================
 const confirmBtn = document.getElementById("confirmBtn")
 const loading = document.getElementById("loading")
+
 confirmBtn.onclick = () => {
+  const file = document.getElementById("bukti").files[0]
+
+  if (!file) {
+    alert("Upload bukti transfer dulu!")
+    return
+  }
+
   confirmBtn.style.display = "none"
   loading.style.display = "block"
 
-  // redirect ke final.html setelah 2 detik, bawa data via query string
   setTimeout(() => {
     window.location.href = "final.html?" + params.toString()
   }, 2000)
 }
 
-// === Fungsi kirim ke Telegram ===
+// ===============================
+// KIRIM KE TELEGRAM
+// ===============================
 async function kirim() {
   const file = document.getElementById("bukti").files[0]
+
   if (!file) {
     alert("Upload bukti transfer terlebih dahulu!")
     return
   }
 
-  const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
-  const CHAT_ID = "7314158034"
+  const BOT_TOKEN = "ISI_BOT_TOKEN_KAMU"
+  const CHAT_ID = "ISI_CHAT_ID_KAMU"
 
   const pesan = `
 📌 *PEMBAYARAN MASUK* 📌
 
 Game: ${data.game}
 Item: ${data.item}
-Harga: Rp ${data.price.toLocaleString()}
-Biaya Admin: Rp ${admin.toLocaleString()}
-Total Bayar: Rp ${total.toLocaleString()}
+Harga: Rp ${data.price.toLocaleString("id-ID")}
+Biaya Admin: Rp ${admin.toLocaleString("id-ID")}
+Total Bayar: Rp ${total.toLocaleString("id-ID")}
 Tipe: ${data.type}
 User ID: ${data.userId}
 Username: ${data.username}
@@ -416,10 +418,9 @@ Metode Bayar: ${data.payment}
   `
 
   try {
-    // kirim pesan teks
     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type":"application/json"},
       body: JSON.stringify({
         chat_id: CHAT_ID,
         text: pesan,
@@ -427,11 +428,9 @@ Metode Bayar: ${data.payment}
       })
     })
 
-    // kirim foto bukti transfer
     let form = new FormData()
     form.append("chat_id", CHAT_ID)
     form.append("photo", file)
-    form.append("caption", `Bukti Transfer: ${data.game} - ${data.item}\nTotal: Rp ${total.toLocaleString()}`)
 
     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
       method: "POST",
@@ -440,8 +439,8 @@ Metode Bayar: ${data.payment}
 
     alert("Berhasil dikirim ke admin!")
   } catch (err) {
+    alert("Gagal kirim!")
     console.error(err)
-    alert("Gagal mengirim ke admin. Silakan coba lagi.")
   }
 }
 </script>
