@@ -363,233 +363,147 @@ transition:0.1s;
 
 <script src="database.js"></script>
 <script>
-
-
 const params = new URLSearchParams(window.location.search)
 const key = params.get("key")
 let produk = database[key] || databaseOther[key] || databasePanel[key] || {}
 
 const required = produk.require || []
-const paymentList = document.getElementById("paymentList")
-const paymentSelected = document.getElementById("paymentSelected")
-const url = new URLSearchParams(window.location.search);
 
-const game = url.get("game");
-const item = url.get("item");
-const price = url.get("price");
-const image = url.get("image");
-const type = url.get("type");
+const userIdBox = document.getElementById("userIdBox")
+const usernameBox = document.getElementById("usernameBox")
+const phoneBox = document.getElementById("phoneBox")
+const serverBox = document.getElementById("serverBox")
+const nicknameBox = document.getElementById("nicknameBox")
+const mlServer = document.getElementById("mlServer")
+const genshinServer = document.getElementById("genshinServer")
 
-const userId = url.get("userId");
-const username = url.get("username");
-const server = url.get("server");
-const phone = url.get("phone");
-const payment = url.get("payment");
-
-const safePrice = Number(price) || 0
+const game = params.get("game") || ""
+const item = params.get("item") || ""
+const price = Number(params.get("price")) || 0
+const image = params.get("image") || "default.png"
+const type = params.get("type") || ""
 
 document.getElementById("itemName").innerText = game + " " + item
-document.getElementById("price").innerText = "Rp " + safePrice.toLocaleString("id-ID")
-document.getElementById("subtotal").innerText = "Rp " + safePrice.toLocaleString("id-ID")
-document.getElementById("total").innerText = "Rp " + safePrice.toLocaleString("id-ID")
-document.getElementById("bill").innerText = "Rp " + safePrice.toLocaleString("id-ID")
+document.getElementById("price").innerText = "Rp " + price.toLocaleString("id-ID")
+document.getElementById("subtotal").innerText = "Rp " + price.toLocaleString("id-ID")
+document.getElementById("total").innerText = "Rp " + price.toLocaleString("id-ID")
+document.getElementById("bill").innerText = "Rp " + price.toLocaleString("id-ID")
 document.getElementById("gameImage").src = image
 
+// Tampilkan input sesuai required
 userIdBox.style.display = required.includes("userId") ? "block" : "none"
-phoneBox.style.display = required.includes("phone") ? "block" : "none"
 usernameBox.style.display = required.includes("username") ? "block" : "none"
+phoneBox.style.display = required.includes("phone") ? "block" : "none"
 serverBox.style.display = required.includes("server") ? "block" : "none"
 
+// Cek nickname
 document.querySelector(".search").onclick = function(){
-const id = userId.value
-if(!id) return alert("Masukkan ID")
-
-nicknameBox.style.display="block"
-nicknameBox.innerHTML = "Mengecek..."
-
-setTimeout(()=>{
-nicknameBox.innerHTML = "Nickname: <b>Player_"+id+"</b>"
-},1000)
+  const id = document.getElementById("userId").value
+  if(!id) return alert("Masukkan ID")
+  nicknameBox.style.display="block"
+  nicknameBox.innerHTML = "Mengecek..."
+  setTimeout(()=>{
+    nicknameBox.innerHTML = "Nickname: <b>Player_"+id+"</b>"
+  },1000)
 }
 
-function goHome(){
-window.location.href="index.html"
-}
+// Navigasi
+function goHome(){ window.location.href="index.html" }
 
 let selectedPayment=""
-
 function togglePayment(){
-paymentList.style.display = paymentList.style.display==="block"?"none":"block"
+  const paymentList = document.getElementById("paymentList")
+  paymentList.style.display = paymentList.style.display==="block"?"none":"block"
 }
-
 function selectPayment(name){
-selectedPayment=name
-paymentSelected.innerText=name
-paymentList.style.display="none"
+  selectedPayment=name
+  document.getElementById("paymentSelected").innerText=name
+  document.getElementById("paymentList").style.display="none"
 }
-
 document.addEventListener("click", e => {
-  if (
-    !e.target.closest(".payment-select") &&
-    !e.target.closest(".payment-list")
-  ) {
-    paymentList.style.display = "none"
+  if (!e.target.closest(".payment-select") && !e.target.closest(".payment-list")) {
+    document.getElementById("paymentList").style.display = "none"
   }
 })
 
+// Checkout
 function bayar(){
-const btn=document.querySelector(".pay")
-btn.innerHTML="⏳ Memproses..."
-btn.disabled=true
-btn.style.opacity="0.7"
+  const btn = document.querySelector(".pay")
+  btn.innerHTML="⏳ Memproses..."
+  btn.disabled=true
+  btn.style.opacity="0.7"
 
-let server = ""
-
-if (required.includes("server")) {
-  if (produk.serverType === "id") {
-    server = serverId.value
-  } else {
-    server = serverRegion.value
+  let serverValue = ""
+  if(required.includes("server")){
+    if(produk.serverType==="id") serverValue = document.getElementById("serverId").value
+    else serverValue = document.getElementById("serverRegion").value
   }
-}
 
-function resetBtn(){
-  btn.innerHTML = "Bayar"
-  btn.disabled = false
-  btn.style.opacity = "1"
-}
-
-// VALIDASI DINAMIS
-if (required.includes("phone") && !phone.value) {
-  alert("Masukkan nomor HP")
-  resetBtn()
-  return
-}
-
-if (required.includes("username") && !username.value) {
-  alert("Masukkan username")
-  resetBtn()
-  return
-}
-
-if (required.includes("userId") && !userId.value) {
-  alert("Masukkan ID")
-  resetBtn()
-  return
-}
-
-if (required.includes("server") && !server) {
-  alert("Masukkan server")
-  resetBtn()
-  return
-}
-
-if(!selectedPayment){
-    alert("Pilih pembayaran")
+  function resetBtn(){
     btn.innerHTML="Bayar"
     btn.disabled=false
-    return
-}
-
-let pesan = `*ORDER*\n\n`
-pesan += `Game: ${game}\n`
-pesan += `Item: ${item}\n`
-pesan += `Harga: Rp ${safePrice.toLocaleString("id-ID")}\n`
-pesan += `Bayar: ${selectedPayment}\n`
-
-if(type === "pulsa"){
-    pesan += `No HP: ${phone.value}\n`
-}
-else if(type === "usn"){
-    pesan += `Username: ${username.value}\n`
-}
-else if(type === "voucher"){
-    pesan += `Tipe: Voucher (tanpa ID)\n`
-}
-else{
-    pesan += `ID: ${userId.value}\n`
-}
-
-if (required.includes("server")) {
-  serverBox.style.display = "block"
-
-  if (produk.serverType === "id") {
-    mlServer.style.display = "flex"
-    genshinServer.style.display = "none"
-  } 
-  else if (produk.serverType === "region") {
-    mlServer.style.display = "none"
-    genshinServer.style.display = "flex"
+    btn.style.opacity="1"
   }
+
+  // Validasi input
+  if(required.includes("phone") && !document.getElementById("phone").value){ alert("Masukkan nomor HP"); resetBtn(); return }
+  if(required.includes("username") && !document.getElementById("username").value){ alert("Masukkan username"); resetBtn(); return }
+  if(required.includes("userId") && !document.getElementById("userId").value){ alert("Masukkan ID"); resetBtn(); return }
+  if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return }
+  if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return }
+
+  window.location.href =
+    "invoice.html?key="+key+
+    "&game="+encodeURIComponent(game)+
+    "&item="+encodeURIComponent(item)+
+    "&price="+price+
+    "&type="+type+
+    "&userId="+encodeURIComponent(document.getElementById("userId").value || '')+
+    "&username="+encodeURIComponent(document.getElementById("username").value || '')+
+    "&phone="+encodeURIComponent(document.getElementById("phone").value || '')+
+    "&server="+encodeURIComponent(serverValue || '')+
+    "&payment="+encodeURIComponent(selectedPayment)
 }
-window.location.href =
-"invoice.html?key=" + key +
-"&game=" + encodeURIComponent(game) +
-"&item=" + encodeURIComponent(item) +
-"&price=" + safePrice +
-"&type=" + type +
-"&userId=" + (userId.value || '') +
-"&username=" + (username.value || '') +
-"&phone=" + (phone.value || '') +
-"&server=" + (server || '') +
-"&payment=" + selectedPayment;
-</script>
-<script>
+
+// Modal info
 function openInfo(){
-const modal = document.getElementById("infoModal")
-const body = document.getElementById("modalBody")
+  const modal = document.getElementById("infoModal")
+  const body = document.getElementById("modalBody")
+  let found = databasePanel[key] || database[key] || databaseOther[key]
 
-const key = params.get("key")
-let found = null
-
-// PRIORITAS 1: panel
-if(key && typeof databasePanel !== "undefined" && databasePanel[key]){
-  found = databasePanel[key]
-}
-
-// PRIORITAS 2: databaseProduk (pakai nama item)
-if(!found && typeof databaseProduk !== "undefined"){
-  for(let k in databaseProduk){
-   if(databaseProduk[k].name.toLowerCase().includes(game.toLowerCase())){
-      found = databaseProduk[k]
-      break
-    }
+  if(found){
+    body.innerHTML = `
+      <img src="${image}" style="width:100%;border-radius:10px;margin-bottom:10px;">
+      <h3>${found.name}</h3>
+      <p>${found.desc || '-'}</p>
+      <hr>
+      <p>${found.detail || '-'}</p>
+    `
+  } else {
+    body.innerHTML = `
+      <h3>${game} - ${item}</h3>
+      <p style="margin-top:10px;">
+        ✅ Proses otomatis 1-30 detik<br>
+        ✅ Tanpa login akun<br>
+        ✅ Aman & terpercaya<br>
+        ✅ Layanan 24 jam
+      </p>
+      <hr>
+      <p style="margin-top:10px;color:#16a34a;">
+        Pastikan data yang kamu input sudah benar sebelum checkout.
+        Kesalahan input bukan tanggung jawab admin.
+      </p>
+    `
   }
+  modal.style.display="flex"
 }
+function closeInfo(){ document.getElementById("infoModal").style.display="none" }
 
-// OUTPUT
-if(found){
-  body.innerHTML = `
-  <img src="${image}" style="width:100%;border-radius:10px;margin-bottom:10px;">
-  <h3>${found.name}</h3>
-  <p>${found.desc || '-'}</p>
-  <hr>
-  <p>${found.detail || '-'}</p>
-  `
-}else{
-  body.innerHTML = `
-<h3>${game} - ${item}</h3>
-
-<p style="margin-top:10px;">
-✅ Proses otomatis 1-30 detik<br>
-✅ Tanpa login akun<br>
-✅ Aman & terpercaya<br>
-✅ Layanan 24 jam
-</p>
-
-<hr>
-
-<p style="margin-top:10px;color:#16a34a;">
-Pastikan data yang kamu input sudah benar sebelum checkout.
-Kesalahan input bukan tanggung jawab admin.
-</p>
-`
-}
-
-modal.style.display = "flex"
-}
-function closeInfo(){
-  document.getElementById("infoModal").style.display = "none"
+// Tampilkan server sesuai tipe
+if(required.includes("server")){
+  serverBox.style.display="block"
+  if(produk.serverType==="id"){ mlServer.style.display="flex"; genshinServer.style.display="none" }
+  else if(produk.serverType==="region"){ mlServer.style.display="none"; genshinServer.style.display="flex" }
 }
 </script>
 </body>
