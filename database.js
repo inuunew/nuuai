@@ -2,7 +2,7 @@ const database = {
 
   ff: {
     name: "Free Fire",
-    type: "id",
+    require: ["userId"],
     image: "assets/ff.png",
 
     regular: [
@@ -35,8 +35,9 @@ const database = {
 
   ml: {
     name: "Mobile Legends",
-    type: "idserver",
-    image: "assets/ml.png",
+    require: ["userId", "server"],
+    serverType: "id", // pakai input number
+    image: "assets/ml.png", 
 
     regular: [
       { name: "59 Diamond ML", price: "Rp15.000", status: "online" },
@@ -55,7 +56,7 @@ const database = {
 
   pubg: {
     name: "PUBG Mobile",
-    type: "voucher",
+    require: ["userid"],
     image: "assets/pubg.png",
 
     regular: [
@@ -70,9 +71,10 @@ const database = {
   },
 
   genshin: {
-    name: "Genshin Impact",
-    type: "uid",
-    image: "assets/genshin.png",
+  name: "Genshin Impact",
+  require: ["userId", "server"],
+  serverType: "region",
+  image: "assets/genshin.png",
 
     regular: [
       { name: "63 Genesis Crystal", price: "Rp17.000", status: "online" },
@@ -89,7 +91,7 @@ const database = {
 
   hok: {
     name: "Honor of Kings",
-    type: "id",
+    require: ["userId"],
     image: "assets/hok.png",
 
     regular: [
@@ -106,7 +108,7 @@ const database = {
 
   valorant: {
     name: "Valorant",
-    type: "voucher",
+    require: [],
     image: "assets/valo.png",
 
     regular: [
@@ -122,7 +124,7 @@ const database = {
 
   fcmobile: {
     name: "FC Mobile",
-    type: "id",
+    require: ["userId"],
     image: "assets/fcm.png",
 
     regular: [
@@ -138,7 +140,7 @@ const database = {
 
   codm: {
     name: "Call of Duty",
-    type: "idserver",
+    require: ["userId"],
     image: "assets/cod.png",
 
     regular: [
@@ -154,7 +156,7 @@ const database = {
 
   coc: {
     name: "Clash of Clans",
-    type: "id",
+    require: ["userId"],
     image: "assets/coc.png",
 
     regular: [
@@ -173,7 +175,7 @@ const database = {
 
   asphalt9: {
     name: "Asphalt 9",
-    type: "id",
+    require: ["userId"],
     image: "assets/asphalt.png",
 
     regular: [
@@ -191,8 +193,8 @@ const database = {
 
 const databaseOther = {
   pulsa: {
-    name: "Pulsa & Paket Data",
-    type: "voucher", 
+  name: "Pulsa",
+  require: ["phone"],
     image: "https://files.catbox.moe/7h9pqr.png",
     items: [
       { name: "Pulsa 5.000", price: "Rp5.000", status: "online" },
@@ -204,34 +206,12 @@ const databaseOther = {
     membership: []
   },
 
-  tokenListrik: {
-    name: "Token Listrik PLN",
-    image: "https://files.catbox.moe/qv8b1x.png",
-    items: [
-      { name: "Token 20.000", price: "Rp20.000", status: "online" },
-      { name: "Token 50.000", price: "Rp50.000", status: "offline" },
-      { name: "Token 100.000", price: "Rp100.000", status: "online" },
-      { name: "Token 200.000", price: "Rp200.000", status: "online" }
-    ], 
-    membership: []
-  },
-
-  voucherGame: {
-    name: "Voucher Game",
-    image: "https://files.catbox.moe/n7y9s2.png",
-    items: [
-      { name: "Steam Wallet 50k", price: "Rp50.000", status: "online" },
-      { name: "Steam Wallet 100k", price: "Rp100.000", status: "online" },
-      { name: "Google Play 50k", price: "Rp50.000", status: "offline" },
-      { name: "Google Play 100k", price: "Rp100.000", status: "online" }
-    ], 
-    membership: []
-  }
 };
 
 const databasePanel = {
   panel: {
     name: "Panel Bot",
+    require: ["username"], // 🔥 WAJIB USERNAME
     image: "img/panel.jpg",
     items: [
       { name: "1GB", price: 5000, status: "online" },
@@ -244,10 +224,11 @@ const databasePanel = {
       { name: "8GB", price: 9000, status: "online" },
       { name: "Unlimited", price: 10000, status: "online" }
     ]
-  }, // ✅ TAMBAHKAN INI
+  },
 
   panel10: {
     name: "Reseller Panel",
+    require: ["username"], // 🔥 WAJIB USERNAME
     image: "img/panel.jpg",
     items: [
       { name: "Reseller public", price: 15000, status: "online" },
@@ -257,6 +238,7 @@ const databasePanel = {
 
   panel11: {
     name: "Admin Panel",
+    require: ["username"], // 🔥 WAJIB USERNAME
     image: "img/panel.jpg",
     items: [
       { name: "Admin", price: 20000, status: "online" }
