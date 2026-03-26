@@ -331,8 +331,11 @@ else if(data.type === "voucher"){
 }
 
 // tampilkan ke produk
-document.getElementById("produk").innerText =
-  `${data.game} - ${data.item} (${detailProduk})`
+document.getElementById("produk").innerHTML = `
+  <b>Layanan : ${data.game}</b>
+  <br>Item : ${data.item}<br>
+  <span style="color:#666;">${detailProduk}</span>
+`
 
 document.getElementById("jumlah").innerText =
   "Rp " + data.price.toLocaleString("id-ID")
