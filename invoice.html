@@ -391,7 +391,7 @@ document.getElementById("bukti").addEventListener("change", function(){
 const confirmBtn = document.getElementById("confirmBtn")
 const loading = document.getElementById("loading")
 
-confirmBtn.onclick = () => {
+confirmBtn.onclick = async () => {
   const file = document.getElementById("bukti").files[0]
 
   if (!file) {
@@ -402,11 +402,17 @@ confirmBtn.onclick = () => {
   confirmBtn.style.display = "none"
   loading.style.display = "block"
 
-  setTimeout(() => {
+  try {
+    await kirim() // kirim ke Telegram
+    alert("Berhasil dikirim ke admin!")
     window.location.href = "final.html?" + params.toString()
-  }, 2000)
+  } catch(e){
+    alert("Gagal kirim ke admin!")
+    confirmBtn.style.display = "block"
+    loading.style.display = "none"
+    console.error(e)
+  }
 }
-
 // ===============================
 // KIRIM KE TELEGRAM
 // ===============================
