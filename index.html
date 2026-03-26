@@ -17,7 +17,6 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Outfit',sans-serif;
--webkit-tap-highlight-color: transparent;
 }
 
 body{
@@ -147,19 +146,12 @@ padding:12px;
 cursor:pointer;
 border:1px solid #ecfdf5;
 box-shadow:0 6px 14px rgba(0,0,0,0.05);
-transition: transform 0.15s ease, box-shadow 0.15s ease;
+transition:all 0.2s ease;
 display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
 }
-
-/* SAAT DIKLIK */
-.game-card:active{
-transform: scale(1.05);
-box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
 
 .game-card a{
 text-decoration:none;
@@ -422,65 +414,24 @@ margin-top:20px;
 }
 
 .item{
-height:90px; /* tinggi fix biar sama */
+background:#f9fafb;
+border-radius:14px;
 padding:12px;
-border-radius:16px;
-border:1px solid #e5e7eb;
-display:flex;
-flex-direction:column;
-justify-content:center;
-gap:4px;
-background:#f9fafb;
-transition:0.2s;
-}
-
-.item:active{
-transform: scale(1.02);
-}
-
-
-/* HOVER */
-.item:hover{
-border:1px solid #16a34a;
-background:#f0fdf4;
-}
-
-/* SAAT DIPILIH */
-.item.selected{
-border:2px solid #16a34a;
-background:#ecfdf5;
-}
-
-/* ONLINE */
-.item.online{
-background:#f9fafb;
-}
-
-/* OFFLINE */
-.item.offline{
-background:#f9fafb;
-opacity:0.5;
-}
-
-
-.item span{
-font-size:14px;
-font-weight:500;
-color:#111827;
+border:1px solid #eee;
 }
 
 .price{
-color:#16a34a;
-font-weight:700;
-font-size:15px;
+color:#18a558;
+font-weight:bold;
+margin-top:5px;
 }
 
 .status{
-width:6px;
-height:6px;
+width:8px;
+height:8px;
 border-radius:50%;
 display:inline-block;
-margin-right:6px;
+margin-right:5px;
 }
 
 .online{
@@ -656,34 +607,6 @@ background:linear-gradient(135deg,#facc15,#f59e0b);
 color:#000;
 box-shadow:0 0 8px rgba(250,204,21,0.6);
 }
-/*CLOSE BTN*/
-.close-btn{
-margin-left:auto;
-width:36px;
-height:36px;
-border:none;
-border-radius:10px;
-background:#f3f4f6;
-display:flex;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-transition:0.2s;
-font-size:14px;
-color:#374151;
-}
-
-/* HOVER */
-.close-btn:hover{
-background:#fee2e2;
-color:#dc2626;
-transform:scale(1.1);
-}
-
-/* ACTIVE (saat diklik) */
-.close-btn:active{
-transform:scale(0.95);
-}
 </style>
 
 </head>
@@ -694,7 +617,7 @@ transform:scale(0.95);
   <!-- POPUP NOTIF -->
   <div id="notifBox" class="popup-box" style="display:none;">
     <h3>🔔 Notifikasi</h3>
-    <p>🎉 Selamat datang di Inuu Market!<br>
+    <p>🎉 Selamat datang di Ryuzen Shop!<br>
     Nikmati layanan top up cepat dan aman.</p>
 
     <div class="popup-btn">
@@ -724,9 +647,7 @@ transform:scale(0.95);
         <span class="instant">Instant Process</span>
       </div>
 
-      <button class="close-btn" onclick="closeTopup()">
-  <i class="fas fa-times"></i>
-</button>
+      <button onclick="closeTopup()">✕</button>
     </div>
 
 <div class="tabs">
@@ -735,7 +656,7 @@ transform:scale(0.95);
 Item Reguler
 </button>
 
-<button id="membershipTab" class="tab" onclick="switchTab('membership',this)">
+<button class="tab" onclick="switchTab('membership',this)">
 Membership
 </button>
 
@@ -757,11 +678,11 @@ Konfirmasi
 
 <div class="nav-left">
 
-<img src="https://files.catbox.moe/tv1rv6.jpeg" class="logo">
+<img src="https://files.catbox.moe/0qwcuo.png" class="logo">
 
 <div class="logo-text">
-<div class="store">INUU <span>MARKET</span></div>
-<div class="sub">Menyediakan Berbagai Layanan</div>
+<div class="store">Ryuzen <span>Shop</span></div>
+<div class="sub">Top Up Games</div>
 </div>
 
 </div>
@@ -794,13 +715,16 @@ Konfirmasi
 <div class="slider">
 
 <div class="slide active">
-<img src="https://files.catbox.moe/x1geon.png">
+<img src="https://files.catbox.moe/kv98v7.jpg">
 </div>
 
 <div class="slide">
-<img src="https://files.catbox.moe/l5pwag.png">
+<img src="https://files.catbox.moe/kv98v7.jpg">
 </div>
 
+<div class="slide">
+<img src="https://files.catbox.moe/kv98v7.jpg">
+</div>
 
 </div>
 
@@ -811,7 +735,7 @@ Konfirmasi
 </div>
 
 <marquee class="info-text" scrollamount="5">
-Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam
+Selamat datang di Ryuzen Shop • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam
 </marquee>
 
 </div>
@@ -840,46 +764,19 @@ Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Dis
 <!-- GAME GRID -->
 
 <div class="game-grid" id="gameGrid"></div>
-
-<!-- PANEL BOT -->
-
-<div class="game-title">
-<div class="title-bar"></div>
-
-<div class="title-text">
-<h2>Panel Bot</h2>
-<p>Layanan Panel Pterodactyl & Bot</p>
-</div>
-</div>
-
-<div class="game-grid" id="panelGrid"></div>
 <!-- PRODUK LAIN -->
 
-<div class="game-title">
-
-<div class="title-bar"></div>
-
-<div class="title-text">
-<h2>Produk Lain</h2>
-<p>Pulsa, Token Listrik & Lainnya</p>
-</div>
-
-</div>
-
-<div class="game-grid" id="otherGrid"></div>
-<!-- FOOTER -->
 
 
 <!-- FOOTER -->
 
 <div class="footer">
-Powered by <span>InuuMarket</span><br>
+Powered by <span>RyuzenShop</span><br>
 © 2026 All rights reserved
 </div>
 
 <script src="database.js"></script>
 <script>
-
 
 let slides = document.querySelectorAll(".slide");
 let index = 0;
@@ -919,7 +816,7 @@ games.forEach(game=>{
 let name = game.innerText.toLowerCase();
 
 if(name.includes(keyword)){
-game.style.display = "";
+game.style.display="block";
 }else{
 game.style.display="none";
 }
@@ -991,39 +888,6 @@ ${item.items.length} Produk
 
 }
 
-/* LOAD PANEL BOT */
-
-const panelGrid = document.getElementById("panelGrid");
-
-if(typeof databasePanel !== "undefined"){
-
-Object.keys(databasePanel).forEach(key => {
-
-const panel = databasePanel[key];
-
-panelGrid.innerHTML += `
-
-<div class="game-card" onclick="openPanel('${key}')">
-
-<div class="game-img">
-<img src="${panel.image}">
-</div>
-
-<div class="game-name">
-${panel.name}
-</div>
-
-<div class="game-service">
-${panel.items.length} Paket
-</div>
-
-</div>
-
-`;
-
-});
-
-}
 
 /* GLOBAL VARIABLES */
 
@@ -1031,7 +895,6 @@ let currentGame = null
 let currentType = "regular"
 let selectedItem = null
 let isOtherProduct = false
-let isPanel = false
 
 
 /* OPEN GAME TOPUP */
@@ -1041,22 +904,12 @@ function openTopup(game){
 const data = database[game]
 
 isOtherProduct = false
-isPanel = false
 currentGame = game
 currentType = "regular"
 selectedItem = null
 
 document.getElementById("gameName").innerText = data.name
 document.getElementById("gameIcon").src = data.image
-
-// 🔥 CEK ADA MEMBERSHIP ATAU TIDAK
-const membershipTab = document.getElementById("membershipTab")
-
-if(data.membership && data.membership.length > 0){
-membershipTab.style.display = "block"
-}else{
-membershipTab.style.display = "none"
-}
 
 document.getElementById("confirmBtn").disabled = true
 document.getElementById("confirmBtn").classList.remove("active")
@@ -1065,73 +918,14 @@ renderItems()
 
 document.getElementById("topupModal").style.display="flex"
 
+document.getElementById("topupModal").onclick = function(e){
+if(e.target.id === "topupModal"){
+closeTopup()
 }
-
-
-/* OPEN PANEL PRODUK */
-function openPanel(key){
-
-const data = databasePanel[key]
-
-isPanel = true
-isOtherProduct = false
-
-currentGame = key
-selectedItem = null
-
-document.getElementById("gameName").innerText = data.name
-document.getElementById("gameIcon").src = data.image
-
-// sembunyikan membership
-document.getElementById("membershipTab").style.display = "none"
-currentType = "regular"
-
-// reset tab
-document.querySelectorAll(".tab").forEach(t=>{
-t.classList.remove("active")
-})
-document.querySelector(".tab").classList.add("active")
-
-const container = document.getElementById("topupItems")
-container.innerHTML=""
-
-// render item panel
-data.items.forEach(item=>{
-
-const div = document.createElement("div")
-div.className = `item ${item.status || 'online'}`
-
-div.innerHTML = `
-<span class="status ${item.status || 'online'}"></span>
-${item.name}
-<div class="price">${item.price}</div>
-${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
-`
-
-div.onclick = function(){
-
-if(item.status === "offline") return;
-
-document.querySelectorAll(".item").forEach(i=>{
-i.classList.remove("selected")
-})
-
-div.classList.add("selected")
-selectedItem = item
-
-const btn = document.getElementById("confirmBtn")
-btn.disabled = false
-btn.classList.add("active")
+}
 
 }
 
-container.appendChild(div)
-
-})
-
-// tampilkan modal
-document.getElementById("topupModal").style.display="flex"
-}
 
 /* OPEN PRODUK LAIN */
 
@@ -1140,22 +934,11 @@ function openOther(key){
 const data = databaseOther[key]
 
 isOtherProduct = true
-isPanel = false
-
 currentGame = key
 selectedItem = null
 
 document.getElementById("gameName").innerText = data.name
 document.getElementById("gameIcon").src = data.image
-
-// 🔥 TAMBAHAN FIX
-document.getElementById("membershipTab").style.display = "none"
-currentType = "regular"
-
-document.querySelectorAll(".tab").forEach(t=>{
-t.classList.remove("active")
-})
-document.querySelector(".tab").classList.add("active")
 
 const container = document.getElementById("topupItems")
 container.innerHTML=""
@@ -1163,26 +946,22 @@ container.innerHTML=""
 data.items.forEach(item=>{
 
 const div = document.createElement("div")
-div.className = `item ${item.status || 'online'}`
+div.className="item"
 
-// UI + status
 div.innerHTML = `
-<span class="status ${item.status || 'online'}"></span>
+<span class="status online"></span>
 ${item.name}
 <div class="price">${item.price}</div>
-${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
 `
 
 div.onclick = function(){
 
-// ⛔ STOP kalau stok habis
-if(item.status === "offline") return;
-
 document.querySelectorAll(".item").forEach(i=>{
-i.classList.remove("selected")
+i.style.border="1px solid #eee"
 })
 
-div.classList.add("selected")
+div.style.border="2px solid #16a34a"
+
 selectedItem = item
 
 const btn = document.getElementById("confirmBtn")
@@ -1196,6 +975,7 @@ container.appendChild(div)
 })
 
 document.getElementById("topupModal").style.display="flex"
+
 }
 
 
@@ -1223,25 +1003,22 @@ return
 items.forEach(item=>{
 
 const div = document.createElement("div")
-div.className = `item ${item.status || 'online'}`
+div.className="item"
 
 div.innerHTML = `
-<span class="status ${item.status || 'online'}"></span>
+<span class="status online"></span>
 ${item.name}
 <div class="price">${item.price}</div>
-${item.status === "offline" ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}
 `
 
 div.onclick = function(){
 
-// ⛔ BLOK kalau stok habis
-if(item.status === "offline") return;
-
 document.querySelectorAll(".item").forEach(i=>{
-i.classList.remove("selected")
+i.style.border="1px solid #eee"
 })
 
-div.classList.add("selected")
+div.style.border="2px solid #16a34a"
+
 selectedItem = item
 
 const btn = document.getElementById("confirmBtn")
@@ -1260,12 +1037,6 @@ container.appendChild(div)
 /* SWITCH TAB */
 
 function switchTab(type,btn){
-
-// ⛔ kalau membership tidak ada, jangan bisa diklik
-const data = database[currentGame]
-if(type === "membership" && (!data.membership || data.membership.length === 0)){
-return;
-}
 
 currentType = type
 
@@ -1292,16 +1063,7 @@ let gameName
 let image
 let type
 
-
-if(isPanel){
-
-const data = databasePanel[currentGame]
-
-gameName = data.name
-image = data.image
-type = "panel"
-
-}else if(isOtherProduct){
+if(isOtherProduct){
 
 const data = databaseOther[currentGame]
 
@@ -1320,13 +1082,7 @@ type = gameData.type
 }
 
 const itemName = selectedItem.name
-let price
-
-if(typeof selectedItem.price === "number"){
-price = selectedItem.price
-}else{
-price = selectedItem.price.replace(/[^\d]/g,'')
-}
+const price = selectedItem.price.replace(/[^\d]/g,'')
 
 window.location.href =
 `checkout.html?game=${encodeURIComponent(gameName)}
@@ -1335,7 +1091,6 @@ window.location.href =
 &image=${encodeURIComponent(image)}
 &type=${type}
 &key=${currentGame}`
-
 }
 
 
