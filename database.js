@@ -56,7 +56,7 @@ const database = {
 
   pubg: {
     name: "PUBG Mobile",
-    require: ["userid"],
+    require: ["userId"],
     image: "assets/pubg.png",
 
     regular: [
