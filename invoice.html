@@ -314,8 +314,25 @@ const total = data.price + admin
 // ===============================
 // TAMPILKAN DATA
 // ===============================
+let detailProduk = ""
+
+// tentukan detail berdasarkan type
+if(data.type === "id" || data.type === "idserver"){
+  detailProduk = `ID: ${data.userId}`
+}
+else if(data.type === "usn"){
+  detailProduk = `Username: ${data.username}`
+}
+else if(data.type === "pulsa"){
+  detailProduk = `HP: ${data.phone}`
+}
+else if(data.type === "voucher"){
+  detailProduk = `Tanpa Data`
+}
+
+// tampilkan ke produk
 document.getElementById("produk").innerText =
-  `${data.game} - ${data.item} (${data.type})`
+  `${data.game} - ${data.item} (${detailProduk})`
 
 document.getElementById("jumlah").innerText =
   "Rp " + data.price.toLocaleString("id-ID")
@@ -398,10 +415,40 @@ async function kirim() {
     return
   }
 
-  const BOT_TOKEN = "ISI_BOT_TOKEN_KAMU"
-  const CHAT_ID = "ISI_CHAT_ID_KAMU"
+  const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
+  const CHAT_ID = "7314158034"
 
-  const pesan = `
+let detailUser = ""
+
+// logic berdasarkan type
+if(data.type === "id" || data.type === "idserver"){
+  detailUser = `User ID: ${data.userId}`
+}
+else if(data.type === "usn"){
+  detailUser = `Username: ${data.username}`
+}
+else if(data.type === "pulsa"){
+  detailUser = `No HP: ${data.phone}`
+}
+else if(data.type === "voucher"){
+  detailUser = `Tanpa Data User`
+}
+
+const pesan = `
+📌 *PEMBAYARAN MASUK* 📌
+
+Game: ${data.game}
+Item: ${data.item}
+Harga: Rp ${data.price.toLocaleString("id-ID")}
+Biaya Admin: Rp ${admin.toLocaleString("id-ID")}
+Total Bayar: Rp ${total.toLocaleString("id-ID")}
+Tipe: ${data.type}
+${detailUser}
+${data.server !== "-" ? "Server: " + data.server : ""}
+Metode Bayar: ${data.payment}
+`
+
+const pesan = `
 📌 *PEMBAYARAN MASUK* 📌
 
 Game: ${data.game}
@@ -415,7 +462,7 @@ Username: ${data.username}
 No HP: ${data.phone}
 Server: ${data.server}
 Metode Bayar: ${data.payment}
-  `
+`
 
   try {
     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
