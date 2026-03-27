@@ -248,6 +248,11 @@ color:#333;
 QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
 </div>
 
+<div class="field" id="paymentInfo" style="display:none;">
+  <label>Detail Pembayaran</label>
+  <div id="paymentNumber" style="padding:10px;background:#eef1ff;border-radius:8px;font-weight:bold;"></div>
+</div>
+
 <div class="product">
   <div><b>Produk</b></div>
   <div id="produk">-</div>
@@ -346,6 +351,24 @@ document.getElementById("kode").innerText =
 document.getElementById("total").innerText =
   "Rp " + total.toLocaleString("id-ID")
 
+
+const paymentInfoDiv = document.getElementById("paymentInfo")
+const paymentNumberEl = document.getElementById("paymentNumber")
+
+// Nomor rekening / ID pembayaran
+const paymentData = {
+  "DANA": "085712345678",
+  "OVO": "081234567890",
+  "GoPay": "081298765432",
+  "ShopeePay": "085701234567",
+  "Transfer Bank": "BCA 123-456-7890"
+}
+
+// Tampilkan jika metode pembayaran bukan QRIS
+if(data.payment && data.payment !== "QRIS"){
+  paymentInfoDiv.style.display = "block"
+  paymentNumberEl.innerText = paymentData[data.payment] || "-"
+}
 // ===============================
 // TIMER
 // ===============================
