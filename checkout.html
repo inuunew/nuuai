@@ -337,12 +337,12 @@ transition:0.1s;
 </div>
 
 <div class="payment-list" id="paymentList">
-<div class="payment-item" onclick="selectPayment('QRIS')">QRIS</div>
-<div class="payment-item" onclick="selectPayment('DANA')">DANA</div>
-<div class="payment-item" onclick="selectPayment('OVO')">OVO</div>
-<div class="payment-item" onclick="selectPayment('GoPay')">GoPay</div>
-<div class="payment-item" onclick="selectPayment('ShopeePay')">ShopeePay</div>
-<div class="payment-item" onclick="selectPayment('Transfer Bank')">Transfer Bank</div>
+  <div class="payment-item" onclick="selectPayment('QRIS')">QRIS</div>
+  <div class="payment-item" onclick="selectPayment('DANA')">DANA</div>
+  <div class="payment-item" onclick="selectPayment('OVO')">OVO</div>
+  <div class="payment-item" onclick="selectPayment('GoPay')">GoPay</div>
+  <div class="payment-item" onclick="selectPayment('ShopeePay')">ShopeePay</div>
+  <div class="payment-item" onclick="selectPayment('Transfer Bank')">Transfer Bank</div>
 </div>
 </div>
 
@@ -366,6 +366,7 @@ transition:0.1s;
 const params = new URLSearchParams(window.location.search)
 const key = params.get("key")
 let produk = database[key] || databaseOther[key] || databasePanel[key] || {}
+let isQRIS = produk.qris === true
 
 const required = produk.require || []
 
@@ -426,6 +427,16 @@ document.addEventListener("click", e => {
   }
 })
 
+// Sembunyikan QRIS jika tidak aktif
+document.addEventListener("DOMContentLoaded", () => {
+  if(!isQRIS){
+    document.querySelectorAll(".payment-item").forEach(el => {
+      if(el.innerText.trim() === "QRIS"){
+        el.style.display = "none"
+      }
+    })
+  }
+})
 // Checkout
 function bayar(){
   const btn = document.querySelector(".pay")
@@ -451,6 +462,12 @@ function bayar(){
   if(required.includes("userId") && !document.getElementById("userId").value){ alert("Masukkan ID"); resetBtn(); return }
   if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return }
   if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return }
+
+if(selectedPayment === "QRIS" && !isQRIS){
+  alert("QRIS tidak tersedia untuk produk ini!")
+  resetBtn()
+  return
+}
 
   window.location.href =
     "invoice.html?key="+key+
