@@ -1,10 +1,11 @@
 const database = {
-
   ff: {
     name: "Free Fire",
     require: ["userId"],
     image: "assets/ff.png",
-
+    qris: false,
+    desc: "Top up diamond Free Fire cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "5 Diamond Free Fire", price: "Rp1.500", status: "online" },
       { name: "12 Diamond Free Fire", price: "Rp2.500", status: "online" },
@@ -24,11 +25,10 @@ const database = {
       { name: "4000 Diamond Free Fire", price: "Rp498.000", status: "online" },
       { name: "7290 Diamond Free Fire", price: "Rp905.000", status: "online" }
     ],
-
     membership: [
       { name: "Membership level up pass", price: "Rp15.000", status: "online" },
-      { name: "Membership Mingguan", price: "Rp30.000", status: "online" }, 
-      { name: "membership bulanan", price: "Rp84.000", status: "offline" }, 
+      { name: "Membership Mingguan", price: "Rp30.000", status: "online" },
+      { name: "Membership Bulanan", price: "Rp84.000", status: "offline" },
       { name: "Boyah Pass", price: "Rp44.000", status: "online" }
     ]
   },
@@ -36,9 +36,11 @@ const database = {
   ml: {
     name: "Mobile Legends",
     require: ["userId", "server"],
-    serverType: "id", // pakai input number
-    image: "assets/ml.png", 
-
+    serverType: "id",
+    image: "assets/ml.png",
+    qris: false,
+    desc: "Top up diamond Mobile Legends cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "59 Diamond ML", price: "Rp15.000", status: "online" },
       { name: "127 Diamond ML", price: "Rp30.000", status: "online" },
@@ -48,7 +50,6 @@ const database = {
       { name: "973 Diamond ML", price: "Rp210.000", status: "online" },
       { name: "1446 Diamond ML", price: "Rp310.000", status: "offline" }
     ],
-
     membership: [
       { name: "Monthly Card", price: "Rp50.000", status: "online" }
     ]
@@ -58,7 +59,9 @@ const database = {
     name: "PUBG Mobile",
     require: ["userId"],
     image: "assets/pubg.png",
-
+    qris: false,
+    desc: "Top up UC PUBG Mobile cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "71 UC Voucher", price: "Rp16.000", status: "online" },
       { name: "148 UC Voucher", price: "Rp32.000", status: "online" },
@@ -66,16 +69,17 @@ const database = {
       { name: "689 UC Voucher", price: "Rp145.000", status: "online" },
       { name: "1097 UC Voucher", price: "Rp225.000", status: "online" }
     ],
-
     membership: []
   },
 
   genshin: {
-  name: "Genshin Impact",
-  require: ["userId", "server"],
-  serverType: "region",
-  image: "assets/genshin.png",
-
+    name: "Genshin Impact",
+    require: ["userId", "server"],
+    serverType: "region",
+    image: "assets/genshin.png",
+    qris: false,
+    desc: "Top up Genesis Crystal Genshin Impact cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "63 Genesis Crystal", price: "Rp17.000", status: "online" },
       { name: "128 Genesis Crystal", price: "Rp34.000", status: "online" },
@@ -83,7 +87,6 @@ const database = {
       { name: "642 Genesis Crystal", price: "Rp162.000", status: "online" },
       { name: "1247 Genesis Crystal", price: "Rp320.000", status: "online" }
     ],
-
     membership: [
       { name: "Blessing of the Welkin Moon", price: "Rp79.000", status: "online" }
     ]
@@ -93,7 +96,9 @@ const database = {
     name: "Honor of Kings",
     require: ["userId"],
     image: "assets/hok.png",
-
+    qris: false,
+    desc: "Top up Tokens HOK cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "46 Tokens HOK", price: "Rp12.000", status: "online" },
       { name: "117 Tokens HOK", price: "Rp28.000", status: "online" },
@@ -102,7 +107,6 @@ const database = {
       { name: "735 Tokens HOK", price: "Rp165.000", status: "online" },
       { name: "1298 Tokens HOK", price: "Rp285.000", status: "online" }
     ],
-
     membership: []
   },
 
@@ -110,7 +114,9 @@ const database = {
     name: "Valorant",
     require: [],
     image: "assets/valo.png",
-
+    qris: false,
+    desc: "Top up VP Valorant cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "412 VP", price: "Rp70.000", status: "online" },
       { name: "843 VP", price: "Rp140.000", status: "online" },
@@ -118,7 +124,6 @@ const database = {
       { name: "3642 VP", price: "Rp590.000", status: "online" },
       { name: "7594 VP", price: "Rp1.190.000", status: "online" }
     ],
-
     membership: []
   },
 
@@ -126,7 +131,9 @@ const database = {
     name: "FC Mobile",
     require: ["userId"],
     image: "assets/fcm.png",
-
+    qris: false,
+    desc: "Top up FC Points FC Mobile cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "94 FC Points", price: "Rp15.000", status: "online" },
       { name: "203 FC Points", price: "Rp33.000", status: "online" },
@@ -134,7 +141,6 @@ const database = {
       { name: "902 FC Points", price: "Rp138.000", status: "online" },
       { name: "1847 FC Points", price: "Rp275.000", status: "online" }
     ],
-
     membership: []
   },
 
@@ -142,7 +148,9 @@ const database = {
     name: "Call of Duty",
     require: ["userId"],
     image: "assets/cod.png",
-
+    qris: false,
+    desc: "Top up CP COD cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "134 CP", price: "Rp20.000", status: "online" },
       { name: "286 CP", price: "Rp42.000", status: "online" },
@@ -150,7 +158,6 @@ const database = {
       { name: "1234 CP", price: "Rp170.000", status: "online" },
       { name: "2489 CP", price: "Rp335.000", status: "online" }
     ],
-
     membership: []
   },
 
@@ -158,7 +165,9 @@ const database = {
     name: "Clash of Clans",
     require: ["userId"],
     image: "assets/coc.png",
-
+    qris: false,
+    desc: "Top up Gems COC cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "88 Gems COC", price: "Rp16.000", status: "online" },
       { name: "214 Gems COC", price: "Rp35.000", status: "online" },
@@ -167,7 +176,6 @@ const database = {
       { name: "2145 Gems COC", price: "Rp320.000", status: "online" },
       { name: "4689 Gems COC", price: "Rp640.000", status: "online" }
     ],
-
     membership: [
       { name: "Gold Pass", price: "Rp89.000", status: "online" }
     ]
@@ -177,7 +185,9 @@ const database = {
     name: "Asphalt 9",
     require: ["userId"],
     image: "assets/asphalt.png",
-
+    qris: false,
+    desc: "Top up Tokens Asphalt cepat & aman",
+    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
     regular: [
       { name: "54 Tokens Asphalt", price: "Rp14.000", status: "online" },
       { name: "149 Tokens Asphalt", price: "Rp36.000", status: "online" },
@@ -185,17 +195,19 @@ const database = {
       { name: "706 Tokens Asphalt", price: "Rp145.000", status: "online" },
       { name: "1498 Tokens Asphalt", price: "Rp290.000", status: "online" }
     ],
-
     membership: []
   }
-
 };
 
+// databaseOther
 const databaseOther = {
   pulsa: {
-  name: "Pulsa",
-  require: ["phone"],
+    name: "Pulsa",
+    require: ["phone"],
     image: "https://files.catbox.moe/7h9pqr.png",
+    qris: true,
+    desc: "Top up pulsa cepat & aman",
+    detail: "Proses otomatis, langsung masuk ke nomor HP",
     items: [
       { name: "Pulsa 5.000", price: "Rp5.000", status: "online" },
       { name: "Pulsa 10.000", price: "Rp10.000", status: "online" },
@@ -204,15 +216,18 @@ const databaseOther = {
       { name: "Pulsa 100.000", price: "Rp100.000", status: "online" }
     ],
     membership: []
-  },
-
+  }
 };
 
+// databasePanel
 const databasePanel = {
   panel: {
     name: "Panel Bot",
-    require: ["username"], // 🔥 WAJIB USERNAME
+    require: ["username"],
     image: "img/panel.jpg",
+    qris: true,
+    desc: "Panel bot otomatis",
+    detail: "Layanan 24 jam, cepat & aman",
     items: [
       { name: "1GB", price: 5000, status: "online" },
       { name: "2GB", price: 3000, status: "online" },
@@ -228,8 +243,11 @@ const databasePanel = {
 
   panel10: {
     name: "Reseller Panel",
-    require: ["username"], // 🔥 WAJIB USERNAME
+    require: ["username"],
     image: "img/panel.jpg",
+    qris: true,
+    desc: "Reseller panel otomatis",
+    detail: "Layanan 24 jam, cepat & aman",
     items: [
       { name: "Reseller public", price: 15000, status: "online" },
       { name: "Reseller private", price: 20000, status: "online" }
@@ -238,8 +256,11 @@ const databasePanel = {
 
   panel11: {
     name: "Admin Panel",
-    require: ["username"], // 🔥 WAJIB USERNAME
+    require: ["username"],
     image: "img/panel.jpg",
+    qris: true,
+    desc: "Admin panel otomatis",
+    detail: "Layanan 24 jam, cepat & aman",
     items: [
       { name: "Admin", price: 20000, status: "online" }
     ]
