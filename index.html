@@ -684,6 +684,27 @@ transform:scale(1.1);
 .close-btn:active{
 transform:scale(0.95);
 }
+
+/*info*/
+.info-text-wrapper{
+  overflow:hidden;
+  width:100%;
+}
+
+.info-text{
+  display:inline-block;
+  white-space:nowrap;
+  animation:marquee 12s linear infinite;
+}
+
+@keyframes marquee{
+  0%{
+    transform: translateX(100%);
+  }
+  100%{
+    transform: translateX(-100%);
+  }
+}
 </style>
 
 </head>
@@ -808,12 +829,10 @@ Konfirmasi
 
 <div class="info-icon">
 📢
-</div>
-
-<marquee class="info-text" scrollamount="5">
-Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam
-</marquee>
-
+<div class="info-text-wrapper">
+  <div class="info-text">
+    Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam
+  </div>
 </div>
 
 <!-- SEARCH -->
