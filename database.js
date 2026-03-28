@@ -229,15 +229,15 @@ const databasePanel = {
     desc: "Panel bot otomatis",
     detail: "Layanan 24 jam, cepat & aman",
     items: [
-      { name: "1GB", price: 5000, status: "online" },
-      { name: "2GB", price: 3000, status: "online" },
-      { name: "3GB", price: 4000, status: "offline" },
-      { name: "4GB", price: 5000, status: "online" },
-      { name: "5GB", price: 6000, status: "online" },
-      { name: "6GB", price: 7000, status: "offline" },
-      { name: "7GB", price: 8000, status: "online" },
-      { name: "8GB", price: 9000, status: "online" },
-      { name: "Unlimited", price: 10000, status: "online" }
+      { name: "1GB", price: "2000", status: "online" },
+      { name: "2GB", price: "3000", status: "online" },
+      { name: "3GB", price: "4000", status: "offline" },
+      { name: "4GB", price: "5000", status: "online" },
+      { name: "5GB", price: "6000", status: "online" },
+      { name: "6GB", price: "7000", status: "offline" },
+      { name: "7GB", price: "8000", status: "online" },
+      { name: "8GB", price: "9000", status: "online" },
+      { name: "Unlimited", price: "10000", status: "online" }
     ],
     membership: []
   },
@@ -250,8 +250,8 @@ const databasePanel = {
     desc: "Reseller panel otomatis",
     detail: "Layanan 24 jam, cepat & aman",
     items: [
-      { name: "Reseller public", price: 15000, status: "online" },
-      { name: "Reseller private", price: 20000, status: "online" }
+      { name: "Reseller public", price: "15000", status: "online" },
+      { name: "Reseller private", price: "20000", status: "online" }
     ],
     membership: []
   },
@@ -264,7 +264,7 @@ const databasePanel = {
     desc: "Admin panel otomatis",
     detail: "Layanan 24 jam, cepat & aman",
     items: [
-      { name: "Admin", price: 20000, status: "online" }
+      { name: "Admin", price: "20000", status: "online" }
     ],
     membership: []
   }
