@@ -256,39 +256,11 @@ transition:0.1s;
 </div>
 </div>
 
-<div class="card" style="text-align:center; padding:12px;">
-  <div onclick="openInfo()" style="cursor:pointer;">
-    
-    <div style="
-      width:50px;
-      height:50px;
-      background:#ecfdf5;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:22px;
-      margin:auto;
-      color:#16a34a;
-      box-shadow:0 4px 10px rgba(0,0,0,0.05);
-    ">
-      ℹ️
-    </div>
-
-    <div style="font-size:13px; margin-top:6px; font-weight:500;">
-      Info Produk
-    </div>
-
-  </div>
-</div>
-
 <div class="card" id="userIdBox">
 <label class="label">USER ID</label>
 <div class="input-group">
 <input type="text" placeholder="Masukkan ID Player" id="userId">
-<button class="search">🔍</button>
 </div>
-<div id="nicknameBox" style="margin-top:8px;font-size:13px;color:#16a34a;display:none;"></div>
 </div>
 
 <div class="card" id="usernameBox" style="display:none;">
@@ -337,7 +309,8 @@ transition:0.1s;
 </div>
 
 <div class="payment-list" id="paymentList">
-  <div class="payment-item" onclick="selectPayment('QRIS')">QRIS</div>
+  <div class="payment-item" onclick="selectPayment('QRIS Otomatis')">QRIS Otomatis</div>
+  <div class="payment-item" onclick="selectPayment('QRIS Manual')">QRIS Manual</div>
   <div class="payment-item" onclick="selectPayment('DANA')">DANA</div>
   <div class="payment-item" onclick="selectPayment('OVO')">OVO</div>
   <div class="payment-item" onclick="selectPayment('GoPay')">GoPay</div>
@@ -412,31 +385,40 @@ document.querySelector(".search").onclick = function(){
 function goHome(){ window.location.href="index.html" }
 
 let selectedPayment=""
-function togglePayment(){
-  const paymentList = document.getElementById("paymentList")
-  paymentList.style.display = paymentList.style.display==="block"?"none":"block"
-}
-function selectPayment(name){
-  selectedPayment=name
-  document.getElementById("paymentSelected").innerText=name
-  document.getElementById("paymentList").style.display="none"
-}
-document.addEventListener("click", e => {
-  if (!e.target.closest(".payment-select") && !e.target.closest(".payment-list")) {
-    document.getElementById("paymentList").style.display = "none"
-  }
-})
+let isManualQRIS = false
 
-// Sembunyikan QRIS jika tidak aktif
-document.addEventListener("DOMContentLoaded", () => {
-  if(!isQRIS){
-    document.querySelectorAll(".payment-item").forEach(el => {
-      if(el.innerText.trim() === "QRIS"){
-        el.style.display = "none"
-      }
-    })
+function selectPayment(name){
+  selectedPayment = name
+  document.getElementById("paymentSelected").innerText = name
+  document.getElementById("paymentList").style.display = "none"
+
+  // Tandai QRIS manual
+  if(name === "QRIS Manual"){
+    isManualQRIS = true
+  } else {
+    isManualQRIS = false
   }
-})
+}
+
+// Tampilkan QRIS otomatis sesuai status
+document.addEventListener("DOMContentLoaded", () => {
+  const paymentItems = document.querySelectorAll(".payment-item");
+  paymentItems.forEach(el => {
+    if(el.innerText.includes("QRIS Otomatis")){
+      if(!isQRIS){ // QRIS false
+        el.innerText = "QRIS Otomatis (sedang error)";
+        el.style.color = "#999";       // buat kelihatan disable
+        el.style.cursor = "not-allowed"; 
+        el.onclick = null;             // hilangkan klik
+      } else { // QRIS true
+        el.innerText = "QRIS Otomatis";
+        el.style.color = "#000";
+        el.style.cursor = "pointer";
+        el.onclick = () => selectPayment("QRIS Otomatis");
+      }
+    }
+  })
+});
 // Checkout
 function bayar(){
   const btn = document.querySelector(".pay")
@@ -463,12 +445,29 @@ function bayar(){
   if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return }
   if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return }
 
-if(selectedPayment === "QRIS" && !isQRIS){
-  alert("QRIS tidak tersedia untuk produk ini!")
+  // QRIS otomatis validasi produk.qris
+  if(selectedPayment === "QRIS Otomatis" && !isQRIS){
+  alert("QRIS otomatis sedang error, silakan pilih metode lain!")
   resetBtn()
   return
 }
 
+  // QRIS manual redirect ke WhatsApp
+  if(selectedPayment === "QRIS Manual" && isManualQRIS){
+    const waNumber = "6283160556330" // ganti dengan nomor WhatsApp kamu
+    const message = encodeURIComponent(
+      `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
+      `Game: ${game}\nItem: ${item}\nHarga: Rp ${price.toLocaleString("id-ID")}\n`+
+      `UserID: ${document.getElementById("userId").value || ''}\n`+
+      `Username: ${document.getElementById("username").value || ''}\n`+
+      `Phone: ${document.getElementById("phone").value || ''}\n`+
+      `Server: ${serverValue || ''}`
+    )
+    window.location.href = `https://wa.me/${waNumber}?text=${message}`
+    return
+  }
+
+  // Redirect ke invoice.html (QRIS Otomatis & payment lain)
   window.location.href =
     "invoice.html?key="+key+
     "&game="+encodeURIComponent(game)+
