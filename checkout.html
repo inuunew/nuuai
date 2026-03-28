@@ -407,13 +407,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if(el.innerText.includes("QRIS Otomatis")){
       if(!isQRIS){ // QRIS false
         el.innerText = "QRIS Otomatis (sedang error)";
-        el.style.color = "#999";       // buat kelihatan disable
+        el.style.color = "#999";       
         el.style.cursor = "not-allowed"; 
-        el.onclick = null;             // hilangkan klik
+        el.dataset.disabled = "true";  // tanda disable
+        el.onclick = () => {
+          alert("QRIS otomatis sedang error, silakan pilih metode lain!");
+        }
       } else { // QRIS true
         el.innerText = "QRIS Otomatis";
         el.style.color = "#000";
         el.style.cursor = "pointer";
+        el.dataset.disabled = "false";
         el.onclick = () => selectPayment("QRIS Otomatis");
       }
     }
