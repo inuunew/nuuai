@@ -262,37 +262,13 @@ const databasePanel = {
       { name: "6GB", price: "7000", status: "online" },
       { name: "7GB", price: "8000", status: "online" },
       { name: "8GB", price: "9000", status: "online" },
-      { name: "Unlimited", price: "10000", status: "online" }
-    ],
-    membership: []
-  },
-
-  panel10: {
-    name: "Reseller Panel",
-    require: ["username"],
-    image: "img/panel.jpg",
-    qris: true,
-    desc: "Reseller panel pterodactyl",
-    detail: "LEGAL aktif selama 30 hari GARANSI FULL",
-    items: [
+      { name: "Unlimited", price: "10000", status: "online" }, 
       { name: "Reseller public", price: "15000", status: "online" },
-      { name: "Reseller private", price: "20000", status: "online" }
+      { name: "Reseller private", price: "20000", status: "online" }, 
+      { name: "Admin panel public", price: "20000", status: "online" }
     ],
     membership: []
   },
-
-  panel11: {
-    name: "Admin Panel",
-    require: ["username"],
-    image: "img/panel.jpg",
-    qris: true,
-    desc: "Admin panel pterodactyl",
-    detail: "LEGAL Aktif selama 30 hari GARANSI FULL",
-    items: [
-      { name: "Admin panel pterodactyl", price: "20000", status: "online" }
-    ],
-    membership: []
-  }, 
   vps1: {
     name: "VPS DIGITAL OCEAN",
     require: ["voucher"],
