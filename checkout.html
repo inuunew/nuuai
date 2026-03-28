@@ -142,19 +142,23 @@ margin-top:8px;
 }
 
 .payment-select{
-display:flex;
-justify-content:space-between;
-align-items:center;
-border:1px solid #ddd;
-padding:12px;
-border-radius:10px;
-cursor:pointer;
-background:#fafafa;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border:1px solid #ddd;
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+  background:#fafafa;
+  position: relative;
+  z-index: 10;
 }
 
 .payment-list{
-display:none;
-margin-top:10px;
+  display:none;
+  margin-top:10px;
+  position: relative;
+  z-index: 9;
 }
 
 .payment-item{
@@ -169,6 +173,10 @@ cursor:pointer;
 background:#f5f5f5;
 }
 
+.payment-item.disabled{
+  color: #999;
+  cursor: not-allowed;
+}
 /*modal info*/
 .modal{
 position:fixed;
@@ -347,7 +355,6 @@ const userIdBox = document.getElementById("userIdBox")
 const usernameBox = document.getElementById("usernameBox")
 const phoneBox = document.getElementById("phoneBox")
 const serverBox = document.getElementById("serverBox")
-const nicknameBox = document.getElementById("nicknameBox")
 const mlServer = document.getElementById("mlServer")
 const genshinServer = document.getElementById("genshinServer")
 
@@ -370,59 +377,65 @@ usernameBox.style.display = required.includes("username") ? "block" : "none"
 phoneBox.style.display = required.includes("phone") ? "block" : "none"
 serverBox.style.display = required.includes("server") ? "block" : "none"
 
-// Cek nickname
-document.querySelector(".search").onclick = function(){
-  const id = document.getElementById("userId").value
-  if(!id) return alert("Masukkan ID")
-  nicknameBox.style.display="block"
-  nicknameBox.innerHTML = "Mengecek..."
-  setTimeout(()=>{
-    nicknameBox.innerHTML = "Nickname: <b>Player_"+id+"</b>"
-  },1000)
+// Toggle server input sesuai tipe
+if(required.includes("server")){
+  if(produk.serverType==="id"){ 
+    mlServer.style.display="flex"; 
+    genshinServer.style.display="none" 
+  }
+  else if(produk.serverType==="region"){ 
+    mlServer.style.display="none"; 
+    genshinServer.style.display="flex" 
+  }
 }
 
 // Navigasi
 function goHome(){ window.location.href="index.html" }
 
-let selectedPayment=""
+let selectedPayment = ""
 let isManualQRIS = false
 
-function selectPayment(name){
-  selectedPayment = name
-  document.getElementById("paymentSelected").innerText = name
-  document.getElementById("paymentList").style.display = "none"
-
-  // Tandai QRIS manual
-  if(name === "QRIS Manual"){
-    isManualQRIS = true
-  } else {
-    isManualQRIS = false
-  }
+function togglePayment() {
+  const list = document.getElementById("paymentList");
+  list.style.display = list.style.display === "block" ? "none" : "block";
 }
 
-// Tampilkan QRIS otomatis sesuai status
+// Pilih payment
+function selectPayment(name){
+  const paymentSelected = document.getElementById("paymentSelected")
+  
+  // Handle QRIS otomatis disabled
+  if(name === "QRIS Otomatis" && !isQRIS){
+    alert("QRIS otomatis sedang error, silakan pilih metode lain!")
+    return
+  }
+  
+  selectedPayment = name
+  paymentSelected.innerText = name
+  document.getElementById("paymentList").style.display = "none"
+  isManualQRIS = (name === "QRIS Manual")
+}
+
+// Disable QRIS otomatis jika produk.qris=false
 document.addEventListener("DOMContentLoaded", () => {
-  const paymentItems = document.querySelectorAll(".payment-item");
-  paymentItems.forEach(el => {
-    if(el.innerText.includes("QRIS Otomatis")){
-      if(!isQRIS){ // QRIS false
-        el.innerText = "QRIS Otomatis (sedang error)";
-        el.style.color = "#999";       
-        el.style.cursor = "not-allowed"; 
-        el.dataset.disabled = "true";  // tanda disable
-        el.onclick = () => {
-          alert("QRIS otomatis sedang error, silakan pilih metode lain!");
-        }
-      } else { // QRIS true
-        el.innerText = "QRIS Otomatis";
-        el.style.color = "#000";
-        el.style.cursor = "pointer";
-        el.dataset.disabled = "false";
-        el.onclick = () => selectPayment("QRIS Otomatis");
-      }
+  const qrisItem = Array.from(document.querySelectorAll(".payment-item"))
+                        .find(el => el.innerText.includes("QRIS Otomatis"));
+  if(qrisItem){
+    if(!isQRIS){
+      qrisItem.innerText = "QRIS Otomatis (sedang error)";
+      qrisItem.classList.add("disabled");
+      qrisItem.style.pointerEvents = "auto"; // biar tetap bisa diklik, tapi alert
+      qrisItem.addEventListener("click", () => {
+        alert("QRIS otomatis sedang error, silakan pilih metode lain!")
+      });
+    } else {
+      qrisItem.innerText = "QRIS Otomatis";
+      qrisItem.classList.remove("disabled");
+      qrisItem.addEventListener("click", () => selectPayment("QRIS Otomatis"));
     }
-  })
+  }
 });
+
 // Checkout
 function bayar(){
   const btn = document.querySelector(".pay")
@@ -449,16 +462,9 @@ function bayar(){
   if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return }
   if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return }
 
-  // QRIS otomatis validasi produk.qris
-  if(selectedPayment === "QRIS Otomatis" && !isQRIS){
-  alert("QRIS otomatis sedang error, silakan pilih metode lain!")
-  resetBtn()
-  return
-}
-
   // QRIS manual redirect ke WhatsApp
   if(selectedPayment === "QRIS Manual" && isManualQRIS){
-    const waNumber = "6283160556330" // ganti dengan nomor WhatsApp kamu
+    const waNumber = "6283160556330" // ganti sesuai nomor WA kamu
     const message = encodeURIComponent(
       `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
       `Game: ${game}\nItem: ${item}\nHarga: Rp ${price.toLocaleString("id-ID")}\n`+
@@ -518,7 +524,6 @@ function openInfo(){
   modal.style.display="flex"
 }
 function closeInfo(){ document.getElementById("infoModal").style.display="none" }
-
 // Tampilkan server sesuai tipe
 if(required.includes("server")){
   serverBox.style.display="block"
