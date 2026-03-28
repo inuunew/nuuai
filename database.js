@@ -9,26 +9,26 @@ const database = {
     regular: [
       { name: "5 Diamond Free Fire", price: "Rp1.200", status: "online" },
       { name: "12 Diamond Free Fire", price: "Rp2.500", status: "online" },
-      { name: "50 Diamond Free Fire", price: "Rp7.500", status: "offline" },
+      { name: "50 Diamond Free Fire", price: "Rp7.500", status: "online" },
       { name: "70 Diamond Free Fire", price: "Rp9.500", status: "online" },
       { name: "100 Diamond Free Fire", price: "Rp13.000", status: "online" },
-      { name: "140 Diamond Free Fire", price: "Rp19.000", status: "offline" },
+      { name: "140 Diamond Free Fire", price: "Rp19.000", status: "online" },
       { name: "210 Diamond Free Fire", price: "Rp27.000", status: "online" },
       { name: "300 Diamond Free Fire", price: "Rp41.000", status: "online" },
       { name: "355 Diamond Free Fire", price: "Rp46.000", status: "online" },
       { name: "500 Diamond Free Fire", price: "Rp65.000", status: "online" },
-      { name: "720 Diamond Free Fire", price: "Rp91.000", status: "offline" },
+      { name: "720 Diamond Free Fire", price: "Rp91.000", status: "online" },
       { name: "1000 Diamond Free Fire", price: "Rp127.000", status: "online" },
       { name: "1450 Diamond Free Fire", price: "Rp183.000", status: "online" },
       { name: "2180 Diamond Free Fire", price: "Rp275.000", status: "online" },
-      { name: "3640 Diamond Free Fire", price: "Rp458.000", status: "offline" },
+      { name: "3640 Diamond Free Fire", price: "Rp458.000", status: "online" },
       { name: "4000 Diamond Free Fire", price: "Rp516.000", status: "online" },
       { name: "7290 Diamond Free Fire", price: "Rp935.000", status: "online" }
     ],
     membership: [
       { name: "Membership level up pass", price: "Rp15.000", status: "online" },
       { name: "Membership Mingguan", price: "Rp29.000", status: "online" },
-      { name: "Membership Bulanan", price: "Rp84.000", status: "offline" },
+      { name: "Membership Bulanan", price: "Rp84.000", status: "online" },
       { name: "Boyah Pass", price: "Rp43.000", status: "online" }
     ]
   },
@@ -46,11 +46,11 @@ const database = {
       { name: "5 Diamond ML", price: "Rp2.500", status: "online" },
       { name: "12(11+1) Diamond ML", price: "Rp3.800", status: "online" },
       { name: "19(17+2) Diamond ML", price: "Rp5.600", status: "online" },
-      { name: "28(25+3) Diamond ML", price: "Rp8.000", status: "offline" },
+      { name: "28(25+3) Diamond ML", price: "Rp8.000", status: "online" },
       { name: "36(33+3) Diamond ML", price: "Rp10.000", status: "online" },
       { name: "40(40+4) Diamond ML", price: "Rp11.500", status: "online" },
       { name: "56(51+5) Diamond ML", price: "Rp15.500", status: "online" },
-      { name: "59(53+6) Diamond ML", price: "Rp16.500", status: "offline" }, 
+      { name: "59(53+6) Diamond ML", price: "Rp16.500", status: "online" }, 
       { name: "74(69+5) Diamond ML", price: "Rp19.800", status: "online" },
       { name: "86(78+8) Diamond ML", price: "Rp21.500", status: "online" },
       { name: "100 Diamond ML", price: "Rp25.000", status: "online" },
@@ -82,7 +82,7 @@ const database = {
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
       { name: "mobile 15 UC", price: "Rp8.000", status: "online" },
-      { name: "mobile 35 UC", price: "Rp15.500", status: "offline" },
+      { name: "mobile 35 UC", price: "Rp15.500", status: "online" },
       { name: "mobile 50 UC", price: "Rp16.500", status: "online" },
       { name: "mobile 70 UC", price: "Rp28.000", status: "online" },
       { name: "mobile 100 UC", price: "Rp29.500", status: "online" },
@@ -110,7 +110,7 @@ const database = {
     regular: [
       { name: "60 Crystal", price: "Rp12.000", status: "online" },
       { name: "60 Chronal Nexus", price: "Rp14.000", status: "online" },
-      { name: "300+30 Crystal", price: "Rp55.000", status: "offline" },
+      { name: "300+30 Crystal", price: "Rp55.000", status: "online" },
       { name: "980+110 Crystal", price: "Rp168.000", status: "online" },
       { name: "980+110 Chronal Nexus", price: "Rp168.000", status: "online" },
       { name: "1280+140 Genesis Crystal", price: "Rp222.000", status: "online" },
@@ -150,7 +150,7 @@ const database = {
     regular: [
       { name: "475 VP", price: "Rp53.000", status: "online" },
       { name: "1000 VP", price: "Rp105.000", status: "online" },
-      { name: "1475 VP", price: "Rp158.000", status: "offline" },
+      { name: "1475 VP", price: "Rp158.000", status: "online" },
       { name: "2050 VP", price: "Rp210.000", status: "online" },
       { name: "2525 VP", price: "Rp264.000", status: "online" }
     ],
@@ -169,8 +169,8 @@ const database = {
       { name: "39 silver", price: "Rp7.000", status: "online" },
       { name: "100 FC Points", price: "Rp16.500", status: "offline" },
       { name: "99 silver", price: "Rp16.500", status: "offline" },
-      { name: "520 FC Points", price: "Rp77.000", status: "online" }
-      { name: "999 silver", price: "Rp154.000", status: "online" }
+      { name: "520 FC Points", price: "Rp77.000", status: "online" }, 
+      { name: "999 silver", price: "Rp154.000", status: "online" }, 
       { name: "1070 silver", price: "Rp154.000", status: "online" }
     ],
     membership: []
