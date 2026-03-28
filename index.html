@@ -1287,20 +1287,27 @@ function goCheckout(){
 
     let gameName, image, typeValue;
 
-    if(isOtherProduct){
+    if(isPanel){
+        const data = databasePanel[currentGame];
+        gameName = data.name;
+        image = data.image;
+        typeValue = "panel";
+    } 
+    else if(isOtherProduct){
         const data = databaseOther[currentGame];
         gameName = data.name;
         image = data.image;
         typeValue = "other";
-    } else {
+    } 
+    else {
         const data = database[currentGame];
         gameName = data.name;
         image = data.image;
-        typeValue = currentType; // regular atau membership
+        typeValue = currentType;
     }
 
     const itemName = selectedItem.name;
-    const priceValue = selectedItem.price.replace(/[^\d]/g,''); // ambil angka saja
+    const priceValue = selectedItem.price.replace(/[^\d]/g,'');
 
     const params = new URLSearchParams({
         game: gameName,
