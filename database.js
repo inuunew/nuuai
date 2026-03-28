@@ -4,32 +4,32 @@ const database = {
     require: ["userId"],
     image: "assets/ff.png",
     qris: false,
-    desc: "Top up diamond Free Fire cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    desc: "Top up diamond Free Fire legal & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "5 Diamond Free Fire", price: "Rp1.500", status: "online" },
+      { name: "5 Diamond Free Fire", price: "Rp1.200", status: "online" },
       { name: "12 Diamond Free Fire", price: "Rp2.500", status: "online" },
-      { name: "50 Diamond Free Fire", price: "Rp8.000", status: "offline" },
-      { name: "70 Diamond Free Fire", price: "Rp10.000", status: "online" },
-      { name: "100 Diamond Free Fire", price: "Rp15.000", status: "online" },
-      { name: "140 Diamond Free Fire", price: "Rp18.000", status: "offline" },
+      { name: "50 Diamond Free Fire", price: "Rp7.500", status: "offline" },
+      { name: "70 Diamond Free Fire", price: "Rp9.500", status: "online" },
+      { name: "100 Diamond Free Fire", price: "Rp13.000", status: "online" },
+      { name: "140 Diamond Free Fire", price: "Rp19.000", status: "offline" },
       { name: "210 Diamond Free Fire", price: "Rp27.000", status: "online" },
       { name: "300 Diamond Free Fire", price: "Rp41.000", status: "online" },
-      { name: "355 Diamond Free Fire", price: "Rp44.000", status: "online" },
+      { name: "355 Diamond Free Fire", price: "Rp46.000", status: "online" },
       { name: "500 Diamond Free Fire", price: "Rp65.000", status: "online" },
-      { name: "720 Diamond Free Fire", price: "Rp89.000", status: "offline" },
-      { name: "1000 Diamond Free Fire", price: "Rp126.000", status: "online" },
-      { name: "1450 Diamond Free Fire", price: "Rp176.000", status: "online" },
-      { name: "2180 Diamond Free Fire", price: "Rp265.000", status: "online" },
-      { name: "3640 Diamond Free Fire", price: "Rp438.000", status: "offline" },
-      { name: "4000 Diamond Free Fire", price: "Rp498.000", status: "online" },
-      { name: "7290 Diamond Free Fire", price: "Rp905.000", status: "online" }
+      { name: "720 Diamond Free Fire", price: "Rp91.000", status: "offline" },
+      { name: "1000 Diamond Free Fire", price: "Rp127.000", status: "online" },
+      { name: "1450 Diamond Free Fire", price: "Rp183.000", status: "online" },
+      { name: "2180 Diamond Free Fire", price: "Rp275.000", status: "online" },
+      { name: "3640 Diamond Free Fire", price: "Rp458.000", status: "offline" },
+      { name: "4000 Diamond Free Fire", price: "Rp516.000", status: "online" },
+      { name: "7290 Diamond Free Fire", price: "Rp935.000", status: "online" }
     ],
     membership: [
       { name: "Membership level up pass", price: "Rp15.000", status: "online" },
-      { name: "Membership Mingguan", price: "Rp30.000", status: "online" },
+      { name: "Membership Mingguan", price: "Rp29.000", status: "online" },
       { name: "Membership Bulanan", price: "Rp84.000", status: "offline" },
-      { name: "Boyah Pass", price: "Rp44.000", status: "online" }
+      { name: "Boyah Pass", price: "Rp43.000", status: "online" }
     ]
   },
 
@@ -40,18 +40,36 @@ const database = {
     image: "assets/ml.png",
     qris: false,
     desc: "Top up diamond Mobile Legends cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "59 Diamond ML", price: "Rp15.000", status: "online" },
-      { name: "127 Diamond ML", price: "Rp30.000", status: "online" },
-      { name: "241 Diamond ML", price: "Rp55.000", status: "offline" },
-      { name: "402 Diamond ML", price: "Rp90.000", status: "online" },
-      { name: "688 Diamond ML", price: "Rp150.000", status: "online" },
-      { name: "973 Diamond ML", price: "Rp210.000", status: "online" },
-      { name: "1446 Diamond ML", price: "Rp310.000", status: "offline" }
+      { name: "3 Diamond ML", price: "Rp1.500", status: "online" },
+      { name: "5 Diamond ML", price: "Rp2.500", status: "online" },
+      { name: "12(11+1) Diamond ML", price: "Rp3.800", status: "online" },
+      { name: "19(17+2) Diamond ML", price: "Rp5.600", status: "online" },
+      { name: "28(25+3) Diamond ML", price: "Rp8.000", status: "offline" },
+      { name: "36(33+3) Diamond ML", price: "Rp10.000", status: "online" },
+      { name: "40(40+4) Diamond ML", price: "Rp11.500", status: "online" },
+      { name: "56(51+5) Diamond ML", price: "Rp15.500", status: "online" },
+      { name: "59(53+6) Diamond ML", price: "Rp16.500", status: "offline" }, 
+      { name: "74(69+5) Diamond ML", price: "Rp19.800", status: "online" },
+      { name: "86(78+8) Diamond ML", price: "Rp21.500", status: "online" },
+      { name: "100 Diamond ML", price: "Rp25.000", status: "online" },
+      { name: "112 Diamond ML", price: "Rp30.000", status: "online" },
+      { name: "144 Diamond ML", price: "Rp38.000", status: "online" },
+      { name: "172 Diamond ML", price: "Rp44.800", status: "online" },
+      { name: "185 Diamond ML", price: "Rp48.000", status: "online" },
+      { name: "222 Diamond ML", price: "Rp58.000", status: "online" },
+      { name: "257 Diamond ML", price: "Rp65.500", status: "online" },
+      { name: "284 Diamond ML", price: "Rp73.000", status: "online" }, 
+      { name: "278 Diamond ML", price: "Rp74.000", status: "online" },
+      { name: "264 Diamond ML", price: "Rp75.000", status: "online" },
+      { name: "296 Diamond ML", price: "Rp78.000", status: "online" },
+      { name: "301 Diamond ML", price: "Rp80.000", status: "online" }
     ],
     membership: [
-      { name: "Monthly Card", price: "Rp50.000", status: "online" }
+      { name: "1X Weekly diamond pass 220", price: "Rp29.000", status: "online" }, 
+      { name: "2X Weekly diamond pass 440", price: "Rp57.000", status: "online" }, 
+      { name: "3X Weekly diamond pass 660", price: "Rp84.000", status: "online" }
     ]
   },
 
@@ -61,13 +79,22 @@ const database = {
     image: "assets/pubg.png",
     qris: false,
     desc: "Top up UC PUBG Mobile cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "71 UC Voucher", price: "Rp16.000", status: "online" },
-      { name: "148 UC Voucher", price: "Rp32.000", status: "online" },
-      { name: "347 UC Voucher", price: "Rp75.000", status: "offline" },
-      { name: "689 UC Voucher", price: "Rp145.000", status: "online" },
-      { name: "1097 UC Voucher", price: "Rp225.000", status: "online" }
+      { name: "mobile 15 UC", price: "Rp8.000", status: "online" },
+      { name: "mobile 35 UC", price: "Rp15.500", status: "offline" },
+      { name: "mobile 50 UC", price: "Rp16.500", status: "online" },
+      { name: "mobile 70 UC", price: "Rp28.000", status: "online" },
+      { name: "mobile 100 UC", price: "Rp29.500", status: "online" },
+      { name: "mobile 125 UC", price: "Rp46.000", status: "online" },
+      { name: "mobile 150 UC", price: "Rp47.000", status: "online" },
+      { name: "mobile 200 UC", price: "Rp60.000", status: "online" },
+      { name: "mobile 250 UC", price: "Rp73.000", status: "online" },
+      { name: "mobile 300 UC", price: "Rp78.000", status: "online" },
+      { name: "mobile 375 UC", price: "Rp82.000", status: "online" },
+      
+      
+      
     ],
     membership: []
   },
@@ -79,16 +106,19 @@ const database = {
     image: "assets/genshin.png",
     qris: false,
     desc: "Top up Genesis Crystal Genshin Impact cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "63 Genesis Crystal", price: "Rp17.000", status: "online" },
-      { name: "128 Genesis Crystal", price: "Rp34.000", status: "online" },
-      { name: "309 Genesis Crystal", price: "Rp80.000", status: "offline" },
-      { name: "642 Genesis Crystal", price: "Rp162.000", status: "online" },
-      { name: "1247 Genesis Crystal", price: "Rp320.000", status: "online" }
+      { name: "60 Crystal", price: "Rp12.000", status: "online" },
+      { name: "60 Chronal Nexus", price: "Rp14.000", status: "online" },
+      { name: "300+30 Crystal", price: "Rp55.000", status: "offline" },
+      { name: "980+110 Crystal", price: "Rp168.000", status: "online" },
+      { name: "980+110 Chronal Nexus", price: "Rp168.000", status: "online" },
+      { name: "1280+140 Genesis Crystal", price: "Rp222.000", status: "online" },
+      { name: "1980+260 Genesis Crystal", price: "Rp349.000", status: "online" }
     ],
     membership: [
-      { name: "Blessing of the Welkin Moon", price: "Rp79.000", status: "online" }
+      { name: "Blessing of the Welkin Moon", price: "Rp55.000", status: "online" }, 
+      { name: "Blessing of the Welkin Moon x2", price: "Rp109.000", status: "online" }
     ]
   },
 
@@ -98,14 +128,14 @@ const database = {
     image: "assets/hok.png",
     qris: false,
     desc: "Top up Tokens HOK cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "46 Tokens HOK", price: "Rp12.000", status: "online" },
-      { name: "117 Tokens HOK", price: "Rp28.000", status: "online" },
-      { name: "236 Tokens HOK", price: "Rp54.000", status: "offline" },
-      { name: "418 Tokens HOK", price: "Rp95.000", status: "online" },
-      { name: "735 Tokens HOK", price: "Rp165.000", status: "online" },
-      { name: "1298 Tokens HOK", price: "Rp285.000", status: "online" }
+      { name: "16 Tokens HOK", price: "Rp3.500", status: "offline" },
+      { name: "80 Tokens HOK", price: "Rp15.000", status: "offline" },
+      { name: "240 Tokens HOK", price: "Rp45.000", status: "offline" },
+      { name: "400 Tokens HOK", price: "Rp73.000", status: "online" },
+      { name: "560 Tokens HOK", price: "Rp103.000", status: "online" },
+      { name: "800+30 Tokens HOK", price: "Rp146.000", status: "online" }
     ],
     membership: []
   },
@@ -116,13 +146,13 @@ const database = {
     image: "assets/valo.png",
     qris: false,
     desc: "Top up VP Valorant cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "412 VP", price: "Rp70.000", status: "online" },
-      { name: "843 VP", price: "Rp140.000", status: "online" },
-      { name: "1765 VP", price: "Rp290.000", status: "offline" },
-      { name: "3642 VP", price: "Rp590.000", status: "online" },
-      { name: "7594 VP", price: "Rp1.190.000", status: "online" }
+      { name: "475 VP", price: "Rp53.000", status: "online" },
+      { name: "1000 VP", price: "Rp105.000", status: "online" },
+      { name: "1475 VP", price: "Rp158.000", status: "offline" },
+      { name: "2050 VP", price: "Rp210.000", status: "online" },
+      { name: "2525 VP", price: "Rp264.000", status: "online" }
     ],
     membership: []
   },
@@ -133,13 +163,15 @@ const database = {
     image: "assets/fcm.png",
     qris: false,
     desc: "Top up FC Points FC Mobile cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "94 FC Points", price: "Rp15.000", status: "online" },
-      { name: "203 FC Points", price: "Rp33.000", status: "online" },
-      { name: "451 FC Points", price: "Rp70.000", status: "offline" },
-      { name: "902 FC Points", price: "Rp138.000", status: "online" },
-      { name: "1847 FC Points", price: "Rp275.000", status: "online" }
+      { name: "40 FC Points", price: "Rp7.000", status: "offline" },
+      { name: "39 silver", price: "Rp7.000", status: "online" },
+      { name: "100 FC Points", price: "Rp16.500", status: "offline" },
+      { name: "99 silver", price: "Rp16.500", status: "offline" },
+      { name: "520 FC Points", price: "Rp77.000", status: "online" }
+      { name: "999 silver", price: "Rp154.000", status: "online" }
+      { name: "1070 silver", price: "Rp154.000", status: "online" }
     ],
     membership: []
   },
@@ -150,35 +182,15 @@ const database = {
     image: "assets/cod.png",
     qris: false,
     desc: "Top up CP COD cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
-      { name: "134 CP", price: "Rp20.000", status: "online" },
-      { name: "286 CP", price: "Rp42.000", status: "online" },
-      { name: "598 CP", price: "Rp85.000", status: "offline" },
-      { name: "1234 CP", price: "Rp170.000", status: "online" },
-      { name: "2489 CP", price: "Rp335.000", status: "online" }
+      { name: "26+5 CP", price: "Rp5.500", status: "online" },
+      { name: "53+9 CP", price: "Rp10.000", status: "online" },
+      { name: "106+21 CP", price: "Rp20.000", status: "online" },
+      { name: "264+53 CP", price: "Rp45.000", status: "online" },
+      { name: "645 CP", price: "Rp92.000", status: "online" }
     ],
     membership: []
-  },
-
-  coc: {
-    name: "Clash of Clans",
-    require: ["userId"],
-    image: "assets/coc.png",
-    qris: false,
-    desc: "Top up Gems COC cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
-    regular: [
-      { name: "88 Gems COC", price: "Rp16.000", status: "online" },
-      { name: "214 Gems COC", price: "Rp35.000", status: "online" },
-      { name: "497 Gems COC", price: "Rp79.000", status: "offline" },
-      { name: "1036 Gems COC", price: "Rp158.000", status: "online" },
-      { name: "2145 Gems COC", price: "Rp320.000", status: "online" },
-      { name: "4689 Gems COC", price: "Rp640.000", status: "online" }
-    ],
-    membership: [
-      { name: "Gold Pass", price: "Rp89.000", status: "online" }
-    ]
   },
 
   asphalt9: {
@@ -187,7 +199,7 @@ const database = {
     image: "assets/asphalt.png",
     qris: false,
     desc: "Top up Tokens Asphalt cepat & aman",
-    detail: "Proses otomatis, tanpa login akun, layanan 24 jam",
+    detail: "Tanpa login akun, layanan 24 jam",
     regular: [
       { name: "54 Tokens Asphalt", price: "Rp14.000", status: "online" },
       { name: "149 Tokens Asphalt", price: "Rp36.000", status: "online" },
@@ -201,19 +213,32 @@ const database = {
 
 // databaseOther
 const databaseOther = {
-  pulsa: {
-    name: "Pulsa",
-    require: ["phone"],
+  alighm: {
+    name: "[AKUN]ALIGHT MOTION PREM EXP 2027",
+    require: ["voucher"],
     image: "https://files.catbox.moe/7h9pqr.png",
     qris: true,
-    desc: "Top up pulsa cepat & aman",
-    detail: "Proses otomatis, langsung masuk ke nomor HP",
+    desc: "Bersifat AKUN bukan mod",
+    detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
-      { name: "Pulsa 5.000", price: "Rp5.000", status: "online" },
-      { name: "Pulsa 10.000", price: "Rp10.000", status: "online" },
-      { name: "Pulsa 25.000", price: "Rp25.000", status: "offline" },
-      { name: "Pulsa 50.000", price: "Rp50.000", status: "online" },
-      { name: "Pulsa 100.000", price: "Rp100.000", status: "online" }
+      { name: "AM Sharing", price: "Rp1.000", status: "online" },
+      { name: "AM Private", price: "Rp5.000", status: "online" }
+    ],
+    membership: []
+  }, 
+  viu: {
+    name: "[AKUN]VIU DRAMA",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/7h9pqr.png",
+    qris: true,
+    desc: "Bersifat AKUN bukan mod",
+    detail: "bergaransi 3 bulan setelah pembelian",
+    items: [
+      { name: "Viu 1 bulan", price: "Rp500", status: "online" },
+      { name: "Viu 3 bulan", price: "Rp1.000", status: "online" },
+      { name: "Viu 4 bulan", price: "Rp1.500", status: "online" },
+      { name: "Viu 1 tahun", price: "Rp3.000", status: "online" },
+      { name: "Viu Lifetime", price: "Rp5.000", status: "online" },
     ],
     membership: []
   }
@@ -222,19 +247,19 @@ const databaseOther = {
 // databasePanel
 const databasePanel = {
   panel: {
-    name: "Panel Bot",
+    name: "Panel Bot wa/tele",
     require: ["username"],
     image: "img/panel.jpg",
     qris: true,
-    desc: "Panel bot otomatis",
-    detail: "Layanan 24 jam, cepat & aman",
+    desc: "Panel bot whatsapp/telegram",
+    detail: "Aktif selama 30 hari GARANSI FULL",
     items: [
       { name: "1GB", price: "2000", status: "online" },
       { name: "2GB", price: "3000", status: "online" },
-      { name: "3GB", price: "4000", status: "offline" },
+      { name: "3GB", price: "4000", status: "online" },
       { name: "4GB", price: "5000", status: "online" },
       { name: "5GB", price: "6000", status: "online" },
-      { name: "6GB", price: "7000", status: "offline" },
+      { name: "6GB", price: "7000", status: "online" },
       { name: "7GB", price: "8000", status: "online" },
       { name: "8GB", price: "9000", status: "online" },
       { name: "Unlimited", price: "10000", status: "online" }
@@ -247,8 +272,8 @@ const databasePanel = {
     require: ["username"],
     image: "img/panel.jpg",
     qris: true,
-    desc: "Reseller panel otomatis",
-    detail: "Layanan 24 jam, cepat & aman",
+    desc: "Reseller panel pterodactyl",
+    detail: "LEGAL aktif selama 30 hari GARANSI FULL",
     items: [
       { name: "Reseller public", price: "15000", status: "online" },
       { name: "Reseller private", price: "20000", status: "online" }
@@ -261,10 +286,38 @@ const databasePanel = {
     require: ["username"],
     image: "img/panel.jpg",
     qris: true,
-    desc: "Admin panel otomatis",
-    detail: "Layanan 24 jam, cepat & aman",
+    desc: "Admin panel pterodactyl",
+    detail: "LEGAL Aktif selama 30 hari GARANSI FULL",
     items: [
-      { name: "Admin", price: "20000", status: "online" }
+      { name: "Admin panel pterodactyl", price: "20000", status: "online" }
+    ],
+    membership: []
+  }, 
+  vps1: {
+    name: "VPS DIGITAL OCEAN",
+    require: ["voucher"],
+    image: "img/panel.jpg",
+    qris: false,
+    desc: "VPS LEGAL DO BILL VCC",
+    detail: "Aktif 1bulan Garansi 25h,no instalasi apapun(kosongan)",
+    items: [
+      { name: "VPS R2C2", price: "25.000", status: "online" }, 
+      { name: "VPS R4C2", price: "30.000", status: "online" }, 
+      { name: "VPS R8C4", price: "35.000", status: "online" }, 
+      { name: "VPS R16C4", price: "40.000", status: "offline" }
+    ],
+    membership: []
+  }, 
+  do1: {
+    name: "DIGITAL OCEAN",
+    require: ["voucher"],
+    image: "img/panel.jpg",
+    qris: false,
+    desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
+    detail: "NOTE : NO GARANSI, BUY=PAHAM!",
+    items: [
+      { name: "D.O BILL VCC", price: "100.000", status: "online" }, 
+      { name: "D.O BILL GPAY", price: "80.000", status: "offline" }
     ],
     membership: []
   }
