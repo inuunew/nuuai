@@ -720,6 +720,9 @@ transform:scale(1.05);
 #gameGrid, #panelGrid, #otherGrid{
 display:none;
 }
+#titleGame, #titleHosting, #titleOther{
+  display:none;
+}
 </style>
 
 </head>
@@ -1460,7 +1463,11 @@ document.getElementById("notifBox").style.display="none"
 
 }
 
-
+window.onload = function(){
+  document.getElementById("titleGame").style.display = "none";
+  document.getElementById("titleHosting").style.display = "none";
+  document.getElementById("titleOther").style.display = "none";
+}
 </script>
 </body>
 </html>
