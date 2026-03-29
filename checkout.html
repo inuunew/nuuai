@@ -318,7 +318,7 @@ transition:0.1s;
 
 <div class="payment-list" id="paymentList">
   <div class="payment-item" onclick="selectPayment('QRIS Otomatis')">QRIS Otomatis</div>
-  <div class="payment-item" onclick="selectPayment('QRIS Manual')">QRIS Manual</div>
+  <div class="payment-item" onclick="selectPayment('QRIS Manual')">QRIS Manual (Order Via WhatsApp)</div>
   <div class="payment-item" onclick="selectPayment('DANA')">DANA</div>
   <div class="payment-item" onclick="selectPayment('OVO')">OVO</div>
   <div class="payment-item" onclick="selectPayment('GoPay')">GoPay</div>
@@ -403,7 +403,7 @@ function selectPayment(name){
   selectedPayment = name;
   paymentSelected.innerText = name;
   document.getElementById("paymentList").style.display = "none";
-  isManualQRIS = (name === "QRIS Manual");
+  isManualQRIS = (name === "QRIS Manual (Order Via WhatsApp)");
 }
 
 // disable QRIS otomatis jika produk.qris=false
@@ -446,7 +446,7 @@ function bayar(){
   if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return; }
   if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return; }
 
-  if(selectedPayment === "QRIS Manual" && isManualQRIS){
+  if(selectedPayment === "QRIS Manual (Order Via WhatsApp)" && isManualQRIS){
     const waNumber = "6283160556330";
     const message = encodeURIComponent(
       `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
