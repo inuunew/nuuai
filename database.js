@@ -265,7 +265,7 @@ const databasePanel = {
   panel: {
     name: "Panel Bot wa/tele",
     require: ["username"],
-    image: "img/panel.jpg",
+    image: "https://files.catbox.moe/a4jl1w.jpeg",
     qris: true,
     desc: "Panel bot whatsapp/telegram",
     detail: "Aktif selama 30 hari GARANSI FULL",
@@ -288,7 +288,7 @@ const databasePanel = {
   vps1: {
     name: "VPS DIGITAL OCEAN",
     require: ["voucher"],
-    image: "img/panel.jpg",
+    image: "https://files.catbox.moe/n8f64z.png",
     qris: false,
     desc: "VPS LEGAL DO BILL VCC",
     detail: "Aktif 1bulan Garansi 25h,no instalasi apapun(kosongan)",
@@ -301,15 +301,16 @@ const databasePanel = {
     membership: []
   }, 
   do1: {
-    name: "DIGITAL OCEAN",
+    name: "AKUN DIGITAL OCEAN",
     require: ["voucher"],
-    image: "https://files.catbox.moe/sufpbu.png",
+    image: "https://files.catbox.moe/n8f64z.png",
     qris: false,
     desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
     detail: "NOTE : NO GARANSI, BUY=PAHAM!",
     items: [
-      { name: "D.O BILL VCC", price: "100.000", status: "online" }, 
-      { name: "D.O BILL GPAY", price: "80.000", status: "offline" }
+      { name: "D.O BILL VCC 3 Droplet", price: "100.000", status: "online" }, 
+      { name: "D.O BILL VCC 10 Droplet", price: "130.000", status: "online" }, 
+      { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
     ],
     membership: []
   }
