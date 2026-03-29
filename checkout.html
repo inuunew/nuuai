@@ -403,7 +403,7 @@ function selectPayment(name){
   selectedPayment = name;
   paymentSelected.innerText = name;
   document.getElementById("paymentList").style.display = "none";
-  isManualQRIS = (name === "QRIS Manual (Order Via WhatsApp)");
+  isManualQRIS = (name === "QRIS Manual");
 }
 
 // disable QRIS otomatis jika produk.qris=false
