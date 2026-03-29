@@ -209,8 +209,8 @@ const database = {
     ],
     membership: []
   }, 
-  asphalt9: {
-    name: "Asphalt 9",
+  roblox: {
+    name: "Roblox Gift Card",
     require: ["userId"],
     image: "assets/asphalt.png",
     qris: false,
@@ -293,10 +293,10 @@ const databasePanel = {
     desc: "VPS LEGAL DO BILL VCC",
     detail: "Aktif 1bulan Garansi 25h,no instalasi apapun(kosongan)",
     items: [
-      { name: "VPS R2C2", price: "25.000", status: "online" }, 
-      { name: "VPS R4C2", price: "30.000", status: "online" }, 
-      { name: "VPS R8C4", price: "35.000", status: "online" }, 
-      { name: "VPS R16C4", price: "40.000", status: "offline" }
+      { name: "VPS R2C2 [LEGAL]", price: "25.000", status: "online" }, 
+      { name: "VPS R4C2 [LEGAL]", price: "30.000", status: "online" }, 
+      { name: "VPS R8C4 [LEGAL]", price: "35.000", status: "online" }, 
+      { name: "VPS R16C4 [LEGAL]", price: "40.000", status: "offline" }
     ],
     membership: []
   }, 
