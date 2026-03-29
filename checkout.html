@@ -446,19 +446,21 @@ function bayar(){
   if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return; }
   if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return; }
 
-  if(selectedPayment === "QRIS Manual (Order Via WhatsApp)" && isManualQRIS){
-    const waNumber = "6283160556330";
-    const message = encodeURIComponent(
-      `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
-      `Game: ${game}\nItem: ${item}\nHarga: Rp ${price.toLocaleString("id-ID")}\n`+
-      `UserID: ${document.getElementById("userId").value || ''}\n`+
-      `Username: ${document.getElementById("username").value || ''}\n`+
-      `Phone: ${document.getElementById("phone").value || ''}\n`+
-      `Server: ${serverValue || ''}`
-    );
-    window.location.href = `https://wa.me/${waNumber}?text=${message}`;
-    return;
-  }
+if(isManualQRIS){
+  const waNumber = "6283160556330";
+  const message = encodeURIComponent(
+    `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
+    `Game: ${game}\nItem: ${item}\nHarga: Rp ${price.toLocaleString("id-ID")}\n`+
+    `UserID: ${document.getElementById("userId").value || ''}\n`+
+    `Username: ${document.getElementById("username").value || ''}\n`+
+    `Phone: ${document.getElementById("phone").value || ''}\n`+
+    `Server: ${serverValue || ''}`
+  );
+
+  resetBtn(); // biar tombol balik normal
+  window.location.href = `https://wa.me/${waNumber}?text=${message}`;
+  return;
+}
 
   // redirect ke invoice.html dengan semua detail
   const invoiceUrl = "invoice.html?" +
