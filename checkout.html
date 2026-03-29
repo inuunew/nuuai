@@ -423,6 +423,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+const btn = document.querySelector(".pay");
+btn.disabled = false;
+btn.style.opacity = "1";
+btn.innerHTML = "Bayar";
 // checkout
 function bayar(){
   const btn = document.querySelector(".pay");
@@ -518,6 +522,13 @@ if(required.includes("server")){
   if(produk.serverType==="id"){ mlServer.style.display="flex"; genshinServer.style.display="none" }
   else if(produk.serverType==="region"){ mlServer.style.display="none"; genshinServer.style.display="flex" }
 }
+
+window.addEventListener("pageshow", () => {
+  const btn = document.querySelector(".pay");
+  btn.disabled = false;
+  btn.style.opacity = "1";
+  btn.innerHTML = "Bayar";
+});
 </script>
 </body>
 </html>
