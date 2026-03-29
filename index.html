@@ -723,6 +723,14 @@ display:none;
 #titleGame, #titleHosting, #titleOther{
   display:none;
 }
+.fade{
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
 </style>
 
 </head>
@@ -865,7 +873,7 @@ Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Dis
   ← Kembali
 </div>
 <!-- MENU DASHBOARD -->
-<div class="menu-grid">
+<div class="menu-grid" id="menuGrid">
 
   <div class="menu-card" onclick="openCategory('game')">
     <i class="fas fa-gamepad"></i>
@@ -932,61 +940,76 @@ Powered by <span>InuuMarket</span><br>
 <script>
 function openCategory(type){
 
-// sembunyikan semua grid
-document.getElementById("gameGrid").style.display = "none";
-document.getElementById("panelGrid").style.display = "none";
-document.getElementById("otherGrid").style.display = "none";
+  // sembunyikan menu utama
+  document.getElementById("menuGrid").style.display = "none";
 
-// sembunyikan semua title
-document.getElementById("titleGame").style.display = "none";
-document.getElementById("titleHosting").style.display = "none";
-document.getElementById("titleOther").style.display = "none";
+  // sembunyikan semua grid
+  document.getElementById("gameGrid").style.display = "none";
+  document.getElementById("panelGrid").style.display = "none";
+  document.getElementById("otherGrid").style.display = "none";
 
-// tampilkan tombol back
-const backBtn = document.getElementById("backBtn");
-if(backBtn) backBtn.style.display = "block";
+  // sembunyikan semua title
+  document.getElementById("titleGame").style.display = "none";
+  document.getElementById("titleHosting").style.display = "none";
+  document.getElementById("titleOther").style.display = "none";
 
-// tampilkan sesuai kategori
-if(type === "game"){
-document.getElementById("gameGrid").style.display = "grid";
-document.getElementById("titleGame").style.display = "flex";
-}
+  // tampilkan tombol back
+  const backBtn = document.getElementById("backBtn");
+  if(backBtn) backBtn.style.display = "block";
 
-if(type === "hosting"){
-document.getElementById("panelGrid").style.display = "grid";
-document.getElementById("titleHosting").style.display = "flex";
-}
+  let grid, title;
 
-if(type === "other"){
-document.getElementById("otherGrid").style.display = "grid";
-document.getElementById("titleOther").style.display = "flex";
-}
+  if(type === "game"){
+    grid = document.getElementById("gameGrid");
+    title = document.getElementById("titleGame");
+  } else if(type === "hosting"){
+    grid = document.getElementById("panelGrid");
+    title = document.getElementById("titleHosting");
+  } else if(type === "other"){
+    grid = document.getElementById("otherGrid");
+    title = document.getElementById("titleOther");
+  }
 
-// scroll
-window.scrollTo({
-top: document.getElementById("backBtn").offsetTop - 20,
-behavior: "smooth"
-});
+  if(grid && title){
+    grid.style.display = "grid";
+    title.style.display = "flex";
+
+    // tambahkan efek fade
+    grid.classList.remove("fade"); // reset animasi
+    void grid.offsetWidth;         // trigger reflow supaya animasi bisa diulang
+    grid.classList.add("fade");
+  }
+
 }
 
 function goBack(){
 
-// hide semua grid
-document.getElementById("gameGrid").style.display = "none";
-document.getElementById("panelGrid").style.display = "none";
-document.getElementById("otherGrid").style.display = "none";
+  const menu = document.getElementById("menuGrid");
 
-// hide semua title
-document.getElementById("titleGame").style.display = "none";
-document.getElementById("titleHosting").style.display = "none";
-document.getElementById("titleOther").style.display = "none";
+  // tampilkan menu utama
+  menu.style.display = "grid";
 
-// hide tombol back
-const backBtn = document.getElementById("backBtn");
-if(backBtn) backBtn.style.display = "none";
+  // sembunyikan semua grid
+  document.getElementById("gameGrid").style.display = "none";
+  document.getElementById("panelGrid").style.display = "none";
+  document.getElementById("otherGrid").style.display = "none";
 
-// scroll ke atas
-window.scrollTo({top:0,behavior:"smooth"});
+  // sembunyikan semua title
+  document.getElementById("titleGame").style.display = "none";
+  document.getElementById("titleHosting").style.display = "none";
+  document.getElementById("titleOther").style.display = "none";
+
+  // sembunyikan tombol back
+  const backBtn = document.getElementById("backBtn");
+  if(backBtn) backBtn.style.display = "none";
+
+  // scroll ke atas
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  // tambahkan efek fade
+  menu.classList.remove("fade"); // reset animasi
+  void menu.offsetWidth;         // trigger reflow
+  menu.classList.add("fade");    // jalankan animasi
 }
 
 let slides = document.querySelectorAll(".slide");
