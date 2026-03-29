@@ -858,6 +858,9 @@ Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Dis
 
 
 <!-- TITLE -->
+<div id="backBtn" onclick="goBack()" style="display:none; padding:15px; cursor:pointer; font-weight:600;">
+  ← Kembali
+</div>
 <!-- MENU DASHBOARD -->
 <div class="menu-grid">
 
@@ -937,7 +940,8 @@ document.getElementById("titleHosting").style.display = "none";
 document.getElementById("titleOther").style.display = "none";
 
 // tampilkan tombol back
-document.getElementById("backBtn").style.display = "block";
+const backBtn = document.getElementById("backBtn");
+if(backBtn) backBtn.style.display = "block";
 
 // tampilkan sesuai kategori
 if(type === "game"){
@@ -975,7 +979,8 @@ document.getElementById("titleHosting").style.display = "none";
 document.getElementById("titleOther").style.display = "none";
 
 // hide tombol back
-document.getElementById("backBtn").style.display = "none";
+const backBtn = document.getElementById("backBtn");
+if(backBtn) backBtn.style.display = "none";
 
 // scroll ke atas
 window.scrollTo({top:0,behavior:"smooth"});
