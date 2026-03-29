@@ -208,6 +208,22 @@ const database = {
       { name: "1498 Tokens Asphalt", price: "Rp290.000", status: "online" }
     ],
     membership: []
+  }, 
+  asphalt9: {
+    name: "Asphalt 9",
+    require: ["userId"],
+    image: "assets/asphalt.png",
+    qris: false,
+    desc: "Top up Tokens Asphalt cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "RGC (IDR)50.000", price: "Rp51.000", status: "online" },
+      { name: "RGC (IDR)65.000", price: "Rp65.000", status: "online" },
+      { name: "RGC (IDR)100.000", price: "Rp100.000", status: "offline" },
+      { name: "RGC (US)$10", price: "Rp175.000", status: "online" },
+      { name: "RGC (IDR)200.000", price: "Rp200.000", status: "online" }
+    ],
+    membership: []
   }
 };
 
@@ -287,7 +303,7 @@ const databasePanel = {
   do1: {
     name: "DIGITAL OCEAN",
     require: ["voucher"],
-    image: "img/panel.jpg",
+    image: "https://files.catbox.moe/sufpbu.png",
     qris: false,
     desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
     detail: "NOTE : NO GARANSI, BUY=PAHAM!",
