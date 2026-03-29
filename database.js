@@ -211,7 +211,7 @@ const database = {
   }, 
   roblox: {
     name: "Roblox Gift Card",
-    require: ["userId"],
+    require: ["voucher"], 
     image: "https://files.catbox.moe/um0wr8.png",
     qris: false,
     desc: "Roblox Gift Card",
