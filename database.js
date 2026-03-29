@@ -212,7 +212,7 @@ const database = {
   roblox: {
     name: "Roblox Gift Card",
     require: ["userId"],
-    image: "assets/asphalt.png",
+    image: "https://files.catbox.moe/um0wr8.png",
     qris: false,
     desc: "Top up Tokens Asphalt cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
