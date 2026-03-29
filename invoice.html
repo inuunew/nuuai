@@ -11,7 +11,6 @@ body{
 font-family:Arial, sans-serif;
 background:#f5f6fa;
 margin:0;
--webkit-tap-highlight-color: transparent;
 }
 
 .header{
@@ -233,10 +232,10 @@ color:#333;
 
 <div class="card">
 
-<div class="timer" id="timer">Batas Waktu: 30:00</div>
+<div class="timer" id="timer">Batas Waktu: 15:00</div>
 
 <div class="field" id="paymentInfo" style="display:none;">
-  <label>Detail Pembayaran</label>
+  <label>Nomor Pembayaran</label>
   <div id="paymentNumber" style="padding:10px;background:#eef1ff;border-radius:8px;font-weight:bold;"></div>
 </div>
 
@@ -251,7 +250,7 @@ color:#333;
 <button class="btn" onclick="bukaQR()">Lihat / Perbesar QRIS</button>
 
 <div class="warning">
-QRIS hanya berlaku 1x. Jangan transfer ulang ke QRIS yang sama.
+PASTIKAN DATA DIISI DENGAN BENAR, KARNA JIKA SALAH ITU BUKAN TANGGUNG KAMI! 
 </div>
 
 
@@ -312,7 +311,7 @@ const data = {
 };
 
 // Hitung total
-const admin = Math.floor(Math.random() * 51) + 50;
+const admin = 300;
 const total = data.price + admin;
 
 // Elemen DOM
@@ -336,7 +335,12 @@ else if(data.type === "voucher") detailProduk = `Tanpa Data`;
 produkEl.innerHTML = `
   <b>Layanan : ${data.game}</b><br>
   Item : ${data.item}<br>
-  <span style="color:#666;">${detailProduk}</span>
+  <span style="color:#666;">
+    ${data.userId ? `ID: ${data.userId}<br>` : ""}
+    ${data.username ? `Username: ${data.username}<br>` : ""}
+    ${data.phone ? `HP: ${data.phone}<br>` : ""}
+    ${data.server ? `Server: ${data.server}<br>` : ""}
+  </span>
 `;
 jumlahEl.innerText = "Rp " + data.price.toLocaleString("id-ID");
 kodeEl.innerText = "Rp " + admin.toLocaleString("id-ID");
@@ -344,7 +348,7 @@ totalEl.innerText = "Rp " + total.toLocaleString("id-ID");
 
 // Data nomor pembayaran
 const paymentData = {
-  "DANA": "085712345678",
+  "DANA": "083160556330",
   "OVO": "081234567890",
   "GoPay": "081298765432",
   "ShopeePay": "085701234567",
