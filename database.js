@@ -214,12 +214,12 @@ const database = {
     require: ["userId"],
     image: "https://files.catbox.moe/um0wr8.png",
     qris: false,
-    desc: "Top up Tokens Asphalt cepat & aman",
-    detail: "Tanpa login akun, layanan 24 jam",
+    desc: "Roblox Gift Card",
+    detail: "tutorial redeem kunjungi website https://www.roblox.com/redeem dan pastikan masuk dengan akun roblox kalian agar gift card masuk ke akun kamu.",
     regular: [
       { name: "RGC (IDR)50.000", price: "Rp51.000", status: "online" },
       { name: "RGC (IDR)65.000", price: "Rp65.000", status: "online" },
-      { name: "RGC (IDR)100.000", price: "Rp100.000", status: "offline" },
+      { name: "RGC (IDR)100.000", price: "Rp100.000", status: "online" },
       { name: "RGC (US)$10", price: "Rp175.000", status: "online" },
       { name: "RGC (IDR)200.000", price: "Rp200.000", status: "online" }
     ],
