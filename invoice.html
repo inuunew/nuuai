@@ -273,12 +273,9 @@ PASTIKAN DATA DIISI DENGAN BENAR, KARNA JIKA SALAH ITU BUKAN TANGGUNG KAMI!
 
 
 
-<div class="field">
-  <label>Upload Bukti Transfer</label>
-  <label class="upload-box">
-    <input type="file" id="bukti" hidden>
-    <span id="uploadText">Klik untuk upload gambar</span>
-  </label>
+<div class="upload-box" onclick="document.getElementById('bukti').click()">
+  <input type="file" id="bukti" accept="image/*" style="display:none;">
+  <span id="uploadText">Klik untuk upload gambar</span>
 </div>
 
 <button class="btn" id="confirmBtn">Konfirmasi</button>
@@ -296,7 +293,9 @@ PASTIKAN DATA DIISI DENGAN BENAR, KARNA JIKA SALAH ITU BUKAN TANGGUNG KAMI!
 </div>
 
 <script>
-// Ambil parameter URL
+// =========================
+// AMBIL PARAMETER
+// =========================
 const params = new URLSearchParams(window.location.search);
 
 const data = {
@@ -304,18 +303,24 @@ const data = {
   item: params.get("item") || "-",
   price: parseInt(params.get("price")) || 0,
   type: params.get("type") || "-",
-  userId: params.get("userId") || "-",
-  username: params.get("username") || "-",
-  phone: params.get("phone") || "-",
-  server: params.get("server") || "-",
-  payment: params.get("payment") || "-"
+  userId: params.get("userId") || "",
+  username: params.get("username") || "",
+  phone: params.get("phone") || "",
+  server: params.get("server") || "",
+  payment: params.get("payment") || ""
 };
 
-// Hitung total
+const payMethod = (data.payment || "").toUpperCase();
+
+// =========================
+// HITUNG TOTAL
+// =========================
 const admin = 300;
 const total = data.price + admin;
 
-// Elemen DOM
+// =========================
+// DOM
+// =========================
 const produkEl = document.getElementById("produk");
 const jumlahEl = document.getElementById("jumlah");
 const kodeEl = document.getElementById("kode");
@@ -324,15 +329,13 @@ const paymentInfoDiv = document.getElementById("paymentInfo");
 const paymentNumberEl = document.getElementById("paymentNumber");
 const qrDiv = document.querySelector(".qr");
 const popupQR = document.getElementById("popupQR");
-const btnQR = document.querySelector(".btn");
+const confirmBtn = document.getElementById("confirmBtn");
+const loading = document.getElementById("loading");
+const inputFile = document.getElementById("bukti");
 
-// Tampilkan detail produk
-let detailProduk = "";
-if(data.type === "id" || data.type === "idserver") detailProduk = `ID: ${data.userId}`;
-else if(data.type === "usn") detailProduk = `Username: ${data.username}`;
-else if(data.type === "pulsa") detailProduk = `HP: ${data.phone}`;
-else if(data.type === "voucher") detailProduk = `Tanpa Data`;
-
+// =========================
+// TAMPILKAN PRODUK
+// =========================
 produkEl.innerHTML = `
   <b>Layanan : ${data.game}</b><br>
   Item : ${data.item}<br>
@@ -343,130 +346,145 @@ produkEl.innerHTML = `
     ${data.server ? `Server: ${data.server}<br>` : ""}
   </span>
 `;
+
 jumlahEl.innerText = "Rp " + data.price.toLocaleString("id-ID");
 kodeEl.innerText = "Rp " + admin.toLocaleString("id-ID");
 totalEl.innerText = "Rp " + total.toLocaleString("id-ID");
 
-// Data nomor pembayaran
+// =========================
+// DATA PEMBAYARAN
+// =========================
 const paymentData = {
   "DANA": "083160556330",
   "OVO": "081234567890",
-  "GoPay": "081298765432",
-  "ShopeePay": "085701234567",
-  "Transfer Bank": "BCA 123-456-7890"
+  "GOPAY": "081298765432",
+  "SHOPEEPAY": "085701234567",
+  "TRANSFER BANK": "BCA 123-456-7890"
 };
 
-// Tampilkan sesuai metode pembayaran
-if(data.payment){
-  if(payMethod.includes("QRIS")){
-    qrDiv.style.display = "block";
-    paymentInfoDiv.style.display = "none";
-    btnQR.innerText = "Lihat / Perbesar QRIS";
-    btnQR.onclick = () => popupQR.classList.add("active");
-  } else {
-    qrDiv.style.display = "none";
-    paymentInfoDiv.style.display = "block"; 
-    const nomor = paymentData[data.payment] || "-";
-    paymentNumberEl.innerText = nomor;
-    btnQR.innerText = "Salin Nomor";
-    btnQR.onclick = () => {
-      navigator.clipboard.writeText(nomor).then(() => {
-        alert(`Nomor ${data.payment} berhasil disalin: ${nomor}`);
-      }).catch(() => alert("Gagal menyalin nomor!"));
-    }
-  }
+// =========================
+// HANDLE PEMBAYARAN
+// =========================
+if(payMethod.includes("QRIS")){
+  qrDiv.style.display = "block";
+  paymentInfoDiv.style.display = "none";
+} else if(payMethod && paymentData[payMethod]){
+  qrDiv.style.display = "none";
+  paymentInfoDiv.style.display = "block";
+  paymentNumberEl.innerText = paymentData[payMethod];
 } else {
   qrDiv.style.display = "none";
   paymentInfoDiv.style.display = "none";
-  btnQR.style.display = "none";
 }
 
+// =========================
+// QR POPUP
+// =========================
 function bukaQR(){
-  document.getElementById("popupQR").classList.add("active");
+  popupQR.classList.add("active");
 }
-// Tutup popup QR
-function tutupQR(){ popupQR.classList.remove("active"); }
 
-// Timer 30 menit
+function tutupQR(){
+  popupQR.classList.remove("active");
+}
+
+// =========================
+// TIMER
+// =========================
 let time = 1800;
 const timerEl = document.getElementById("timer");
-const interval = setInterval(() => {
+
+setInterval(() => {
   if (time <= 0) {
     timerEl.innerText = "QRIS EXPIRED";
-    clearInterval(interval);
     return;
   }
+
   let m = Math.floor(time / 60);
   let s = time % 60;
+
   timerEl.innerText = `Batas Waktu: ${m}:${s < 10 ? "0" : ""}${s}`;
   time--;
 }, 1000);
 
-// Upload bukti
-document.getElementById("bukti").addEventListener("change", function(){
+// =========================
+// UPLOAD FILE (FIX)
+// =========================
+inputFile.addEventListener("change", function(){
+  console.log("FILE:", this.files);
+
   const fileName = this.files[0]?.name || "Klik untuk upload gambar";
   document.getElementById("uploadText").innerText = fileName;
 });
 
-// Konfirmasi pembayaran
-const confirmBtn = document.getElementById("confirmBtn");
-const loading = document.getElementById("loading");
-
+// =========================
+// KONFIRMASI
+// =========================
 confirmBtn.onclick = async () => {
-  const file = document.getElementById("bukti").files[0];
-  if (!file){ alert("Upload bukti transfer dulu!"); return; }
+  const file = inputFile.files[0];
+
+  console.log("FILE SAAT CONFIRM:", file);
+
+  if (!file){
+    alert("Upload bukti transfer dulu!");
+    return;
+  }
 
   confirmBtn.style.display = "none";
   loading.style.display = "block";
 
   try {
-    await kirimTelegram();
+    await kirimTelegram(file);
     alert("Berhasil dikirim ke admin!");
     window.location.href = "final.html?" + params.toString();
   } catch(e){
+    console.error(e);
     alert("Gagal kirim ke admin!");
     confirmBtn.style.display = "block";
     loading.style.display = "none";
-    console.error(e);
   }
-}
+};
 
-// Kirim data ke Telegram
-async function kirimTelegram(){
-  const file = document.getElementById("bukti").files[0];
-  if(!file){ alert("Upload bukti transfer terlebih dahulu!"); return; }
+// =========================
+// KIRIM TELEGRAM
+// =========================
+async function kirimTelegram(file){
 
   const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w";
   const CHAT_ID = "7314158034";
 
   const pesan = `
-📌 *PEMBAYARAN MASUK* 📌
+📌 PEMBAYARAN MASUK
 
 Game: ${data.game}
 Item: ${data.item}
-Harga: Rp ${data.price.toLocaleString("id-ID")}
-Biaya Admin: Rp ${admin.toLocaleString("id-ID")}
-Total Bayar: Rp ${total.toLocaleString("id-ID")}
-Tipe: ${data.type}
+Total: Rp ${total.toLocaleString("id-ID")}
 User ID: ${data.userId}
 Username: ${data.username}
-No HP: ${data.phone}
+HP: ${data.phone}
 Server: ${data.server}
-Metode Bayar: ${data.payment}
+Metode: ${data.payment}
 `;
 
-  // Kirim teks
+  // kirim teks
   await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({chat_id: CHAT_ID, text: pesan, parse_mode:"Markdown"})
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: pesan
+    })
   });
 
-  // Kirim foto bukti
+  // kirim foto
   let form = new FormData();
   form.append("chat_id", CHAT_ID);
   form.append("photo", file);
-  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method:"POST", body:form });
+
+  await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+    method:"POST",
+    body: form
+  });
 }
 </script>
 </body>
