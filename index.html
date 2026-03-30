@@ -18,12 +18,14 @@ padding:0;
 box-sizing:border-box;
 font-family:'Outfit',sans-serif;
 -webkit-tap-highlight-color: transparent;
+
 }
 
 body{
 background: linear-gradient(180deg, #ecfdf5 0%, #f0fdf4 50%, #ffffff 100%);
 overflow-x:hidden;
 min-height:100vh;
+transition:0.2s;
 }
 
 /* HEADER */
@@ -731,12 +733,157 @@ animation: fadeIn 0.3s ease;
 from{opacity:0; transform:translateY(10px);}
 to{opacity:1; transform:translateY(0);}
 }
+.dropdown-menu{
+position:absolute;
+top:70px;
+left:20px;
+background:white;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+display:none;
+flex-direction:column;
+padding:10px;
+z-index:999;
+min-width:150px;
+}
+
+.dropdown-menu p{
+padding:10px;
+font-size:14px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.dropdown-menu p:hover{
+background:#f3f4f6;
+}
+.nav-left{
+position:relative;
+}
+#overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+z-index:998;
+}
+
+#sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#fff;
+box-shadow:2px 0 10px rgba(0,0,0,0.1);
+transition:0.3s;
+z-index:999;
+display:flex;
+flex-direction:column;
+}
+
+#sidebar.active{
+left:0;
+}
+
+#overlay.active{
+display:block;
+}
+
+/* HEADER */
+.sidebar-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+font-weight:bold;
+font-size:16px;
+border-bottom:1px solid #eee;
+}
+
+/* MENU */
+.menu{
+padding:10px;
+}
+
+.menu p{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+border-radius:10px;
+cursor:pointer;
+font-size:14px;
+}
+
+.menu p:hover{
+background:#f3f4f6;
+}
+
+.menu p.active{
+background:#16a34a;
+color:#fff;
+}
+
+.menu .title{
+margin:15px 10px 5px;
+font-size:12px;
+color:#888;
+}
+.icon i{
+font-size:20px;     /* bikin lebih besar */
+line-height:1;
+}
+
+.icon{
+padding:8px;
+cursor:pointer;
+}
 </style>
 
 </head>
 <body>
+<!-- OVERLAY -->
+<div id="overlay" onclick="closeMenu()"></div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+
+  <div class="sidebar-header">
+    <span>INUU MARKET</span>
+    <i class="fas fa-xmark" onclick="closeMenu()"></i>
+  </div>
+
+  <div class="menu">
+    <p class="active"><i class="fas fa-home"></i> Beranda</p>
+<a href="musics.html" style="text-decoration:none; color:inherit;">
+  <p>
+    <i class="fas fa-music"></i> List Music
+  </p>
+</a>
+    <p><i class="fas fa-right-to-bracket"></i> Login H2H</p>
+
+    <div class="title">Informasi</div>
+
+    <p onclick="window.location.href='bantuan.html'">
+      <i class="fas fa-headset"></i> Bantuan & Support
+    </p>
+
+    <p onclick="showNotif()">
+      <i class="fas fa-bell"></i> Notifikasi
+    </p>
+
+    <p onclick="showAdmin()">
+      <i class="fas fa-circle-info"></i> Info Admin
+    </p>
+  </div>
+
+</div>
 <!-- POPUP OVERLAY -->
-<div id="overlay" class="popup">
+<div id="popupOverlay" class="popup">
 
   <!-- POPUP NOTIF -->
   <div id="notifBox" class="popup-box" style="display:none;">
@@ -798,36 +945,31 @@ Konfirmasi
 
 </div>
 
-<!-- HEADER -->
-
 <div class="navbar">
 
-<div class="nav-left">
+  <div class="nav-left">
 
-<img src="https://files.catbox.moe/tv1rv6.jpeg" class="logo">
+    <img src="https://files.catbox.moe/tv1rv6.jpeg" class="logo">
 
-<div class="logo-text">
-<div class="store">INUU <span>MARKET</span></div>
-<div class="sub">Menyediakan Berbagai Layanan</div>
+    <div class="logo-text">
+      <div class="store">INUU <span>MARKET</span></div>
+      <div class="sub">Menyediakan Berbagai Layanan</div>
+    </div>
+
+    <!-- TOMBOL TITIK TIGA -->
+    <div class="icon" onclick="toggleMenu()">
+  <i class="fas fa-ellipsis-vertical"></i>
 </div>
 
-</div>
+    <!-- DROPDOWN -->
+    <div id="menuDropdown" class="dropdown-menu">
+      <p onclick="showAdmin()">Info Admin</p>
+      <p onclick="showNotif()">Notifikasi</p>
+    </div>
 
-<div class="nav-right">
+  </div>
 
-<!-- INFO ADMIN -->
-<div class="icon" onclick="showAdmin()">
-<i class="fas fa-circle-info"></i>
-</div>
 
-<!-- PUSAT BANTUAN -->
-<a href="bantuan.html" class="icon">
-<i class="fas fa-headset"></i>
-</a>
-
-<!-- NOTIFIKASI -->
-<div class="icon" onclick="showNotif()">
-<i class="fas fa-bell"></i>
 </div>
 
 </div>
@@ -938,6 +1080,15 @@ Powered by <span>InuuMarket</span><br>
 
 <script src="database.js"></script>
 <script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu(){
+  document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("overlay").classList.remove("active");
+}
 function openCategory(type){
 
   // sembunyikan menu utama
@@ -1463,27 +1614,21 @@ document.getElementById("topupModal").style.display="none"
 <script>
 
 function showAdmin(){
-
-document.getElementById("overlay").style.display="flex"
-document.getElementById("adminBox").style.display="block"
-document.getElementById("notifBox").style.display="none"
-
+  document.getElementById("popupOverlay").style.display="flex"
+  document.getElementById("adminBox").style.display="block"
+  document.getElementById("notifBox").style.display="none"
 }
 
 function showNotif(){
-
-document.getElementById("overlay").style.display="flex"
-document.getElementById("notifBox").style.display="block"
-document.getElementById("adminBox").style.display="none"
-
+  document.getElementById("popupOverlay").style.display="flex"
+  document.getElementById("notifBox").style.display="block"
+  document.getElementById("adminBox").style.display="none"
 }
 
 function closePopup(){
-
-document.getElementById("overlay").style.display="none"
-document.getElementById("adminBox").style.display="none"
-document.getElementById("notifBox").style.display="none"
-
+  document.getElementById("popupOverlay").style.display="none"
+  document.getElementById("adminBox").style.display="none"
+  document.getElementById("notifBox").style.display="none"
 }
 
 window.onload = function(){
