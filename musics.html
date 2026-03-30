@@ -379,9 +379,7 @@ function loadSong(index){
   icon.classList.replace("fa-play","fa-pause")
 
   localStorage.setItem("musicIndex", currentIndex)
-}
-
-if ('mediaSession' in navigator) {
+  if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: song.title,
     artist: song.artist,
@@ -403,6 +401,9 @@ if ('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('previoustrack', prevSong)
   navigator.mediaSession.setActionHandler('nexttrack', nextSong)
 }
+}
+
+
 // ================= LYRICS =================
 function loadLyrics(lyrics){
   lyricsContainer.innerHTML = ""
