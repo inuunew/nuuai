@@ -256,10 +256,72 @@ transition:0.1s;
   font-weight:bold;
   margin-bottom:10px;
 }
+/*warning popup*/
+.popup-warning{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup-box{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+  width:85%;
+  max-width:350px;
+  animation:fadeIn 0.2s ease;
+}
+
+.popup-box .icon{
+  font-size:50px;
+  color:#f59e0b; /* warna kuning warning */
+  margin-bottom:10px;
+}
+
+.popup-box h3{
+  margin:5px 0;
+}
+
+.popup-box p{
+  font-size:14px;
+  color:#555;
+}
+
+.popup-box button{
+  margin-top:15px;
+  width:100%;
+  padding:10px;
+  border:none;
+  background:#f59e0b;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+@keyframes fadeIn{
+  from{transform:scale(0.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
 </style>
 </head>
 
 <body>
+<div id="warningPopup" class="popup-warning">
+  <div class="popup-box">
+    <div class="icon">❗</div>
+    <h3>Peringatan</h3>
+    <p id="warningText">Harap isi data terlebih dahulu!</p>
+    <button onclick="closeWarning()">Oke</button>
+  </div>
+</div>
 
 <div id="infoModal" class="modal">
   <div class="modal-content">
@@ -328,7 +390,7 @@ transition:0.1s;
       </div>
 
       <div style="margin-top:15px;background:#f3f4f6;padding:10px;border-radius:10px;">
-        Pastikan data sudah benar agar tidak terjadi kesalahan.
+        Pastikan data sudah benar agar tidak terjadi kesalahan.<br>Melanjutkan Berarti Membeli! admin akan blacklist orang yang tidak bersungguh-sungguh
       </div>
 
       <button onclick="lanjutWA()" class="pay" style="width:100%;margin-top:15px;">
@@ -419,6 +481,14 @@ transition:0.1s;
 
 <script src="database.js"></script>
 <script>
+function showWarning(text){
+  document.getElementById("warningText").innerText = text;
+  document.getElementById("warningPopup").style.display = "flex";
+}
+
+function closeWarning(){
+  document.getElementById("warningPopup").style.display = "none";
+}
 function openConfirm(){
   document.getElementById("confirmModal").style.display = "flex";
 }
@@ -531,11 +601,29 @@ function bayar(){
     btn.style.opacity="1";
   }
 
-  if(required.includes("phone") && !document.getElementById("phone").value){ alert("Masukkan nomor HP"); resetBtn(); return; }
-  if(required.includes("username") && !document.getElementById("username").value){ alert("Masukkan username"); resetBtn(); return; }
-  if(required.includes("userId") && !document.getElementById("userId").value){ alert("Masukkan ID"); resetBtn(); return; }
-  if(required.includes("server") && !serverValue){ alert("Masukkan server"); resetBtn(); return; }
-  if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return; }
+  if(required.includes("username") && !document.getElementById("username").value){
+  showWarning("Masukkan username terlebih dahulu!");
+  resetBtn();
+  return;
+}
+
+if(required.includes("userId") && !document.getElementById("userId").value){
+  showWarning("Masukkan ID terlebih dahulu!");
+  resetBtn();
+  return;
+}
+
+if(required.includes("server") && !serverValue){
+  showWarning("Masukkan server terlebih dahulu!");
+  resetBtn();
+  return;
+}
+
+if(!selectedPayment){
+  showWarning("Pilih metode pembayaran!");
+  resetBtn();
+  return;
+}
 
 if(isManualQRIS){
   openSheet(); // bukan modal lagi
