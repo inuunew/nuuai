@@ -303,7 +303,7 @@ text-align:center;
 </div>
 
 <script>
-// ELEMENT
+// ================= ELEMENT =================
 const audio = document.getElementById("audio")
 const progress = document.getElementById("progress")
 const icon = document.getElementById("icon")
@@ -317,6 +317,10 @@ let songs = []
 let currentLyrics = []
 let currentIndex = 0
 let lastIndex = -1
+
+// ================= BASIC SETUP =================
+audio.setAttribute("playsinline", "true")
+audio.setAttribute("webkit-playsinline", "true")
 
 // ================= SIDEBAR =================
 function openMenu(){
@@ -379,30 +383,31 @@ function loadSong(index){
   icon.classList.replace("fa-play","fa-pause")
 
   localStorage.setItem("musicIndex", currentIndex)
+  localStorage.setItem("musicSrc", song.src)
+
+  // ================= MEDIA SESSION =================
   if ('mediaSession' in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: song.title,
-    artist: song.artist,
-    artwork: [
-      { src: song.cover, sizes: '512x512', type: 'image/png' }
-    ]
-  })
 
-  navigator.mediaSession.setActionHandler('play', () => {
-    audio.play()
-    icon.classList.replace("fa-play","fa-pause")
-  })
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: song.title,
+      artist: song.artist,
+      artwork: [
+        { src: song.cover, sizes: '512x512', type: 'image/png' }
+      ]
+    })
 
-  navigator.mediaSession.setActionHandler('pause', () => {
-    audio.pause()
-    icon.classList.replace("fa-pause","fa-play")
-  })
+    navigator.mediaSession.setActionHandler('play', () => {
+      audio.play()
+    })
 
-  navigator.mediaSession.setActionHandler('previoustrack', prevSong)
-  navigator.mediaSession.setActionHandler('nexttrack', nextSong)
+    navigator.mediaSession.setActionHandler('pause', () => {
+      audio.pause()
+    })
+
+    navigator.mediaSession.setActionHandler('previoustrack', prevSong)
+    navigator.mediaSession.setActionHandler('nexttrack', nextSong)
+  }
 }
-}
-
 
 // ================= LYRICS =================
 function loadLyrics(lyrics){
@@ -421,10 +426,8 @@ function loadLyrics(lyrics){
 function togglePlay(){
   if(audio.paused){
     audio.play()
-    icon.classList.replace("fa-play","fa-pause")
   } else {
     audio.pause()
-    icon.classList.replace("fa-pause","fa-play")
   }
 }
 
@@ -441,19 +444,17 @@ function prevSong(){
   loadSong(currentIndex)
 }
 
-// AUTO NEXT
+// ================= AUTO NEXT =================
 audio.addEventListener("ended", nextSong)
 
-// ================= SYNC LYRICS =================
+// ================= SYNC =================
 audio.addEventListener("timeupdate", () => {
 
   if(!audio.duration) return
 
-  // progress bar
   const percent = (audio.currentTime / audio.duration) * 100
   progress.style.width = percent + "%"
 
-  // simpan posisi lagu
   localStorage.setItem("musicTime", audio.currentTime)
   localStorage.setItem("musicIndex", currentIndex)
 
@@ -484,6 +485,30 @@ function setProgress(e){
   const clickX = e.offsetX
   audio.currentTime = (clickX / width) * audio.duration
 }
+
+// ================= BACKGROUND PROTECTION =================
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden){
+    // biarkan tetap jalan
+  }
+})
+
+// ================= MEDIA STATE =================
+audio.addEventListener("play", () => {
+  icon.classList.replace("fa-play","fa-pause")
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.playbackState = "playing"
+  }
+})
+
+audio.addEventListener("pause", () => {
+  icon.classList.replace("fa-pause","fa-play")
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.playbackState = "paused"
+  }
+})
 </script>
 
 </body>
