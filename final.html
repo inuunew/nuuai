@@ -10,7 +10,6 @@ body {
   background: #f5f6fa;
   margin: 0;
   padding: 0;
--webkit-tap-highlight-color: transparent;
 }
 .container {
   padding: 15px;
@@ -104,9 +103,98 @@ input {
   color: #555;
   word-break: break-all;
 }
+.popup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup.active{
+  display:flex;
+}
+
+.popup-box{
+  background:white;
+  width:85%;
+  max-width:320px;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  animation:fadeIn 0.2s ease;
+}
+
+.icon{
+  font-size:40px;
+  color:#ef4444;
+}
+
+.icon.success{
+  color:#22c55e;
+}
+
+.title{
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.text{
+  font-size:14px;
+  color:#555;
+  margin-top:8px;
+}
+
+.btn-popup{
+  margin-top:15px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#eee;
+  font-weight:bold;
+}
+
+.btn-popup.success{
+  background:#22c55e;
+  color:white;
+}
+
+@keyframes fadeIn{
+  from{transform:scale(0.9);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
 </style>
 </head>
 <body>
+<!-- POPUP WARNING -->
+<div id="warningPopup" class="popup">
+  <div class="popup-box">
+    <div class="icon">⚠️</div>
+    <div class="title">Nomor Kosong</div>
+    <div class="text">
+      Silahkan masukkan nomor WhatsApp terlebih dahulu
+    </div>
+    <button onclick="tutupWarning()" class="btn-popup">Oke</button>
+  </div>
+</div>
+
+<!-- POPUP SUKSES -->
+<div id="successPopup" class="popup">
+  <div class="popup-box">
+    <div class="icon success">✔️</div>
+    <div class="title">Berhasil</div>
+    <div class="text">
+      Nomor WhatsApp berhasil dikirim ke admin
+    </div>
+    <button onclick="tutupSukses()" class="btn-popup success">Oke</button>
+  </div>
+</div>
 <div class="container">
   <div class="message">
     <h2>Pembayaran Telah Dikirim!</h2>
@@ -143,10 +231,28 @@ input {
 </div>
 
 <script>
+function bukaWarning(){
+  document.getElementById("warningPopup").classList.add("active");
+}
+
+function tutupWarning(){
+  document.getElementById("warningPopup").classList.remove("active");
+}
+
+function bukaSukses(){
+  document.getElementById("successPopup").classList.add("active");
+}
+
+function tutupSukses(){
+  document.getElementById("successPopup").classList.remove("active");
+}
 const sendBtn = document.getElementById("sendWA")
 sendBtn.onclick = async () => {
   const wa = document.getElementById("whatsapp").value.trim()
-  if(!wa) return alert("Masukkan nomor WhatsApp Anda!")
+  if(!wa){
+  bukaWarning();
+  return;
+}
 
   const BOT_TOKEN = "8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w"
   const CHAT_ID = "7314158034"
@@ -163,7 +269,7 @@ sendBtn.onclick = async () => {
     })
   })
 
-  alert("Nomor WhatsApp Anda berhasil dikirim ke admin!")
+  bukaSukses();
 }
 </script>
 </body>
