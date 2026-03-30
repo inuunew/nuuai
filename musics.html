@@ -381,6 +381,28 @@ function loadSong(index){
   localStorage.setItem("musicIndex", currentIndex)
 }
 
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: song.title,
+    artist: song.artist,
+    artwork: [
+      { src: song.cover, sizes: '512x512', type: 'image/png' }
+    ]
+  })
+
+  navigator.mediaSession.setActionHandler('play', () => {
+    audio.play()
+    icon.classList.replace("fa-play","fa-pause")
+  })
+
+  navigator.mediaSession.setActionHandler('pause', () => {
+    audio.pause()
+    icon.classList.replace("fa-pause","fa-play")
+  })
+
+  navigator.mediaSession.setActionHandler('previoustrack', prevSong)
+  navigator.mediaSession.setActionHandler('nexttrack', nextSong)
+}
 // ================= LYRICS =================
 function loadLyrics(lyrics){
   lyricsContainer.innerHTML = ""
