@@ -221,11 +221,132 @@ display:block;
 margin-bottom:5px;
 color:#333;
 }
+#successPopup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+@keyframes pop{
+  0%{transform:scale(0.5);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
+}
+
+#successPopup div{
+  animation: pop 0.3s ease;
+}
+
+#successPopup.active{
+  display:flex;
+}
+.popup-warning{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.popup-warning.active{
+  display:flex;
+}
+
+.popup-box{
+  background:white;
+  width:85%;
+  max-width:320px;
+  border-radius:15px;
+  padding:20px;
+  text-align:center;
+  animation:fadeIn 0.2s ease;
+}
+
+.icon-warning{
+  font-size:40px;
+  color:#ef4444;
+}
+
+.title-warning{
+  font-weight:bold;
+  margin-top:10px;
+  font-size:16px;
+}
+
+.text-warning{
+  font-size:14px;
+  color:#555;
+  margin-top:8px;
+}
+
+.btn-warning{
+  margin-top:15px;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#eee;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+@keyframes fadeIn{
+  from{transform:scale(0.9);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
 </style>
 
 </head>
 
 <body>
+<div id="warningPopup" class="popup-warning">
+  <div class="popup-box">
+    
+    <div class="icon-warning">⚠️</div>
+    
+    <div class="title-warning">Upload Belum Ada</div>
+    
+    <div class="text-warning">
+      Silahkan upload bukti transfer terlebih dahulu sebelum konfirmasi pembayaran
+    </div>
+    
+    <button onclick="tutupWarning()" class="btn-warning">
+      Oke
+    </button>
+
+  </div>
+</div>
+
+<div id="successPopup" class="popup">
+  <div style="background:white;padding:20px;border-radius:15px;text-align:center;max-width:300px;width:90%;">
+    
+    <div style="font-size:50px;color:#22c55e;">✔️</div>
+    
+    <div style="font-weight:bold;margin-top:10px;">
+      Berhasil
+    </div>
+    
+    <div style="font-size:14px;margin-top:8px;color:#555;">
+      Informasi pembayaran telah dikirim kepada admin, silahkan lanjutkan ke menu selanjutnya dan mengikuti instruksi
+    </div>
+    
+    <button onclick="tutupSukses()" 
+      style="margin-top:15px;padding:10px 20px;border:none;border-radius:10px;background:#22c55e;color:white;font-weight:bold;">
+      Oke
+    </button>
+
+  </div>
+</div>
 
 <div class="header">INUU MARKET</div>
 
@@ -293,6 +414,23 @@ PASTIKAN DATA DIISI DENGAN BENAR, KARNA JIKA SALAH ITU BUKAN TANGGUNG KAMI!
 </div>
 
 <script>
+function bukaWarning(){
+  document.getElementById("warningPopup").classList.add("active");
+}
+
+function tutupWarning(){
+  document.getElementById("warningPopup").classList.remove("active");
+}
+function bukaSukses(){
+  document.getElementById("successPopup").classList.add("active");
+}
+
+function tutupSukses(){
+  document.getElementById("successPopup").classList.remove("active");
+
+  // lanjut ke halaman final
+  window.location.href = "final.html?" + params.toString();
+}
 // =========================
 // AMBIL PARAMETER
 // =========================
@@ -426,17 +564,16 @@ confirmBtn.onclick = async () => {
   console.log("FILE SAAT CONFIRM:", file);
 
   if (!file){
-    alert("Upload bukti transfer dulu!");
-    return;
-  }
+  bukaWarning();
+  return;
+}
 
   confirmBtn.style.display = "none";
   loading.style.display = "block";
 
   try {
-    await kirimTelegram(file);
-    alert("Berhasil dikirim ke admin!");
-    window.location.href = "final.html?" + params.toString();
+    await kirimTelegram();
+    bukaSukses();
   } catch(e){
     console.error(e);
     alert("Gagal kirim ke admin!");
