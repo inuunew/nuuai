@@ -229,6 +229,33 @@ transform:scale(0.97);
 opacity:0.85;
 transition:0.1s;
 }
+/*open info*/
+.sheet{
+  position:fixed;
+  bottom:-100%;
+  left:0;
+  right:0;
+  background:white;
+  border-radius:20px 20px 0 0;
+  box-shadow:0 -5px 20px rgba(0,0,0,0.1);
+  transition:0.3s;
+  z-index:9999;
+}
+
+.sheet.show{
+  bottom:0;
+}
+
+.sheet-content{
+  padding:15px;
+}
+
+.sheet-header{
+  display:flex;
+  justify-content:space-between;
+  font-weight:bold;
+  margin-bottom:10px;
+}
 </style>
 </head>
 
@@ -255,16 +282,68 @@ transition:0.1s;
 </div>
 
 <div class="card">
-<div class="product">
-<img id="gameImage" onerror="this.src='default.png'">
-<div>
-<div class="badge">GAMES</div>
-<div id="itemName"></div>
-<div class="price" id="price"></div>
-</div>
-</div>
+  <div class="product">
+    <img id="gameImage" onerror="this.src='default.png'">
+    
+    <div>
+      <div class="badge">GAMES</div>
+      <div id="itemName"></div>
+      <div class="price" id="price"></div>
+    </div>
+  </div>
+
+  <!-- MENU AKSI GLOBAL -->
+  <div class="action-menu">
+    <div class="action-item" onclick="openInfo()">ℹ️ Info</div>
+  </div>
 </div>
 
+<div id="confirmSheet" class="sheet">
+  <div class="sheet-content">
+
+    <div class="sheet-header">
+      <span>Detail Pembayaran</span>
+      <span onclick="closeSheet()">▼</span>
+    </div>
+
+    <div class="sheet-body">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <img id="sheetImage" style="width:50px;border-radius:8px;">
+        <div>
+          <div id="sheetItem"></div>
+          <div id="sheetPrice" style="color:#555;"></div>
+        </div>
+      </div>
+
+      <hr style="margin:15px 0;">
+
+      <div class="row">
+        <span>Tujuan :</span>
+        <span id="sheetUser" style="color:red;"></span>
+      </div>
+
+      <div class="row">
+        <span>Harga :</span>
+        <span id="sheetHarga"></span>
+      </div>
+
+      <div style="margin-top:15px;background:#f3f4f6;padding:10px;border-radius:10px;">
+        Pastikan data sudah benar agar tidak terjadi kesalahan.
+      </div>
+
+      <button onclick="lanjutWA()" class="pay" style="width:100%;margin-top:15px;">
+        Lanjutkan Pembelian
+      </button>
+
+      <button onclick="closeSheet()" style="width:100%;margin-top:10px;padding:10px;border:none;border-radius:10px;">
+        Kembali
+      </button>
+    </div>
+
+  </div>
+
+  </div>
+</div>
 <div class="card" id="userIdBox">
 <label class="label">USER ID</label>
 <div class="input-group">
@@ -276,7 +355,6 @@ transition:0.1s;
 
 <div style="display:flex; justify-content:space-between; align-items:center;">
 <label class="label">USERNAME PANEL</label>
-<div onclick="openInfo()" style="cursor:pointer;font-size:18px;">ℹ️</div>
 </div>
 
 
@@ -341,6 +419,14 @@ transition:0.1s;
 
 <script src="database.js"></script>
 <script>
+function openConfirm(){
+  document.getElementById("confirmModal").style.display = "flex";
+}
+
+function closeConfirm(){
+  document.getElementById("confirmModal").style.display = "none";
+}
+
 function goHome() {
   window.location.href = "index.html"; // arahkan kembali ke halaman utama
 }
@@ -452,18 +538,8 @@ function bayar(){
   if(!selectedPayment){ alert("Pilih pembayaran"); resetBtn(); return; }
 
 if(isManualQRIS){
-  const waNumber = "6283160556330";
-  const message = encodeURIComponent(
-    `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
-    `Game: ${game}\nItem: ${item}\nHarga: Rp ${price.toLocaleString("id-ID")}\n`+
-    `UserID: ${document.getElementById("userId").value || ''}\n`+
-    `Username: ${document.getElementById("username").value || ''}\n`+
-    `Phone: ${document.getElementById("phone").value || ''}\n`+
-    `Server: ${serverValue || ''}`
-  );
-
-  resetBtn(); // biar tombol balik normal
-  window.location.href = `https://wa.me/${waNumber}?text=${message}`;
+  openSheet(); // bukan modal lagi
+  resetBtn();
   return;
 }
 
@@ -529,6 +605,43 @@ window.addEventListener("pageshow", () => {
   btn.style.opacity = "1";
   btn.innerHTML = "Bayar";
 });
+
+function openSheet(){
+  document.getElementById("confirmSheet").classList.add("show");
+
+  document.getElementById("sheetImage").src = image;
+  document.getElementById("sheetItem").innerText = game + " " + item;
+  document.getElementById("sheetPrice").innerText = "Rp " + price.toLocaleString("id-ID");
+  document.getElementById("sheetHarga").innerText = "Rp " + price.toLocaleString("id-ID");
+
+  document.getElementById("sheetUser").innerText =
+    document.getElementById("userId")?.value ||
+    document.getElementById("username")?.value ||
+    document.getElementById("phone")?.value || "-";
+}
+
+function closeSheet(){
+  document.getElementById("confirmSheet").classList.remove("show");
+}
+
+function lanjutWA(){
+  closeSheet();
+
+  const waNumber = "6283160556330";
+  const message = encodeURIComponent(
+    `Halo, saya ingin melakukan pembayaran memakai qris manual untuk:\n`+
+    `Game: ${game}\nItem: ${item}\nHarga: Rp ${price.toLocaleString("id-ID")}\n`+
+    `UserID: ${document.getElementById("userId").value || ''}\n`+
+    `Username: ${document.getElementById("username").value || ''}\n`+
+    `Phone: ${document.getElementById("phone").value || ''}\n`+
+    `Server: ${required.includes("server") ? 
+      (produk.serverType==="id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value)
+      : ''
+    }`
+  );
+
+  window.location.href = `https://wa.me/${waNumber}?text=${message}`;
+}
 </script>
 </body>
 </html>
