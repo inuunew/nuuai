@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Player</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+/* PLAYER */
+.player{
+width:330px;
+background:#1e293b;
+padding:20px;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+text-align:center;
+}
+
+.player img{
+width:100%;
+border-radius:15px;
+margin-bottom:10px;
+}
+
+/* TEXT */
+.title{
+font-size:18px;
+font-weight:bold;
+}
+
+.artist{
+font-size:14px;
+color:#cbd5f5;
+margin-bottom:10px;
+}
+
+/* LYRICS */
+.lyrics{
+margin-top:10px;
+height:120px;
+overflow:hidden;
+}
+
+.lyrics p{
+margin:5px 0;
+opacity:0.4;
+transition:0.3s;
+font-size:14px;
+}
+
+.lyrics p.active{
+opacity:1;
+color:#22c55e;
+font-weight:bold;
+font-size:16px;
+}
+
+/* PROGRESS */
+.progress-container{
+width:100%;
+height:6px;
+background:#334155;
+border-radius:10px;
+cursor:pointer;
+margin:10px 0;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:#22c55e;
+border-radius:10px;
+}
+
+/* TIME */
+.time{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+color:#94a3b8;
+}
+
+/* BUTTON */
+.controls{
+margin-top:15px;
+display:flex;
+justify-content:center;
+gap:15px;
+}
+
+.controls button{
+background:#22c55e;
+border:none;
+color:white;
+width:50px;
+height:50px;
+border-radius:50%;
+font-size:18px;
+cursor:pointer;
+}
+
+.controls button:hover{
+background:#16a34a;
+}
+</style>
+</head>
+<body>
+
+<div class="player">
+
+<img id="cover" src="">
+
+<div class="title" id="title">-</div>
+<div class="artist" id="artist">-</div>
+
+<div id="lyrics" class="lyrics"></div>
+
+<div class="progress-container" onclick="setProgress(event)">
+<div class="progress" id="progress"></div>
+</div>
+
+<div class="time">
+<span id="current">0:00</span>
+<span id="duration">0:00</span>
+</div>
+
+<div class="controls">
+<button onclick="prevSong()"><i class="fas fa-backward"></i></button>
+<button onclick="togglePlay()"><i id="icon" class="fas fa-play"></i></button>
+<button onclick="nextSong()"><i class="fas fa-forward"></i></button>
+</div>
+
+<audio id="audio"></audio>
+
+</div>
+
+<script>
+const audio = document.getElementById("audio")
+const progress = document.getElementById("progress")
+const icon = document.getElementById("icon")
+const lyricsContainer = document.getElementById("lyrics")
+
+let songs = []
+let currentLyrics = []
+let currentIndex = 0
+let lastIndex = -1
+
+// LOAD JSON
+fetch("listmusic.json")
+.then(res => res.json())
+.then(data => {
+  songs = data.songs
+  currentIndex = localStorage.getItem("musicIndex") || 0
+  loadSong(currentIndex)
+})
+
+// LOAD SONG
+function loadSong(index){
+  const song = songs[index]
+
+  audio.src = song.src
+  document.getElementById("title").innerText = song.title
+  document.getElementById("artist").innerText = song.artist
+  document.getElementById("cover").src = song.cover
+
+  loadLyrics(song.lyrics)
+
+  audio.play()
+  icon.classList.remove("fa-play")
+  icon.classList.add("fa-pause")
+}
+
+// LOAD LYRICS
+function loadLyrics(lyrics){
+  lyricsContainer.innerHTML = ""
+  currentLyrics = lyrics
+  lastIndex = -1
+
+  lyrics.forEach(line => {
+    const p = document.createElement("p")
+    p.innerText = line.text
+    lyricsContainer.appendChild(p)
+  })
+}
+
+// PLAY / PAUSE
+function togglePlay(){
+if(audio.paused){
+  audio.play()
+  icon.classList.replace("fa-play","fa-pause")
+}else{
+  audio.pause()
+  icon.classList.replace("fa-pause","fa-play")
+}
+}
+
+// NEXT / PREV
+function nextSong(){
+  currentIndex++
+  if(currentIndex >= songs.length) currentIndex = 0
+  loadSong(currentIndex)
+}
+
+function prevSong(){
+  currentIndex--
+  if(currentIndex < 0) currentIndex = songs.length - 1
+  loadSong(currentIndex)
+}
+
+// UPDATE PROGRESS + LYRICS
+audio.addEventListener("timeupdate", () => {
+
+const percent = (audio.currentTime / audio.duration) * 100
+progress.style.width = percent + "%"
+
+document.getElementById("current").innerText = formatTime(audio.currentTime)
+document.getElementById("duration").innerText = formatTime(audio.duration)
+
+// LYRICS SYNC
+const lines = lyricsContainer.getElementsByTagName("p")
+
+currentLyrics.forEach((line, index) => {
+  if(audio.currentTime >= line.time && index !== lastIndex){
+
+    lastIndex = index
+
+    for(let i=0;i<lines.length;i++){
+      lines[i].classList.remove("active")
+    }
+
+    lines[index].classList.add("active")
+
+    lines[index].scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    })
+  }
+})
+
+})
+
+// FORMAT TIME
+function formatTime(time){
+if(isNaN(time)) return "0:00"
+let min = Math.floor(time / 60)
+let sec = Math.floor(time % 60)
+if(sec < 10) sec = "0" + sec
+return min + ":" + sec
+}
+
+// CLICK PROGRESS
+function setProgress(e){
+const width = e.currentTarget.clientWidth
+const clickX = e.offsetX
+const duration = audio.duration
+audio.currentTime = (clickX / width) * duration
+}
+</script>
+
+</body>
+</html>
