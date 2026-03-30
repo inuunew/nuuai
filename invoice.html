@@ -356,28 +356,30 @@ const paymentData = {
 };
 
 // Tampilkan sesuai metode pembayaran
-if(data.payment){
-  if(data.payment === "QRIS"){
+// Reset semua tampilan dulu
+qrDiv.style.display = "none";
+paymentInfoDiv.style.display = "none";
+btnQR.style.display = "none";
+
+// Ambil metode pembayaran dalam huruf besar
+const payMethod = (data.payment || "").toUpperCase();
+
+if(payMethod === "QRIS"){
     qrDiv.style.display = "block";
-    paymentInfoDiv.style.display = "none";
+    btnQR.style.display = "block";
     btnQR.innerText = "Lihat / Perbesar QRIS";
     btnQR.onclick = () => popupQR.classList.add("active");
-  } else {
-    qrDiv.style.display = "none";
-    paymentInfoDiv.style.display = "block"; 
-    const nomor = paymentData[data.payment] || "-";
+} else if(payMethod && paymentData[payMethod]){
+    paymentInfoDiv.style.display = "block";
+    btnQR.style.display = "block";
+    const nomor = paymentData[payMethod];
     paymentNumberEl.innerText = nomor;
     btnQR.innerText = "Salin Nomor";
     btnQR.onclick = () => {
-      navigator.clipboard.writeText(nomor).then(() => {
-        alert(`Nomor ${data.payment} berhasil disalin: ${nomor}`);
-      }).catch(() => alert("Gagal menyalin nomor!"));
+        navigator.clipboard.writeText(nomor).then(() => {
+            alert(`Nomor ${payMethod} berhasil disalin: ${nomor}`);
+        }).catch(() => alert("Gagal menyalin nomor!"));
     }
-  }
-} else {
-  qrDiv.style.display = "none";
-  paymentInfoDiv.style.display = "none";
-  btnQR.style.display = "none";
 }
 
 // Tutup popup QR
