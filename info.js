@@ -676,7 +676,7 @@ infoData.reverse().forEach(item => {
         <div class="title">${item.title}</div>
 
         <div class="meta">
-          <span class="badge-info">i</span>
+          ${getBadge(item.type)}
           ${item.type}
           <span class="dot">•</span>
           ${item.date}
