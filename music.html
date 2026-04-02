@@ -436,7 +436,7 @@ to{transform:scale(1);opacity:1;}
 
     <div class="logo-text">
       <div class="store">INUU <span>MARKET</span></div>
-      <div class="sub">Menyediakan Berbagai Layanan</div>
+      <div class="sub">Music nyala walau hp mati.<br>music nyala walau keluar browser.<br>tetapi tidak memakai SPA.</div>
     </div>
 
     <!-- TOMBOL TITIK TIGA -->
@@ -500,8 +500,10 @@ audio.setAttribute("webkit-playsinline", "true")
 
 // ================= SIDEBAR =================
 function toggleMenu(){
-  document.getElementById("sidebar").classList.add("active");
-  document.getElementById("overlay").classList.add("active");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  sidebar.classList.toggle("active");
+  overlay.classList.toggle("active");
 }
 
 function closeMenu(){
