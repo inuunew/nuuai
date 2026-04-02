@@ -367,6 +367,9 @@ function loadSong(index){
   currentIndex = index
   const song = songs[index]
 
+  audio.pause()
+  audio.currentTime = 0
+
   audio.src = song.src
   title.innerText = song.title
   artist.innerText = song.artist
@@ -374,10 +377,9 @@ function loadSong(index){
 
   loadLyrics(song.lyrics)
 
-  audio.addEventListener("loadedmetadata", () => {
-    let lastTime = localStorage.getItem("musicTime") || 0
-    audio.currentTime = lastTime
-  }, { once: true })
+  audio.addEventListener("loadedmetadata", () => {  
+  audio.currentTime = 0  
+}, { once: true })
 
   audio.play()
   icon.classList.replace("fa-play","fa-pause")
