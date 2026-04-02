@@ -514,6 +514,36 @@ color:white;
 from{transform:scale(0.8);opacity:0;}
 to{transform:scale(1);opacity:1;}
 }
+
+.badge-promo{
+  width:18px;
+  height:18px;
+  background:#ef4444;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+}
+
+.badge-event{
+  width:18px;
+  height:18px;
+  background:#8b5cf6;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+}
+
+.badge-info i,
+.badge-promo i,
+.badge-event i{
+  font-size:10px;
+}
 </style>
 </head>
 
@@ -618,6 +648,19 @@ function toggleMenu(){
   document.getElementById("overlay").classList.add("active");
 }
 
+function getBadge(type){
+  if(type === "INFO"){
+    return `<span class="badge-info"><i class="fas fa-info"></i></span>`;
+  }
+  if(type === "PROMO"){
+    return `<span class="badge-promo"><i class="fas fa-tag"></i></span>`;
+  }
+  if(type === "EVENT"){
+    return `<span class="badge-event"><i class="fas fa-calendar"></i></span>`;
+  }
+  return "";
+}
+
 const container = document.getElementById("infoContainer");
 
 infoData.reverse().forEach(item => {
@@ -633,7 +676,7 @@ infoData.reverse().forEach(item => {
         <div class="title">${item.title}</div>
 
         <div class="meta">
-          <span class="badge-info">i</span>
+          ${getBadge(item.type)}
           ${item.type}
           <span class="dot">•</span>
           ${item.date}
