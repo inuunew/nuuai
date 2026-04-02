@@ -16,12 +16,14 @@ background:#f1f5f9;
 
 /* HEADER */
 .header{
+background:#ff6a00;
+color:white;
+padding:16px;
 display:flex;
 align-items:center;
-justify-content:space-between;
-padding:10px 15px;
-background:white;
-box-shadow:0 2px 10px rgba(0,0,0,0.1);
+gap:10px;
+font-size:18px;
+font-weight:500;
 }
 
 .header-left{
@@ -51,19 +53,44 @@ padding:8px;
 cursor:pointer;
 }
 
-/* OVERLAY */
+.dropdown-menu{
+position:absolute;
+top:70px;
+left:20px;
+background:white;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+display:none;
+flex-direction:column;
+padding:10px;
+z-index:999;
+min-width:150px;
+}
+
+.dropdown-menu p{
+padding:10px;
+font-size:14px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.dropdown-menu p:hover{
+background:#f3f4f6;
+}
+.nav-left{
+position:relative;
+}
 #overlay{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.4);
 display:none;
-z-index:9;
+z-index:998;
 }
 
-/* SIDEBAR */
 #sidebar{
 position:fixed;
 top:0;
@@ -71,18 +98,91 @@ left:-260px;
 width:260px;
 height:100%;
 background:#fff;
-z-index:10;
+box-shadow:2px 0 10px rgba(0,0,0,0.1);
 transition:0.3s;
-overflow-y:auto;
+z-index:999;
+display:flex;
+flex-direction:column;
 }
 
-/* SIDEBAR HEADER */
+#sidebar.active{
+left:0;
+}
+
+#overlay.active{
+display:block;
+}
+
+/* NAVBAR STORE */
+
+.navbar{
+background:white;
+padding:12px 16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.nav-left{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo{
+width:40px;
+height:40px;
+border-radius:10px;
+object-fit:cover;
+}
+
+.logo-text{
+display:flex;
+flex-direction:column;
+line-height:1.1;
+}
+
+.store{
+font-weight:700;
+font-size:18px;
+}
+
+.store span{
+color:#16a34a;
+}
+
+.sub{
+font-size:11px;
+color:#777;
+}
+
+.nav-right{
+display:flex;
+gap:12px;
+}
+
+.icon{
+font-size:20px;
+cursor:pointer;
+padding:6px;
+border-radius:8px;
+}
+
+.icon:hover{
+background:#f3f3f3;
+}
+/* HEADER */
 .sidebar-header{
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:15px;
 font-weight:bold;
+font-size:16px;
 border-bottom:1px solid #eee;
 }
 
@@ -211,35 +311,60 @@ border-radius:50%;
 font-size:18px;
 }
 
-/* POPUP */
-#popupOverlay{
-display:none;
+.popup{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
-justify-content:center;
+background:rgba(0,0,0,0.6);
+display:none;
 align-items:center;
-z-index:99;
+justify-content:center;
+z-index:999;
 }
 
 .popup-box{
 background:white;
 padding:20px;
 border-radius:10px;
+width:300px;
 text-align:center;
+animation:fade 0.3s;
+}
+
+.popup-btn{
+margin-top:15px;
+display:flex;
+gap:10px;
+justify-content:center;
+}
+
+.popup-btn button{
+padding:8px 15px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+.popup-btn .wa{
+background:#25D366;
+color:white;
+}
+
+@keyframes fade{
+from{transform:scale(0.8);opacity:0;}
+to{transform:scale(1);opacity:1;}
 }
 </style>
 </head>
 <body>
-
 <!-- OVERLAY -->
 <div id="overlay" onclick="closeMenu()"></div>
 
 <!-- SIDEBAR -->
 <div id="sidebar">
+
   <div class="sidebar-header">
     <span>INUU MARKET</span>
     <i class="fas fa-xmark" onclick="closeMenu()"></i>
@@ -262,7 +387,7 @@ text-align:center;
 
     <div class="title">Informasi</div>
 
-    <p onclick="location.href='bantuan.html'">
+    <p onclick="window.location.href='bantuan.html'">
       <i class="fas fa-headset"></i> Bantuan & Support
     </p>
 
@@ -274,21 +399,59 @@ text-align:center;
       <i class="fas fa-circle-info"></i> Info Admin
     </p>
   </div>
-</div>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="header-left">
-    <img src="https://files.catbox.moe/tv1rv6.jpeg">
-    <div>
-      <div class="title">INUU <span style="color:green">MARKET</span></div>
-      <div class="subtitle">Music Player:music nyala walau hp mati/keluar browser tapi ga support SPA.<br>Req music bisa ke owner</div>
+</div>
+<!-- POPUP OVERLAY -->
+<div id="popupOverlay" class="popup">
+
+  <!-- POPUP NOTIF -->
+  <div id="notifBox" class="popup-box" style="display:none;">
+    <h3>🔔 Notifikasi</h3>
+    <p>🎉 Selamat datang di Inuu Market!<br>
+    Nikmati layanan top up cepat dan aman.</p>
+
+    <div class="popup-btn">
+      <button onclick="closePopup()">Tutup</button>
     </div>
   </div>
 
-  <div class="icon" onclick="openMenu()">
-    <i class="fas fa-bars"></i>
+  <!-- POPUP ADMIN -->
+  <div id="adminBox" class="popup-box" style="display:none;">
+    <h3>ℹ️ Informasi Admin</h3>
+    <p>Admin Top Up<br>
+    Jam Online: 08:00 - 22:00</p>
+    <div class="popup-btn">
+      <button onclick="closePopup()">Tutup</button>
+    </div>
   </div>
+
+</div>
+<!-- HEADER -->
+<div class="navbar">
+
+  <div class="nav-left">
+
+    <img src="https://files.catbox.moe/tv1rv6.jpeg" class="logo">
+
+    <div class="logo-text">
+      <div class="store">INUU <span>MARKET</span></div>
+      <div class="sub">Menyediakan Berbagai Layanan</div>
+    </div>
+
+    <!-- TOMBOL TITIK TIGA -->
+    <div class="icon" onclick="toggleMenu()">
+  <i class="fas fa-ellipsis-vertical"></i>
+</div>
+
+    <!-- DROPDOWN -->
+    <div id="menuDropdown" class="dropdown-menu">
+      <p onclick="showAdmin()">Info Admin</p>
+      <p onclick="showNotif()">Notifikasi</p>
+    </div>
+
+  </div>
+
+
 </div>
 
 <!-- PLAYER -->
@@ -313,22 +476,8 @@ text-align:center;
   <audio id="audio"></audio>
 </div>
 
-<!-- POPUP -->
-<div id="popupOverlay">
-  <div id="notifBox" class="popup-box" style="display:none;">
-    <h3>Notifikasi</h3>
-    <p>Belum ada notifikasi</p>
-    <button onclick="closePopup()">Tutup</button>
-  </div>
-
-  <div id="adminBox" class="popup-box" style="display:none;">
-    <h3>Admin</h3>
-    <p>WA: 08xxxx</p>
-    <button onclick="closePopup()">Tutup</button>
-  </div>
-</div>
-
 <script>
+
 // ================= ELEMENT =================
 const audio = document.getElementById("audio")
 const progress = document.getElementById("progress")
@@ -349,14 +498,14 @@ audio.setAttribute("playsinline", "true")
 audio.setAttribute("webkit-playsinline", "true")
 
 // ================= SIDEBAR =================
-function openMenu(){
-  document.getElementById("sidebar").style.left = "0"
-  document.getElementById("overlay").style.display = "block"
+function toggleMenu(){
+  document.getElementById("sidebar").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
 }
 
 function closeMenu(){
-  document.getElementById("sidebar").style.left = "-260px"
-  document.getElementById("overlay").style.display = "none"
+  document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("overlay").classList.remove("active");
 }
 
 // ================= POPUP =================
@@ -483,9 +632,7 @@ audio.addEventListener("timeupdate", () => {
   const percent = (audio.currentTime / audio.duration) * 100
   progress.style.width = percent + "%"
 
-  localStorage.setItem("musicTime", audio.currentTime)
-  localStorage.setItem("musicIndex", currentIndex)
-
+  
   const lines = lyricsContainer.getElementsByTagName("p")
 
   currentLyrics.forEach((line, index) => {
@@ -537,6 +684,7 @@ audio.addEventListener("pause", () => {
     navigator.mediaSession.playbackState = "paused"
   }
 })
+
 </script>
 
 </body>
