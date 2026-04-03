@@ -461,34 +461,36 @@ opacity:0.5;
 .info-box {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: white;
   border-radius: 12px;
   padding: 10px 12px;
-  overflow: hidden; /* penting agar teks yang kelebihan tidak keluar kotak */
+  overflow: hidden;
 }
 
 .info-icon {
-  flex-shrink: 0; /* ikon tidak mengecil */
+  flex-shrink: 0;
   font-size: 18px;
   color: #16a34a;
 }
 
-.running-wrapper {
+.info-text {
   flex: 1;
-  overflow: hidden; /* area teks terbatas */
+  overflow: hidden;
   white-space: nowrap;
 }
 
-.running-text {
+.info-text::before {
+  content: attr(data-text);
   display: inline-block;
-  animation: slideText 12s linear infinite;
-  padding-right: 20px; /* jarak saat kembali */
+  white-space: nowrap;
+  animation: scrollLeft 12s linear infinite;
+  padding-left: 100%;
 }
 
-@keyframes slideText {
+@keyframes scrollLeft {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
@@ -529,10 +531,10 @@ opacity:0.5;
     <div class="slider">
       <div class="slide active"><img src="https://files.catbox.moe/b629ct.png"></div>
     </div>
-    <div class="info-box">
-      <div class="info-icon">📢</div>
-<div class="info-text running-text">Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam</div>
-    </div>
+<div class="info-box">
+  <div class="info-icon">📢</div>
+  <div class="info-text" data-text="Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam"></div>
+</div>
     <div class="search-area">
       <div class="search-box"><input type="text" id="searchGame" placeholder="Cari game..."></div>
     </div>
