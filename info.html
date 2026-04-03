@@ -549,6 +549,43 @@ to{transform:scale(1);opacity:1;}
 
 <body>
 <div id="overlay" onclick="closeMenu()"></div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+
+  <div class="sidebar-header">
+    <span>INUU MARKET</span>
+    <i class="fas fa-xmark" onclick="closeMenu()"></i>
+  </div>
+
+  <div class="menu">
+    <p onclick="window.location.href='index.html'">
+  <i class="fas fa-home"></i> Beranda
+</p>
+<p onclick="window.location.href='music.html'">
+  <i class="fas fa-music"></i> Music
+</p>
+
+<p class="active">
+  <i class="fas fa-bullhorn"></i> Pengumuman
+</p>
+
+    <div class="title">Informasi</div>
+
+    <p onclick="window.location.href='bantuan.html'">
+      <i class="fas fa-headset"></i> Bantuan & Support
+    </p>
+
+    <p onclick="showNotif()">
+      <i class="fas fa-bell"></i> Notifikasi
+    </p>
+
+    <p onclick="showAdmin()">
+      <i class="fas fa-circle-info"></i> Info Admin
+    </p>
+  </div>
+
+</div>
 <!-- POPUP OVERLAY -->
 <div id="popupOverlay" class="popup">
 
