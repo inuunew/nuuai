@@ -22,11 +22,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Ganti background di bawah ini */
   background: linear-gradient(145deg, #16a34a 0%, #dcfce7 100%);
-  /* atau alternatif lain: 
-     background: linear-gradient(135deg, #22c55e, #f0fdf4);
-  */
   z-index: 10000;
   display: flex;
   align-items: center;
@@ -47,11 +43,6 @@
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
-}
-.splash-icon {
-  font-size: 4rem;
-  color: #f97316;
-  margin-bottom: 20px;
 }
 .splash-logo {
   width: 90px;
@@ -81,22 +72,6 @@
   font-size: 0.9rem;
   line-height: 1.5;
   margin-bottom: 30px;
-}
-.splash-container .feature {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: rgba(255,255,255,0.05);
-  padding: 12px 16px;
-  border-radius: 60px;
-  width: fit-content;
-  margin: 0 auto 30px;
-  font-size: 0.85rem;
-  color: #cbd5e1;
-}
-.splash-container .feature i {
-  color: #f97316;
 }
 .btn-login {
   background: linear-gradient(95deg, #f97316, #ea580c);
@@ -241,7 +216,7 @@ body {
   color: #888;
 }
 
-/* BANNER, INFO, SEARCH, DLL (sama seperti sebelumnya) */
+/* BANNER, INFO, SEARCH, DLL */
 .banner-container { padding: 15px; }
 .slider { position: relative; overflow: hidden; border-radius: 14px; }
 .slide { display: none; }
@@ -358,17 +333,29 @@ body {
 .footer { text-align: center; color: #666; font-size: 14px; margin: 30px 0; }
 .footer span { color: #ff6a00; font-weight: 600; }
 
-/* MODAL TOPUP */
-/* Animasi modal slide from bottom */
+/* MODAL TOPUP - DENGAN ANIMASI SLIDE */
 .topup-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: rgba(0,0,0,0.4);
   display: none;
   align-items: flex-end;
-  transition: background-color 0.3s;
+  z-index: 9999;
 }
+/* Saat modal terbuka, tampilkan dengan class show */
 .topup-modal.show {
   display: flex;
 }
 .topup-content {
+  background: white;
+  width: 100%;
+  border-radius: 25px 25px 0 0;
+  padding: 20px;
+  max-height: 90vh;
+  overflow: auto;
   transform: translateY(100%);
   transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   will-change: transform;
@@ -699,6 +686,7 @@ if (typeof databasePanel !== 'undefined') {
 // GLOBAL VARIABLES
 let currentGame = null, currentType = 'regular', selectedItem = null, isOtherProduct = false, isPanel = false;
 
+// FUNGSI OPEN DENGAN ANIMASI SLIDE
 function openTopup(game) {
   const data = database[game];
   isOtherProduct = false; isPanel = false; currentGame = game; currentType = 'regular'; selectedItem = null;
@@ -710,13 +698,12 @@ function openTopup(game) {
   document.getElementById('confirmBtn').classList.remove('active');
   renderItems();
   
-
   const modal = document.getElementById('topupModal');
   modal.style.display = 'flex';
-  modal.offsetHeight; // force reflow
+  // Force reflow agar transisi berjalan
+  modal.offsetHeight;
   modal.classList.add('show');
 }
-
 function openPanel(key) {
   const data = databasePanel[key];
   isPanel = true; isOtherProduct = false; currentGame = key; selectedItem = null;
@@ -744,13 +731,11 @@ function openPanel(key) {
     container.appendChild(div);
   });
   
-
   const modal = document.getElementById('topupModal');
   modal.style.display = 'flex';
-  modal.offsetHeight; // force reflow
+  modal.offsetHeight;
   modal.classList.add('show');
 }
-
 function openOther(key) {
   const data = databaseOther[key];
   isOtherProduct = true; isPanel = false; currentGame = key; selectedItem = null;
@@ -780,19 +765,8 @@ function openOther(key) {
   
   const modal = document.getElementById('topupModal');
   modal.style.display = 'flex';
-  modal.offsetHeight; // force reflow
+  modal.offsetHeight;
   modal.classList.add('show');
-}
-
-function closeTopup() {
-  const modal = document.getElementById('topupModal');
-  modal.classList.remove('show');
-  modal.addEventListener('transitionend', function onEnd() {
-    if (!modal.classList.contains('show')) {
-      modal.style.display = 'none';
-    }
-    modal.removeEventListener('transitionend', onEnd);
-  }, { once: true });
 }
 function renderItems() {
   const container = document.getElementById('topupItems');
@@ -856,6 +830,17 @@ function goCheckout() {
     key: currentGame
   });
   window.location.href = `checkout.html?${params.toString()}`;
+}
+// FUNGSI CLOSE DENGAN ANIMASI SLIDE KE BAWAH
+function closeTopup() {
+  const modal = document.getElementById('topupModal');
+  modal.classList.remove('show');
+  modal.addEventListener('transitionend', function onEnd() {
+    if (!modal.classList.contains('show')) {
+      modal.style.display = 'none';
+    }
+    modal.removeEventListener('transitionend', onEnd);
+  }, { once: true });
 }
 
 window.onload = () => {
