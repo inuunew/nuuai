@@ -535,6 +535,9 @@ opacity:0.5;
   <div class="info-icon">📢</div>
   <div class="info-text" data-text="Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam"></div>
 </div>
+<div class="search-area" id="searchArea" style="display: none;">
+  <div class="search-box"><input type="text" id="searchGame" placeholder="Cari game..."></div>
+</div>
   </div>
 
   <div class="game-title" id="titleLayanan" style="margin-top:0;">
@@ -662,6 +665,10 @@ function openCategory(type) {
   document.getElementById('titleOther').style.display = 'none';
   document.getElementById('titleLayanan').style.display = 'none';
   document.getElementById('backBtn').style.display = 'block';
+  
+  // TAMPILKAN SEARCH AREA
+  document.getElementById('searchArea').style.display = 'flex';
+  
   let grid, title;
   if (type === 'game') { grid = document.getElementById('gameGrid'); title = document.getElementById('titleGame'); }
   else if (type === 'hosting') { grid = document.getElementById('panelGrid'); title = document.getElementById('titleHosting'); }
@@ -684,6 +691,10 @@ function goBack() {
   document.getElementById('titleOther').style.display = 'none';
   document.getElementById('titleLayanan').style.display = 'flex';
   document.getElementById('backBtn').style.display = 'none';
+  
+  // SEMBUNYIKAN SEARCH AREA
+  document.getElementById('searchArea').style.display = 'none';
+  
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -893,6 +904,7 @@ window.onload = () => {
   document.getElementById('titleHosting').style.display = 'none';
   document.getElementById('titleOther').style.display = 'none';
   document.getElementById('titleLayanan').style.display = 'flex';
+  document.getElementById('searchArea').style.display = 'none'; // tambahkan baris ini
 };
 </script>
 </body>
