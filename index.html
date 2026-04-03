@@ -458,11 +458,15 @@ background:#f9fafb;
 background:#f9fafb;
 opacity:0.5;
 }
-/*horn*/
+.info-box {
+  overflow: hidden;     /* agar teks yang kelebihan tidak keluar dari kotak */
+  white-space: nowrap;  /* agar teks dalam satu baris */
+}
+
 .running-text {
-  white-space: nowrap;
-  overflow: hidden;
-  animation: slideText 15s linear infinite;
+  display: inline-block;
+  animation: slideText 12s linear infinite;
+  padding-right: 20px;  /* memberi jarak saat kembali */
 }
 
 @keyframes slideText {
@@ -472,6 +476,11 @@ opacity:0.5;
   100% {
     transform: translateX(-100%);
   }
+}
+
+/* Opsional: hentikan animasi saat di-hover */
+.running-text:hover {
+  animation-play-state: paused;
 }
 </style>
 </head>
