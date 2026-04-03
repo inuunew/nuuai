@@ -360,15 +360,20 @@ body {
 
 /* MODAL TOPUP */
 .topup-modal {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  background: rgba(0,0,0,0.4);
   display: none;
   align-items: flex-end;
-  z-index: 9999;
+  transition: background-color 0.3s;
+}
+.topup-modal.show {
+  display: flex;
+}
+.topup-content {
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  will-change: transform;
+}
+.topup-modal.show .topup-content {
+  transform: translateY(0);
 }
 .topup-content {
   background: white;
@@ -711,8 +716,14 @@ function openTopup(game) {
   document.getElementById('confirmBtn').disabled = true;
   document.getElementById('confirmBtn').classList.remove('active');
   renderItems();
-  document.getElementById('topupModal').style.display = 'flex';
+  
+  const modal = document.getElementById('topupModal');
+  modal.style.display = 'flex';
+  // force reflow agar transisi berjalan
+  modal.offsetHeight;
+  modal.classList.add('show');
 }
+
 function openPanel(key) {
   const data = databasePanel[key];
   isPanel = true; isOtherProduct = false; currentGame = key; selectedItem = null;
@@ -739,8 +750,13 @@ function openPanel(key) {
     };
     container.appendChild(div);
   });
-  document.getElementById('topupModal').style.display = 'flex';
+  
+  const modal = document.getElementById('topupModal');
+  modal.style.display = 'flex';
+  modal.offsetHeight;
+  modal.classList.add('show');
 }
+
 function openOther(key) {
   const data = databaseOther[key];
   isOtherProduct = true; isPanel = false; currentGame = key; selectedItem = null;
@@ -767,7 +783,22 @@ function openOther(key) {
     };
     container.appendChild(div);
   });
-  document.getElementById('topupModal').style.display = 'flex';
+  
+  const modal = document.getElementById('topupModal');
+  modal.style.display = 'flex';
+  modal.offsetHeight;
+  modal.classList.add('show');
+}
+
+function closeTopup() {
+  const modal = document.getElementById('topupModal');
+  modal.classList.remove('show');
+  modal.addEventListener('transitionend', function onEnd() {
+    if (!modal.classList.contains('show')) {
+      modal.style.display = 'none';
+    }
+    modal.removeEventListener('transitionend', onEnd);
+  }, { once: true });
 }
 function renderItems() {
   const container = document.getElementById('topupItems');
@@ -831,9 +862,6 @@ function goCheckout() {
     key: currentGame
   });
   window.location.href = `checkout.html?${params.toString()}`;
-}
-function closeTopup() {
-  document.getElementById('topupModal').style.display = 'none';
 }
 
 window.onload = () => {
