@@ -459,28 +459,40 @@ background:#f9fafb;
 opacity:0.5;
 }
 .info-box {
-  overflow: hidden;     /* agar teks yang kelebihan tidak keluar dari kotak */
-  white-space: nowrap;  /* agar teks dalam satu baris */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 12px;
+  overflow: hidden; /* penting agar teks yang kelebihan tidak keluar kotak */
+}
+
+.info-icon {
+  flex-shrink: 0; /* ikon tidak mengecil */
+  font-size: 18px;
+  color: #16a34a;
+}
+
+.running-wrapper {
+  flex: 1;
+  overflow: hidden; /* area teks terbatas */
+  white-space: nowrap;
 }
 
 .running-text {
   display: inline-block;
   animation: slideText 12s linear infinite;
-  padding-right: 20px;  /* memberi jarak saat kembali */
+  padding-right: 20px; /* jarak saat kembali */
 }
 
 @keyframes slideText {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0%);
   }
   100% {
     transform: translateX(-100%);
   }
-}
-
-/* Opsional: hentikan animasi saat di-hover */
-.running-text:hover {
-  animation-play-state: paused;
 }
 </style>
 </head>
