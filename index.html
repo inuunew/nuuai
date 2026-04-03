@@ -359,6 +359,7 @@ body {
 .footer span { color: #ff6a00; font-weight: 600; }
 
 /* MODAL TOPUP */
+/* Animasi modal slide from bottom */
 .topup-modal {
   display: none;
   align-items: flex-end;
@@ -374,14 +375,6 @@ body {
 }
 .topup-modal.show .topup-content {
   transform: translateY(0);
-}
-.topup-content {
-  background: white;
-  width: 100%;
-  border-radius: 25px 25px 0 0;
-  padding: 20px;
-  max-height: 90vh;
-  overflow: auto;
 }
 .topup-header {
   display: flex;
@@ -717,10 +710,10 @@ function openTopup(game) {
   document.getElementById('confirmBtn').classList.remove('active');
   renderItems();
   
+
   const modal = document.getElementById('topupModal');
   modal.style.display = 'flex';
-  // force reflow agar transisi berjalan
-  modal.offsetHeight;
+  modal.offsetHeight; // force reflow
   modal.classList.add('show');
 }
 
@@ -751,9 +744,10 @@ function openPanel(key) {
     container.appendChild(div);
   });
   
+
   const modal = document.getElementById('topupModal');
   modal.style.display = 'flex';
-  modal.offsetHeight;
+  modal.offsetHeight; // force reflow
   modal.classList.add('show');
 }
 
@@ -786,7 +780,7 @@ function openOther(key) {
   
   const modal = document.getElementById('topupModal');
   modal.style.display = 'flex';
-  modal.offsetHeight;
+  modal.offsetHeight; // force reflow
   modal.classList.add('show');
 }
 
