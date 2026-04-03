@@ -458,6 +458,21 @@ background:#f9fafb;
 background:#f9fafb;
 opacity:0.5;
 }
+/*horn*/
+.running-text {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: slideText 15s linear infinite;
+}
+
+@keyframes slideText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 </style>
 </head>
 <body>
@@ -495,7 +510,7 @@ opacity:0.5;
     </div>
     <div class="info-box">
       <div class="info-icon">📢</div>
-      <marquee class="info-text" scrollamount="5">Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam</marquee>
+<div class="info-text running-text">Selamat datang di InuuMarket • Top Up Game Murah & Cepat • Promo Spesial Diskon Besar • Proses Otomatis 24 Jam</div>
     </div>
     <div class="search-area">
       <div class="search-box"><input type="text" id="searchGame" placeholder="Cari game..."></div>
