@@ -32,7 +32,7 @@ const infoData = [
   
   {
     title: "InuuMarket Admin",
-    date: "2 April 2026",
+    date: "02 APRIL 2026",
     type: "INFO",
     image: "https://files.catbox.moe/tv1rv6.jpeg",
     banner: "",
@@ -42,7 +42,7 @@ const infoData = [
   
   {
     title: "InuuMarket Admin",
-    date: "4 April 2026",
+    date: "04 APRIL 2026",
     type: "INFO",
     image: "https://files.catbox.moe/tv1rv6.jpeg",
     banner: "",
@@ -51,7 +51,7 @@ const infoData = [
   },
   {
     title: "InuuMarket Admin",
-    date: "5 April 2026",
+    date: "05 APRIL 2026",
     type: "INFO",
     image: "https://files.catbox.moe/tv1rv6.jpeg",
     banner: "",
