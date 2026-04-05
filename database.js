@@ -38,7 +38,7 @@ const database = {
     require: ["userId", "server"],
     serverType: "id",
     image: "assets/ml.png",
-    qris: true,
+    qris: false,
     desc: "Top up diamond Mobile Legends cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
@@ -77,7 +77,7 @@ const database = {
     name: "PUBG Mobile",
     require: ["userId"],
     image: "assets/pubg.png",
-    qris: true,
+    qris: false,
     desc: "Top up UC PUBG Mobile cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
@@ -104,7 +104,7 @@ const database = {
     require: ["userId", "server"],
     serverType: "region",
     image: "assets/genshin.png",
-    qris: true,
+    qris: false,
     desc: "Top up Genesis Crystal Genshin Impact cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
@@ -234,6 +234,7 @@ const databaseOther = {
     require: ["voucher"],
     image: "https://files.catbox.moe/f4fmn6.png",
     qris: true,
+    qty: true, 
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
