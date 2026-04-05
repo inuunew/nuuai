@@ -232,7 +232,7 @@ const databaseOther = {
   alighm: {
     name: "[AKUN]ALIGHT MOTION PREM EXP 2027",
     require: ["voucher"],
-    image: "https://files.catbox.moe/7h9pqr.png",
+    image: "https://files.catbox.moe/f4fmn6.png,
     qris: true,
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
@@ -245,7 +245,7 @@ const databaseOther = {
   viu: {
     name: "[AKUN]VIU DRAMA",
     require: ["voucher"],
-    image: "https://files.catbox.moe/7h9pqr.png",
+    image: "https://files.catbox.moe/5x79aa.png",
     qris: true,
     qty: true, 
     desc: "Bersifat AKUN bukan mod",
