@@ -86,10 +86,25 @@ body{
 }
 
 .product {
-  flex-wrap: wrap;  /* agar features bisa pindah ke baris baru */
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 15px;
+  align-items: start;
 }
-.product > div {
-  flex: 1;          /* div teks memenuhi sisa space */
+.product-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.product-left img {
+  width: 70px;
+  border-radius: 16px;
+}
+
+.product-right {
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -157,6 +172,7 @@ body{
 .features {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   margin-top: 10px;
   width: 100%;
