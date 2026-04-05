@@ -133,7 +133,7 @@ const database = {
 { "name": "6030 Diamond ML", "price": "Rp1.429.450", "status": "online" },
 { "name": "5940 Diamond ML", "price": "Rp1.434.752", "status": "online" },
 { "name": "6001 Diamond ML", "price": "Rp1.438.347", "status": "online" },
-{ "name": "6257 Diamond ML", "price": "Rp1.504.527", "status": "online" }
+{ "name": "6257 Diamond ML", "price": "Rp1.504.527", "status": "online" },
 { "name": "6840 Diamond ML", "price": "Rp1.618.933", "status": "online" },
 { "name": "7195 Diamond ML", "price": "Rp1.710.202", "status": "online" },
 { "name": "7660 Diamond ML", "price": "Rp1.826.669", "status": "online" },
