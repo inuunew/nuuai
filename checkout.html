@@ -85,12 +85,13 @@ body{
   transition: all 0.1s ease;
 }
 
-.product{
-  display:flex;
-  align-items:center;
-  gap:15px;
-  flex-wrap: nowrap;
+.product {
+  flex-wrap: wrap;  /* agar features bisa pindah ke baris baru */
 }
+.product > div {
+  flex: 1;          /* div teks memenuhi sisa space */
+}
+
 
 .product img{
   width:70px;
@@ -102,7 +103,8 @@ body{
 
 /* Opsi 1: Hijau medium terang (Material Green 500) */
 .badge{
-  color: #4caf50;
+  background: #2e7d32;  /* hijau medium agak pekat (Material Green 800) */
+  color: #000000;       /* teks hitam */
   font-size: 12px;
   padding: 3px 8px;
   border-radius: 6px;
@@ -157,6 +159,8 @@ body{
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
+  width: 100%;
+  margin-top: 12px;
 }
 .feature {
   background: #e6f7ed;
@@ -621,17 +625,20 @@ body{
 
 <!-- CARD PRODUK UTAMA -->
 <div class="card">
-  <div class="product">
+  <div class="product" style="flex-wrap: wrap;">
     <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
     <div>
       <div class="badge">Produk Dipilih</div>
       <div id="itemName" style="font-weight:700; font-size:18px;"></div>
-      <div
-      <div class="features">
-        <span class="feature"><i class="fas fa-check-circle"></i> Proses Cepat</span>
-        <span class="feature"><i class="fas fa-bolt"></i> Anti Delay</span>
-        <span class="feature"><i class="fas fa-comment-dots"></i> Admin Fast Respon</span>
+      <div id="productCode" style="font-size:13px; color:#4b5563; margin-top:4px;">
+        <i class="fas fa-tag"></i> Kode: <span id="codeValue">-</span>
       </div>
+    </div>
+    <!-- FEATURES PINDAH KE BAWAH -->
+    <div class="features" style="width: 100%; margin-top: 12px;">
+      <span class="feature"><i class="fas fa-check-circle"></i> Proses Cepat</span>
+      <span class="feature"><i class="fas fa-bolt"></i> Anti Delay</span>
+      <span class="feature"><i class="fas fa-comment-dots"></i> Admin Fast Respon</span>
     </div>
   </div>
 </div>
@@ -739,8 +746,10 @@ body{
 <script src="database.js"></script>
 <script>
 // ========== AMBIL DATA PRODUK ==========
+// Ambil kode dari URL parameter "key"
 const params = new URLSearchParams(window.location.search);
-const key = params.get("key");
+const key = params.get("key") || "-";
+document.getElementById("codeValue").innerText = key;
 let produk = (typeof database !== 'undefined' && database[key]) ? database[key] : {};
 if (typeof databaseOther !== 'undefined' && databaseOther[key]) produk = databaseOther[key];
 if (typeof databasePanel !== 'undefined' && databasePanel[key]) produk = databasePanel[key];
