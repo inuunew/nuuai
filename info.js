@@ -41,7 +41,7 @@ const infoData = [
     type: "INFO",
     image: "https://files.catbox.moe/tv1rv6.jpeg",
     banner: "",
-    desc: "Update Sistem SPA(Single Page Aplication)! website lebih lancar saat pindah halaman dibanding sebelumnya,music tidak mati walau pindah halaman(kecuali ke bagian checkout)/hp mati/keluar chrome",
+    desc: "Update Sistem SPA(Single Page Aplication)! website lebih lancar saat pindah halaman dibanding sebelumnya,music tidak mati walau pindah halaman/hp mati/keluar chrome",
     tags: "#InuuTyzDev"
   },
   {
