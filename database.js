@@ -232,7 +232,7 @@ const databaseOther = {
   alighm: {
     name: "[AKUN]ALIGHT MOTION PREM EXP 2027",
     require: ["voucher"],
-    image: "https://files.catbox.moe/f4fmn6.png,
+    image: "https://files.catbox.moe/f4fmn6.png",
     qris: true,
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
