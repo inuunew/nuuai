@@ -312,7 +312,7 @@ function initPengumuman() {
   const container = document.getElementById('pengumumanContainer');
   if (!container) return;
   container.innerHTML = '';
- // if (typeof infoData === 'undefined') return;
+  if (typeof infoData === 'undefined') return;
   [...infoData].reverse().forEach(item => {
     const card = document.createElement('div');
     card.className = 'card';
