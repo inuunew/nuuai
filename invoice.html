@@ -432,13 +432,25 @@
       <span class="row-label"><i class="fas fa-gamepad"></i> Produk</span>
       <span class="row-value" id="productName">-</span>
     </div>
-    <div class="row">
-      <span class="row-label"><i class="fas fa-tag"></i> Harga Produk</span>
-      <span class="row-value" id="basePriceDisplay">-</span>
+    <!-- Harga Satuan -->
+    <div class="row" id="unitPriceRow">
+      <span class="row-label"><i class="fas fa-tag"></i> Harga Satuan</span>
+      <span class="row-value" id="unitPriceDisplay">-</span>
     </div>
+    <!-- Jumlah (qty) -->
+    <div class="row" id="qtyRow" style="display: none;">
+      <span class="row-label"><i class="fas fa-cubes"></i> Jumlah</span>
+      <span class="row-value" id="qtyDisplay">1</span>
+    </div>
+    <!-- Subtotal -->
+    <div class="row" id="subtotalRow" style="display: none;">
+      <span class="row-label"><i class="fas fa-calculator"></i> Subtotal</span>
+      <span class="row-value" id="subtotalDisplay">-</span>
+    </div>
+    <!-- Biaya Admin (Flat Rp200) -->
     <div class="row">
-      <span class="row-label"><i class="fas fa-percent"></i> Biaya Admin (1.5%)</span>
-      <span class="row-value" id="adminFeeDisplay">-</span>
+      <span class="row-label"><i class="fas fa-percent"></i> Biaya Admin (flat)</span>
+      <span class="row-value" id="adminFeeDisplay">Rp 200</span>
     </div>
     <div class="row total-row">
       <span class="row-label"><i class="fas fa-coins"></i> Total Dibayar</span>
@@ -593,9 +605,20 @@
   const key = urlParams.get('key') || '';
   const game = urlParams.get('game') || 'Game';
   const item = urlParams.get('item') || 'Item';
-  const totalPrice = Number(urlParams.get('price')) || 0;
-  const basePrice = Number(urlParams.get('base_price')) || totalPrice;
-  const adminFee = Number(urlParams.get('admin_fee')) || Math.round(basePrice * 0.015);
+  const totalPriceParam = Number(urlParams.get('price')) || 0;   // total yang sudah termasuk admin (dikirim dari checkout)
+  const basePrice = Number(urlParams.get('base_price')) || 0;    // harga satuan
+  const qty = Number(urlParams.get('qty')) || 1;                 // jumlah (default 1)
+  const adminFeeParam = Number(urlParams.get('admin_fee')) || 200; // pakai dari URL atau default 200
+  
+  // Hitung ulang subtotal dan total untuk memastikan konsistensi
+  const subtotal = basePrice * qty;
+  const adminFee = 200;  // biaya admin flat
+  const totalPrice = subtotal + adminFee;
+  
+  // Gunakan total dari parameter jika ada, tapi pastikan konsisten
+  const finalTotal = (totalPriceParam === subtotal + adminFee) ? totalPriceParam : totalPrice;
+  
+  // Data lainnya
   const userId = urlParams.get('userId') || '-';
   const username = urlParams.get('username') || '';
   const phone = urlParams.get('phone') || '';
@@ -605,12 +628,29 @@
 
   // Tampilkan data invoice
   document.getElementById('productName').innerText = `${game} - ${item}`;
-  document.getElementById('basePriceDisplay').innerHTML = formatRupiah(basePrice);
+  
+  // Harga satuan
+  document.getElementById('unitPriceDisplay').innerHTML = formatRupiah(basePrice);
+  
+  // Jumlah (qty) - tampilkan hanya jika qty > 1
+  if (qty > 1) {
+    document.getElementById('qtyRow').style.display = 'flex';
+    document.getElementById('qtyDisplay').innerText = qty;
+    document.getElementById('subtotalRow').style.display = 'flex';
+    document.getElementById('subtotalDisplay').innerHTML = formatRupiah(subtotal);
+  } else {
+    document.getElementById('qtyRow').style.display = 'none';
+    document.getElementById('subtotalRow').style.display = 'none';
+  }
+  
+  // Biaya admin (flat)
   document.getElementById('adminFeeDisplay').innerHTML = formatRupiah(adminFee);
-  document.getElementById('totalPriceDisplay').innerHTML = formatRupiah(totalPrice);
+  
+  // Total
+  document.getElementById('totalPriceDisplay').innerHTML = formatRupiah(finalTotal);
   document.getElementById('userIdDisplay').innerText = userId;
   document.getElementById('paymentMethod').innerText = paymentMethod;
-  document.getElementById('nominalDisplay').innerText = formatRupiah(totalPrice);
+  document.getElementById('nominalDisplay').innerText = formatRupiah(finalTotal);
 
   // QRIS image
   const qrisImg = document.getElementById('qrisImage');
@@ -773,7 +813,8 @@
       caption += `🧾 *Invoice:* ${invoiceNumber}\n`;
       caption += `🎮 *Game:* ${game}\n`;
       caption += `📦 *Item:* ${item}\n`;
-      caption += `💰 *Total Dibayar:* ${formatRupiah(totalPrice)}\n`;
+      if (qty > 1) caption += `🔢 *Jumlah:* ${qty} x ${formatRupiah(basePrice)}\n`;
+      caption += `💰 *Total Dibayar:* ${formatRupiah(finalTotal)}\n`;
       caption += `👤 *User ID:* ${userId}\n`;
       if (username) caption += `👥 *Username:* ${username}\n`;
       if (phone) caption += `📞 *No. Telepon (dari checkout):* ${phone}\n`;
@@ -788,7 +829,7 @@
       const success = await sendToTelegram(base64Image, caption);
       if (success) {
         sessionStorage.setItem('invoiceData', JSON.stringify({
-          invoiceNumber, game, item, totalPrice, userId, username, phone, server, paymentMethod, whatsapp, email
+          invoiceNumber, game, item, totalPrice: finalTotal, userId, username, phone, server, paymentMethod, whatsapp, email, qty, basePrice
         }));
         window.location.href = 'proses.html';
       } else {
