@@ -661,7 +661,7 @@ function initKalkulator() {
             let fiveDrawsNeeded = Math.ceil(needCore / 5);
             let totalDiamond = fiveDrawsNeeded * 270;
             resultArea.innerHTML = `<div class="result-value"><i class="fas fa-gem"></i> ${totalDiamond.toLocaleString()} Diamond</div>
-                                    <div class="result-desc">Maksimal yang dibutuhkan (worst case: 5 core per 5x draw)</div>`;
+                                    <div class="result-desc">Maksimal yang dibutuhkan (worst case: 5 core per 5x draw)<br>Top up di halaman beranda:)</div>`;
         } 
         else if (currentTab === "zodiac") {
             let currentSP = parseInt(document.getElementById("starPower")?.value);
@@ -676,7 +676,7 @@ function initKalkulator() {
             }
             let totalDiamond = needSP * 60;
             resultArea.innerHTML = `<div class="result-value"><i class="fas fa-gem"></i> ${totalDiamond.toLocaleString()} Diamond</div>
-                                    <div class="result-desc">Maksimal yang dibutuhkan (worst case: 1 SP per draw, 60💎/draw)</div>`;
+                                    <div class="result-desc">Maksimal yang dibutuhkan (worst case: 1 SP per draw, 60💎/draw)<br>Top up di halaman beranda:)</div>`;
         }
     }
 
