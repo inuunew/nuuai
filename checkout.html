@@ -862,9 +862,9 @@ if (selectedItemDetail) {
   detailCard.style.display = "block";
   let statusText = selectedItemDetail.status === 'online' ? '<i class="fas fa-check-circle" style="color:#16a34a;"></i> Tersedia' : '<i class="fas fa-times-circle" style="color:#ef4444;"></i> Habis';
   let detailHtml = `<strong><i class="fas fa-box"></i> Paket:</strong> ${selectedItemDetail.name}<br>`;
-  detailHtml += `<strong><i class="fas fa-money-bill-wave"></i> Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
+  detailHtml += `<strong><i class="fas fa-money-bill-wave"></i>  Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
   if (isQtyActive) detailHtml += `<strong><i class="fas fa-cubes"></i> Minimal order:</strong> 1 (bisa tambah jumlah)<br>`;
-  detailHtml += `<strong><i class="fas fa-bolt"></i> Status:</strong> ${statusText}<br><span style="font-size:12px; color:#4b5563;"><i class="fas fa-info-circle"></i> Biaya admin flat Rp200 sudah termasuk total.</span>`;
+  detailHtml += `<strong><i class="fas fa-bolt"></i>  Status:</strong> ${statusText}<br><span style="font-size:12px; color:#4b5563;"><i class="fas fa-info-circle"></i> Biaya admin flat Rp200 sudah termasuk total.</span>`;
   detailCardContent.innerHTML = detailHtml;
 } else {
   detailCard.style.display = "none";
@@ -975,7 +975,7 @@ function openInfo() {
     ${bulletHtml}
     <div class="steps">
       <p><strong><i class="fas fa-shopping-cart"></i> Cara transaksi :</strong></p>
-      <ol><li>Masukkan ID / Username yang valid</li><li>Pilih nominal / item</li><li>Atur jumlah beli (jika tersedia)</li><li>Pilih metode pembayaran</li><li>Jika produk VOUCHER, kode akan dikirim admin via WhatsApp</li><li>Klik Bayar & lakukan pembayaran</li><li>Proses otomatis/max 15 menit</li></ol>
+      <ol><li>Masukkan Data yang valid</li><li>Pilih nominal / item</li><li>Atur jumlah beli (jika tersedia)</li><li>Pilih metode pembayaran</li><li>Jika produk VOUCHER, kode akan dikirim admin via WhatsApp</li><li>Klik Bayar & lakukan pembayaran</li><li>Proses otomatis/max 15 menit</li></ol>
       <p>${descText}</p>
       <p style="background:#eef2ff; padding:8px; border-radius:16px; margin-top:12px;"><strong><i class="fas fa-percent"></i> Biaya Admin Flat Rp200</strong> sudah termasuk dalam total yang dibayarkan.</p>
     </div>
