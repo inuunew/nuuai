@@ -247,6 +247,7 @@ const databaseOther = {
     require: ["voucher"],
     image: "https://files.catbox.moe/7h9pqr.png",
     qris: true,
+    qty: true, 
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian",
     items: [
@@ -267,6 +268,7 @@ const databasePanel = {
     require: ["username"],
     image: "https://files.catbox.moe/a4jl1w.jpeg",
     qris: true,
+    qty: true, 
     desc: "Panel bot whatsapp/telegram",
     detail: "Aktif selama 30 hari GARANSI FULL",
     items: [
@@ -290,6 +292,7 @@ const databasePanel = {
     require: ["voucher"],
     image: "https://files.catbox.moe/n8f64z.png",
     qris: false,
+    qty: true, 
     desc: "VPS LEGAL DO BILL VCC",
     detail: "Aktif 1bulan Garansi 25h,no instalasi apapun(kosongan)",
     items: [
@@ -305,6 +308,7 @@ const databasePanel = {
     require: ["voucher"],
     image: "https://files.catbox.moe/n8f64z.png",
     qris: false,
+    qty: true, 
     desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
     detail: "NOTE : NO GARANSI, BUY=PAHAM!",
     items: [
