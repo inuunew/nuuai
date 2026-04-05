@@ -86,27 +86,14 @@ body{
 }
 
 .product {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
+  flex-wrap: wrap;  /* agar features bisa pindah ke baris baru */
+  align-items: flex-start;
   gap: 15px;
-  align-items: start;
 }
-.product-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+.product-info {
+  flex: 1;
 }
-.product-left img {
-  width: 70px;
-  border-radius: 16px;
-}
-
-.product-right {
-  display: flex;
-  flex-direction: column;
-}
-
 
 .product img{
   width:70px;
@@ -114,6 +101,7 @@ body{
   background:#f8fafc;
   object-fit: cover;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  flex-shrink: 0;
 }
 
 /* Opsi 1: Hijau medium terang (Material Green 500) */
@@ -168,13 +156,12 @@ body{
   border-color: #16a34a;
   box-shadow: 0 0 0 2px rgba(22,163,74,0.2);
 }
-
 .features {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
   width: 100%;
   margin-top: 12px;
 }
@@ -642,22 +629,20 @@ body{
 <!-- CARD PRODUK UTAMA -->
 <div class="card">
   <div class="product">
-    <!-- Kolom kiri: gambar + feature -->
-    <div class="product-left">
+    <div class="product-image">
       <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
-      <div class="features">
-        <span class="feature"><i class="fas fa-check-circle"></i> Proses Cepat</span>
-        <span class="feature"><i class="fas fa-bolt"></i> Anti Delay</span>
-        <span class="feature"><i class="fas fa-comment-dots"></i> Admin Fast Respon</span>
-      </div>
     </div>
-    <!-- Kolom kanan: badge, itemName, kode -->
-    <div class="product-right">
+    <div class="product-info">
       <div class="badge">Produk Dipilih</div>
       <div id="itemName" style="font-weight:700; font-size:18px;"></div>
       <div id="productCode" style="font-size:13px; color:#4b5563; margin-top:4px;">
         <i class="fas fa-tag"></i> Kode: <span id="codeValue">-</span>
       </div>
+    </div>
+    <div class="features">
+      <span class="feature"><i class="fas fa-check-circle"></i> Proses Cepat</span>
+      <span class="feature"><i class="fas fa-bolt"></i> Anti Delay</span>
+      <span class="feature"><i class="fas fa-comment-dots"></i> Admin Fast Respon</span>
     </div>
   </div>
 </div>
