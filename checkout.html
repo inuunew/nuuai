@@ -816,7 +816,7 @@ function changeQty(delta) {
 }
 
 // Tampilkan info produk utama dan setup qty
-document.getElementById("itemName").innerText = game + " " + item;
+document.getElementById("itemName").innerText = game;
 document.getElementById("gameImage").src = image;
 
 // Tampilkan/dan setup quantity card
@@ -1086,7 +1086,7 @@ window.addEventListener("pageshow", () => {
 if(game.toLowerCase().includes("mobile legend") || game.toLowerCase().includes("ml")){
   const userIdInput = document.getElementById("userId");
   if(userIdInput && !userIdInput.placeholder.includes("ZoneID")){
-    userIdInput.placeholder = "ID Player | Zone ID (contoh: 12345678|1234)";
+    userIdInput.placeholder = "ID Player (contoh: 12345678";
   }
 }
 </script>
