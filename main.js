@@ -244,7 +244,7 @@ function renderItems() {
   items.forEach(item => {
     const div = document.createElement('div');
     div.className = `item ${item.status || 'online'}`;
-    div.innerHTML = `<span class="status ${item.status || 'online'}"></span>${item.name}<div class="price">${item.price}</div>${item.status === 'offline' ? '<div style="color:red;font-size:12px;">Gangguan</div>' : ''}`;
+    div.innerHTML = `<span class="status ${item.status || 'online'}"></span>${item.name}<div class="price">${item.price}</div>${item.status === 'offline' ? '<div style="color:red;font-size:12px;">Gangguan*</div>' : ''}`;
     div.onclick = () => {
       if (item.status === 'offline') return;
       document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
