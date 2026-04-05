@@ -5,7 +5,7 @@ const infoData = [
     date: "18 MARET 2026",
     type: "INFO",
     image: "https://files.catbox.moe/tv1rv6.jpeg",
-    banner: "",
+    banner: "https://files.catbox.moe/b629ct.png",
     desc: "Liburan dimulai dengan membuat web ini karna gabut. ",
     tags: "#InuuTyzDev"
   }, 
