@@ -624,6 +624,7 @@ body{
   <div class="product">
     <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
     <div>
+    <div class="badge">Produk</div>
       <div id="itemName" style="font-weight:700; font-size:18px;"></div>
       <div class="features">
         <span class="feature"><i class="fas fa-check-circle"></i> Proses Cepat</span>
@@ -1086,7 +1087,7 @@ window.addEventListener("pageshow", () => {
 if(game.toLowerCase().includes("mobile legend") || game.toLowerCase().includes("ml")){
   const userIdInput = document.getElementById("userId");
   if(userIdInput && !userIdInput.placeholder.includes("ZoneID")){
-    userIdInput.placeholder = "ID Player (contoh: 12345678";
+    userIdInput.placeholder = "ID Player | Zone ID (contoh: 12345678|1234)";
   }
 }
 </script>
