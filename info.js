@@ -50,7 +50,7 @@ const infoData = [
     type: "INFO",
     image: "https://files.catbox.moe/tv1rv6.jpeg",
     banner: "",
-    desc: "Update halaman Kalkulator MLBB buat yang bingung kalo ngedraw bilang 'aduh diamond segini cukup ga ya' ngecek cukup enggak nya bisa di halaman Kalkulator MLBB ya biar tau!!",
+    desc: "Update halaman Kalkulator MLBB buat yang bingung kalo ngedraw skin legend ama zodiac diamond nya bakal cukup tidak",
     tags: "#InuuTyzDev"
   }
 
