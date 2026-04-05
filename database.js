@@ -38,7 +38,7 @@ const database = {
     require: ["userId", "server"],
     serverType: "id",
     image: "assets/ml.png",
-    qris: false,
+    qris: true,
     desc: "Top up diamond Mobile Legends cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
@@ -77,7 +77,7 @@ const database = {
     name: "PUBG Mobile",
     require: ["userId"],
     image: "assets/pubg.png",
-    qris: false,
+    qris: true,
     desc: "Top up UC PUBG Mobile cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
@@ -104,7 +104,7 @@ const database = {
     require: ["userId", "server"],
     serverType: "region",
     image: "assets/genshin.png",
-    qris: false,
+    qris: true,
     desc: "Top up Genesis Crystal Genshin Impact cepat & aman",
     detail: "Tanpa login akun, layanan 24 jam",
     regular: [
