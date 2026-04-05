@@ -57,6 +57,6 @@ const infoData = [
     banner: "",
     desc: "Update halaman Kalkulator MLBB buat yang bingung kalo ngedraw bilang "aduh diamond segini cukup ga ya" ngecek cukup enggak nya bisa di halaman Kalkulator MLBB ya biar tau!!",
     tags: "#InuuTyzDev"
-  },
+  }
 
 ];
