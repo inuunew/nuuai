@@ -102,8 +102,7 @@ body{
 
 /* Opsi 1: Hijau medium terang (Material Green 500) */
 .badge{
-  background: #4caf50;
-  color: #000000;
+  color: #4caf50;
   font-size: 12px;
   padding: 3px 8px;
   border-radius: 6px;
@@ -625,7 +624,9 @@ body{
   <div class="product">
     <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
     <div>
-      <div class="badge" id="itemName" style="font-weight:700; font-size:18px;"></div>
+      <div class="badge">Produk Dipilih</div>
+      <div id="itemName" style="font-weight:700; font-size:18px;"></div>
+      <div
       <div class="features">
         <span class="feature"><i class="fas fa-check-circle"></i> Proses Cepat</span>
         <span class="feature"><i class="fas fa-bolt"></i> Anti Delay</span>
@@ -1087,7 +1088,7 @@ window.addEventListener("pageshow", () => {
 if(game.toLowerCase().includes("mobile legend") || game.toLowerCase().includes("ml")){
   const userIdInput = document.getElementById("userId");
   if(userIdInput && !userIdInput.placeholder.includes("ZoneID")){
-    userIdInput.placeholder = "ID Player | Zone ID (contoh: 12345678|1234)";
+    userIdInput.placeholder = "ID Player (contoh: 12345678)";
   }
 }
 </script>
