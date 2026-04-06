@@ -1,6 +1,6 @@
 // main.js
 // ==================== GLOBAL VARIABLES ====================
-let currentGame = null, currentType = 'regular', selectedItem = null, isOtherProduct = false, isPanel = false, isConvert = false;
+let currentGame = null, currentType = 'regular', selectedItem = null, isOtherProduct = false, isPanel = false;
 /*
 let audioPlayer = null;
 let currentSongIndex = 0;
@@ -66,8 +66,6 @@ function initBeranda() {
   
   // Load games dari database
   loadGameGrids();
-  // Render e-wallet grid
-  renderEwalletGrid();
 }
 
 function loadGameGrids() {
@@ -113,24 +111,6 @@ function loadGameGrids() {
       </div>`;
     });
   }
-  
-  // Convert Grid (tambahan)
-  loadConvertGrid();
-}
-
-function loadConvertGrid() {
-  const convertGrid = document.getElementById('convertGrid');
-  if (convertGrid && typeof databaseConvert !== 'undefined') {
-    convertGrid.innerHTML = '';
-    Object.keys(databaseConvert).forEach(key => {
-      const item = databaseConvert[key];
-      convertGrid.innerHTML += `<div class="game-card" onclick="openConvert('${key}')">
-        <div class="game-img"><img src="${item.image}"></div>
-        <div class="game-name">${item.name}</div>
-        <div class="game-service">${item.items.length} Paket Convert</div>
-      </div>`;
-    });
-  }
 }
 
 // Fungsi untuk kategori (global)
@@ -139,11 +119,9 @@ window.openCategory = function(type) {
   document.getElementById('gameGrid').style.display = 'none';
   document.getElementById('panelGrid').style.display = 'none';
   document.getElementById('otherGrid').style.display = 'none';
-  document.getElementById('convertGrid').style.display = 'none';
   document.getElementById('titleGame').style.display = 'none';
   document.getElementById('titleHosting').style.display = 'none';
   document.getElementById('titleOther').style.display = 'none';
-  document.getElementById('titleConvert').style.display = 'none';
   document.getElementById('titleLayanan').style.display = 'none';
   document.getElementById('backBtn').style.display = 'block';
   document.getElementById('searchArea').style.display = 'flex';
@@ -151,8 +129,7 @@ window.openCategory = function(type) {
   let grid, title;
   if (type === 'game') { grid = document.getElementById('gameGrid'); title = document.getElementById('titleGame'); }
   else if (type === 'hosting') { grid = document.getElementById('panelGrid'); title = document.getElementById('titleHosting'); }
-  else if (type === 'other') { grid = document.getElementById('otherGrid'); title = document.getElementById('titleOther'); }
-  else if (type === 'convert') { grid = document.getElementById('convertGrid'); title = document.getElementById('titleConvert'); }
+  else { grid = document.getElementById('otherGrid'); title = document.getElementById('titleOther'); }
   if (grid && title) {
     grid.style.display = 'grid';
     title.style.display = 'flex';
@@ -165,11 +142,9 @@ window.goBack = function() {
   document.getElementById('gameGrid').style.display = 'none';
   document.getElementById('panelGrid').style.display = 'none';
   document.getElementById('otherGrid').style.display = 'none';
-  document.getElementById('convertGrid').style.display = 'none';
   document.getElementById('titleGame').style.display = 'none';
   document.getElementById('titleHosting').style.display = 'none';
   document.getElementById('titleOther').style.display = 'none';
-  document.getElementById('titleConvert').style.display = 'none';
   document.getElementById('titleLayanan').style.display = 'flex';
   document.getElementById('backBtn').style.display = 'none';
   document.getElementById('searchArea').style.display = 'none';
@@ -179,7 +154,7 @@ window.goBack = function() {
 // ==================== TOPUP MODAL FUNCTIONS ====================
 window.openTopup = function(game) {
   const data = database[game];
-  isOtherProduct = false; isPanel = false; isConvert = false; currentGame = game; currentType = 'regular'; selectedItem = null;
+  isOtherProduct = false; isPanel = false; currentGame = game; currentType = 'regular'; selectedItem = null;
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   const membershipTab = document.getElementById('membershipTab');
@@ -195,7 +170,7 @@ window.openTopup = function(game) {
 
 window.openPanel = function(key) {
   const data = databasePanel[key];
-  isPanel = true; isOtherProduct = false; isConvert = false; currentGame = key; selectedItem = null;
+  isPanel = true; isOtherProduct = false; currentGame = key; selectedItem = null;
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   document.getElementById('membershipTab').style.display = 'none';
@@ -227,39 +202,7 @@ window.openPanel = function(key) {
 
 window.openOther = function(key) {
   const data = databaseOther[key];
-  isOtherProduct = true; isPanel = false; isConvert = false; currentGame = key; selectedItem = null;
-  document.getElementById('gameName').innerText = data.name;
-  document.getElementById('gameIcon').src = data.image;
-  document.getElementById('membershipTab').style.display = 'none';
-  currentType = 'regular';
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab').classList.add('active');
-  const container = document.getElementById('topupItems');
-  container.innerHTML = '';
-  data.items.forEach(item => {
-    const div = document.createElement('div');
-    div.className = `item ${item.status || 'online'}`;
-    div.innerHTML = `<span class="status ${item.status || 'online'}"></span>${item.name}<div class="price">${item.price}</div>${item.status === 'offline' ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}`;
-    div.onclick = () => {
-      if (item.status === 'offline') return;
-      document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
-      div.classList.add('selected');
-      selectedItem = item;
-      const btn = document.getElementById('confirmBtn');
-      btn.disabled = false;
-      btn.classList.add('active');
-    };
-    container.appendChild(div);
-  });
-  const modal = document.getElementById('topupModal');
-  modal.style.display = 'flex';
-  modal.offsetHeight;
-  modal.classList.add('show');
-};
-
-window.openConvert = function(key) {
-  const data = databaseConvert[key];
-  isConvert = true; isOtherProduct = false; isPanel = false; currentGame = key; selectedItem = null;
+  isOtherProduct = true; isPanel = false; currentGame = key; selectedItem = null;
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   document.getElementById('membershipTab').style.display = 'none';
@@ -337,11 +280,6 @@ window.goCheckout = function() {
     gameName = data.name;
     image = data.image;
     typeValue = 'other';
-  } else if (isConvert) {
-    const data = databaseConvert[currentGame];
-    gameName = data.name;
-    image = data.image;
-    typeValue = 'convert';
   } else {
     const data = database[currentGame];
     gameName = data.name;
@@ -397,33 +335,6 @@ function initPengumuman() {
   });
 }
 
-// ==================== E-WALLET GRID ====================
-function renderEwalletGrid() {
-  const ewalletContainer = document.getElementById('ewalletGrid');
-  if (!ewalletContainer) return;
-  const ewalletList = [
-    { name: "DANA", icon: "fas fa-university", method: "DANA" },
-    { name: "OVO", icon: "fas fa-charging-station", method: "OVO" },
-    { name: "GoPay", icon: "fab fa-google-pay", method: "GoPay" },
-    { name: "LinkAja", icon: "fas fa-link", method: "LinkAja" },
-    { name: "ShopeePay", icon: "fas fa-shopping-cart", method: "ShopeePay" },
-    { name: "QRIS", icon: "fas fa-qrcode", method: "QRIS" }
-  ];
-  ewalletContainer.innerHTML = '';
-  ewalletList.forEach(ew => {
-    const card = document.createElement('div');
-    card.className = 'ewallet-card';
-    card.onclick = () => pilihEwallet(ew.method);
-    card.innerHTML = `<i class="${ew.icon}"></i><span>${ew.name}</span>`;
-    ewalletContainer.appendChild(card);
-  });
-}
-
-window.pilihEwallet = function(method) {
-  alert(`✅ ${method} dipilih sebagai metode pembayaran.`);
-  localStorage.setItem('paymentMethod', method);
-};
-
 // ==================== GLOBAL AUDIO PLAYER (CLEAN) ====================
 let globalAudio = new Audio();
 let globalSongsData = [];
@@ -473,6 +384,8 @@ function prevGlobalSong() {
   isGlobalPlaying = true;
   updateMusicUI();
 }
+
+
 
 function updateMusicUI() {
   const musicPage = document.querySelector('.music-page');
@@ -537,7 +450,6 @@ function updateMusicUI() {
     }
   }, 200);
 }
-
 function initMusicGlobal() {
   if (globalSongsData.length > 0) return Promise.resolve();
   return fetch('listmusic.json')
@@ -679,6 +591,10 @@ function initBantuan() {
   // Tidak ada inisialisasi khusus, hanya konten statis
 }
 
+// ==================== KALKULATOR ====================
+// Data default setiap mode
+// ==================== KALKULATOR ====================
+// ==================== KALKULATOR (AUTO-HITUNG) ====================
 // ==================== KALKULATOR (AUTO-HITUNG) ====================
 function initKalkulator() {
     const defaultValues = {
@@ -907,7 +823,6 @@ function initKalkulator() {
     cleanupListeners();
     renderForm();
 }
-
 // ==================== SIDEBAR & NAVBAR FUNCTIONS ====================
 window.toggleMenu = function() {
   document.getElementById('sidebar').classList.add('active');
