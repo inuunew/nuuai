@@ -718,6 +718,17 @@ body{
   <div id="voucherInfoContainer"></div>
 </div>
 
+<!-- NOMINAL BOX (BARU) -->
+<div class="card" id="nominalBox" style="display:none;">
+  <label class="label"><i class="fas fa-coins"></i> NOMINAL TOPUP</label>
+  <div class="input-group">
+    <input type="text" id="nominalInput" placeholder="Contoh: 100 Diamond / 500 V-Bucks / 1000 UC" autocomplete="off">
+  </div>
+  <div style="font-size:12px; color:#6c757d; margin-top:6px;">
+    <i class="fas fa-info-circle"></i> Masukkan nominal yang ingin dibeli (misal 100 diamond, 50.000 gold, dll)
+  </div>
+</div>
+
 <div class="card" id="serverBox" style="display:none;">
 <label class="label"><i class="fas fa-globe-asia"></i> SERVER / ZONE</label>
 <div class="input-group" id="mlServer" style="display:none;"><input type="number" placeholder="Server ID (contoh: 1234)" id="serverId"></div>
@@ -792,6 +803,10 @@ const qtyPlusBtn = document.getElementById("qtyPlus");
 const rowSubtotal = document.getElementById("rowSubtotal");
 const subtotalProdukSpan = document.getElementById("subtotalProduk");
 const hargaSatuanSpan = document.getElementById("hargaSatuan");
+
+// Elemen Nominal (baru)
+const nominalBox = document.getElementById("nominalBox");
+const nominalInput = document.getElementById("nominalInput");
 
 const game = params.get("game") || produk.name || "Game";
 const item = params.get("item") || "Item";
@@ -889,12 +904,19 @@ function setupVoucherField() {
   }
 }
 
-// Tampilkan field berdasarkan require (tanpa input voucher)
+// Tampilkan field berdasarkan require
 userIdBox.style.display = required.includes("userId") ? "block" : "none";
 usernameBox.style.display = required.includes("username") ? "block" : "none";
 phoneBox.style.display = required.includes("phone") ? "block" : "none";
 serverBox.style.display = required.includes("server") ? "block" : "none";
 setupVoucherField();
+
+// Tampilkan field Nominal jika required mengandung "nominal"
+if (required.includes("nominal")) {
+  nominalBox.style.display = "block";
+} else {
+  nominalBox.style.display = "none";
+}
 
 if(required.includes("server")){
   if(produk.serverType === "id"){ 
@@ -1021,16 +1043,23 @@ function lanjutWA(){
   } else {
     voucherInfoForWA = "Tidak ada voucher";
   }
+  let nominalInfoForWA = "";
+  if(required.includes("nominal")){
+    nominalInfoForWA = `Nominal: ${nominalInput.value || "-"}`;
+  } else {
+    nominalInfoForWA = "Tidak ada nominal khusus";
+  }
   const subtotal = basePricePerUnit * currentQty;
   const totalPrice = subtotal + adminFee;
   const message = encodeURIComponent(
     `*ORDER INUU MARKET* 🛒\n\n`+
-    `Game: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\nSubtotal: ${formatRupiah(subtotal)}\nBiaya Admin (Rp200): ${formatRupiah(adminFee)}\n*TOTAL BAYAR: ${formatRupiah(totalPrice)}*\n`+
+    `Produk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\nSubtotal: ${formatRupiah(subtotal)}\nBiaya Admin (Rp200): ${formatRupiah(adminFee)}\n*TOTAL BAYAR: ${formatRupiah(totalPrice)}*\n`+
     `User ID: ${document.getElementById("userId")?.value || '-'}\n`+
     `Username: ${document.getElementById("username")?.value || '-'}\n`+
     `No. Telepon: ${document.getElementById("phone")?.value || '-'}\n`+
     `Server: ${serverVal || '-'}\n`+
     `Metode: QRIS Manual (WhatsApp)\n`+
+    `${nominalInfoForWA}\n`+
     `Keterangan Voucher: ${voucherInfoForWA}\n\n`+
     `*Admin tolong segera kirim QRIS pembayarannya!.*`
   );
@@ -1049,6 +1078,7 @@ function bayar(){
   if(required.includes("userId") && !document.getElementById("userId").value){ showWarning("Masukkan ID Player!"); return; }
   if(required.includes("phone") && !document.getElementById("phone").value){ showWarning("Masukkan nomor telepon aktif!"); return; }
   if(required.includes("server") && !serverValue){ showWarning("Pilih / masukkan server!"); return; }
+  if(required.includes("nominal") && !nominalInput.value.trim()){ showWarning("Masukkan nominal topup!"); return; }
   if(!selectedPayment){ showWarning("Pilih metode pembayaran!"); return; }
   
   if(isManualQRIS){
@@ -1087,6 +1117,7 @@ function bayar(){
     "&phone="+encodeURIComponent(document.getElementById("phone")?.value || '')+
     "&"+voucherParam+
     "&server="+encodeURIComponent(serverValue || '')+
+    "&nominal="+encodeURIComponent(nominalInput.value || '')+
     "&payment="+encodeURIComponent(selectedPayment);
   
   setTimeout(() => { window.location.href = invoiceUrl; }, 1300);
