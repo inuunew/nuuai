@@ -80,7 +80,6 @@ const database = {
   { name: "460 Diamond ML", price: "Rp134.800", status: "online" },
   { name: "500 Diamond ML", price: "Rp135.300", status: "online" },
   { name: "522 Diamond ML", price: "Rp136.366", status: "online" },
-  // Screenshot 3
   { name: "448 Diamond ML", price: "Rp136.800", status: "online" },
   { name: "518 Diamond ML", price: "Rp138.586", status: "online" },
   { name: "568 Diamond ML", price: "Rp142.700", status: "online" },
@@ -145,11 +144,10 @@ const database = {
       { name: "1X Weekly diamond pass 220", price: "Rp29.000", status: "online" }, 
       { name: "2X Weekly diamond pass 440", price: "Rp57.000", status: "online" }, 
       { name: "3X Weekly diamond pass 660", price: "Rp84.000", status: "online" }, 
-  { name: "5X Weekly Diamond Pass 1100", price: "Rp138.200", status: "online" },
+      { name: "5X Weekly Diamond Pass 1100", price: "Rp138.200", status: "online" },
       { name: "4X Weekly Diamond Pass 880", price: "Rp110.800", status: "online" },
-  { name: "Mobile Legend Twilight Pass", price: "Rp145.417", status: "online" },
-  { name: "Starlight Member Plus", price: "Rp195.700", status: "online" }
-
+      { name: "Mobile Legend Twilight Pass", price: "Rp145.417", status: "online" },
+      { name: "Starlight Member Plus", price: "Rp195.700", status: "online" }
     ]
   },
 
@@ -398,5 +396,23 @@ const databasePanel = {
       { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
     ],
     membership: []
+  }
+};
+
+// databaseConvert
+const databaseConvert = {
+  Gpyda: {
+    name: "E-wallet Suka-Suka",
+    require: ["phone"],
+    image: "https://files.catbox.moe/b629ct.png",
+    qris: false,
+    desc: "Segera Hadir",
+    detail: "Belum Tersedia",
+    items: [
+      { name: "Allpay → Dana", price: "Rp550", status: "online" },
+      { name: "Allpay → Gopay", price: "Rp800", status: "online" },
+      { name: "Allpay → Ovo", price: "Rp490", status: "online" },
+      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }
+    ]
   }
 };
