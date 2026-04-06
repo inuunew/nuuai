@@ -337,6 +337,20 @@ const databaseOther = {
       { name: "Viu Lifetime", price: "Rp5.000", status: "online" },
     ],
     membership: []
+  }, 
+    Gpyda: {
+    name: "E-wallet Suka-Suka",
+    require: ["phone", "nominal"],
+    image: "https://files.catbox.moe/b629ct.png",
+    qris: false,
+    desc: "Segera Hadir",
+    detail: "Belum Tersedia",
+    items: [
+      { name: "Allpay → Dana", price: "Rp550", status: "online" },
+      { name: "Allpay → Gopay", price: "Rp800", status: "online" },
+      { name: "Allpay → Ovo", price: "Rp490", status: "online" },
+      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }
+    ]
   }
 };
 
@@ -396,23 +410,5 @@ const databasePanel = {
       { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
     ],
     membership: []
-  }
-};
-
-// databaseConvert
-const databaseConvert = {
-  Gpyda: {
-    name: "E-wallet Suka-Suka",
-    require: ["phone"],
-    image: "https://files.catbox.moe/b629ct.png",
-    qris: false,
-    desc: "Segera Hadir",
-    detail: "Belum Tersedia",
-    items: [
-      { name: "Allpay → Dana", price: "Rp550", status: "online" },
-      { name: "Allpay → Gopay", price: "Rp800", status: "online" },
-      { name: "Allpay → Ovo", price: "Rp490", status: "online" },
-      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }
-    ]
   }
 };
