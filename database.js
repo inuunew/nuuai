@@ -307,6 +307,22 @@ const database = {
 
 // databaseOther
 const databaseOther = {
+    WalletSS: {
+    name: "E-wallet Suka-Suka",
+    require: ["phone", "nominal"],
+    image: "https://files.catbox.moe/2klckj.png",
+    qris: false,
+    desc: "Segera Hadir",
+    detail: "Belum Tersedia",
+    items: [
+      { name: "Allpay → Dana", price: "Rp550", status: "online" },
+      { name: "Allpay → Gopay", price: "Rp800", status: "online" },
+      { name: "Allpay → Ovo", price: "Rp490", status: "online" },
+      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }, 
+      { name: "Allpay → LinkAja", price: "Rp450", status: "online" }, 
+      { name: "Allpay → e wallet apapun", price: "Rp700", status: "offline" }, 
+    ]
+  }, 
   alighm: {
     name: "[AKUN]ALIGHT MOTION PREM EXP 2027",
     require: ["voucher"],
@@ -337,22 +353,6 @@ const databaseOther = {
       { name: "Viu Lifetime (1th+)", price: "Rp1000", status: "online" },
     ],
     membership: []
-  }, 
-    WalletSS: {
-    name: "E-wallet Suka-Suka",
-    require: ["phone", "nominal"],
-    image: "https://files.catbox.moe/2klckj.png",
-    qris: false,
-    desc: "Fast and Trusted",
-    detail: "",
-    items: [
-      { name: "Allpay → Dana", price: "Rp550", status: "online" },
-      { name: "Allpay → Gopay", price: "Rp800", status: "online" },
-      { name: "Allpay → Ovo", price: "Rp490", status: "online" },
-      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }, 
-      { name: "Allpay → LinkAja", price: "Rp450", status: "online" }, 
-      { name: "Allpay → e wallet apapun", price: "Rp700", status: "offline" }, 
-    ]
   }
 };
 
