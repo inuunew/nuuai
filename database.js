@@ -341,7 +341,7 @@ const databaseOther = {
     WalletSS: {
     name: "E-wallet Suka-Suka",
     require: ["phone", "nominal"],
-    image: "https://files.catbox.moe/b629ct.png",
+    image: "https://files.catbox.moe/2klckj.png",
     qris: false,
     desc: "Segera Hadir",
     detail: "Belum Tersedia",
