@@ -1,1208 +1,416 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Checkout - Inuu Market</title>
+const database = {
+  ff: {
+    name: "Free Fire",
+    require: ["userId"],
+    image: "assets/ff.png",
+    qris: false,
+    desc: "Top up diamond Free Fire legal & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "5 Diamond Free Fire", price: "Rp1.200", status: "online" },
+      { name: "12 Diamond Free Fire", price: "Rp2.500", status: "online" },
+      { name: "50 Diamond Free Fire", price: "Rp7.500", status: "online" },
+      { name: "70 Diamond Free Fire", price: "Rp9.500", status: "online" },
+      { name: "100 Diamond Free Fire", price: "Rp13.000", status: "online" },
+      { name: "140 Diamond Free Fire", price: "Rp19.000", status: "online" },
+      { name: "210 Diamond Free Fire", price: "Rp27.000", status: "online" },
+      { name: "300 Diamond Free Fire", price: "Rp41.000", status: "online" },
+      { name: "355 Diamond Free Fire", price: "Rp46.000", status: "online" },
+      { name: "500 Diamond Free Fire", price: "Rp65.000", status: "online" },
+      { name: "720 Diamond Free Fire", price: "Rp91.000", status: "online" },
+      { name: "1000 Diamond Free Fire", price: "Rp127.000", status: "online" },
+      { name: "1450 Diamond Free Fire", price: "Rp183.000", status: "online" },
+      { name: "2180 Diamond Free Fire", price: "Rp275.000", status: "online" },
+      { name: "3640 Diamond Free Fire", price: "Rp458.000", status: "online" },
+      { name: "4000 Diamond Free Fire", price: "Rp516.000", status: "online" },
+      { name: "7290 Diamond Free Fire", price: "Rp935.000", status: "online" }
+    ],
+    membership: [
+      { name: "Membership level up pass", price: "Rp15.000", status: "online" },
+      { name: "Membership Mingguan", price: "Rp29.000", status: "online" },
+      { name: "Membership Bulanan", price: "Rp84.000", status: "online" },
+      { name: "Boyah Pass", price: "Rp43.000", status: "online" }
+    ]
+  },
 
-<!-- Font Awesome 6 & Google Font Outfit -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  ml: {
+    name: "Mobile Legends",
+    require: ["userId", "server"],
+    serverType: "id",
+    image: "assets/ml.png",
+    qris: false,
+    desc: "Top up diamond Mobile Legends cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "3 Diamond ML", price: "Rp1.500", status: "online" },
+      { name: "5 Diamond ML", price: "Rp2.500", status: "online" },
+      { name: "12(11+1) Diamond ML", price: "Rp3.800", status: "online" },
+      { name: "19(17+2) Diamond ML", price: "Rp5.600", status: "online" },
+      { name: "28(25+3) Diamond ML", price: "Rp8.000", status: "online" },
+      { name: "36(33+3) Diamond ML", price: "Rp10.000", status: "online" },
+      { name: "40(40+4) Diamond ML", price: "Rp11.500", status: "online" },
+      { name: "56(51+5) Diamond ML", price: "Rp15.500", status: "online" },
+      { name: "59(53+6) Diamond ML", price: "Rp16.500", status: "online" }, 
+      { name: "74(69+5) Diamond ML", price: "Rp19.800", status: "online" },
+      { name: "86(78+8) Diamond ML", price: "Rp21.500", status: "online" },
+      { name: "100 Diamond ML", price: "Rp25.000", status: "online" },
+      { name: "112 Diamond ML", price: "Rp30.000", status: "online" },
+      { name: "144 Diamond ML", price: "Rp38.000", status: "online" },
+      { name: "172 Diamond ML", price: "Rp44.800", status: "online" },
+      { name: "185 Diamond ML", price: "Rp48.000", status: "online" },
+      { name: "222 Diamond ML", price: "Rp58.000", status: "online" },
+      { name: "257 Diamond ML", price: "Rp65.500", status: "online" },
+      { name: "284 Diamond ML", price: "Rp73.000", status: "online" }, 
+      { name: "278 Diamond ML", price: "Rp74.000", status: "online" },
+      { name: "264 Diamond ML", price: "Rp75.000", status: "online" },
+  { name: "296 Diamond ML", price: "Rp78.300", status: "online" },
+  { name: "301 Diamond ML", price: "Rp80.300", status: "online" },
+  { name: "344 Diamond ML", price: "Rp88.848", status: "online" },
+  { name: "345 Diamond ML", price: "Rp90.388", status: "online" },
+  { name: "355 Diamond ML", price: "Rp92.766", status: "online" },
+  { name: "374 Diamond ML", price: "Rp98.008", status: "online" },
+  { name: "381 Diamond ML", price: "Rp99.436", status: "online" },
+  { name: "370 Diamond ML", price: "Rp100.500", status: "online" },
+  { name: "384 Diamond ML", price: "Rp105.500", status: "online" },
+  { name: "408 Diamond ML", price: "Rp106.058", status: "online" },
+  { name: "429 Diamond ML", price: "Rp108.888", status: "online" },
+  { name: "425 Diamond ML", price: "Rp110.866", status: "online" },
+  { name: "514 Diamond ML", price: "Rp131.470", status: "online" },
+  { name: "512 Diamond ML", price: "Rp133.507", status: "online" },
+  { name: "460 Diamond ML", price: "Rp134.800", status: "online" },
+  { name: "500 Diamond ML", price: "Rp135.300", status: "online" },
+  { name: "522 Diamond ML", price: "Rp136.366", status: "online" },
+  { name: "448 Diamond ML", price: "Rp136.800", status: "online" },
+  { name: "518 Diamond ML", price: "Rp138.586", status: "online" },
+  { name: "568 Diamond ML", price: "Rp142.700", status: "online" },
+  { name: "601 Diamond ML", price: "Rp153.466", status: "online" },
+  { name: "600 Diamond ML", price: "Rp154.156", status: "online" },
+  { name: "642 Diamond ML", price: "Rp173.300", status: "online" },
+  { name: "706 Diamond ML", price: "Rp180.192", status: "online" },
+  { name: "712 Diamond ML", price: "Rp181.565", status: "online" },
+  { name: "717 Diamond ML", price: "Rp182.995", status: "online" },
+  { name: "750 Diamond ML", price: "Rp198.378", status: "offline" },
+  { name: "875 Diamond ML", price: "Rp219.098", status: "online" },
+  { name: "965 Diamond ML", price: "Rp245.239", status: "online" },
+  { name: "963 Diamond ML", price: "Rp245.248", status: "online" },
+  { "name": "1050 Diamond ML", "price": "Rp267.625", "status": "online" },
+  { "name": "1136 Diamond ML", "price": "Rp288.034", "status": "online" },
+  { "name": "1134 Diamond ML", "price": "Rp288.425", "status": "online" },
+  { "name": "1139 Diamond ML", "price": "Rp289.854", "status": "online" },
+  { "name": "1159 Diamond ML", "price": "Rp294.616", "status": "online" },
+  { "name": "1164 Diamond ML", "price": "Rp296.046", "status": "online" },
+  { "name": "1183 Diamond ML", "price": "Rp300.764", "status": "online" },
+  { "name": "1230 Diamond ML", "price": "Rp312.670", "status": "online" }, 
+  { "name": "1368 Diamond ML", "price": "Rp347.870", "status": "online" },
+{ "name": "1412 Diamond ML", "price": "Rp362.275", "status": "online" },
+{ "name": "1443 Diamond ML", "price": "Rp364.019", "status": "online" },
+{ "name": "1453 Diamond ML", "price": "Rp369.778", "status": "online" },
+{ "name": "1507 Diamond ML", "price": "Rp380.689", "status": "online" },
+{ "name": "1672 Diamond ML", "price": "Rp423.075", "status": "online" },
+{ "name": "1704 Diamond ML", "price": "Rp430.651", "status": "online" },
+{ "name": "1750 Diamond ML", "price": "Rp440.004", "status": "online" }, 
+{ "name": "2010 Diamond ML", "price": "Rp478.017", "status": "online" },
+{ "name": "2180 Diamond ML", "price": "Rp521.832", "status": "online" },
+{ "name": "2199 Diamond ML", "price": "Rp527.071", "status": "online" },
+{ "name": "2195 Diamond ML", "price": "Rp531.798", "status": "online" },
+{ "name": "2350 Diamond ML", "price": "Rp565.996", "status": "online" },
+{ "name": "2380 Diamond ML", "price": "Rp569.951", "status": "online" },
+{ "name": "2382 Diamond ML", "price": "Rp574.049", "status": "online" },
+{ "name": "2536 Diamond ML", "price": "Rp613.534", "status": "online" },
+{ "name": "2578 Diamond ML", "price": "Rp620.634", "status": "online" },
+{ "name": "2885 Diamond ML", "price": "Rp696.618", "status": "online" },
+{ "name": "2904 Diamond ML", "price": "Rp701.858", "status": "online" },
+{ "name": "3453 Diamond ML", "price": "Rp839.236", "status": "online" },
+{ "name": "3481 Diamond ML", "price": "Rp846.855", "status": "online" },
+{ "name": "3693 Diamond ML", "price": "Rp901.019", "status": "online" },
+{ "name": "4020 Diamond ML", "price": "Rp953.233", "status": "online" },
+{ "name": "4404 Diamond ML", "price": "Rp1.052.665", "status": "online" },
+{ "name": "4678 Diamond ML", "price": "Rp1.119.687", "status": "online" },
+{ "name": "4830 Diamond ML", "price": "Rp1.143.717", "status": "online" },
+{ "name": "5372 Diamond ML", "price": "Rp1.286.334", "status": "online" },
+{ "name": "5398 Diamond ML", "price": "Rp1.286.334", "status": "online" },
+{ "name": "6030 Diamond ML", "price": "Rp1.429.450", "status": "online" },
+{ "name": "5940 Diamond ML", "price": "Rp1.434.752", "status": "online" },
+{ "name": "6001 Diamond ML", "price": "Rp1.438.347", "status": "online" },
+{ "name": "6257 Diamond ML", "price": "Rp1.504.527", "status": "online" },
+{ "name": "6840 Diamond ML", "price": "Rp1.618.933", "status": "online" },
+{ "name": "7195 Diamond ML", "price": "Rp1.710.202", "status": "online" },
+{ "name": "7660 Diamond ML", "price": "Rp1.826.669", "status": "online" },
+{ "name": "7723 Diamond ML", "price": "Rp1.842.818", "status": "online" },
+{ "name": "8040 Diamond ML", "price": "Rp1.904.166", "status": "online" },
+{ "name": "8303 Diamond ML", "price": "Rp1.985.392", "status": "online" }
+    ],
+    membership: [
+      { name: "1X Weekly diamond pass 220", price: "Rp29.000", status: "online" }, 
+      { name: "2X Weekly diamond pass 440", price: "Rp57.000", status: "online" }, 
+      { name: "3X Weekly diamond pass 660", price: "Rp84.000", status: "online" }, 
+      { name: "5X Weekly Diamond Pass 1100", price: "Rp138.200", status: "online" },
+      { name: "4X Weekly Diamond Pass 880", price: "Rp110.800", status: "online" },
+      { name: "Mobile Legend Twilight Pass", price: "Rp145.417", status: "online" },
+      { name: "Starlight Member Plus", price: "Rp195.700", status: "online" }
+    ]
+  },
 
-<style>
-/* ========== GAYA DASAR ========== */
-* {
-  box-sizing: border-box;
-}
-body{
-  font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  background:#f3f4f6;
-  margin:0;
-  padding:0;
-  padding-bottom: 85px;
-  -webkit-tap-highlight-color: transparent;
-}
+  pubg: {
+    name: "PUBG Mobile",
+    require: ["userId"],
+    image: "assets/pubg.png",
+    qris: false,
+    desc: "Top up UC PUBG Mobile cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "mobile 15 UC", price: "Rp8.000", status: "online" },
+      { name: "mobile 35 UC", price: "Rp15.500", status: "online" },
+      { name: "mobile 50 UC", price: "Rp16.500", status: "online" },
+      { name: "mobile 70 UC", price: "Rp28.000", status: "online" },
+      { name: "mobile 100 UC", price: "Rp29.500", status: "online" },
+      { name: "mobile 125 UC", price: "Rp46.000", status: "online" },
+      { name: "mobile 150 UC", price: "Rp47.000", status: "online" },
+      { name: "mobile 200 UC", price: "Rp60.000", status: "online" },
+      { name: "mobile 250 UC", price: "Rp73.000", status: "online" },
+      { name: "mobile 300 UC", price: "Rp78.000", status: "online" },
+      { name: "mobile 375 UC", price: "Rp82.000", status: "online" },
+      
+      
+      
+    ],
+    membership: []
+  },
 
-.header{
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  padding:15px;
-  background:white;
-  box-shadow:0 2px 5px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
+  genshin: {
+    name: "Genshin Impact",
+    require: ["userId", "server"],
+    serverType: "region",
+    image: "assets/genshin.png",
+    qris: false,
+    desc: "Top up Genesis Crystal Genshin Impact cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "60 Crystal", price: "Rp12.000", status: "online" },
+      { name: "60 Chronal Nexus", price: "Rp14.000", status: "online" },
+      { name: "300+30 Crystal", price: "Rp55.000", status: "online" },
+      { name: "980+110 Crystal", price: "Rp168.000", status: "online" },
+      { name: "980+110 Chronal Nexus", price: "Rp168.000", status: "online" },
+      { name: "1280+140 Genesis Crystal", price: "Rp222.000", status: "online" },
+      { name: "1980+260 Genesis Crystal", price: "Rp349.000", status: "online" }
+    ],
+    membership: [
+      { name: "Blessing of the Welkin Moon", price: "Rp55.000", status: "online" }, 
+      { name: "Blessing of the Welkin Moon x2", price: "Rp109.000", status: "online" }
+    ]
+  },
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+  hok: {
+    name: "Honor of Kings",
+    require: ["userId"],
+    image: "assets/hok.png",
+    qris: false,
+    desc: "Top up Tokens HOK cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "16 Tokens HOK", price: "Rp3.500", status: "offline" },
+      { name: "80 Tokens HOK", price: "Rp15.000", status: "offline" },
+      { name: "240 Tokens HOK", price: "Rp45.000", status: "offline" },
+      { name: "400 Tokens HOK", price: "Rp73.000", status: "online" },
+      { name: "560 Tokens HOK", price: "Rp103.000", status: "online" },
+      { name: "800+30 Tokens HOK", price: "Rp146.000", status: "online" }
+    ],
+    membership: []
+  },
 
-.back{
-  font-size:22px;
-  cursor:pointer;
-  font-weight: 500;
-  transition: opacity 0.2s;
-  color: #1f2937;
-}
-.back:active { opacity: 0.6; }
+  valorant: {
+    name: "Valorant",
+    require: [],
+    image: "assets/valo.png",
+    qris: false,
+    desc: "Top up VP Valorant cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "475 VP", price: "Rp53.000", status: "online" },
+      { name: "1000 VP", price: "Rp105.000", status: "online" },
+      { name: "1475 VP", price: "Rp158.000", status: "online" },
+      { name: "2050 VP", price: "Rp210.000", status: "online" },
+      { name: "2525 VP", price: "Rp264.000", status: "online" }
+    ],
+    membership: []
+  },
 
-.brand {
-  font-weight: bold;
-  font-size: 18px;
-  color: #1f2937;
-}
+  fcmobile: {
+    name: "FC Mobile",
+    require: ["userId"],
+    image: "assets/fcm.png",
+    qris: false,
+    desc: "Top up FC Points FC Mobile cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "40 FC Points", price: "Rp7.000", status: "offline" },
+      { name: "39 silver", price: "Rp7.000", status: "online" },
+      { name: "100 FC Points", price: "Rp16.500", status: "offline" },
+      { name: "99 silver", price: "Rp16.500", status: "offline" },
+      { name: "520 FC Points", price: "Rp77.000", status: "online" }, 
+      { name: "999 silver", price: "Rp154.000", status: "online" }, 
+      { name: "1070 silver", price: "Rp154.000", status: "online" }
+    ],
+    membership: []
+  },
 
-.header-right {
-  font-size: 16px;
-  font-weight: 500;
-  color: #5a5a5a;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: #f0f2f5;
-  padding: 5px 12px;
-  border-radius: 40px;
-}
+  codm: {
+    name: "Call of Duty",
+    require: ["userId"],
+    image: "assets/cod.png",
+    qris: false,
+    desc: "Top up CP COD cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "26+5 CP", price: "Rp5.500", status: "online" },
+      { name: "53+9 CP", price: "Rp10.000", status: "online" },
+      { name: "106+21 CP", price: "Rp20.000", status: "online" },
+      { name: "264+53 CP", price: "Rp45.000", status: "online" },
+      { name: "645 CP", price: "Rp92.000", status: "online" }
+    ],
+    membership: []
+  },
 
-.chrome-icon {
-  width: 20px;
-  height: 20px;
-  background: conic-gradient(#EA4335 0deg 120deg, #FBBC05 120deg 240deg, #34A853 240deg 360deg);
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.card{
-  background:white;
-  margin:15px;
-  padding:15px;
-  border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.03);
-  transition: all 0.1s ease;
-}
-
-.product {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 15px;
-}
-.product-info {
-  flex: 1;
-}
-
-.product img{
-  width:70px;
-  border-radius:16px;
-  background:#f8fafc;
-  object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  flex-shrink: 0;
-}
-
-.badge{
-  background: #2e7d32;
-  color: #000000;
-  font-size: 12px;
-  padding: 3px 8px;
-  border-radius: 6px;
-  display: inline-block;
-  margin-bottom: 5px;
-}
-
-.label{
-  font-weight:600;
-  margin-bottom:8px;
-  display:block;
-  font-size: 14px;
-  color: #1e293b;
-}
-
-.label i {
-  margin-right: 6px;
-  color: #16a34a;
-  width: 18px;
-}
-
-.input-group{
-  display:flex;
-  align-items:center;
-  border:1px solid #e2e8f0;
-  border-radius:16px;
-  overflow:hidden;
-  background: #fafcff;
-}
-
-.input-group input, .input-group select{
-  flex:1;
-  border:none;
-  padding:14px 16px;
-  outline:none;
-  font-size: 15px;
-  background: transparent;
-  font-family: 'Outfit', sans-serif;
-}
-
-.input-group:focus-within {
-  border-color: #16a34a;
-  box-shadow: 0 0 0 2px rgba(22,163,74,0.2);
-}
-.features {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 12px;
-}
-.feature {
-  background: #e6f7ed;
-  color: #1ea55b;
-  font-size: 12px;
-  padding: 4px 12px;
-  border-radius: 30px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
-}
-.feature i {
-  font-size: 12px;
-}
-.detail-card-content {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #1e293b;
-}
-.detail-card-content strong {
-  font-size: 16px;
-  color: #16a34a;
-}
-.detail-card-content i {
-  margin-right: 6px;
-}
-#detailCard {
-  padding: 18px;
-}
-.view-desc {
-  background: #f0fdf4;
-  border: 1px solid #dcfce7;
-  border-radius: 40px;
-  color: #15803d;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 10px 16px;
-  width: 100%;
-  text-align: center;
-  font-weight: 500;
-  transition: 0.2s;
-  font-family: 'Outfit', sans-serif;
-}
-.view-desc:active {
-  background: #dcfce7;
-}
-.row{
-  display:flex;
-  justify-content:space-between;
-  margin:10px 0;
-  font-size: 14px;
-}
-.total{
-  font-size: 22px;
-  color:#16a34a;
-  font-weight:800;
-}
-
-.footer{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  padding:12px 16px;
-  box-shadow:0 -4px 20px rgba(0,0,0,0.08);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index: 15;
-}
-
-.pay{
-  background:#16a34a;
-  color:white;
-  border:none;
-  padding:12px 28px;
-  border-radius:40px;
-  font-size:16px;
-  font-weight: 600;
-  cursor:pointer;
-  transition: 0.2s;
-  box-shadow: 0 2px 8px rgba(22,163,74,0.3);
-  font-family: 'Outfit', sans-serif;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.pay:active {
-  transform: scale(0.97);
-  background: #15803d;
-}
-.pay i {
-  font-size: 16px;
-}
-
-.bill{
-  color:#16a34a;
-  font-weight:800;
-  font-size:20px;
-}
-
-.payment-select{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border:1px solid #e2e8f0;
-  padding:14px 16px;
-  border-radius:20px;
-  cursor:pointer;
-  background:#ffffff;
-  transition: 0.1s;
-  font-family: 'Outfit', sans-serif;
-}
-
-.payment-list{
-  display:none;
-  margin-top:12px;
-  background: white;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-  border: 1px solid #edf2f7;
-}
-
-.payment-item{
-  padding:14px 16px;
-  border-bottom: 1px solid #f1f5f9;
-  cursor:pointer;
-  transition: background 0.1s;
-  font-family: 'Outfit', sans-serif;
-}
-
-.payment-item:last-child {
-  border-bottom: none;
-}
-
-.payment-item:hover{
-  background:#f8fafc;
-}
-
-.payment-item.disabled{
-  color: #94a3b8;
-  cursor: not-allowed;
-  background: #f8fafc;
-}
-/* MODAL INFO */
-.modal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-  backdrop-filter: blur(2px);
-}
-
-.modal-content{
-  background:white;
-  width:90%;
-  max-width:440px;
-  max-height:85%;
-  overflow-y:auto;
-  border-radius:32px;
-  padding:0;
-  animation:popup .2s ease;
-  font-family: 'Outfit', sans-serif;
-}
-
-.modal-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 20px;
-  border-bottom:1px solid #eef2f6;
-  font-weight:700;
-  font-size: 18px;
-}
-
-.close{
-  cursor:pointer;
-  font-size:22px;
-  opacity: 0.7;
-}
-
-.modal-body{
-  padding:20px;
-  font-size:14px;
-  color:#1e293b;
-  line-height:1.5;
-}
-.info-store {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.info-store h2 {
-  margin: 0;
-  font-size: 24px;
-  color: #0f172a;
-}
-.info-store p {
-  color: #475569;
-  font-size: 12px;
-  margin-top: 6px;
-}
-.info-game {
-  text-align: center;
-  margin: 15px 0;
-}
-.info-game h3 {
-  margin: 0;
-  font-size: 20px;
-}
-.bullet-list {
-  list-style: none;
-  padding: 0;
-  margin: 12px 0;
-}
-.bullet-list li {
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.bullet-list li:before {
-  content: "✓";
-  color: #16a34a;
-  font-weight: bold;
-  font-size: 16px;
-}
-.steps {
-  background: #f8fafc;
-  padding: 12px 18px;
-  border-radius: 24px;
-  margin: 20px 0;
-}
-.note {
-  background: #fffbeb;
-  padding: 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  margin-top: 18px;
-  border-left: 3px solid #f59e0b;
-}
-.note a {
-  color: #16a34a;
-  text-decoration: none;
-  font-weight: 500;
-}
-@keyframes popup{
-  from{transform:scale(0.92);opacity:0;}
-  to{transform:scale(1);opacity:1;}
-}
-.sheet{
-  position:fixed;
-  bottom:-100%;
-  left:0;
-  right:0;
-  background:white;
-  border-radius:28px 28px 0 0;
-  box-shadow:0 -10px 30px rgba(0,0,0,0.2);
-  transition:0.3s ease;
-  z-index:9999;
-  font-family: 'Outfit', sans-serif;
-}
-.sheet.show{
-  bottom:0;
-}
-.sheet-content{
-  padding:20px;
-}
-.sheet-header{
-  display:flex;
-  justify-content:space-between;
-  font-weight:700;
-  font-size: 18px;
-  margin-bottom:16px;
-}
-.popup-warning{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-.popup-box{
-  background:white;
-  padding:24px 20px;
-  border-radius:28px;
-  text-align:center;
-  width:85%;
-  max-width:340px;
-  animation:fadeIn 0.2s ease;
-  font-family: 'Outfit', sans-serif;
-}
-.popup-box .icon{
-  font-size:48px;
-  margin-bottom:8px;
-}
-.popup-box button{
-  margin-top:18px;
-  width:100%;
-  padding:12px;
-  border:none;
-  background:#f59e0b;
-  color:white;
-  border-radius:40px;
-  font-weight: 600;
-  cursor:pointer;
-  font-family: 'Outfit', sans-serif;
-}
-@keyframes fadeIn{
-  from{transform:scale(0.92);opacity:0;}
-  to{transform:scale(1);opacity:1;}
-}
-.loading-popup{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-.loading-box{
-  background:white;
-  padding:28px 20px;
-  border-radius:32px;
-  text-align:center;
-  width:80%;
-  max-width:260px;
-  font-family: 'Outfit', sans-serif;
-}
-.spinner{
-  width:44px;
-  height:44px;
-  border:4px solid #e2e8f0;
-  border-top:4px solid #16a34a;
-  border-radius:50%;
-  margin:0 auto 12px;
-  animation:spin 0.8s linear infinite;
-}
-@keyframes spin{
-  0%{transform:rotate(0deg);}
-  100%{transform:rotate(360deg);}
-}
-.voucher-message {
-  background: #fef9e3;
-  border-radius: 18px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: #92400e;
-  border: 1px solid #fde68a;
-}
-.voucher-message span:first-child {
-  font-size: 22px;
-}
-.admin-badge {
-  background: #eef2ff;
-  color: #1e40af;
-  font-size: 11px;
-  border-radius: 30px;
-  padding: 3px 10px;
-  display: inline-block;
-  margin-left: 6px;
-}
-
-/* ========== STYLE QUANTITY ========== */
-.qty-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-.qty-label {
-  font-weight: 600;
-  font-size: 14px;
-  color: #1e293b;
-}
-.qty-control {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #f8fafc;
-  border-radius: 40px;
-  padding: 5px 12px;
-  border: 1px solid #e2e8f0;
-}
-.qty-btn {
-  background: white;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.1s;
-  color: #16a34a;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-.qty-btn:active {
-  background: #e6f7ed;
-  transform: scale(0.95);
-}
-.qty-number {
-  font-size: 18px;
-  font-weight: 700;
-  min-width: 40px;
-  text-align: center;
-}
-</style>
-</head>
-<body>
-
-<div id="loadingPopup" class="loading-popup">
-  <div class="loading-box">
-    <div class="spinner"></div>
-    <p>Menyiapkan pembayaran...</p>
-  </div>
-</div>
-<div id="warningPopup" class="popup-warning">
-  <div class="popup-box">
-    <div class="icon">⚠️</div>
-    <h3>Perhatian</h3>
-    <p id="warningText">Harap lengkapi data terlebih dahulu!</p>
-    <button onclick="closeWarning()">Mengerti</button>
-  </div>
-</div>
-
-<div id="infoModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <span>Detail Produk</span>
-      <span class="close" onclick="closeInfo()">✕</span>
-    </div>
-    <div id="modalBody" class="modal-body">Loading...</div>
-  </div>
-</div>
-
-<div class="header">
-  <div class="header-left">
-    <div class="back" onclick="goHome()"><i class="fas fa-arrow-left"></i></div>
-    <div class="brand">Inuu Market</div>
-  </div>
-  <div class="header-right">
-    <span class="chrome-icon"></span>
-    <span>Secure Checkout</span>
-  </div>
-</div>
-
-<!-- CARD PRODUK UTAMA -->
-<div class="card">
-  <div class="product">
-    <div class="product-image">
-      <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
-    </div>
-    <div class="product-info">
-      <div class="badge">Produk Dipilih</div>
-      <div id="itemName" style="font-weight:700; font-size:18px;"></div>
-      <div id="productCode" style="font-size:13px; color:#4b5563; margin-top:4px;">
-        <i class="fas fa-tag"></i> Kode: <span id="codeValue">-</span>
-      </div>
-    </div>
-    <div class="features">
-      <span class="feature"><i class="fas fa-bolt"></i> Proses Cepat</span>
-      <span class="feature"><i class="fas fa-comment-dots"></i> Admin Fast Respon</span>
-    </div>
-  </div>
-</div>
-
-<!-- CARD QUANTITY (hanya tampil jika qty aktif) -->
-<div id="qtyCard" class="card" style="display:none;">
-  <div class="qty-card">
-    <div class="qty-label"><i class="fas fa-cubes"></i> Jumlah Beli</div>
-    <div class="qty-control">
-      <button class="qty-btn" id="qtyMinus">-</button>
-      <span class="qty-number" id="qtyValue">1</span>
-      <button class="qty-btn" id="qtyPlus">+</button>
-    </div>
-  </div>
-</div>
-
-<div class="card">
-  <button class="view-desc" onclick="openInfo()"><i class="fas fa-file-alt"></i> Lihat Deskripsi & Panduan</button>
-</div>
-
-<div id="confirmSheet" class="sheet">
-  <div class="sheet-content">
-    <div class="sheet-header">
-      <span><i class="fas fa-bolt"></i> Konfirmasi Pesanan</span>
-      <span onclick="closeSheet()" style="font-size:20px;">✕</span>
-    </div>
-    <div class="sheet-body">
-      <div style="display:flex;gap:14px;align-items:center;">
-        <img id="sheetImage" style="width:55px;border-radius:14px;">
-        <div>
-          <div id="sheetItem" style="font-weight:700;"></div>
-          <div id="sheetPrice" style="color:#3b7c4c;"></div>
-        </div>
-      </div>
-      <hr style="margin:15px 0;">
-      <div class="row"><span><i class="fas fa-map-marker-alt"></i> Tujuan / ID :</span><span id="sheetUser" style="color:#b91c1c; font-weight:500;"></span></div>
-      <div class="row"><span><i class="fas fa-receipt"></i> Total tagihan :</span><span id="sheetHarga" style="font-weight:700;"></span></div>
-      <div style="margin-top:18px;background:#f0fdf4;padding:14px;border-radius:20px;font-size:13px;">
-        <i class="fas fa-check-circle" style="color:#16a34a;"></i> Pastikan data sudah benar. <br>
-        <i class="fas fa-exclamation-triangle"></i> Melanjutkan berarti menyetujui pembelian, admin akan blacklist jika tidak serius.
-      </div>
-      <button onclick="lanjutWA()" class="pay" style="width:100%;margin-top:18px;"><i class="fab fa-whatsapp"></i> Lanjut ke WhatsApp</button>
-      <button onclick="closeSheet()" style="width:100%;margin-top:10px;padding:12px;border:1px solid #ddd;border-radius:40px;background:white; font-family:'Outfit', sans-serif;"><i class="fas fa-arrow-left"></i> Kembali</button>
-    </div>
-  </div>
-</div>
-
-<!-- INPUT DATA USER -->
-<div class="card" id="userIdBox">
-<label class="label"><i class="fas fa-id-card"></i> USER ID / ID PLAYER</label>
-<div class="input-group"><input type="text" placeholder="Contoh: 12345678" id="userId"></div>
-</div>
-
-<div class="card" id="usernameBox" style="display:none;">
-<label class="label"><i class="fas fa-user-circle"></i> USERNAME PANEL / AKUN</label>
-<div class="input-group"><input type="text" placeholder="Masukkan Username" id="username"></div>
-</div>
-
-<div class="card" id="phoneBox" style="display:none;">
-<label class="label"><i class="fas fa-phone-alt"></i> NOMOR TUJUAN</label>
-<div class="input-group"><input type="tel" placeholder="08xxxxxxxx" id="phone"></div>
-</div>
-
-<!-- VOUCHER BOX: INFORMATIF -->
-<div class="card" id="voucherBox" style="display:none;">
-  <div id="voucherInfoContainer"></div>
-</div>
-
-<!-- NOMINAL BOX -->
-<div class="card" id="nominalBox" style="display:none;">
-  <label class="label"><i class="fas fa-coins"></i> NOMINAL TOPUP</label>
-  <div class="input-group">
-    <input type="text" id="nominalInput" placeholder="Contoh: 1000 to gopay/dana/ovo/dll" autocomplete="off">
-  </div>
-  <div style="font-size:12px; color:#6c757d; margin-top:6px;">
-    <i class="fas fa-info-circle"></i> Masukkan nominal yang ingin di convert (contoh: 1000 to gopay/dana/ovo/dll)
-  </div>
-</div>
-
-<div class="card" id="serverBox" style="display:none;">
-<label class="label"><i class="fas fa-globe-asia"></i> SERVER / ZONE</label>
-<div class="input-group" id="mlServer" style="display:none;"><input type="number" placeholder="Server ID (contoh: 1234)" id="serverId"></div>
-<div class="input-group" id="genshinServer" style="display:none;"><select id="serverRegion"><option value="">Pilih Server</option><option>Asia</option><option>America</option><option>Europe</option><option>TW/HK/MO</option></select></div>
-</div>
-
-<!-- DETAIL SPESIFIKASI ITEM -->
-<div id="detailCard" class="card" style="display:none;">
-  <div id="detailCardContent" class="detail-card-content"></div>
-</div>
-
-<!-- METODE BAYAR -->
-<div class="card">
-<h4 style="margin:0 0 12px 0;"><i class="fas fa-credit-card"></i> METODE PEMBAYARAN</h4>
-<div class="payment-select" onclick="togglePayment()"><div id="paymentSelected">Pilih Metode</div><div><i class="fas fa-chevron-down"></i></div></div>
-<div class="payment-list" id="paymentList">
-  <div class="payment-item" id="qrisAutoItem"><i class="fas fa-qrcode"></i> QRIS Otomatis (Instant)</div>
-  <div class="payment-item" id="manualQrisItem"><i class="fab fa-whatsapp"></i> QRIS Manual (Order via WA)</div>
-</div>
-</div>
-
-<!-- RINCIAN TRANSAKSI -->
-<div class="card">
-  <h4 style="margin:0 0 12px 0;"><i class="fas fa-chart-line"></i> RINCIAN TRANSAKSI</h4>
-  <div class="row"><span><i class="fas fa-tag"></i> Harga Produk (per unit)</span><span id="hargaSatuan"></span></div>
-  <div class="row" id="rowNominal" style="display:none;"><span><i class="fas fa-coins"></i> Nominal Topup</span><span id="nominalValue"></span></div>
-  <div class="row" id="rowSubtotal" style="display:none;"><span><i class="fas fa-calculator"></i> Subtotal (harga x jumlah)</span><span id="subtotalProduk"></span></div>
-  <div class="row" id="rowAdminFee"><span><i class="fas fa-calculator"></i> Biaya Admin (Rp200) <span class="admin-badge">flat</span></span><span id="biayaAdmin"></span></div>
-  <hr style="margin:8px 0;">
-  <div class="row"><span><i class="fas fa-coins"></i> TOTAL YANG HARUS DIBAYAR</span><span class="total" id="totalAmount"></span></div>
-</div>
-
-<div class="footer">
-<div><div style="font-size:12px;color:#5b6e8c;">TOTAL BAYAR</div><div class="bill" id="billFooter"></div></div>
-<button class="pay" id="bayarBtn"><i class="fas fa-lock"></i> Bayar Sekarang</button>
-</div>
-
-<script src="database.js"></script>
-<script>
-// ========== AMBIL DATA PRODUK ==========
-const params = new URLSearchParams(window.location.search);
-const key = params.get("key") || "-";
-document.getElementById("codeValue").innerText = key;
-let produk = (typeof database !== 'undefined' && database[key]) ? database[key] : {};
-if (typeof databaseOther !== 'undefined' && databaseOther[key]) produk = databaseOther[key];
-if (typeof databasePanel !== 'undefined' && databasePanel[key]) produk = databasePanel[key];
-if (!produk || Object.keys(produk).length === 0) produk = {};
-
-let required = produk.require || [];
-
-// Cek apakah produk membutuhkan nominal
-const hasNominal = required.includes("nominal");
-
-// Cek apakah produk mendukung quantity
-const isQtyActive = produk.qty === true || produk.qty === "active";
-let currentQty = 1;
-const basePricePerUnit = Number(params.get("price")) || 0;
-
-// Biaya admin: jika produk punya require nominal, admin fee = 0, jika tidak = 200
-const adminFee = hasNominal ? 0 : 200;
-
-// Elemen DOM
-const userIdBox = document.getElementById("userIdBox");
-const usernameBox = document.getElementById("usernameBox");
-const phoneBox = document.getElementById("phoneBox");
-const voucherBox = document.getElementById("voucherBox");
-const voucherInfoContainer = document.getElementById("voucherInfoContainer");
-const serverBox = document.getElementById("serverBox");
-const mlServer = document.getElementById("mlServer");
-const genshinServer = document.getElementById("genshinServer");
-const detailCard = document.getElementById("detailCard");
-const detailCardContent = document.getElementById("detailCardContent");
-const qtyCard = document.getElementById("qtyCard");
-const qtyValueSpan = document.getElementById("qtyValue");
-const qtyMinusBtn = document.getElementById("qtyMinus");
-const qtyPlusBtn = document.getElementById("qtyPlus");
-const rowSubtotal = document.getElementById("rowSubtotal");
-const subtotalProdukSpan = document.getElementById("subtotalProduk");
-const hargaSatuanSpan = document.getElementById("hargaSatuan");
-const nominalBox = document.getElementById("nominalBox");
-const nominalInput = document.getElementById("nominalInput");
-const rowNominal = document.getElementById("rowNominal");
-const nominalValueSpan = document.getElementById("nominalValue");
-const rowAdminFee = document.getElementById("rowAdminFee");
-const biayaAdminSpan = document.getElementById("biayaAdmin");
-
-const game = params.get("game") || produk.name || "Game";
-const item = params.get("item") || "Item";
-const image = params.get("image") || "https://placehold.co/70x70?text=Item";
-const type = params.get("type") || "";
-
-// Fungsi format Rupiah
-function formatRupiah(angka) {
-  return "Rp " + angka.toLocaleString("id-ID");
-}
-
-// Fungsi ekstrak angka dari input nominal (ambil angka pertama yang ditemukan)
-function extractNominalValue(nominalText) {
-  if (!nominalText) return 0;
-  const match = nominalText.match(/\d+(?:\.\d+)?/);
-  if (match) {
-    return parseInt(match[0].replace(/\./g, ''), 10);
+  asphalt9: {
+    name: "Asphalt 9",
+    require: ["userId"],
+    image: "assets/asphalt.png",
+    qris: false,
+    desc: "Top up Tokens Asphalt cepat & aman",
+    detail: "Tanpa login akun, layanan 24 jam",
+    regular: [
+      { name: "54 Tokens Asphalt", price: "Rp14.000", status: "online" },
+      { name: "149 Tokens Asphalt", price: "Rp36.000", status: "online" },
+      { name: "318 Tokens Asphalt", price: "Rp70.000", status: "offline" },
+      { name: "706 Tokens Asphalt", price: "Rp145.000", status: "online" },
+      { name: "1498 Tokens Asphalt", price: "Rp290.000", status: "online" }
+    ],
+    membership: []
+  }, 
+  roblox: {
+    name: "Roblox Gift Card",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/um0wr8.png",
+    qris: false,
+    desc: "Roblox Gift Card",
+    detail: "tutorial redeem kunjungi website https://www.roblox.com/redeem dan pastikan masuk dengan akun roblox kalian agar gift card masuk ke akun kamu.",
+    regular: [
+      { name: "RGC (IDR)50.000", price: "Rp51.000", status: "online" },
+      { name: "RGC (IDR)65.000", price: "Rp65.000", status: "online" },
+      { name: "RGC (IDR)100.000", price: "Rp100.000", status: "offline" },
+      { name: "RGC (US)$10", price: "Rp175.000", status: "online" },
+      { name: "RGC (IDR)200.000", price: "Rp200.000", status: "online" }
+    ],
+    membership: []
   }
-  return 0;
-}
+};
 
-// Fungsi update total berdasarkan qty dan nominal
-function updateTotal() {
-  const subtotalProduk = basePricePerUnit * currentQty;
-  let nominalValue = 0;
-  let nominalDisplay = "-";
-  
-  if (hasNominal && nominalInput.value.trim()) {
-    nominalValue = extractNominalValue(nominalInput.value);
-    nominalDisplay = nominalInput.value.trim();
+// databaseOther
+const databaseOther = {
+  alighm: {
+    name: "[AKUN]ALIGHT MOTION PREM EXP 2027",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/f4fmn6.png",
+    qris: true,
+    qty: true, 
+    desc: "Bersifat AKUN bukan mod",
+    detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
+    items: [
+      { name: "AM Sharing", price: "Rp1.000", status: "online" },
+      { name: "AM Private", price: "Rp5.000", status: "online" }
+    ],
+    membership: []
+  }, 
+  viu: {
+    name: "[AKUN]VIU DRAMA",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/5x79aa.png",
+    qris: true,
+    qty: true, 
+    desc: "Bersifat AKUN bukan mod",
+    detail: "bergaransi 3 bulan setelah pembelian",
+    items: [
+      { name: "Viu 1 bulan", price: "Rp500", status: "online" },
+      { name: "Viu 3 bulan", price: "Rp1.000", status: "online" },
+      { name: "Viu 4 bulan", price: "Rp1.500", status: "online" },
+      { name: "Viu 1 tahun", price: "Rp3.000", status: "online" },
+      { name: "Viu Lifetime", price: "Rp5.000", status: "online" },
+    ],
+    membership: []
+  }, 
+    WalletSS: {
+    name: "E-wallet Suka-Suka",
+    require: ["phone", "nominal"],
+    image: "https://files.catbox.moe/b629ct.png",
+    qris: false,
+    desc: "Segera Hadir",
+    detail: "Belum Tersedia",
+    items: [
+      { name: "Allpay → Dana", price: "Rp550", status: "online" },
+      { name: "Allpay → Gopay", price: "Rp800", status: "online" },
+      { name: "Allpay → Ovo", price: "Rp490", status: "online" },
+      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }, 
+      { name: "Allpay → LinkAja", price: "Rp450", status: "online" }, 
+      { name: "Allpay → e wallet apapun", price: "Rp700", status: "online" }, 
+    ]
   }
-  
-  const totalPrice = subtotalProduk + nominalValue + adminFee;
-  
-  // Update tampilan
-  document.getElementById("hargaSatuan").innerHTML = formatRupiah(basePricePerUnit);
-  
-  if (hasNominal) {
-    rowNominal.style.display = "flex";
-    nominalValueSpan.innerHTML = nominalDisplay;
-  } else {
-    rowNominal.style.display = "none";
+};
+
+// databasePanel
+const databasePanel = {
+  panel: {
+    name: "Panel Bot wa/tele",
+    require: ["username"],
+    image: "https://files.catbox.moe/a4jl1w.jpeg",
+    qris: true,
+    qty: true, 
+    desc: "Panel bot whatsapp/telegram",
+    detail: "Aktif selama 30 hari GARANSI FULL",
+    items: [
+      { name: "1GB", price: "2000", status: "online" },
+      { name: "2GB", price: "3000", status: "online" },
+      { name: "3GB", price: "4000", status: "online" },
+      { name: "4GB", price: "5000", status: "online" },
+      { name: "5GB", price: "6000", status: "online" },
+      { name: "6GB", price: "7000", status: "online" },
+      { name: "7GB", price: "8000", status: "online" },
+      { name: "8GB", price: "9000", status: "online" },
+      { name: "Unlimited", price: "10000", status: "online" }, 
+      { name: "Reseller public", price: "15000", status: "online" },
+      { name: "Reseller private", price: "20000", status: "online" }, 
+      { name: "Admin panel public", price: "20000", status: "online" }
+    ],
+    membership: []
+  },
+  vps1: {
+    name: "VPS DIGITAL OCEAN",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/n8f64z.png",
+    qris: false,
+    qty: true, 
+    desc: "VPS LEGAL DO BILL VCC",
+    detail: "Aktif 1bulan Garansi 25h,no instalasi apapun(kosongan)",
+    items: [
+      { name: "VPS R2C2 [LEGAL]", price: "25.000", status: "online" }, 
+      { name: "VPS R4C2 [LEGAL]", price: "30.000", status: "online" }, 
+      { name: "VPS R8C4 [LEGAL]", price: "35.000", status: "online" }, 
+      { name: "VPS R16C4 [LEGAL]", price: "40.000", status: "offline" }
+    ],
+    membership: []
+  }, 
+  do1: {
+    name: "AKUN DIGITAL OCEAN",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/n8f64z.png",
+    qris: false,
+    qty: true, 
+    desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
+    detail: "NOTE : NO GARANSI, BUY=PAHAM!",
+    items: [
+      { name: "D.O BILL VCC 3 Droplet", price: "100.000", status: "online" }, 
+      { name: "D.O BILL VCC 10 Droplet", price: "130.000", status: "online" }, 
+      { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
+    ],
+    membership: []
   }
-  
-  if (isQtyActive) {
-    rowSubtotal.style.display = "flex";
-    subtotalProdukSpan.innerHTML = formatRupiah(subtotalProduk);
-  } else {
-    rowSubtotal.style.display = "none";
-  }
-  
-  // Tampilkan atau sembunyikan baris biaya admin (jika adminFee 0, sembunyikan)
-  if (adminFee === 0) {
-    rowAdminFee.style.display = "none";
-  } else {
-    rowAdminFee.style.display = "flex";
-    biayaAdminSpan.innerHTML = formatRupiah(adminFee);
-  }
-  
-  document.getElementById("totalAmount").innerHTML = formatRupiah(totalPrice);
-  document.getElementById("billFooter").innerHTML = formatRupiah(totalPrice);
-  
-  // Update sheet jika terbuka
-  const sheetHarga = document.getElementById("sheetHarga");
-  if (sheetHarga) sheetHarga.innerHTML = formatRupiah(totalPrice);
-}
-
-// Event quantity
-function changeQty(delta) {
-  let newQty = currentQty + delta;
-  if (newQty < 1) newQty = 1;
-  if (newQty > 999) newQty = 999;
-  if (newQty !== currentQty) {
-    currentQty = newQty;
-    qtyValueSpan.innerText = currentQty;
-    updateTotal();
-  }
-}
-
-// Event listener untuk input nominal (update total saat diketik)
-if (nominalInput) {
-  nominalInput.addEventListener('input', function() {
-    updateTotal();
-  });
-}
-
-// Tampilkan info produk utama dan setup qty
-document.getElementById("itemName").innerText = game;
-document.getElementById("gameImage").src = image;
-
-// Tampilkan/dan setup quantity card
-if (isQtyActive) {
-  qtyCard.style.display = "block";
-  qtyMinusBtn.addEventListener("click", () => changeQty(-1));
-  qtyPlusBtn.addEventListener("click", () => changeQty(1));
-} else {
-  qtyCard.style.display = "none";
-  currentQty = 1;
-}
-updateTotal();
-
-// Tampilkan detail item jika ada
-let selectedItemDetail = null;
-if (produk.regular) selectedItemDetail = produk.regular.find(p => p.name === item);
-if (!selectedItemDetail && produk.items) selectedItemDetail = produk.items.find(p => p.name === item);
-if (!selectedItemDetail && produk.membership) selectedItemDetail = produk.membership.find(p => p.name === item);
-if (selectedItemDetail) {
-  detailCard.style.display = "block";
-  let statusText = selectedItemDetail.status === 'online' ? '<i class="fas fa-check-circle" style="color:#16a34a;"></i> Tersedia' : '<i class="fas fa-times-circle" style="color:#ef4444;"></i> Habis';
-  let detailHtml = `<strong><i class="fas fa-box"></i> Paket:</strong> ${selectedItemDetail.name}<br>`;
-  detailHtml += `<strong><i class="fas fa-money-bill-wave"></i> Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
-  if (isQtyActive) detailHtml += `<strong><i class="fas fa-cubes"></i> Jumlah beli:</strong> bisa tambah jumlah<br>`;
-  if (hasNominal) detailHtml += `<strong><i class="fas fa-coins"></i> Nominal tambahan:</strong> akan ditambahkan ke total<br>`;
-  detailHtml += `<strong><i class="fas fa-bolt"></i> Status:</strong> ${statusText}<br>`;
-  if (adminFee === 0) {
-    detailHtml += `<span style="font-size:12px; color:#16a34a;"><i class="fas fa-gift"></i> MOHON LIHAT LAGI NOMOR TUJUAN!</span>`;
-  } else {
-    detailHtml += `<span style="font-size:12px; color:#4b5563;"><i class="fas fa-info-circle"></i> Biaya admin flat Rp200 sudah termasuk total.</span>`;
-  }
-  detailCardContent.innerHTML = detailHtml;
-} else {
-  detailCard.style.display = "none";
-}
-
-// ========== VOUCHER ==========
-function setupVoucherField() {
-  if (required.includes("voucher")) {
-    voucherBox.style.display = "block";
-    voucherInfoContainer.innerHTML = `
-      <div class="voucher-message">
-        <span><i class="fas fa-ticket-alt"></i></span>
-        <div>
-          <strong style="display:block; margin-bottom:4px;">Voucher Digital</strong>
-          <span style="font-size:13px;">Kode voucher akan dikirimkan oleh admin setelah pembayaran berhasil melalui WhatsApp/Email.</span>
-          <span style="font-size:12px; display:inline-block; margin-top:6px;"><i class="fas fa-check-circle"></i> Tidak perlu memasukkan kode apapun.</span>
-        </div>
-      </div>
-    `;
-  } else {
-    voucherBox.style.display = "none";
-  }
-}
-
-// Tampilkan field berdasarkan require
-userIdBox.style.display = required.includes("userId") ? "block" : "none";
-usernameBox.style.display = required.includes("username") ? "block" : "none";
-phoneBox.style.display = required.includes("phone") ? "block" : "none";
-serverBox.style.display = required.includes("server") ? "block" : "none";
-setupVoucherField();
-
-// Tampilkan field Nominal jika required mengandung "nominal"
-if (hasNominal) {
-  nominalBox.style.display = "block";
-} else {
-  nominalBox.style.display = "none";
-}
-
-if(required.includes("server")){
-  if(produk.serverType === "id"){ 
-    mlServer.style.display="flex"; 
-    genshinServer.style.display="none"; 
-  } else if(produk.serverType === "region"){ 
-    mlServer.style.display="none"; 
-    genshinServer.style.display="flex"; 
-  }
-}
-
-let selectedPayment = "";
-let isManualQRIS = false;
-
-function togglePayment() {
-  const list = document.getElementById("paymentList");
-  list.style.display = list.style.display === "block" ? "none" : "block";
-}
-
-function selectPayment(name){
-  const paymentSelectedElem = document.getElementById("paymentSelected");
-  if(name === "QRIS Otomatis" && !produk.qris){
-    showWarning("QRIS otomatis sedang error, silakan pilih QRIS Manual (Order WA).");
-    return;
-  }
-  selectedPayment = name;
-  paymentSelectedElem.innerHTML = (name === "QRIS Otomatis" ? '<i class="fas fa-qrcode"></i> ' : '<i class="fab fa-whatsapp"></i> ') + name;
-  document.getElementById("paymentList").style.display = "none";
-  isManualQRIS = (name === "QRIS Manual (Order via WA)");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const qrisAuto = document.getElementById("qrisAutoItem");
-  const manualQris = document.getElementById("manualQrisItem");
-  if(qrisAuto){
-    if(!produk.qris){
-      qrisAuto.innerHTML = '<i class="fas fa-qrcode"></i> QRIS Otomatis (sedang error)';
-      qrisAuto.classList.add("disabled");
-      qrisAuto.addEventListener("click", (e) => {
-        e.stopPropagation();
-        showWarning("QRIS otomatis sedang error, gunakan QRIS Manual.");
-      });
-    } else {
-      qrisAuto.innerHTML = '<i class="fas fa-qrcode"></i> QRIS Otomatis (Instant)';
-      qrisAuto.addEventListener("click", () => selectPayment("QRIS Otomatis"));
-    }
-  }
-  if(manualQris){
-    manualQris.innerHTML = '<i class="fab fa-whatsapp"></i> QRIS Manual (Order via WA)';
-    manualQris.addEventListener("click", () => selectPayment("QRIS Manual (Order via WA)"));
-  }
-});
-
-// ========== MODAL INFO PRODUK ==========
-function getPublisher(key) {
-  const map = {
-    ff: "Garena", ml: "Moonton", pubg: "Tencent", genshin: "Hoyoverse",
-    hok: "Level Infinite", valorant: "Riot Games", fcmobile: "EA Sports",
-    codm: "Activision", asphalt9: "Gameloft", roblox: "Roblox Corporation",
-    panel: "Panel Bot", vps1: "Digital Ocean", do1: "Digital Ocean", alighm: "Alight Motion", viu: "Viu"
-  };
-  return map[key] || "Inuu Market";
-}
-
-function openInfo() {
-  const modal = document.getElementById("infoModal");
-  const body = document.getElementById("modalBody");
-  let gameName = produk.name || game;
-  let publisher = getPublisher(key);
-  let detailText = produk.detail || "Proses Cepat\nLayanan Chat 24/7\nProduk Resmi 100%";
-  let bulletItems = detailText.split('\n').filter(l => l.trim());
-  let bulletHtml = '<ul class="bullet-list">' + bulletItems.map(l => `<li><i class="fas fa-check-circle" style="color:#16a34a;"></i> ${l.trim()}</li>`).join('') + '</ul>';
-  let descText = produk.desc || "Top up termurah, aman, dan terpercaya. Voucher dikirim otomatis oleh admin setelah pembayaran.";
-  const content = `
-    <div class="info-store"><h2>INUU MARKET</h2><p>The Most Trusted Platform for TopUp & Voucher</p></div>
-    <div class="info-game"><h3>${gameName.toUpperCase()}</h3><div class="sub"><i class="fas fa-building"></i> ${publisher}</div></div>
-    ${bulletHtml}
-    <div class="steps">
-      <p><strong><i class="fas fa-shopping-cart"></i> Cara transaksi :</strong></p>
-      <ol><li>Masukkan Data yang valid</li><li>Pilih nominal / item</li><li>Atur jumlah beli (jika tersedia)</li><li>Masukkan nominal topup (jika ada)</li><li>Pilih metode pembayaran</li><li>Klik Bayar & lakukan pembayaran</li><li>Proses otomatis/max 15 menit</li></ol>
-      <p>${descText}</p>
-      ${adminFee === 0 ? '<p style="background:#e6f7ed; padding:8px; border-radius:16px; margin-top:12px;"><strong><i class="fas fa-percent"></i> GRATIS BIAYA ADMIN</strong> untuk produk ini!</p>' : '<p style="background:#eef2ff; padding:8px; border-radius:16px; margin-top:12px;"><strong><i class="fas fa-percent"></i> Biaya Admin Flat Rp200</strong> sudah termasuk dalam total yang dibayarkan.</p>'}
-    </div>
-    <div class="note"><strong><i class="fas fa-lightbulb"></i> Catatan:</strong> Nominal yang dimasukkan akan ditambahkan ke total harga. Hubungi CS jika ada kendala. <a href="https://wa.me/6283160556330" target="_blank"><i class="fab fa-whatsapp"></i> Klik CS WhatsApp</a></div>
-  `;
-  body.innerHTML = content;
-  modal.style.display = "flex";
-}
-function closeInfo() { document.getElementById("infoModal").style.display = "none"; }
-
-function showLoading(){ document.getElementById("loadingPopup").style.display = "flex"; }
-function hideLoading(){ document.getElementById("loadingPopup").style.display = "none"; }
-function showWarning(text){
-  document.getElementById("warningText").innerText = text;
-  document.getElementById("warningPopup").style.display = "flex";
-}
-function closeWarning(){ document.getElementById("warningPopup").style.display = "none"; }
-function goHome() { window.location.href = "index.html"; }
-
-// Sheet untuk manual QRIS
-function openSheet(){
-  const subtotalProduk = basePricePerUnit * currentQty;
-  const nominalValue = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const totalPrice = subtotalProduk + nominalValue + adminFee;
-  
-  document.getElementById("confirmSheet").classList.add("show");
-  document.getElementById("sheetImage").src = image;
-  document.getElementById("sheetItem").innerText = game + " " + item + (isQtyActive ? ` (${currentQty}x)` : "");
-  let priceText = formatRupiah(basePricePerUnit) + " / unit" + (isQtyActive ? ` × ${currentQty}` : "");
-  if (hasNominal && nominalInput.value.trim()) {
-    priceText += ` + nominal ${nominalInput.value.trim()}`;
-  }
-  if (adminFee > 0) priceText += ` + admin Rp${adminFee}`;
-  document.getElementById("sheetPrice").innerHTML = priceText;
-  document.getElementById("sheetHarga").innerHTML = formatRupiah(totalPrice);
-  let userData = document.getElementById("userId")?.value || document.getElementById("username")?.value || document.getElementById("phone")?.value || "Data akan dikirim via WA";
-  document.getElementById("sheetUser").innerText = userData;
-}
-function closeSheet(){ document.getElementById("confirmSheet").classList.remove("show"); }
-
-function lanjutWA(){
-  closeSheet();
-  const waNumber = "6283160556330";
-  let serverVal = "";
-  if(required.includes("server")){
-    serverVal = (produk.serverType==="id") ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
-  }
-  let voucherInfoForWA = "";
-  if(required.includes("voucher")){
-    voucherInfoForWA = "✅ PRODUK VOUCHER (Kode akan dikirim oleh admin setelah pembayaran lunas)";
-  } else {
-    voucherInfoForWA = "Tidak ada voucher";
-  }
-  
-  const subtotalProduk = basePricePerUnit * currentQty;
-  const nominalValue = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const totalPrice = subtotalProduk + nominalValue + adminFee;
-  
-  let nominalInfoForWA = "";
-  if (hasNominal) {
-    nominalInfoForWA = `Nominal Topup: ${nominalInput.value || "-"} (nilai: ${formatRupiah(nominalValue)})`;
-  } else {
-    nominalInfoForWA = "Tidak ada nominal khusus";
-  }
-  
-  let adminInfoWA = adminFee > 0 ? `Biaya Admin: ${formatRupiah(adminFee)}` : "";
-  
-  const message = encodeURIComponent(
-    `*ORDER INUU MARKET* 🛒\n\n`+
-    `Produk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\n`+
-    `Subtotal: ${formatRupiah(subtotalProduk)}\n`+
-    `${nominalInfoForWA}\n`+
-    `${adminInfoWA}\n`+
-    `*TOTAL BAYAR: ${formatRupiah(totalPrice)}*\n\n`+
-    `User ID: ${document.getElementById("userId")?.value || '-'}\n`+
-    `Username: ${document.getElementById("username")?.value || '-'}\n`+
-    `No. Telepon: ${document.getElementById("phone")?.value || '-'}\n`+
-    `Server: ${serverVal || '-'}\n`+
-    `Metode: QRIS Manual (WhatsApp)\n`+
-    `Keterangan Voucher: ${voucherInfoForWA}\n\n`+
-    `*Admin tolong segera kirim QRIS pembayarannya!.*`
-  );
-  window.location.href = `https://wa.me/${waNumber}?text=${message}`;
-}
-
-// PROSES BAYAR UTAMA (QRIS otomatis)
-function bayar(){
-  const btn = document.getElementById("bayarBtn");
-  let serverValue = "";
-  if(required.includes("server")){
-    serverValue = (produk.serverType==="id") ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
-  }
-  
-  if(required.includes("username") && !document.getElementById("username").value){ showWarning("Masukkan username!"); return; }
-  if(required.includes("userId") && !document.getElementById("userId").value){ showWarning("Masukkan ID Player!"); return; }
-  if(required.includes("phone") && !document.getElementById("phone").value){ showWarning("Masukkan nomor telepon aktif!"); return; }
-  if(required.includes("server") && !serverValue){ showWarning("Pilih / masukkan server!"); return; }
-  if(hasNominal && !nominalInput.value.trim()){ showWarning("Masukkan nominal topup!"); return; }
-  if(!selectedPayment){ showWarning("Pilih metode pembayaran!"); return; }
-  
-  if(isManualQRIS){
-    openSheet();
-    return;
-  }
-  
-  // QRIS Otomatis
-  btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Memproses...';
-  btn.disabled = true;
-  btn.style.opacity = "0.7";
-  showLoading();
-  
-  let voucherParam = "";
-  if(required.includes("voucher")){
-    voucherParam = "voucher=admin_kirim_setelah_bayar";
-  } else {
-    voucherParam = "voucher=" + encodeURIComponent(document.getElementById("voucher")?.value || '');
-  }
-  
-  const subtotalProduk = basePricePerUnit * currentQty;
-  const nominalValue = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const totalPrice = subtotalProduk + nominalValue + adminFee;
-  
-  const invoiceUrl = "invoice.html?" +
-    "key="+encodeURIComponent(key)+
-    "&game="+encodeURIComponent(game)+
-    "&item="+encodeURIComponent(item)+
-    "&price="+encodeURIComponent(totalPrice)+
-    "&base_price="+encodeURIComponent(basePricePerUnit)+
-    "&admin_fee="+encodeURIComponent(adminFee)+
-    "&qty="+encodeURIComponent(currentQty)+
-    "&type="+encodeURIComponent(type)+
-    "&userId="+encodeURIComponent(document.getElementById("userId")?.value || '')+
-    "&username="+encodeURIComponent(document.getElementById("username")?.value || '')+
-    "&phone="+encodeURIComponent(document.getElementById("phone")?.value || '')+
-    "&"+voucherParam+
-    "&server="+encodeURIComponent(serverValue || '')+
-    "&nominal="+encodeURIComponent(nominalInput.value || '')+
-    "&nominal_value="+encodeURIComponent(nominalValue)+
-    "&payment="+encodeURIComponent(selectedPayment);
-  
-  setTimeout(() => { window.location.href = invoiceUrl; }, 1300);
-}
-
-document.getElementById("bayarBtn").addEventListener("click", bayar);
-
-window.addEventListener("pageshow", () => {
-  const btn = document.getElementById("bayarBtn");
-  if(btn){
-    btn.disabled = false;
-    btn.style.opacity = "1";
-    btn.innerHTML = '<i class="fas fa-lock"></i> Bayar Sekarang';
-  }
-  hideLoading();
-});
-
-// Placeholder tambahan
-if(game.toLowerCase().includes("mobile legend") || game.toLowerCase().includes("ml")){
-  const userIdInput = document.getElementById("userId");
-  if(userIdInput && !userIdInput.placeholder.includes("ZoneID")){
-    userIdInput.placeholder = "ID Player (contoh: 12345678)";
-  }
-}
-</script>
-</body>
-</html>
+};
