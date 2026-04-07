@@ -87,7 +87,7 @@ body{
 
 .product {
   display: flex;
-  flex-wrap: wrap;  /* agar features bisa pindah ke baris baru */
+  flex-wrap: wrap;
   align-items: flex-start;
   gap: 15px;
 }
@@ -104,19 +104,14 @@ body{
   flex-shrink: 0;
 }
 
-/* Opsi 1: Hijau medium terang (Material Green 500) */
 .badge{
-  background: #2e7d32;  /* hijau medium agak pekat (Material Green 800) */
-  color: #000000;       /* teks hitam */
+  background: #2e7d32;
+  color: #000000;
   font-size: 12px;
   padding: 3px 8px;
   border-radius: 6px;
   display: inline-block;
   margin-bottom: 5px;
-}
-
-.price{
-  color:#555;
 }
 
 .label{
@@ -162,8 +157,6 @@ body{
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 12px;
-  width: 100%;
-  margin-top: 12px;
 }
 .feature {
   background: #e6f7ed;
@@ -179,21 +172,20 @@ body{
 .feature i {
   font-size: 12px;
 }
-/* ========== DETAIL CARD ========== */
-.detail-card-content, .desc-card-content {
-  font-size: 16px;        /* dari 14px */
-  line-height: 1.6;       /* lebih renggang */
+.detail-card-content {
+  font-size: 16px;
+  line-height: 1.6;
   color: #1e293b;
 }
-.detail-card-content strong, .desc-card-content strong {
+.detail-card-content strong {
   font-size: 16px;
   color: #16a34a;
 }
-.detail-card-content i, .desc-card-content i {
+.detail-card-content i {
   margin-right: 6px;
 }
 #detailCard {
-  padding: 18px;          /* sedikit lebih lega */
+  padding: 18px;
 }
 .view-desc {
   background: #f0fdf4;
@@ -202,7 +194,6 @@ body{
   color: #15803d;
   cursor: pointer;
   font-size: 14px;
-  margin-top: 0px;
   padding: 10px 16px;
   width: 100%;
   text-align: center;
@@ -686,7 +677,7 @@ body{
       </div>
       <hr style="margin:15px 0;">
       <div class="row"><span><i class="fas fa-map-marker-alt"></i> Tujuan / ID :</span><span id="sheetUser" style="color:#b91c1c; font-weight:500;"></span></div>
-      <div class="row"><span><i class="fas fa-receipt"></i> Total tagihan (inkl. admin Rp200) :</span><span id="sheetHarga" style="font-weight:700;"></span></div>
+      <div class="row"><span><i class="fas fa-receipt"></i> Total tagihan :</span><span id="sheetHarga" style="font-weight:700;"></span></div>
       <div style="margin-top:18px;background:#f0fdf4;padding:14px;border-radius:20px;font-size:13px;">
         <i class="fas fa-check-circle" style="color:#16a34a;"></i> Pastikan data sudah benar. <br>
         <i class="fas fa-exclamation-triangle"></i> Melanjutkan berarti menyetujui pembelian, admin akan blacklist jika tidak serius.
@@ -718,14 +709,14 @@ body{
   <div id="voucherInfoContainer"></div>
 </div>
 
-<!-- NOMINAL BOX (BARU) -->
+<!-- NOMINAL BOX -->
 <div class="card" id="nominalBox" style="display:none;">
   <label class="label"><i class="fas fa-coins"></i> NOMINAL TOPUP</label>
   <div class="input-group">
-    <input type="text" id="nominalInput" placeholder="Contoh: 100 Diamond / 500 V-Bucks / 1000 UC" autocomplete="off">
+    <input type="text" id="nominalInput" placeholder="Contoh: 60 Crystal / 300+30 Crystal / Welkin Moon" autocomplete="off">
   </div>
   <div style="font-size:12px; color:#6c757d; margin-top:6px;">
-    <i class="fas fa-info-circle"></i> Masukkan nominal yang ingin dibeli (misal 100 diamond, 50.000 gold, dll)
+    <i class="fas fa-info-circle"></i> Masukkan nominal yang ingin dibeli (contoh: 60 Crystal, 980+110 Crystal, dll)
   </div>
 </div>
 
@@ -750,12 +741,13 @@ body{
 </div>
 </div>
 
-<!-- RINCIAN TRANSAKSI DENGAN BIAYA ADMIN Rp200 -->
+<!-- RINCIAN TRANSAKSI -->
 <div class="card">
   <h4 style="margin:0 0 12px 0;"><i class="fas fa-chart-line"></i> RINCIAN TRANSAKSI</h4>
   <div class="row"><span><i class="fas fa-tag"></i> Harga Produk (per unit)</span><span id="hargaSatuan"></span></div>
+  <div class="row" id="rowNominal" style="display:none;"><span><i class="fas fa-coins"></i> Nominal Topup</span><span id="nominalValue"></span></div>
   <div class="row" id="rowSubtotal" style="display:none;"><span><i class="fas fa-calculator"></i> Subtotal (harga x jumlah)</span><span id="subtotalProduk"></span></div>
-  <div class="row"><span><i class="fas fa-calculator"></i> Biaya Admin (Rp200) <span class="admin-badge">flat</span></span><span id="biayaAdmin"></span></div>
+  <div class="row" id="rowAdminFee"><span><i class="fas fa-calculator"></i> Biaya Admin (Rp200) <span class="admin-badge">flat</span></span><span id="biayaAdmin"></span></div>
   <hr style="margin:8px 0;">
   <div class="row"><span><i class="fas fa-coins"></i> TOTAL YANG HARUS DIBAYAR</span><span class="total" id="totalAmount"></span></div>
 </div>
@@ -768,7 +760,6 @@ body{
 <script src="database.js"></script>
 <script>
 // ========== AMBIL DATA PRODUK ==========
-// Ambil kode dari URL parameter "key"
 const params = new URLSearchParams(window.location.search);
 const key = params.get("key") || "-";
 document.getElementById("codeValue").innerText = key;
@@ -779,11 +770,16 @@ if (!produk || Object.keys(produk).length === 0) produk = {};
 
 let required = produk.require || [];
 
+// Cek apakah produk membutuhkan nominal
+const hasNominal = required.includes("nominal");
+
 // Cek apakah produk mendukung quantity
 const isQtyActive = produk.qty === true || produk.qty === "active";
 let currentQty = 1;
-const basePricePerUnit = Number(params.get("price")) || 0;   // harga satuan asli
-const adminFee = 200;   // biaya admin tetap
+const basePricePerUnit = Number(params.get("price")) || 0;
+
+// Biaya admin: jika produk punya require nominal, admin fee = 0, jika tidak = 200
+const adminFee = hasNominal ? 0 : 200;
 
 // Elemen DOM
 const userIdBox = document.getElementById("userIdBox");
@@ -803,10 +799,12 @@ const qtyPlusBtn = document.getElementById("qtyPlus");
 const rowSubtotal = document.getElementById("rowSubtotal");
 const subtotalProdukSpan = document.getElementById("subtotalProduk");
 const hargaSatuanSpan = document.getElementById("hargaSatuan");
-
-// Elemen Nominal (baru)
 const nominalBox = document.getElementById("nominalBox");
 const nominalInput = document.getElementById("nominalInput");
+const rowNominal = document.getElementById("rowNominal");
+const nominalValueSpan = document.getElementById("nominalValue");
+const rowAdminFee = document.getElementById("rowAdminFee");
+const biayaAdminSpan = document.getElementById("biayaAdmin");
 
 const game = params.get("game") || produk.name || "Game";
 const item = params.get("item") || "Item";
@@ -818,24 +816,58 @@ function formatRupiah(angka) {
   return "Rp " + angka.toLocaleString("id-ID");
 }
 
-// Fungsi update total berdasarkan qty
+// Fungsi ekstrak angka dari input nominal (ambil angka pertama yang ditemukan)
+function extractNominalValue(nominalText) {
+  if (!nominalText) return 0;
+  const match = nominalText.match(/\d+(?:\.\d+)?/);
+  if (match) {
+    return parseInt(match[0].replace(/\./g, ''), 10);
+  }
+  return 0;
+}
+
+// Fungsi update total berdasarkan qty dan nominal
 function updateTotal() {
-  const subtotal = basePricePerUnit * currentQty;
-  const totalPrice = subtotal + adminFee;
+  const subtotalProduk = basePricePerUnit * currentQty;
+  let nominalValue = 0;
+  let nominalDisplay = "-";
+  
+  if (hasNominal && nominalInput.value.trim()) {
+    nominalValue = extractNominalValue(nominalInput.value);
+    nominalDisplay = nominalInput.value.trim();
+  }
+  
+  const totalPrice = subtotalProduk + nominalValue + adminFee;
   
   // Update tampilan
   document.getElementById("hargaSatuan").innerHTML = formatRupiah(basePricePerUnit);
+  
+  if (hasNominal) {
+    rowNominal.style.display = "flex";
+    nominalValueSpan.innerHTML = nominalDisplay;
+  } else {
+    rowNominal.style.display = "none";
+  }
+  
   if (isQtyActive) {
     rowSubtotal.style.display = "flex";
-    subtotalProdukSpan.innerHTML = formatRupiah(subtotal);
+    subtotalProdukSpan.innerHTML = formatRupiah(subtotalProduk);
   } else {
     rowSubtotal.style.display = "none";
   }
-  document.getElementById("biayaAdmin").innerHTML = formatRupiah(adminFee);
+  
+  // Tampilkan atau sembunyikan baris biaya admin (jika adminFee 0, sembunyikan)
+  if (adminFee === 0) {
+    rowAdminFee.style.display = "none";
+  } else {
+    rowAdminFee.style.display = "flex";
+    biayaAdminSpan.innerHTML = formatRupiah(adminFee);
+  }
+  
   document.getElementById("totalAmount").innerHTML = formatRupiah(totalPrice);
   document.getElementById("billFooter").innerHTML = formatRupiah(totalPrice);
   
-  // Update sheet jika terbuka nanti (nilai dinamis saat konfirmasi)
+  // Update sheet jika terbuka
   const sheetHarga = document.getElementById("sheetHarga");
   if (sheetHarga) sheetHarga.innerHTML = formatRupiah(totalPrice);
 }
@@ -844,12 +876,19 @@ function updateTotal() {
 function changeQty(delta) {
   let newQty = currentQty + delta;
   if (newQty < 1) newQty = 1;
-  if (newQty > 999) newQty = 999; // batas atas
+  if (newQty > 999) newQty = 999;
   if (newQty !== currentQty) {
     currentQty = newQty;
     qtyValueSpan.innerText = currentQty;
     updateTotal();
   }
+}
+
+// Event listener untuk input nominal (update total saat diketik)
+if (nominalInput) {
+  nominalInput.addEventListener('input', function() {
+    updateTotal();
+  });
 }
 
 // Tampilkan info produk utama dan setup qty
@@ -861,14 +900,13 @@ if (isQtyActive) {
   qtyCard.style.display = "block";
   qtyMinusBtn.addEventListener("click", () => changeQty(-1));
   qtyPlusBtn.addEventListener("click", () => changeQty(1));
-  updateTotal();
 } else {
   qtyCard.style.display = "none";
   currentQty = 1;
-  updateTotal(); // tetap hitung dengan qty=1
 }
+updateTotal();
 
-// Tampilkan detail item jika ada (spesifikasi)
+// Tampilkan detail item jika ada
 let selectedItemDetail = null;
 if (produk.regular) selectedItemDetail = produk.regular.find(p => p.name === item);
 if (!selectedItemDetail && produk.items) selectedItemDetail = produk.items.find(p => p.name === item);
@@ -877,15 +915,21 @@ if (selectedItemDetail) {
   detailCard.style.display = "block";
   let statusText = selectedItemDetail.status === 'online' ? '<i class="fas fa-check-circle" style="color:#16a34a;"></i> Tersedia' : '<i class="fas fa-times-circle" style="color:#ef4444;"></i> Habis';
   let detailHtml = `<strong><i class="fas fa-box"></i> Paket:</strong> ${selectedItemDetail.name}<br>`;
-  detailHtml += `<strong><i class="fas fa-money-bill-wave"></i>  Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
-  if (isQtyActive) detailHtml += `<strong><i class="fas fa-cubes"></i> Minimal order:</strong> 1 (bisa tambah jumlah)<br>`;
-  detailHtml += `<strong><i class="fas fa-bolt"></i>  Status:</strong> ${statusText}<br><span style="font-size:12px; color:#4b5563;"><i class="fas fa-info-circle"></i> Biaya admin flat Rp200 sudah termasuk total.</span>`;
+  detailHtml += `<strong><i class="fas fa-money-bill-wave"></i> Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
+  if (isQtyActive) detailHtml += `<strong><i class="fas fa-cubes"></i> Jumlah beli:</strong> bisa tambah jumlah<br>`;
+  if (hasNominal) detailHtml += `<strong><i class="fas fa-coins"></i> Nominal tambahan:</strong> akan ditambahkan ke total<br>`;
+  detailHtml += `<strong><i class="fas fa-bolt"></i> Status:</strong> ${statusText}<br>`;
+  if (adminFee === 0) {
+    detailHtml += `<span style="font-size:12px; color:#16a34a;"><i class="fas fa-gift"></i> Bebas biaya admin untuk produk ini!</span>`;
+  } else {
+    detailHtml += `<span style="font-size:12px; color:#4b5563;"><i class="fas fa-info-circle"></i> Biaya admin flat Rp200 sudah termasuk total.</span>`;
+  }
   detailCardContent.innerHTML = detailHtml;
 } else {
   detailCard.style.display = "none";
 }
 
-// ========== VOUCHER (tanpa input, hanya info) ==========
+// ========== VOUCHER ==========
 function setupVoucherField() {
   if (required.includes("voucher")) {
     voucherBox.style.display = "block";
@@ -912,7 +956,7 @@ serverBox.style.display = required.includes("server") ? "block" : "none";
 setupVoucherField();
 
 // Tampilkan field Nominal jika required mengandung "nominal"
-if (required.includes("nominal")) {
+if (hasNominal) {
   nominalBox.style.display = "block";
 } else {
   nominalBox.style.display = "none";
@@ -948,7 +992,6 @@ function selectPayment(name){
   isManualQRIS = (name === "QRIS Manual (Order via WA)");
 }
 
-// Event listener untuk metode pembayaran
 document.addEventListener("DOMContentLoaded", () => {
   const qrisAuto = document.getElementById("qrisAutoItem");
   const manualQris = document.getElementById("manualQrisItem");
@@ -997,11 +1040,11 @@ function openInfo() {
     ${bulletHtml}
     <div class="steps">
       <p><strong><i class="fas fa-shopping-cart"></i> Cara transaksi :</strong></p>
-      <ol><li>Masukkan Data yang valid</li><li>Pilih nominal / item</li><li>Atur jumlah beli (jika tersedia)</li><li>Pilih metode pembayaran</li><li>Jika produk VOUCHER, kode akan dikirim admin via WhatsApp</li><li>Klik Bayar & lakukan pembayaran</li><li>Proses otomatis/max 15 menit</li></ol>
+      <ol><li>Masukkan Data yang valid</li><li>Pilih nominal / item</li><li>Atur jumlah beli (jika tersedia)</li><li>Masukkan nominal topup (jika ada)</li><li>Pilih metode pembayaran</li><li>Klik Bayar & lakukan pembayaran</li><li>Proses otomatis/max 15 menit</li></ol>
       <p>${descText}</p>
-      <p style="background:#eef2ff; padding:8px; border-radius:16px; margin-top:12px;"><strong><i class="fas fa-percent"></i> Biaya Admin Flat Rp200</strong> sudah termasuk dalam total yang dibayarkan.</p>
+      ${adminFee === 0 ? '<p style="background:#e6f7ed; padding:8px; border-radius:16px; margin-top:12px;"><strong><i class="fas fa-percent"></i> GRATIS BIAYA ADMIN</strong> untuk produk ini!</p>' : '<p style="background:#eef2ff; padding:8px; border-radius:16px; margin-top:12px;"><strong><i class="fas fa-percent"></i> Biaya Admin Flat Rp200</strong> sudah termasuk dalam total yang dibayarkan.</p>'}
     </div>
-    <div class="note"><strong><i class="fas fa-lightbulb"></i> Catatan:</strong> Untuk pembelian voucher, kode akan dikirim oleh admin setelah status lunas. Hubungi CS jika belum diterima dalam 1x24 jam. <a href="https://wa.me/6283160556330" target="_blank"><i class="fab fa-whatsapp"></i> Klik CS WhatsApp</a></div>
+    <div class="note"><strong><i class="fas fa-lightbulb"></i> Catatan:</strong> Nominal yang dimasukkan akan ditambahkan ke total harga. Hubungi CS jika ada kendala. <a href="https://wa.me/6283160556330" target="_blank"><i class="fab fa-whatsapp"></i> Klik CS WhatsApp</a></div>
   `;
   body.innerHTML = content;
   modal.style.display = "flex";
@@ -1017,13 +1060,21 @@ function showWarning(text){
 function closeWarning(){ document.getElementById("warningPopup").style.display = "none"; }
 function goHome() { window.location.href = "index.html"; }
 
-// Sheet untuk manual QRIS (tampilkan totalPrice)
+// Sheet untuk manual QRIS
 function openSheet(){
-  const totalPrice = (basePricePerUnit * currentQty) + adminFee;
+  const subtotalProduk = basePricePerUnit * currentQty;
+  const nominalValue = hasNominal ? extractNominalValue(nominalInput.value) : 0;
+  const totalPrice = subtotalProduk + nominalValue + adminFee;
+  
   document.getElementById("confirmSheet").classList.add("show");
   document.getElementById("sheetImage").src = image;
   document.getElementById("sheetItem").innerText = game + " " + item + (isQtyActive ? ` (${currentQty}x)` : "");
-  document.getElementById("sheetPrice").innerHTML = formatRupiah(basePricePerUnit) + " / unit" + (isQtyActive ? ` × ${currentQty}` : "") + " + admin Rp200";
+  let priceText = formatRupiah(basePricePerUnit) + " / unit" + (isQtyActive ? ` × ${currentQty}` : "");
+  if (hasNominal && nominalInput.value.trim()) {
+    priceText += ` + nominal ${nominalInput.value.trim()}`;
+  }
+  if (adminFee > 0) priceText += ` + admin Rp${adminFee}`;
+  document.getElementById("sheetPrice").innerHTML = priceText;
   document.getElementById("sheetHarga").innerHTML = formatRupiah(totalPrice);
   let userData = document.getElementById("userId")?.value || document.getElementById("username")?.value || document.getElementById("phone")?.value || "Data akan dikirim via WA";
   document.getElementById("sheetUser").innerText = userData;
@@ -1043,23 +1094,32 @@ function lanjutWA(){
   } else {
     voucherInfoForWA = "Tidak ada voucher";
   }
+  
+  const subtotalProduk = basePricePerUnit * currentQty;
+  const nominalValue = hasNominal ? extractNominalValue(nominalInput.value) : 0;
+  const totalPrice = subtotalProduk + nominalValue + adminFee;
+  
   let nominalInfoForWA = "";
-  if(required.includes("nominal")){
-    nominalInfoForWA = `Nominal: ${nominalInput.value || "-"}`;
+  if (hasNominal) {
+    nominalInfoForWA = `Nominal Topup: ${nominalInput.value || "-"} (nilai: ${formatRupiah(nominalValue)})`;
   } else {
     nominalInfoForWA = "Tidak ada nominal khusus";
   }
-  const subtotal = basePricePerUnit * currentQty;
-  const totalPrice = subtotal + adminFee;
+  
+  let adminInfoWA = adminFee > 0 ? `Biaya Admin: ${formatRupiah(adminFee)}` : "Bebas Biaya Admin";
+  
   const message = encodeURIComponent(
     `*ORDER INUU MARKET* 🛒\n\n`+
-    `Produk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\nSubtotal: ${formatRupiah(subtotal)}\nBiaya Admin (Rp200): ${formatRupiah(adminFee)}\n*TOTAL BAYAR: ${formatRupiah(totalPrice)}*\n`+
+    `Produk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\n`+
+    `Subtotal: ${formatRupiah(subtotalProduk)}\n`+
+    `${nominalInfoForWA}\n`+
+    `${adminInfoWA}\n`+
+    `*TOTAL BAYAR: ${formatRupiah(totalPrice)}*\n\n`+
     `User ID: ${document.getElementById("userId")?.value || '-'}\n`+
     `Username: ${document.getElementById("username")?.value || '-'}\n`+
     `No. Telepon: ${document.getElementById("phone")?.value || '-'}\n`+
     `Server: ${serverVal || '-'}\n`+
     `Metode: QRIS Manual (WhatsApp)\n`+
-    `${nominalInfoForWA}\n`+
     `Keterangan Voucher: ${voucherInfoForWA}\n\n`+
     `*Admin tolong segera kirim QRIS pembayarannya!.*`
   );
@@ -1078,7 +1138,7 @@ function bayar(){
   if(required.includes("userId") && !document.getElementById("userId").value){ showWarning("Masukkan ID Player!"); return; }
   if(required.includes("phone") && !document.getElementById("phone").value){ showWarning("Masukkan nomor telepon aktif!"); return; }
   if(required.includes("server") && !serverValue){ showWarning("Pilih / masukkan server!"); return; }
-  if(required.includes("nominal") && !nominalInput.value.trim()){ showWarning("Masukkan nominal topup!"); return; }
+  if(hasNominal && !nominalInput.value.trim()){ showWarning("Masukkan nominal topup!"); return; }
   if(!selectedPayment){ showWarning("Pilih metode pembayaran!"); return; }
   
   if(isManualQRIS){
@@ -1099,15 +1159,15 @@ function bayar(){
     voucherParam = "voucher=" + encodeURIComponent(document.getElementById("voucher")?.value || '');
   }
   
-  const subtotal = basePricePerUnit * currentQty;
-  const totalPrice = subtotal + adminFee;
+  const subtotalProduk = basePricePerUnit * currentQty;
+  const nominalValue = hasNominal ? extractNominalValue(nominalInput.value) : 0;
+  const totalPrice = subtotalProduk + nominalValue + adminFee;
   
-  // Kirim totalPrice (sudah termasuk admin flat) dan qty
   const invoiceUrl = "invoice.html?" +
     "key="+encodeURIComponent(key)+
     "&game="+encodeURIComponent(game)+
     "&item="+encodeURIComponent(item)+
-    "&price="+encodeURIComponent(totalPrice)+   // total yang harus dibayar
+    "&price="+encodeURIComponent(totalPrice)+
     "&base_price="+encodeURIComponent(basePricePerUnit)+
     "&admin_fee="+encodeURIComponent(adminFee)+
     "&qty="+encodeURIComponent(currentQty)+
@@ -1118,6 +1178,7 @@ function bayar(){
     "&"+voucherParam+
     "&server="+encodeURIComponent(serverValue || '')+
     "&nominal="+encodeURIComponent(nominalInput.value || '')+
+    "&nominal_value="+encodeURIComponent(nominalValue)+
     "&payment="+encodeURIComponent(selectedPayment);
   
   setTimeout(() => { window.location.href = invoiceUrl; }, 1300);
@@ -1135,7 +1196,7 @@ window.addEventListener("pageshow", () => {
   hideLoading();
 });
 
-// placeholder tambahan jika ml
+// Placeholder tambahan
 if(game.toLowerCase().includes("mobile legend") || game.toLowerCase().includes("ml")){
   const userIdInput = document.getElementById("userId");
   if(userIdInput && !userIdInput.placeholder.includes("ZoneID")){
