@@ -316,8 +316,8 @@ const databaseOther = {
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
-      { name: "AM Sharing", price: "Rp1.000", status: "online" },
-      { name: "AM Private", price: "Rp5.000", status: "online" }
+      { name: "AM Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
+      { name: "AM Private EXP Januari 2027", price: "Rp1.000", status: "online" }
     ],
     membership: []
   }, 
@@ -330,11 +330,11 @@ const databaseOther = {
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian",
     items: [
-      { name: "Viu 1 bulan", price: "Rp500", status: "online" },
-      { name: "Viu 3 bulan", price: "Rp1.000", status: "online" },
-      { name: "Viu 4 bulan", price: "Rp1.500", status: "online" },
-      { name: "Viu 1 tahun", price: "Rp3.000", status: "online" },
-      { name: "Viu Lifetime", price: "Rp5.000", status: "online" },
+      { name: "Viu 1 bulan", price: "Rp100", status: "online" },
+      { name: "Viu 3 bulan", price: "Rp250", status: "online" },
+      { name: "Viu 4 bulan", price: "Rp400", status: "online" },
+      { name: "Viu 1 tahun", price: "Rp750", status: "online" },
+      { name: "Viu Lifetime (1th+)", price: "Rp1000", status: "online" },
     ],
     membership: []
   }, 
@@ -343,15 +343,15 @@ const databaseOther = {
     require: ["phone", "nominal"],
     image: "https://files.catbox.moe/2klckj.png",
     qris: false,
-    desc: "Segera Hadir",
-    detail: "Belum Tersedia",
+    desc: "Fast and Trusted",
+    detail: "",
     items: [
       { name: "Allpay → Dana", price: "Rp550", status: "online" },
       { name: "Allpay → Gopay", price: "Rp800", status: "online" },
       { name: "Allpay → Ovo", price: "Rp490", status: "online" },
       { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }, 
       { name: "Allpay → LinkAja", price: "Rp450", status: "online" }, 
-      { name: "Allpay → e wallet apapun", price: "Rp700", status: "online" }, 
+      { name: "Allpay → e wallet apapun", price: "Rp700", status: "offline" }, 
     ]
   }
 };
