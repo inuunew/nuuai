@@ -349,7 +349,9 @@ const databaseOther = {
       { name: "Allpay → Dana", price: "Rp550", status: "online" },
       { name: "Allpay → Gopay", price: "Rp800", status: "online" },
       { name: "Allpay → Ovo", price: "Rp490", status: "online" },
-      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }
+      { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }, 
+      { name: "Allpay → LinkAja", price: "Rp450", status: "online" }, 
+      { name: "Allpay → e wallet apapun", price: "Rp700", status: "online" }, 
     ]
   }
 };
