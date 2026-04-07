@@ -920,7 +920,7 @@ if (selectedItemDetail) {
   if (hasNominal) detailHtml += `<strong><i class="fas fa-coins"></i> Nominal tambahan:</strong> akan ditambahkan ke total<br>`;
   detailHtml += `<strong><i class="fas fa-bolt"></i> Status:</strong> ${statusText}<br>`;
   if (adminFee === 0) {
-    detailHtml += `<span style="font-size:12px; color:#16a34a;"><i class="fas fa-gift"></i> MOHON LIHAT LAGI NOMOR TUJUAN!</span>`;
+    detailHtml += `<span style="font-size:12px; color:#16a34a;"><i class="fas fa-gift"></i> MOHON PERIKSA LAGI NOMOR TUJUAN!</span>`;
   } else {
     detailHtml += `<span style="font-size:12px; color:#4b5563;"><i class="fas fa-info-circle"></i> Biaya admin flat Rp200 sudah termasuk total.</span>`;
   }
@@ -1115,9 +1115,10 @@ function lanjutWA(){
     `${nominalInfoForWA}\n`+
     `${adminInfoWA}\n`+
     `*TOTAL BAYAR: ${formatRupiah(totalPrice)}*\n\n`+
+    `*Detail Pembayaran*\n`+
     `User ID: ${document.getElementById("userId")?.value || '-'}\n`+
     `Username: ${document.getElementById("username")?.value || '-'}\n`+
-    `No. Telepon: ${document.getElementById("phone")?.value || '-'}\n`+
+    `No. Tujuan: ${document.getElementById("phone")?.value || '-'}\n`+
     `Server: ${serverVal || '-'}\n`+
     `Metode: QRIS Manual (WhatsApp)\n`+
     `Keterangan Voucher: ${voucherInfoForWA}\n\n`+
