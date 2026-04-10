@@ -331,11 +331,11 @@ const databaseOther = {
     desc: "Bisa request game apa saja,atur harga produk, free add halaman kalkulator mlbb,halaman music(req music),halaman pengumuman",
     detail: "Kami akan membuat di gmail yang baru, dan jika web selesai dibuat, maka gmail akan kami berikan ke kalian dan bisa kalian otak atik sendiri di github(mendeploy dari vercel)",
     items: [
-      { name: "Allpay → Dana", price: "Rp550", status: "online" }
+      { name: "Buat Website Mu Sendiri", price: "Rp25.000", status: "online" }
     ]
   }, 
   alighm: {
-    name: "[AKUN]ALIGHT MOTION PREM EXP 2027",
+    name: "[AKUN]AM PREM EXP 2027",
     require: ["voucher"],
     image: "https://files.catbox.moe/f4fmn6.png",
     qris: true,
