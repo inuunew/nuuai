@@ -331,7 +331,7 @@ const databaseOther = {
     desc: "Bisa request game apa saja,atur harga produk, free add halaman kalkulator mlbb,halaman music(req music),halaman pengumuman",
     detail: "Kami akan membuat di gmail yang baru, dan jika web selesai dibuat, maka gmail akan kami berikan ke kalian dan bisa kalian otak atik sendiri di github(mendeploy dari vercel)",
     items: [
-      { name: "Buat Website Mu Sendiri", price: "Rp25.000", status: "online" }
+      { name: "Buat Website Top Up Mu Sendiri", price: "Rp25.000", status: "online" }
     ]
   }, 
   alighm: {
@@ -357,11 +357,11 @@ const databaseOther = {
     desc: "Bersifat AKUN bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian",
     items: [
-      { name: "Viu 1 bulan", price: "Rp100", status: "online" },
-      { name: "Viu 3 bulan", price: "Rp250", status: "online" },
-      { name: "Viu 4 bulan", price: "Rp400", status: "online" },
-      { name: "Viu 1 tahun", price: "Rp750", status: "online" },
-      { name: "Viu Lifetime (1th+)", price: "Rp1000", status: "online" },
+      { name: "Viu 1 bulan Prem", price: "Rp100", status: "online" },
+      { name: "Viu 3 bulan Prem", price: "Rp250", status: "online" },
+      { name: "Viu 4 bulan Prem", price: "Rp400", status: "online" },
+      { name: "Viu 1 tahun Prem", price: "Rp750", status: "online" },
+      { name: "Viu Lifetime (1th+) Prem", price: "Rp1000", status: "online" },
     ],
     membership: []
   }
