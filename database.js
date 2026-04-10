@@ -320,7 +320,18 @@ const databaseOther = {
       { name: "Allpay → Ovo", price: "Rp490", status: "online" },
       { name: "Allpay → Shopeepay", price: "Rp500", status: "online" }, 
       { name: "Allpay → LinkAja", price: "Rp450", status: "online" }, 
-      { name: "Allpay → e wallet apapun", price: "Rp700", status: "offline" }, 
+      { name: "Allpay → e wallet apapun", price: "Rp700", status: "offline" }
+    ]
+  }, 
+  WebJas: {
+    name: "Create website Topup(lihat deskripsi)",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/zdf9ee.jpeg",
+    qris: false,
+    desc: "Bisa request game apa saja,atur harga produk, free add halaman kalkulator mlbb,halaman music(req music),halaman pengumuman",
+    detail: "Kami akan membuat di gmail yang baru, dan jika web selesai dibuat, maka gmail akan kami berikan ke kalian dan bisa kalian otak atik sendiri di github(mendeploy dari vercel)",
+    items: [
+      { name: "Allpay → Dana", price: "Rp550", status: "online" }
     ]
   }, 
   alighm: {
