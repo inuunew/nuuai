@@ -111,9 +111,8 @@ function loadGameGrids() {
       </div>`;
     });
   }
-}
-
-// Hiburan Grid
+  
+  // Hiburan Grid
 const hiburanGrid = document.getElementById('hiburanGrid');
 if (hiburanGrid && typeof databaseHiburan !== 'undefined') {
   hiburanGrid.innerHTML = '';
@@ -127,6 +126,9 @@ if (hiburanGrid && typeof databaseHiburan !== 'undefined') {
       </div>`;
   });
 }
+}
+
+
 
 // Fungsi untuk kategori (global)
 window.openCategory = function(type) {
@@ -339,13 +341,15 @@ window.switchTab = function(type, btn) {
 window.goCheckout = function() {
   if (!selectedItem) return;
   let gameName, image, typeValue;
+  
   if (isPanel) {
     const data = databasePanel[currentGame];
     gameName = data.name;
     image = data.image;
     typeValue = 'panel';
   } else if (isOtherProduct) {
-    const data = databaseOther[currentGame];
+    // Perbaikan di sini: Cek databaseOther, jika tidak ada cek databaseHiburan
+    const data = databaseOther[currentGame] || databaseHiburan[currentGame];
     gameName = data.name;
     image = data.image;
     typeValue = 'other';
@@ -355,6 +359,9 @@ window.goCheckout = function() {
     image = data.image;
     typeValue = currentType;
   }
+  
+  // ... sisa kode checkout (params, window.location, dll)
+
   const priceValue = selectedItem.price.replace(/[^\d]/g, '');
   const params = new URLSearchParams({
     game: gameName,
