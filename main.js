@@ -288,28 +288,54 @@ window.openOther = function(key) {
 };
 
 // ==================== CHECKOUT LOGIC ====================
+// ==================== CHECKOUT LOGIC (FIXED) ====================
 window.goCheckout = function() {
   if (!selectedItem) return;
+  
   let gameName, image, typeValue;
+  let inputValues = {}; // Untuk menyimpan data input dinamis
 
+  // Ambil semua nilai dari inputContainer (phone, voucher, nominal, dll)
+  const inputContainer = document.getElementById('inputContainer');
+  if (inputContainer) {
+    const inputs = inputContainer.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (input.id && input.value.trim() !== '') {
+        inputValues[input.id] = input.value.trim();
+      }
+    });
+  }
+
+  // Tentukan tipe produk dan ambil datanya
   if (isPanel) {
     const data = databasePanel[currentGame];
-    gameName = data.name; image = data.image; typeValue = 'panel';
+    gameName = data.name; 
+    image = data.image; 
+    typeValue = 'panel';
   } 
   else if (databaseHiburan && databaseHiburan[currentGame]) {
     const data = databaseHiburan[currentGame];
-    gameName = data.name; image = data.image; typeValue = 'hiburan';
+    gameName = data.name; 
+    image = data.image; 
+    typeValue = 'hiburan';
   } 
   else if (databaseOther && databaseOther[currentGame]) {
     const data = databaseOther[currentGame];
-    gameName = data.name; image = data.image; typeValue = 'other';
+    gameName = data.name; 
+    image = data.image; 
+    typeValue = 'other';
   } 
   else {
     const data = database[currentGame];
-    gameName = data.name; image = data.image; typeValue = currentType;
+    gameName = data.name; 
+    image = data.image; 
+    typeValue = currentType;
   }
 
+  // Format harga (hilangkan non-digit)
   const priceValue = selectedItem.price.replace(/[^\d]/g, '');
+  
+  // Buat URLSearchParams
   const params = new URLSearchParams({
     game: gameName,
     item: selectedItem.name,
@@ -319,6 +345,12 @@ window.goCheckout = function() {
     key: currentGame
   });
 
+  // Tambahkan inputValues ke params (contoh: phone, voucher, nominal)
+  for (const [key, value] of Object.entries(inputValues)) {
+    params.append(key, value);
+  }
+
+  // Redirect ke checkout
   window.location.href = `checkout.html?${params.toString()}`;
 };
 
