@@ -415,9 +415,93 @@
       from { transform: scale(0.9); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+    
+    /*struk*/
+/* MODAL STRUK */
+.modal-struk {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.85);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-struk.show { display: flex; }
+
+.struk-box {
+  background: white;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  font-family: 'Courier New', Courier, monospace; /* Font struk */
+  color: #333;
+}
+
+.struk-header {
+  text-align: center;
+  border-bottom: 2px dashed #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.struk-body { line-height: 1.6; font-size: 14px; }
+.struk-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+
+.struk-footer {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px dashed #ccc;
+  text-align: center;
+}
+
+.screenshot-alert {
+  background: #fff4e5;
+  color: #663c00;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 15px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+}
+
   </style>
 </head>
 <body>
+<div id="modalStruk" class="modal-struk">
+  <div class="struk-box">
+    <div class="screenshot-alert">
+      <i class="fas fa-camera"></i> SILAKAN SCREENSHOT STRUK INI SEBAGAI BUKTI SIMPANAN ANDA.
+    </div>
+    
+    <div class="struk-header">
+      <h2 style="font-family: 'Outfit';">INUU MARKET</h2>
+      <p id="strukTime" style="font-size: 12px;"></p>
+    </div>
+
+    <div class="struk-body">
+      <div class="struk-row"><span>No. Invoice:</span> <span id="s-inv"></span></div>
+      <div class="struk-row"><span>Produk:</span> <span id="s-prod"></span></div>
+      <div class="struk-row"><span>User ID:</span> <span id="s-uid"></span></div>
+      <div class="struk-row"><span>WhatsApp:</span> <span id="s-wa"></span></div>
+      <div class="divider"></div>
+      <div class="struk-row" style="font-weight: bold; font-size: 16px;">
+        <span>TOTAL:</span> <span id="s-total"></span>
+      </div>
+      <div class="struk-row"><span>Status:</span> <span>PENDING/PROSES</span></div>
+    </div>
+
+    <div class="struk-footer">
+      <p style="font-size: 11px; margin-bottom: 15px;">Terima kasih telah berbelanja!</p>
+      <button class="btn btn-primary" onclick="lanjutKeProses()">Lanjut ke Halaman Proses <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <!-- Kartu Rincian Invoice -->
   <div class="card">
@@ -793,6 +877,8 @@ async function sendToTelegram(fileBase64, caption) {
 }
 
 
+  // ... (Bagian atas script kamu tetap sama)
+
   // Tombol kirim bukti
   document.getElementById('submitProofBtn').addEventListener('click', async () => {
     if (!selectedFile) {
@@ -806,36 +892,53 @@ async function sendToTelegram(fileBase64, caption) {
 
     const btn = document.getElementById('submitProofBtn');
     const originalText = btn.innerHTML;
-    btn.innerHTML = 'Mengirim bukti... <span class="loading"></span>';
+    
+    // Efek Loading pada tombol
+    btn.innerHTML = 'Memproses... <span class="loading"></span>';
     btn.disabled = true;
 
     const reader = new FileReader();
     reader.onload = async (e) => {
       const base64Image = e.target.result;
+      
+      // Format Pesan untuk Telegram (HTML)
       let caption = `<b>✅ BUKTI TRANSFER MASUK ✅</b>\n`;
-caption += `─────────────────\n`;
-caption += `<b>🧾 Invoice:</b> ${invoiceNumber}\n`;
-caption += `<b>🎮 Game:</b> ${game}\n`;
-caption += `<b>📦 Item:</b> ${item}\n`;
-if (qty > 1) caption += `<b>🔢 Jumlah:</b> ${qty} x ${formatRupiah(basePrice)}\n`;
-caption += `<b>💰 Total Dibayar:</b> ${formatRupiah(finalTotal)}\n`;
-caption += `<b>👤 User ID:</b> ${userId}\n`;
-if (username) caption += `<b>👥 Username:</b> ${username}\n`;
-if (server) caption += `<b>🌍 Server:</b> ${server}\n`;
-caption += `<b>📱 WhatsApp:</b> ${whatsapp}\n`;
-caption += `<b>📧 Email:</b> ${email}\n`;
-caption += `<b>💳 Metode:</b> ${paymentMethod}\n`;
-caption += `<b>⏰ Waktu:</b> ${formattedTime}\n`;
-caption += `─────────────────\n`;
-caption += `Segera verifikasi pesanan.`;
-
+      caption += `─────────────────\n`;
+      caption += `<b>🧾 Invoice:</b> ${invoiceNumber}\n`;
+      caption += `<b>🎮 Game:</b> ${game}\n`;
+      caption += `<b>📦 Item:</b> ${item}\n`;
+      if (qty > 1) caption += `<b>🔢 Jumlah:</b> ${qty} x ${formatRupiah(basePrice)}\n`;
+      caption += `<b>💰 Total Dibayar:</b> ${formatRupiah(finalTotal)}\n`;
+      caption += `<b>👤 User ID:</b> ${userId}\n`;
+      if (username) caption += `<b>👥 Username:</b> ${username}\n`;
+      if (server) caption += `<b>🌍 Server:</b> ${server}\n`;
+      caption += `<b>📱 WhatsApp:</b> ${whatsapp}\n`;
+      caption += `<b>📧 Email:</b> ${email}\n`;
+      caption += `<b>💳 Metode:</b> ${paymentMethod}\n`;
+      caption += `<b>⏰ Waktu:</b> ${formattedTime}\n`;
+      caption += `─────────────────\n`;
+      caption += `Segera verifikasi pesanan.`;
 
       const success = await sendToTelegram(base64Image, caption);
+      
       if (success) {
+        // 1. Isi data ke Struk Digital
+        document.getElementById('s-inv').innerText = invoiceNumber;
+        document.getElementById('s-prod').innerText = `${game} - ${item}`;
+        document.getElementById('s-uid').innerText = userId;
+        document.getElementById('s-wa').innerText = whatsapp;
+        document.getElementById('s-total').innerText = formatRupiah(finalTotal);
+        document.getElementById('strukTime').innerText = new Date().toLocaleString('id-ID');
+
+        // 2. Simpan ke sessionStorage agar bisa dibaca di proses.html
         sessionStorage.setItem('invoiceData', JSON.stringify({
-          invoiceNumber, game, item, totalPrice: finalTotal, userId, username, phone, server, paymentMethod, whatsapp, email, qty, basePrice
+            invoiceNumber, game, item, totalPrice: finalTotal, userId, username, whatsapp, email
         }));
-        window.location.href = 'proses.html';
+
+        // 3. Reset tombol dan tampilkan Modal Struk
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        document.getElementById('modalStruk').classList.add('show');
       } else {
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -848,6 +951,14 @@ caption += `Segera verifikasi pesanan.`;
     };
     reader.readAsDataURL(selectedFile);
   });
+
+  // Fungsi untuk tombol "Lanjut ke Halaman Proses" di dalam struk
+  function lanjutKeProses() {
+    window.location.href = 'proses.html';
+  }
+
+  // ... (Bagian tombol batal tetap sama)
+
 
   // Tombol batalkan transaksi
   const cancelModalElem = document.getElementById('cancelModal');
