@@ -340,28 +340,42 @@ window.switchTab = function(type, btn) {
 
 window.goCheckout = function() {
   if (!selectedItem) return;
-  let gameName, image, typeValue;
   
+  let gameName, image, typeValue;
+
+  // 1. Cek Kategori Panel
   if (isPanel) {
     const data = databasePanel[currentGame];
     gameName = data.name;
     image = data.image;
     typeValue = 'panel';
-  } else if (isOtherProduct) {
-    // Perbaikan di sini: Cek databaseOther, jika tidak ada cek databaseHiburan
-    const data = databaseOther[currentGame] || databaseHiburan[currentGame];
+  } 
+  
+  // 2. Cek Kategori Hiburan (Dipisah sendiri)
+  else if (databaseHiburan && databaseHiburan[currentGame]) {
+    const data = databaseHiburan[currentGame];
     gameName = data.name;
     image = data.image;
     typeValue = 'other';
-  } else {
+  } 
+  
+  // 3. Cek Kategori Other (Jasa Web, E-wallet, dll)
+  else if (databaseOther && databaseOther[currentGame]) {
+    const data = databaseOther[currentGame];
+    gameName = data.name;
+    image = data.image;
+    typeValue = 'other';
+  } 
+  
+  // 4. Default: Kategori Game Reguler
+  else {
     const data = database[currentGame];
     gameName = data.name;
     image = data.image;
     typeValue = currentType;
   }
-  
-  // ... sisa kode checkout (params, window.location, dll)
 
+  // --- Bagian Pengiriman Data ke Halaman Checkout ---
   const priceValue = selectedItem.price.replace(/[^\d]/g, '');
   const params = new URLSearchParams({
     game: gameName,
@@ -371,8 +385,10 @@ window.goCheckout = function() {
     type: typeValue,
     key: currentGame
   });
+
   window.location.href = `checkout.html?${params.toString()}`;
 };
+
 
 window.closeTopup = function() {
   const modal = document.getElementById('topupModal');
