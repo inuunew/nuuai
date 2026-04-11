@@ -443,7 +443,7 @@ const databaseHiburan = {
   youtube: {
     name: "YouTube Premium",
     require: ["voucher"],
-    image: "https://files.catbox.moe/c68ue7.png", // Ganti dengan link icon youtube
+    image: "https://files.catbox.moe/1ubvar.png", // Ganti dengan link icon youtube
     qris: false,
     qty: true, 
     desc: "Bebas iklan & putar di latar belakang",
@@ -454,12 +454,12 @@ const databaseHiburan = {
     ]
   }, 
   alighm: {
-    name: "[AKUN]AM PREM EXP 2027",
+    name: "AM PREM EXP 2027",
     require: ["voucher"],
     image: "https://files.catbox.moe/f4fmn6.png",
     qris: true,
     qty: true, 
-    desc: "bukan mod",
+    desc: "berbasis akun bukan apk mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
       { name: "AM Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
@@ -473,7 +473,7 @@ const databaseHiburan = {
     image: "https://files.catbox.moe/5x79aa.png",
     qris: true,
     qty: true, 
-    desc: "bukan mod",
+    desc: "berbasis akun bukan apk mod",
     detail: "bergaransi 3 bulan setelah pembelian",
     items: [
       { name: "Viu 1 bulan Prem", price: "Rp500", status: "online" },
