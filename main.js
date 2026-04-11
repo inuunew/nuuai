@@ -40,6 +40,7 @@ function loadPage(page) {
 }
 
 // ==================== BERANDA ====================
+// ==================== INITIALIZATION ====================
 function initBeranda() {
   // Slider otomatis
   let slides = document.querySelectorAll('.beranda-page .slide');
@@ -64,7 +65,6 @@ function initBeranda() {
     });
   }
   
-  // Load games dari database
   loadGameGrids();
 }
 
@@ -113,30 +113,23 @@ function loadGameGrids() {
   }
   
   // Hiburan Grid
-const hiburanGrid = document.getElementById('hiburanGrid');
-if (hiburanGrid && typeof databaseHiburan !== 'undefined') {
-  hiburanGrid.innerHTML = '';
-  Object.keys(databaseHiburan).forEach(key => {
-    const item = databaseHiburan[key];
-    hiburanGrid.innerHTML += `
-      <div class="game-card" onclick="openHiburan('${key}')">
+  const hiburanGrid = document.getElementById('hiburanGrid');
+  if (hiburanGrid && typeof databaseHiburan !== 'undefined') {
+    hiburanGrid.innerHTML = '';
+    Object.keys(databaseHiburan).forEach(key => {
+      const item = databaseHiburan[key];
+      hiburanGrid.innerHTML += `<div class="game-card" onclick="openHiburan('${key}')">
         <div class="game-img"><img src="${item.image}"></div>
         <div class="game-name">${item.name}</div>
         <div class="game-service">${item.items.length} Paket</div>
       </div>`;
-  });
+    });
+  }
 }
-}
 
-
-
-// Fungsi untuk kategori (global)
+// ==================== CATEGORY & NAVIGATION ====================
 window.openCategory = function(type) {
-  // Sembunyikan semua grid dan judul
-  const elementsToHide = [
-    'menuGrid', 'gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid',
-    'titleGame', 'titleHosting', 'titleOther', 'titleLayanan', 'titleHiburan'
-  ];
+  const elementsToHide = ['menuGrid', 'gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid', 'titleGame', 'titleHosting', 'titleOther', 'titleLayanan', 'titleHiburan'];
   elementsToHide.forEach(id => {
     const el = document.getElementById(id);
     if(el) el.style.display = 'none';
@@ -146,19 +139,10 @@ window.openCategory = function(type) {
   document.getElementById('searchArea').style.display = 'flex';
   
   let grid, title;
-  if (type === 'game') { 
-    grid = document.getElementById('gameGrid'); 
-    title = document.getElementById('titleGame'); 
-  } else if (type === 'hosting') { 
-    grid = document.getElementById('panelGrid'); 
-    title = document.getElementById('titleHosting'); 
-  } else if (type === 'hiburan') { // Tambahkan kondisi ini
-    grid = document.getElementById('hiburanGrid'); 
-    title = document.getElementById('titleHiburan'); 
-  } else { 
-    grid = document.getElementById('otherGrid'); 
-    title = document.getElementById('titleOther'); 
-  }
+  if (type === 'game') { grid = document.getElementById('gameGrid'); title = document.getElementById('titleGame'); } 
+  else if (type === 'hosting') { grid = document.getElementById('panelGrid'); title = document.getElementById('titleHosting'); } 
+  else if (type === 'hiburan') { grid = document.getElementById('hiburanGrid'); title = document.getElementById('titleHiburan'); } 
+  else { grid = document.getElementById('otherGrid'); title = document.getElementById('titleOther'); }
 
   if (grid && title) {
     grid.style.display = 'grid';
@@ -167,20 +151,43 @@ window.openCategory = function(type) {
   }
 };
 
-
 window.goBack = function() {
   const elementsToHide = ['gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid', 'titleGame', 'titleHosting', 'titleOther', 'titleHiburan', 'backBtn', 'searchArea'];
   elementsToHide.forEach(id => {
     const el = document.getElementById(id);
     if(el) el.style.display = 'none';
   });
-
   document.getElementById('menuGrid').style.display = 'grid';
   document.getElementById('titleLayanan').style.display = 'flex';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// ==================== TOPUP MODAL FUNCTIONS ====================
+// ==================== MODAL LOGIC (OPENERS) ====================
+
+// Fungsi Pembantu: Render Input Dinamis (Require)
+function setupDynamicInputs(data) {
+  const inputContainer = document.getElementById('inputContainer');
+  if (!inputContainer) return;
+  
+  inputContainer.innerHTML = '';
+  if (data.require && data.require.length > 0) {
+    inputContainer.style.display = 'block';
+    data.require.forEach(req => {
+      let placeholder = 'Masukkan data';
+      if (req === 'phone') placeholder = 'Masukkan No. WhatsApp';
+      if (req === 'voucher') placeholder = 'Masukkan Email/Voucher/Data Akun';
+      if (req === 'nominal') placeholder = 'Masukkan Nominal';
+      
+      inputContainer.innerHTML += `
+        <div class="input-group" style="margin-bottom:10px;">
+          <input type="text" id="${req}" placeholder="${placeholder}" class="topup-input">
+        </div>`;
+    });
+  } else {
+    inputContainer.style.display = 'none';
+  }
+}
+
 window.openTopup = function(game) {
   const data = database[game];
   isOtherProduct = false; isPanel = false; currentGame = game; currentType = 'regular'; selectedItem = null;
@@ -192,9 +199,7 @@ window.openTopup = function(game) {
   document.getElementById('confirmBtn').classList.remove('active');
   renderItems();
   const modal = document.getElementById('topupModal');
-  modal.style.display = 'flex';
-  modal.offsetHeight;
-  modal.classList.add('show');
+  modal.style.display = 'flex'; modal.classList.add('show');
 };
 
 window.openPanel = function(key) {
@@ -203,9 +208,7 @@ window.openPanel = function(key) {
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   document.getElementById('membershipTab').style.display = 'none';
-  currentType = 'regular';
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab').classList.add('active');
+  setupDynamicInputs(data);
   const container = document.getElementById('topupItems');
   container.innerHTML = '';
   data.items.forEach(item => {
@@ -218,58 +221,42 @@ window.openPanel = function(key) {
       div.classList.add('selected');
       selectedItem = item;
       const btn = document.getElementById('confirmBtn');
-      btn.disabled = false;
-      btn.classList.add('active');
+      btn.disabled = false; btn.classList.add('active');
     };
     container.appendChild(div);
   });
   const modal = document.getElementById('topupModal');
-  modal.style.display = 'flex';
-  modal.offsetHeight;
-  modal.classList.add('show');
+  modal.style.display = 'flex'; modal.classList.add('show');
 };
 
 window.openHiburan = function(key) {
   const data = databaseHiburan[key];
-  // Logic-nya sama dengan openOther
-  isOtherProduct = true; // Kita asumsikan strukturnya mirip product other
-  isPanel = false; 
-  currentGame = key; 
-  selectedItem = null;
-  
+  isOtherProduct = true; isPanel = false; currentGame = key; selectedItem = null;
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   document.getElementById('membershipTab').style.display = 'none';
-  currentType = 'regular';
+  
+  setupDynamicInputs(data); // Render input WA/Email
+  
   const container = document.getElementById('topupItems');
   container.innerHTML = '';
-  
   data.items.forEach(item => {
     const div = document.createElement('div');
     div.className = `item ${item.status || 'online'}`;
-    div.innerHTML = `
-      <span class="status ${item.status || 'online'}"></span>
-      ${item.name}
-      <div class="price">${item.price}</div>
-    `;
+    div.innerHTML = `<span class="status ${item.status || 'online'}"></span>${item.name}<div class="price">${item.price}</div>${item.status === 'offline' ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}`;
     div.onclick = () => {
       if (item.status === 'offline') return;
       document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
       div.classList.add('selected');
       selectedItem = item;
       const btn = document.getElementById('confirmBtn');
-      btn.disabled = false;
-      btn.classList.add('active');
+      btn.disabled = false; btn.classList.add('active');
     };
     container.appendChild(div);
   });
-
   const modal = document.getElementById('topupModal');
-  modal.style.display = 'flex';
-  modal.offsetHeight;
-  modal.classList.add('show');
+  modal.style.display = 'flex'; modal.classList.add('show');
 };
-
 
 window.openOther = function(key) {
   const data = databaseOther[key];
@@ -277,9 +264,9 @@ window.openOther = function(key) {
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   document.getElementById('membershipTab').style.display = 'none';
-  currentType = 'regular';
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelector('.tab').classList.add('active');
+  
+  setupDynamicInputs(data); // Render input WA/Email
+  
   const container = document.getElementById('topupItems');
   container.innerHTML = '';
   data.items.forEach(item => {
@@ -292,17 +279,50 @@ window.openOther = function(key) {
       div.classList.add('selected');
       selectedItem = item;
       const btn = document.getElementById('confirmBtn');
-      btn.disabled = false;
-      btn.classList.add('active');
+      btn.disabled = false; btn.classList.add('active');
     };
     container.appendChild(div);
   });
   const modal = document.getElementById('topupModal');
-  modal.style.display = 'flex';
-  modal.offsetHeight;
-  modal.classList.add('show');
+  modal.style.display = 'flex'; modal.classList.add('show');
 };
 
+// ==================== CHECKOUT LOGIC ====================
+window.goCheckout = function() {
+  if (!selectedItem) return;
+  let gameName, image, typeValue;
+
+  if (isPanel) {
+    const data = databasePanel[currentGame];
+    gameName = data.name; image = data.image; typeValue = 'panel';
+  } 
+  else if (databaseHiburan && databaseHiburan[currentGame]) {
+    const data = databaseHiburan[currentGame];
+    gameName = data.name; image = data.image; typeValue = 'hiburan';
+  } 
+  else if (databaseOther && databaseOther[currentGame]) {
+    const data = databaseOther[currentGame];
+    gameName = data.name; image = data.image; typeValue = 'other';
+  } 
+  else {
+    const data = database[currentGame];
+    gameName = data.name; image = data.image; typeValue = currentType;
+  }
+
+  const priceValue = selectedItem.price.replace(/[^\d]/g, '');
+  const params = new URLSearchParams({
+    game: gameName,
+    item: selectedItem.name,
+    price: priceValue,
+    image: image,
+    type: typeValue,
+    key: currentGame
+  });
+
+  window.location.href = `checkout.html?${params.toString()}`;
+};
+
+// ==================== OTHER UI LOGIC ====================
 function renderItems() {
   const container = document.getElementById('topupItems');
   container.innerHTML = '';
@@ -322,82 +342,18 @@ function renderItems() {
       div.classList.add('selected');
       selectedItem = item;
       const btn = document.getElementById('confirmBtn');
-      btn.disabled = false;
-      btn.classList.add('active');
+      btn.disabled = false; btn.classList.add('active');
     };
     container.appendChild(div);
   });
 }
 
-window.switchTab = function(type, btn) {
-  const data = database[currentGame];
-  if (type === 'membership' && (!data.membership || data.membership.length === 0)) return;
-  currentType = type;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  renderItems();
-};
-
-window.goCheckout = function() {
-  if (!selectedItem) return;
-  
-  let gameName, image, typeValue;
-
-  // 1. Cek Kategori Panel
-  if (isPanel) {
-    const data = databasePanel[currentGame];
-    gameName = data.name;
-    image = data.image;
-    typeValue = 'panel';
-  } 
-  
-  // 2. Cek Kategori Hiburan (Dipisah sendiri)
-  else if (databaseHiburan && databaseHiburan[currentGame]) {
-    const data = databaseHiburan[currentGame];
-    gameName = data.name;
-    image = data.image;
-    typeValue = 'other';
-  } 
-  
-  // 3. Cek Kategori Other (Jasa Web, E-wallet, dll)
-  else if (databaseOther && databaseOther[currentGame]) {
-    const data = databaseOther[currentGame];
-    gameName = data.name;
-    image = data.image;
-    typeValue = 'other';
-  } 
-  
-  // 4. Default: Kategori Game Reguler
-  else {
-    const data = database[currentGame];
-    gameName = data.name;
-    image = data.image;
-    typeValue = currentType;
-  }
-
-  // --- Bagian Pengiriman Data ke Halaman Checkout ---
-  const priceValue = selectedItem.price.replace(/[^\d]/g, '');
-  const params = new URLSearchParams({
-    game: gameName,
-    item: selectedItem.name,
-    price: priceValue,
-    image: image,
-    type: typeValue,
-    key: currentGame
-  });
-
-  window.location.href = `checkout.html?${params.toString()}`;
-};
-
-
 window.closeTopup = function() {
   const modal = document.getElementById('topupModal');
   modal.classList.remove('show');
-  modal.addEventListener('transitionend', function onEnd() {
-    if (!modal.classList.contains('show')) modal.style.display = 'none';
-    modal.removeEventListener('transitionend', onEnd);
-  }, { once: true });
+  setTimeout(() => { modal.style.display = 'none'; }, 300);
 };
+
 
 // ==================== PENGUMUMAN ====================
 function initPengumuman() {
