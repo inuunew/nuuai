@@ -20,6 +20,11 @@
   <div class="menu-card" onclick="openCategory('game')"><i class="fas fa-gamepad"></i><p>Top Up Games</p></div>
   <div class="menu-card" onclick="openCategory('hosting')"><i class="fas fa-server"></i><p>Hosting Product</p></div>
   <div class="menu-card" onclick="openCategory('other')"><i class="fas fa-box"></i><p>Lainnya</p></div>
+  <div class="menu-card" onclick="openCategory('hiburan')">
+  <i class="fas fa-clapperboard"></i>
+  <p>Hiburan</p>
+</div>
+
 </div>
 <div id="backBtn" onclick="goBack()" style="display:none;"><i class="fas fa-arrow-left"></i> Kembali</div>
 
@@ -29,5 +34,20 @@
 <div class="game-title" id="titleHosting"><div class="title-bar"></div><div class="title-text"><h2><i class="fas fa-server"></i> Hosting Area</h2><p>Layanan Hosting Panel Pterodactyl/VPS/Digital Ocean 🌊</p></div></div>
 <div class="game-grid" id="panelGrid"></div>
 
-<div class="game-title" id="titleOther"><div class="title-bar"></div><div class="title-text"><h2><i class="fas fa-box"></i> Product collection</h2><p>Produk tambahan biar rame</p></div></div>
+<div class="game-title" id="titleOther">
+  <div class="title-bar"></div>
+  <div class="title-text">
+    <h2><i class="fas fa-box"></i> Product collection</h2>
+    <p>Produk tambahan biar rame</p>
+  </div>
+</div>
 <div class="game-grid" id="otherGrid"></div>
+
+<div class="game-title" id="titleHiburan" style="display: none;">
+  <div class="title-bar"></div>
+  <div class="title-text">
+    <h2><i class="fas fa-clapperboard"></i> Hiburan</h2>
+    <p>Langganan premium, voucher aplikasi, dan lainnya 🍿</p>
+  </div>
+</div>
+<div class="game-grid" id="hiburanGrid" style="display: none;"></div>
