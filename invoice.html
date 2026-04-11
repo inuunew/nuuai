@@ -94,6 +94,8 @@
       font-weight: 500;
       color: #0f172a;
       text-align: right;
+      word-break: break-word;
+      max-width: 60%;
     }
 
     .total-row {
@@ -447,6 +449,11 @@
       <span class="row-label"><i class="fas fa-calculator"></i> Subtotal</span>
       <span class="row-value" id="subtotalDisplay">-</span>
     </div>
+    <!-- Nominal tambahan (untuk produk seperti WalletSS) -->
+    <div class="row" id="nominalRow" style="display: none;">
+      <span class="row-label"><i class="fas fa-coins"></i> Nominal Topup</span>
+      <span class="row-value" id="nominalDisplayValue">-</span>
+    </div>
     <!-- Biaya Admin (Flat Rp200) -->
     <div class="row">
       <span class="row-label"><i class="fas fa-percent"></i> Biaya Admin (flat)</span>
@@ -578,6 +585,16 @@
 </div>
 
 <script>
+  // ========== FUNGSI ESCAPE HTML UNTUK KEAMANAN ==========
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
 
   // ========== KONFIGURASI TELEGRAM (WAJIB DIISI) ==========
   const BOT_TOKEN = "8787799672:AAFlXyKsh1SjDO3cjjpw9PGd35X4EcUzh-A";   // GANTI DENGAN TOKEN ASLI
@@ -606,19 +623,22 @@
   const key = urlParams.get('key') || '';
   const game = urlParams.get('game') || 'Game';
   const item = urlParams.get('item') || 'Item';
-  const totalPriceParam = Number(urlParams.get('price')) || 0;   // total yang sudah termasuk admin (dikirim dari checkout)
+  const totalPriceParam = Number(urlParams.get('price')) || 0;   // total yang sudah termasuk admin dan nominal (dikirim dari checkout)
   const basePrice = Number(urlParams.get('base_price')) || 0;    // harga satuan
   const qty = Number(urlParams.get('qty')) || 1;                 // jumlah (default 1)
   const adminFeeParam = Number(urlParams.get('admin_fee')) || 200; // pakai dari URL atau default 200
   
-  // Hitung ulang subtotal dan total untuk memastikan konsistensi
+  // Ambil parameter nominal (untuk produk seperti WalletSS)
+  const nominalRaw = urlParams.get('nominal') || '';
+  const nominalValue = Number(urlParams.get('nominal_value')) || 0;
+  
+  // Hitung ulang subtotal dan total dengan memasukkan nominal
   const subtotal = basePrice * qty;
   const adminFee = 200;  // biaya admin flat
-  const totalPrice = subtotal + adminFee;
+  const totalWithNominal = subtotal + adminFee + nominalValue;
   
-  // Gunakan total dari parameter jika ada, tapi pastikan konsisten
-  const finalTotal = (totalPriceParam === subtotal + adminFee) ? totalPriceParam : totalPrice;
-  
+  // Gunakan total dari parameter jika ada, fallback ke hitungan sendiri
+  const finalTotal = (totalPriceParam === totalWithNominal) ? totalPriceParam : totalWithNominal;
   
   // Data lainnya
   const userId = urlParams.get('userId') || '-';
@@ -627,10 +647,6 @@
   const voucher = urlParams.get('voucher') || '';
   const server = urlParams.get('server') || '';
   const paymentMethod = urlParams.get('payment') || 'Tidak diketahui';
-// Ambil parameter nominal
-const nominalRaw = urlParams.get('nominal') || '';
-const nominalValue = Number(urlParams.get('nominal_value')) || 0;
-
 
   // Tampilkan data invoice
   document.getElementById('productName').innerText = `${game} - ${item}`;
@@ -647,6 +663,14 @@ const nominalValue = Number(urlParams.get('nominal_value')) || 0;
   } else {
     document.getElementById('qtyRow').style.display = 'none';
     document.getElementById('subtotalRow').style.display = 'none';
+  }
+  
+  // Tampilkan nominal tambahan jika ada
+  if (nominalRaw && nominalValue > 0) {
+    document.getElementById('nominalRow').style.display = 'flex';
+    document.getElementById('nominalDisplayValue').innerHTML = escapeHtml(nominalRaw);
+  } else {
+    document.getElementById('nominalRow').style.display = 'none';
   }
   
   // Biaya admin (flat)
@@ -683,15 +707,15 @@ const nominalValue = Number(urlParams.get('nominal_value')) || 0;
   // Tampilkan data tambahan
   if (username && username.trim() !== '') {
     document.getElementById('usernameRow').style.display = 'flex';
-    document.getElementById('usernameDisplay').innerText = username;
+    document.getElementById('usernameDisplay').innerText = escapeHtml(username);
   }
   if (phone && phone.trim() !== '') {
     document.getElementById('phoneRow').style.display = 'flex';
-    document.getElementById('phoneDisplay').innerText = phone;
+    document.getElementById('phoneDisplay').innerText = escapeHtml(phone);
   }
   if (server && server.trim() !== '') {
     document.getElementById('serverRow').style.display = 'flex';
-    document.getElementById('serverDisplay').innerText = server;
+    document.getElementById('serverDisplay').innerText = escapeHtml(server);
   }
   let voucherText = voucher;
   if (voucher === 'admin_kirim_setelah_bayar') {
@@ -700,27 +724,9 @@ const nominalValue = Number(urlParams.get('nominal_value')) || 0;
     document.getElementById('voucherDisplay').innerHTML = voucherText;
   } else if (voucher && voucher.trim() !== '') {
     document.getElementById('voucherRow').style.display = 'flex';
-    document.getElementById('voucherDisplay').innerText = voucher;
+    document.getElementById('voucherDisplay').innerText = escapeHtml(voucher);
   }
 
-  // Di bagian rincian invoice, setelah serverRow (atau sebelum voucherRow)
-const nominalRow = document.getElementById('nominalRow');
-if (nominalRaw) {
-  if (!nominalRow) {
-    // buat elemen row baru jika belum ada
-    const newRow = document.createElement('div');
-    newRow.className = 'row';
-    newRow.id = 'nominalRow';
-    newRow.innerHTML = `
-      <span class="row-label"><i class="fas fa-coins"></i> Nominal Topup</span>
-      <span class="row-value" id="nominalDisplayValue">${nominalRaw}</span>
-    `;
-    document.querySelector('.card .divider:nth-of-type(2)').after(newRow);
-  } else {
-    nominalRow.style.display = 'flex';
-    document.getElementById('nominalDisplayValue').innerText = nominalRaw;
-  }
-}
   const now = new Date();
   const formattedTime = now.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
   document.getElementById('orderTime').innerText = formattedTime;
@@ -838,6 +844,7 @@ if (nominalRaw) {
       caption += `🎮 *Game:* ${game}\n`;
       caption += `📦 *Item:* ${item}\n`;
       if (qty > 1) caption += `🔢 *Jumlah:* ${qty} x ${formatRupiah(basePrice)}\n`;
+      if (nominalValue > 0) caption += `➕ *Nominal tambahan:* ${escapeHtml(nominalRaw)}\n`;
       caption += `💰 *Total Dibayar:* ${formatRupiah(finalTotal)}\n`;
       caption += `👤 *User ID:* ${userId}\n`;
       if (username) caption += `👥 *Username:* ${username}\n`;
@@ -853,7 +860,7 @@ if (nominalRaw) {
       const success = await sendToTelegram(base64Image, caption);
       if (success) {
         sessionStorage.setItem('invoiceData', JSON.stringify({
-          invoiceNumber, game, item, totalPrice: finalTotal, userId, username, phone, server, paymentMethod, whatsapp, email, qty, basePrice
+          invoiceNumber, game, item, totalPrice: finalTotal, userId, username, phone, server, paymentMethod, whatsapp, email, qty, basePrice, nominalRaw, nominalValue
         }));
         window.location.href = 'proses.html';
       } else {
