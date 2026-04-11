@@ -578,6 +578,7 @@
 </div>
 
 <script>
+
   // ========== KONFIGURASI TELEGRAM (WAJIB DIISI) ==========
   const BOT_TOKEN = "8787799672:AAFlXyKsh1SjDO3cjjpw9PGd35X4EcUzh-A";   // GANTI DENGAN TOKEN ASLI
   const CHAT_ID = "7314158034";      // GANTI DENGAN ID CHAT ADMIN
@@ -618,6 +619,7 @@
   // Gunakan total dari parameter jika ada, tapi pastikan konsisten
   const finalTotal = (totalPriceParam === subtotal + adminFee) ? totalPriceParam : totalPrice;
   
+  
   // Data lainnya
   const userId = urlParams.get('userId') || '-';
   const username = urlParams.get('username') || '';
@@ -625,6 +627,10 @@
   const voucher = urlParams.get('voucher') || '';
   const server = urlParams.get('server') || '';
   const paymentMethod = urlParams.get('payment') || 'Tidak diketahui';
+// Ambil parameter nominal
+const nominalRaw = urlParams.get('nominal') || '';
+const nominalValue = Number(urlParams.get('nominal_value')) || 0;
+
 
   // Tampilkan data invoice
   document.getElementById('productName').innerText = `${game} - ${item}`;
@@ -697,6 +703,24 @@
     document.getElementById('voucherDisplay').innerText = voucher;
   }
 
+  // Di bagian rincian invoice, setelah serverRow (atau sebelum voucherRow)
+const nominalRow = document.getElementById('nominalRow');
+if (nominalRaw) {
+  if (!nominalRow) {
+    // buat elemen row baru jika belum ada
+    const newRow = document.createElement('div');
+    newRow.className = 'row';
+    newRow.id = 'nominalRow';
+    newRow.innerHTML = `
+      <span class="row-label"><i class="fas fa-coins"></i> Nominal Topup</span>
+      <span class="row-value" id="nominalDisplayValue">${nominalRaw}</span>
+    `;
+    document.querySelector('.card .divider:nth-of-type(2)').after(newRow);
+  } else {
+    nominalRow.style.display = 'flex';
+    document.getElementById('nominalDisplayValue').innerText = nominalRaw;
+  }
+}
   const now = new Date();
   const formattedTime = now.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
   document.getElementById('orderTime').innerText = formattedTime;
