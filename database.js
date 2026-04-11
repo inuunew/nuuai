@@ -400,8 +400,9 @@ const databaseHiburan = {
   DuoLingO: {
     name: "Duolingo",
     require: ["voucher"], // Voucher di sini bisa diasumsikan sebagai no WA/Email
-    image: "https://files.catbox.moe/6v0m0k.png", // Ganti dengan link icon netflix
-    qris: true,
+    image: "https://files.catbox.moe/fnhfpi.png", // Ganti dengan link icon netflix
+    qris: false,
+    qty: true, 
     desc: "Duolingo title",
     detail: "",
     items: [
@@ -412,8 +413,9 @@ const databaseHiburan = {
   CapCuT: {
     name: "Capcut Pro",
     require: ["voucher"],
-    image: "https://files.catbox.moe/w9v289.png", // Ganti dengan link icon spotify
-    qris: true,
+    image: "https://files.catbox.moe/vyaopt.png", // Ganti dengan link icon spotify
+    qris: false,
+    qty: true, 
     desc: "Capcut Pro",
     detail: "",
     items: [
@@ -425,8 +427,9 @@ const databaseHiburan = {
   CanVa: {
     name: "Canva Premium",
     require: ["phone"],
-    image: "https://files.catbox.moe/z4m7p8.png", // Ganti dengan link icon disney
-    qris: true,
+    image: "https://files.catbox.moe/3n8ds6.jpg", // Ganti dengan link icon disney
+    qris: false,
+    qty: true, 
     desc: "Akun Canva Premium",
     detail: "",
     items: [
@@ -440,8 +443,9 @@ const databaseHiburan = {
   youtube: {
     name: "YouTube Premium",
     require: ["voucher"],
-    image: "https://files.catbox.moe/8u7x6z.png", // Ganti dengan link icon youtube
-    qris: true,
+    image: "https://files.catbox.moe/c68ue7.png", // Ganti dengan link icon youtube
+    qris: false,
+    qty: true, 
     desc: "Bebas iklan & putar di latar belakang",
     detail: "Sistem invite family atau akun baru.",
     items: [
@@ -455,7 +459,7 @@ const databaseHiburan = {
     image: "https://files.catbox.moe/f4fmn6.png",
     qris: true,
     qty: true, 
-    desc: "Bersifat AKUN bukan mod",
+    desc: "bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
       { name: "AM Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
@@ -464,12 +468,12 @@ const databaseHiburan = {
     membership: []
   }, 
   viu: {
-    name: "[AKUN]VIU DRAMA",
+    name: "VIU DRAMA",
     require: ["voucher"],
     image: "https://files.catbox.moe/5x79aa.png",
     qris: true,
     qty: true, 
-    desc: "Bersifat AKUN bukan mod",
+    desc: "bukan mod",
     detail: "bergaransi 3 bulan setelah pembelian",
     items: [
       { name: "Viu 1 bulan Prem", price: "Rp500", status: "online" },
