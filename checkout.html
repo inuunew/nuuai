@@ -782,10 +782,34 @@ const basePricePerUnit = Number(params.get("price")) || 0;
 const adminFee = hasNominal ? 0 : 200;
 
 // Elemen DOM
-const userIdBox = document.getElementById("userIdBox");
-const usernameBox = document.getElementById("usernameBox");
-const phoneBox = document.getElementById("phoneBox");
-const voucherBox = document.getElementById("voucherBox");
+// --- GANTI KODE LAMA (Baris 480-500) DENGAN INI ---
+
+// Sembunyikan semua box dulu
+userIdBox.style.display = "none";
+usernameBox.style.display = "none";
+phoneBox.style.display = "none";
+serverBox.style.display = "none";
+nominalBox.style.display = "none";
+voucherBox.style.display = "none";
+
+// Tampilkan berdasarkan array 'required' dari database
+if (required && required.length > 0) {
+  required.forEach(req => {
+    if (req === "userId") userIdBox.style.display = "block";
+    if (req === "username") usernameBox.style.display = "block";
+    if (req === "phone") phoneBox.style.display = "block";
+    if (req === "server") serverBox.style.display = "block";
+    if (req === "nominal") {
+      nominalBox.style.display = "block";
+      hasNominal = true; // Pastikan variabel ini terupdate
+    }
+    if (req === "voucher") {
+      voucherBox.style.display = "block";
+      setupVoucherField();
+    }
+  });
+}
+
 const voucherInfoContainer = document.getElementById("voucherInfoContainer");
 const serverBox = document.getElementById("serverBox");
 const mlServer = document.getElementById("mlServer");
