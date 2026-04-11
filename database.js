@@ -425,3 +425,59 @@ const databasePanel = {
     membership: []
   }
 };
+
+// databaseHiburan
+const databaseHiburan = {
+  netflix: {
+    name: "Netflix Premium",
+    require: ["voucher"], // Voucher di sini bisa diasumsikan sebagai no WA/Email
+    image: "https://files.catbox.moe/6v0m0k.png", // Ganti dengan link icon netflix
+    qris: true,
+    desc: "Nonton film kualitas 4K UHD",
+    detail: "Akun Sharing/Private, Garansi Full sesuai durasi. Dilarang mengubah profil orang lain (untuk sharing).",
+    items: [
+      { name: "Netflix Sharing 1 Hari", price: "Rp3.000", status: "online" },
+      { name: "Netflix Sharing 7 Hari", price: "Rp12.000", status: "online" },
+      { name: "Netflix Sharing 1 Bulan", price: "Rp35.000", status: "online" },
+      { name: "Netflix Private 1 Bulan", price: "Rp160.000", status: "online" }
+    ]
+  },
+  spotify: {
+    name: "Spotify Premium",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/w9v289.png", // Ganti dengan link icon spotify
+    qris: true,
+    desc: "Dengarkan musik tanpa iklan",
+    detail: "Bisa pakai akun sendiri (Indoplan/Family) atau akun baru dari kami.",
+    items: [
+      { name: "Spotify Premium 1 Bulan", price: "Rp10.000", status: "online" },
+      { name: "Spotify Premium 2 Bulan", price: "Rp18.000", status: "online" },
+      { name: "Spotify Premium 3 Bulan", price: "Rp25.000", status: "online" }
+    ]
+  },
+  disney: {
+    name: "Disney+ Hotstar",
+    require: ["phone"],
+    image: "https://files.catbox.moe/z4m7p8.png", // Ganti dengan link icon disney
+    qris: true,
+    desc: "Streaming film Marvel & Disney",
+    detail: "Proses via nomor HP (Login Code).",
+    items: [
+      { name: "Disney+ 1 Bulan (Sharing)", price: "Rp15.000", status: "online" },
+      { name: "Disney+ 1 Tahun (Sharing)", price: "Rp85.000", status: "online" }
+    ]
+  },
+  youtube: {
+    name: "YouTube Premium",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/8u7x6z.png", // Ganti dengan link icon youtube
+    qris: true,
+    desc: "Bebas iklan & putar di latar belakang",
+    detail: "Sistem invite family atau akun baru.",
+    items: [
+      { name: "YT Premium 1 Bulan (Individual)", price: "Rp8.000", status: "online" },
+      { name: "YT Premium 4 Bulan (Fresh)", price: "Rp25.000", status: "online" }
+    ]
+  }
+};
+
