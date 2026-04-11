@@ -113,6 +113,21 @@ function loadGameGrids() {
   }
 }
 
+// Hiburan Grid
+const hiburanGrid = document.getElementById('hiburanGrid');
+if (hiburanGrid && typeof databaseHiburan !== 'undefined') {
+  hiburanGrid.innerHTML = '';
+  Object.keys(databaseHiburan).forEach(key => {
+    const item = databaseHiburan[key];
+    hiburanGrid.innerHTML += `
+      <div class="game-card" onclick="openHiburan('${key}')">
+        <div class="game-img"><img src="${item.image}"></div>
+        <div class="game-name">${item.name}</div>
+        <div class="game-service">${item.items.length} Paket</div>
+      </div>`;
+  });
+}
+
 // Fungsi untuk kategori (global)
 window.openCategory = function(type) {
   // Sembunyikan semua grid dan judul
@@ -211,6 +226,48 @@ window.openPanel = function(key) {
   modal.offsetHeight;
   modal.classList.add('show');
 };
+
+window.openHiburan = function(key) {
+  const data = databaseHiburan[key];
+  // Logic-nya sama dengan openOther
+  isOtherProduct = true; // Kita asumsikan strukturnya mirip product other
+  isPanel = false; 
+  currentGame = key; 
+  selectedItem = null;
+  
+  document.getElementById('gameName').innerText = data.name;
+  document.getElementById('gameIcon').src = data.image;
+  document.getElementById('membershipTab').style.display = 'none';
+  
+  const container = document.getElementById('topupItems');
+  container.innerHTML = '';
+  
+  data.items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = `item ${item.status || 'online'}`;
+    div.innerHTML = `
+      <span class="status ${item.status || 'online'}"></span>
+      ${item.name}
+      <div class="price">${item.price}</div>
+    `;
+    div.onclick = () => {
+      if (item.status === 'offline') return;
+      document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
+      div.classList.add('selected');
+      selectedItem = item;
+      const btn = document.getElementById('confirmBtn');
+      btn.disabled = false;
+      btn.classList.add('active');
+    };
+    container.appendChild(div);
+  });
+
+  const modal = document.getElementById('topupModal');
+  modal.style.display = 'flex';
+  modal.offsetHeight;
+  modal.classList.add('show');
+};
+
 
 window.openOther = function(key) {
   const data = databaseOther[key];
