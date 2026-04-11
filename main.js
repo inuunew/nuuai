@@ -115,21 +115,34 @@ function loadGameGrids() {
 
 // Fungsi untuk kategori (global)
 window.openCategory = function(type) {
-  document.getElementById('menuGrid').style.display = 'none';
-  document.getElementById('gameGrid').style.display = 'none';
-  document.getElementById('panelGrid').style.display = 'none';
-  document.getElementById('otherGrid').style.display = 'none';
-  document.getElementById('titleGame').style.display = 'none';
-  document.getElementById('titleHosting').style.display = 'none';
-  document.getElementById('titleOther').style.display = 'none';
-  document.getElementById('titleLayanan').style.display = 'none';
+  // Sembunyikan semua grid dan judul
+  const elementsToHide = [
+    'menuGrid', 'gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid',
+    'titleGame', 'titleHosting', 'titleOther', 'titleLayanan', 'titleHiburan'
+  ];
+  elementsToHide.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+
   document.getElementById('backBtn').style.display = 'block';
   document.getElementById('searchArea').style.display = 'flex';
   
   let grid, title;
-  if (type === 'game') { grid = document.getElementById('gameGrid'); title = document.getElementById('titleGame'); }
-  else if (type === 'hosting') { grid = document.getElementById('panelGrid'); title = document.getElementById('titleHosting'); }
-  else { grid = document.getElementById('otherGrid'); title = document.getElementById('titleOther'); }
+  if (type === 'game') { 
+    grid = document.getElementById('gameGrid'); 
+    title = document.getElementById('titleGame'); 
+  } else if (type === 'hosting') { 
+    grid = document.getElementById('panelGrid'); 
+    title = document.getElementById('titleHosting'); 
+  } else if (type === 'hiburan') { // Tambahkan kondisi ini
+    grid = document.getElementById('hiburanGrid'); 
+    title = document.getElementById('titleHiburan'); 
+  } else { 
+    grid = document.getElementById('otherGrid'); 
+    title = document.getElementById('titleOther'); 
+  }
+
   if (grid && title) {
     grid.style.display = 'grid';
     title.style.display = 'flex';
@@ -137,17 +150,16 @@ window.openCategory = function(type) {
   }
 };
 
+
 window.goBack = function() {
+  const elementsToHide = ['gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid', 'titleGame', 'titleHosting', 'titleOther', 'titleHiburan', 'backBtn', 'searchArea'];
+  elementsToHide.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+
   document.getElementById('menuGrid').style.display = 'grid';
-  document.getElementById('gameGrid').style.display = 'none';
-  document.getElementById('panelGrid').style.display = 'none';
-  document.getElementById('otherGrid').style.display = 'none';
-  document.getElementById('titleGame').style.display = 'none';
-  document.getElementById('titleHosting').style.display = 'none';
-  document.getElementById('titleOther').style.display = 'none';
   document.getElementById('titleLayanan').style.display = 'flex';
-  document.getElementById('backBtn').style.display = 'none';
-  document.getElementById('searchArea').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
