@@ -333,37 +333,6 @@ const databaseOther = {
     items: [
       { name: "Buat Website Top Up Mu Sendiri", price: "Rp25.000", status: "online" }
     ]
-  }, 
-  alighm: {
-    name: "[AKUN]AM PREM EXP 2027",
-    require: ["voucher"],
-    image: "https://files.catbox.moe/f4fmn6.png",
-    qris: true,
-    qty: true, 
-    desc: "Bersifat AKUN bukan mod",
-    detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
-    items: [
-      { name: "AM Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
-      { name: "AM Private EXP Januari 2027", price: "Rp1.000", status: "online" }
-    ],
-    membership: []
-  }, 
-  viu: {
-    name: "[AKUN]VIU DRAMA",
-    require: ["voucher"],
-    image: "https://files.catbox.moe/5x79aa.png",
-    qris: true,
-    qty: true, 
-    desc: "Bersifat AKUN bukan mod",
-    detail: "bergaransi 3 bulan setelah pembelian",
-    items: [
-      { name: "Viu 1 bulan Prem", price: "Rp100", status: "online" },
-      { name: "Viu 3 bulan Prem", price: "Rp250", status: "online" },
-      { name: "Viu 4 bulan Prem", price: "Rp400", status: "online" },
-      { name: "Viu 1 tahun Prem", price: "Rp750", status: "online" },
-      { name: "Viu Lifetime (1th+) Prem", price: "Rp1000", status: "online" },
-    ],
-    membership: []
   }
 };
 
@@ -428,43 +397,44 @@ const databasePanel = {
 
 // databaseHiburan
 const databaseHiburan = {
-  netflix: {
-    name: "Netflix Premium",
+  DuoLingO: {
+    name: "Duolingo",
     require: ["voucher"], // Voucher di sini bisa diasumsikan sebagai no WA/Email
     image: "https://files.catbox.moe/6v0m0k.png", // Ganti dengan link icon netflix
     qris: true,
-    desc: "Nonton film kualitas 4K UHD",
-    detail: "Akun Sharing/Private, Garansi Full sesuai durasi. Dilarang mengubah profil orang lain (untuk sharing).",
+    desc: "Duolingo title",
+    detail: "",
     items: [
-      { name: "Netflix Sharing 1 Hari", price: "Rp3.000", status: "online" },
-      { name: "Netflix Sharing 7 Hari", price: "Rp12.000", status: "online" },
-      { name: "Netflix Sharing 1 Bulan", price: "Rp35.000", status: "online" },
-      { name: "Netflix Private 1 Bulan", price: "Rp160.000", status: "online" }
+      { name: "duostu", price: "Rp7.000", status: "online" },
+      { name: "Duolingo Super 1 bulan", price: "Rp5.000", status: "online" }
     ]
   },
-  spotify: {
-    name: "Spotify Premium",
+  CapCuT: {
+    name: "Capcut Pro",
     require: ["voucher"],
     image: "https://files.catbox.moe/w9v289.png", // Ganti dengan link icon spotify
     qris: true,
-    desc: "Dengarkan musik tanpa iklan",
-    detail: "Bisa pakai akun sendiri (Indoplan/Family) atau akun baru dari kami.",
+    desc: "Capcut Pro",
+    detail: "",
     items: [
-      { name: "Spotify Premium 1 Bulan", price: "Rp10.000", status: "online" },
-      { name: "Spotify Premium 2 Bulan", price: "Rp18.000", status: "online" },
-      { name: "Spotify Premium 3 Bulan", price: "Rp25.000", status: "online" }
+      { name: "Capcut pro 7 hari", price: "Rp3.000", status: "online" },
+      { name: "Capcut Pro 1 Bulan", price: "Rp8.000", status: "online" },
+      { name: "Capcut 6 Bulan", price: "Rp15.000", status: "offline" }
     ]
   },
-  disney: {
-    name: "Disney+ Hotstar",
+  CanVa: {
+    name: "Canva Premium",
     require: ["phone"],
     image: "https://files.catbox.moe/z4m7p8.png", // Ganti dengan link icon disney
     qris: true,
-    desc: "Streaming film Marvel & Disney",
-    detail: "Proses via nomor HP (Login Code).",
+    desc: "Akun Canva Premium",
+    detail: "",
     items: [
-      { name: "Disney+ 1 Bulan (Sharing)", price: "Rp15.000", status: "online" },
-      { name: "Disney+ 1 Tahun (Sharing)", price: "Rp85.000", status: "online" }
+      { name: "Canva Premium 1 bulan", price: "Rp3.000", status: "online" },
+      { name: "Canva Premium 1 tahun", price: "8.000", status: "online" },
+      { name: "Canva Premium Edukasi Lifetime", price: "Rp10.000", status: "online" },
+      { name: "Canva Premium Admin Edukasi Lifetime", price: "Rp15.000", status: "offline" },
+     { name: "Canva Head", price: "Rp20.000", status: "offline" }
     ]
   },
   youtube: {
@@ -476,8 +446,39 @@ const databaseHiburan = {
     detail: "Sistem invite family atau akun baru.",
     items: [
       { name: "YT Premium 1 Bulan (Individual)", price: "Rp8.000", status: "online" },
-      { name: "YT Premium 4 Bulan (Fresh)", price: "Rp25.000", status: "online" }
+      { name: "YT Premium HEAD", price: "Rp15.000", status: "offline" }
     ]
+  }, 
+  alighm: {
+    name: "[AKUN]AM PREM EXP 2027",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/f4fmn6.png",
+    qris: true,
+    qty: true, 
+    desc: "Bersifat AKUN bukan mod",
+    detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
+    items: [
+      { name: "AM Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
+      { name: "AM Private EXP Januari 2027", price: "Rp5.000", status: "online" }
+    ],
+    membership: []
+  }, 
+  viu: {
+    name: "[AKUN]VIU DRAMA",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/5x79aa.png",
+    qris: true,
+    qty: true, 
+    desc: "Bersifat AKUN bukan mod",
+    detail: "bergaransi 3 bulan setelah pembelian",
+    items: [
+      { name: "Viu 1 bulan Prem", price: "Rp500", status: "online" },
+      { name: "Viu 3 bulan Prem", price: "Rp1.000", status: "online" },
+      { name: "Viu 4 bulan Prem", price: "Rp1.500", status: "online" },
+      { name: "Viu 1 tahun Prem", price: "Rp2.500", status: "online" },
+      { name: "Viu Lifetime (1th+) Prem", price: "Rp5.000", status: "online" },
+    ],
+    membership: []
   }
 };
 
