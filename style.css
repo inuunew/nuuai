@@ -312,21 +312,26 @@ body {
   border-radius: 8px;
   font-size: 12px;
 }
-.tabs {
+..tabs {
   display: flex;
-  margin-top: 20px;
-  border-bottom: 2px solid #eee;
+  gap: 10px;
+  margin-bottom: 15px;
 }
-.tab {
+.tab-btn {
   flex: 1;
   padding: 10px;
-  background: none;
-  border: none;
-  font-weight: bold;
-  color: #888;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  font-family: 'Outfit', sans-serif;
   cursor: pointer;
 }
-.tab.active { color: #18a558; border-bottom: 3px solid #18a558; }
+.tab-btn.active {
+  background: #16a34a; /* Warna hijau sesuai tema Inuu Market */
+  color: white;
+  border-color: #16a34a;
+}
+
 .topup-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
