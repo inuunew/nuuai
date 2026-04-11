@@ -380,22 +380,27 @@ function renderItems() {
   });
 }
 
-window.switchTab = function(type) {
-  currentType = type; // Ubah tipe (regular atau membership)
+window.switchTab = function(type, element) {
+  currentType = type; // Mengubah tipe ke 'regular' atau 'membership'
   
-  // Update tampilan visual tombol tab
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  // 1. Hapus class 'active' dari semua tombol tab
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.classList.remove('active');
+  });
   
-  // Reset item yang dipilih saat pindah tab
+  // 2. Tambahkan class 'active' ke tombol yang baru saja diklik
+  element.classList.add('active');
+  
+  // 3. Reset pilihan item & tombol konfirmasi
   selectedItem = null;
-  const btn = document.getElementById('confirmBtn');
-  btn.disabled = true;
-  btn.classList.remove('active');
+  const confirmBtn = document.getElementById('confirmBtn');
+  confirmBtn.disabled = true;
+  confirmBtn.classList.remove('active');
   
-  // Render ulang daftar item
+  // 4. Render ulang daftar produk
   renderItems();
 };
+
 
 window.closeTopup = function() {
   const modal = document.getElementById('topupModal');
