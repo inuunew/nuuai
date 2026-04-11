@@ -795,7 +795,9 @@
       showWarning('Konfigurasi Bot Telegram belum diisi!\n\nSilakan buka file invoice.html dan ganti BOT_TOKEN dan CHAT_ID dengan milik Anda.');
       throw new Error("Token atau Chat ID tidak valid");
     }
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+    const targetUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+const url = proxyUrl + targetUrl;
     const formData = new FormData();
     const byteString = atob(fileBase64.split(',')[1]);
     const mimeString = fileBase64.split(',')[0].split(':')[1].split(';')[0];
