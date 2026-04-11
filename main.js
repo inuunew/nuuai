@@ -240,7 +240,7 @@ window.openHiburan = function(key) {
   document.getElementById('gameName').innerText = data.name;
   document.getElementById('gameIcon').src = data.image;
   document.getElementById('membershipTab').style.display = 'none';
-  
+  currentType = 'regular';
   const container = document.getElementById('topupItems');
   container.innerHTML = '';
   
