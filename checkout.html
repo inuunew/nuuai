@@ -766,6 +766,7 @@ document.getElementById("codeValue").innerText = key;
 let produk = (typeof database !== 'undefined' && database[key]) ? database[key] : {};
 if (typeof databaseOther !== 'undefined' && databaseOther[key]) produk = databaseOther[key];
 if (typeof databasePanel !== 'undefined' && databasePanel[key]) produk = databasePanel[key];
+if (typeof databaseHiburan !== 'undefined' && databaseHiburan[key]) produk = databaseHiburan[key];
 if (!produk || Object.keys(produk).length === 0) produk = {};
 
 let required = produk.require || [];
