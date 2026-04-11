@@ -380,6 +380,23 @@ function renderItems() {
   });
 }
 
+window.switchTab = function(type) {
+  currentType = type; // Ubah tipe (regular atau membership)
+  
+  // Update tampilan visual tombol tab
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  
+  // Reset item yang dipilih saat pindah tab
+  selectedItem = null;
+  const btn = document.getElementById('confirmBtn');
+  btn.disabled = true;
+  btn.classList.remove('active');
+  
+  // Render ulang daftar item
+  renderItems();
+};
+
 window.closeTopup = function() {
   const modal = document.getElementById('topupModal');
   modal.classList.remove('show');
