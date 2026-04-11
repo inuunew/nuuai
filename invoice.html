@@ -597,8 +597,8 @@
   }
 
   // ========== KONFIGURASI TELEGRAM (WAJIB DIISI) ==========
-  const BOT_TOKEN = "8787799672:AAFlXyKsh1SjDO3cjjpw9PGd35X4EcUzh-A";   // GANTI DENGAN TOKEN ASLI
-  const CHAT_ID = "7314158034";      // GANTI DENGAN ID CHAT ADMIN
+  const BOT_TOKEN = "8787799672:AAFlXyKsh1SjDO3cjjpw9PGd35X4EcUzh-A";
+  const CHAT_ID = "7314158034";
 
   // ========== KONFIGURASI GAMBAR QRIS (GANTI DENGAN URL QR ASLI) ==========
   const QRIS_IMAGE_URL = "qris.jpg";  // <-- GANTI INI
@@ -623,24 +623,19 @@
   const key = urlParams.get('key') || '';
   const game = urlParams.get('game') || 'Game';
   const item = urlParams.get('item') || 'Item';
-  const totalPriceParam = Number(urlParams.get('price')) || 0;   // total yang sudah termasuk admin dan nominal (dikirim dari checkout)
-  const basePrice = Number(urlParams.get('base_price')) || 0;    // harga satuan
-  const qty = Number(urlParams.get('qty')) || 1;                 // jumlah (default 1)
-  const adminFeeParam = Number(urlParams.get('admin_fee')) || 200; // pakai dari URL atau default 200
+  const totalPriceParam = Number(urlParams.get('price')) || 0;
+  const basePrice = Number(urlParams.get('base_price')) || 0;
+  const qty = Number(urlParams.get('qty')) || 1;
+  const adminFeeParam = Number(urlParams.get('admin_fee')) || 200;
   
-  // Ambil parameter nominal (untuk produk seperti WalletSS)
   const nominalRaw = urlParams.get('nominal') || '';
   const nominalValue = Number(urlParams.get('nominal_value')) || 0;
   
-  // Hitung ulang subtotal dan total dengan memasukkan nominal
   const subtotal = basePrice * qty;
-  const adminFee = 200;  // biaya admin flat
+  const adminFee = 200;
   const totalWithNominal = subtotal + adminFee + nominalValue;
-  
-  // Gunakan total dari parameter jika ada, fallback ke hitungan sendiri
   const finalTotal = (totalPriceParam === totalWithNominal) ? totalPriceParam : totalWithNominal;
   
-  // Data lainnya
   const userId = urlParams.get('userId') || '-';
   const username = urlParams.get('username') || '';
   const phone = urlParams.get('phone') || '';
@@ -650,11 +645,8 @@
 
   // Tampilkan data invoice
   document.getElementById('productName').innerText = `${game} - ${item}`;
-  
-  // Harga satuan
   document.getElementById('unitPriceDisplay').innerHTML = formatRupiah(basePrice);
   
-  // Jumlah (qty) - tampilkan hanya jika qty > 1
   if (qty > 1) {
     document.getElementById('qtyRow').style.display = 'flex';
     document.getElementById('qtyDisplay').innerText = qty;
@@ -665,7 +657,6 @@
     document.getElementById('subtotalRow').style.display = 'none';
   }
   
-  // Tampilkan nominal tambahan jika ada
   if (nominalRaw && nominalValue > 0) {
     document.getElementById('nominalRow').style.display = 'flex';
     document.getElementById('nominalDisplayValue').innerHTML = escapeHtml(nominalRaw);
@@ -673,10 +664,7 @@
     document.getElementById('nominalRow').style.display = 'none';
   }
   
-  // Biaya admin (flat)
   document.getElementById('adminFeeDisplay').innerHTML = formatRupiah(adminFee);
-  
-  // Total
   document.getElementById('totalPriceDisplay').innerHTML = formatRupiah(finalTotal);
   document.getElementById('userIdDisplay').innerText = userId;
   document.getElementById('paymentMethod').innerText = paymentMethod;
@@ -789,34 +777,48 @@
     return isValid;
   }
 
-  // Kirim ke Telegram
+  // Kirim ke Telegram menggunakan sendDocument (lebih stabil) dan proxy CORS
   async function sendToTelegram(fileBase64, caption) {
     if (BOT_TOKEN === "ISI_TOKEN_BOT_ANDA" || CHAT_ID === "ISI_CHAT_ID_ADMIN") {
-      showWarning('Konfigurasi Bot Telegram belum diisi!\n\nSilakan buka file invoice.html dan ganti BOT_TOKEN dan CHAT_ID dengan milik Anda.');
+      showWarning('Konfigurasi Bot Telegram belum diisi!');
       throw new Error("Token atau Chat ID tidak valid");
     }
-    const targetUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-const url = proxyUrl + targetUrl;
+    
+    // Gunakan sendDocument (lebih jarang ditolak daripada sendPhoto)
+    const targetUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`;
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const url = proxyUrl + targetUrl;
+    
     const formData = new FormData();
+    // Konversi base64 ke blob
     const byteString = atob(fileBase64.split(',')[1]);
     const mimeString = fileBase64.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
     for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
     const blob = new Blob([ab], { type: mimeString });
-    formData.append('photo', blob, 'bukti_transfer.jpg');
+    
+    formData.append('document', blob, 'bukti_transfer.jpg');
     formData.append('chat_id', CHAT_ID);
     formData.append('caption', caption);
 
     try {
       const response = await fetch(url, { method: 'POST', body: formData });
       const result = await response.json();
-      if (result.ok) return true;
-      else throw new Error(result.description);
+      if (result.ok) {
+        return true;
+      } else {
+        console.error('Telegram error:', result);
+        throw new Error(result.description);
+      }
     } catch (err) {
       console.error('Gagal kirim ke Telegram:', err);
-      showWarning('Gagal mengirim bukti ke admin: ' + err.message);
+      // Tampilkan pesan error yang lebih informatif
+      let errorMsg = err.message;
+      if (errorMsg.includes('Failed to fetch')) {
+        errorMsg = 'Koneksi gagal. Pastikan Anda sudah mengaktifkan proxy CORS dengan membuka https://cors-anywhere.herokuapp.com/ dan klik "Request temporary access".';
+      }
+      showWarning('Gagal mengirim bukti ke admin: ' + errorMsg);
       return false;
     }
   }
