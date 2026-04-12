@@ -179,7 +179,7 @@ window.openCategory = function(type) {
 };
 
 window.goBack = function() {
-  // Sembunyikan semua grid konten dan judulnya
+  // Sembunyikan semua grid konten & judulnya
   const contents = ['game', 'hosting', 'hiburan', 'other'];
   contents.forEach(cat => {
     const titleEl = document.getElementById(`title${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
@@ -188,19 +188,20 @@ window.goBack = function() {
     if (gridEl) gridEl.style.display = 'none';
   });
 
-  // Sembunyikan backBtn dan searchArea
+  // Sembunyikan backBtn & searchArea
   document.getElementById('backBtn').style.display = 'none';
   const searchArea = document.getElementById('searchArea');
   if (searchArea) searchArea.style.display = 'none';
 
-  // Tampilkan kembali menu utama dan tambahan
+  // ✅ TAMPILKAN KEMBALI MENU UTAMA & TAMBAHAN
   const menuUtama = document.getElementById('menuGridUtama');
   const menuTambahan = document.getElementById('menuGridTambahan');
   const titleUtama = document.getElementById('titleLayananUtama');
   const titleTambahan = document.getElementById('titleLayananTambahan');
+
   if (menuUtama) menuUtama.style.display = 'grid';
   if (menuTambahan) menuTambahan.style.display = 'grid';
-  if (titleUtama) titleUtama.style.display = 'block'; // atau 'flex' sesuai CSS
+  if (titleUtama) titleUtama.style.display = 'block'; // atau 'flex' sesuai CSS kamu
   if (titleTambahan) titleTambahan.style.display = 'block';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
