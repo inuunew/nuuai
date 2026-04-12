@@ -428,19 +428,30 @@ body {
 }
 .beranda-page .game-title {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: column;  /* Ubah jadi column biar turun ke bawah */
   padding: 0 15px;
   margin: 10px 0;
 }
+
 .beranda-page .title-bar {
-  width: 6px;
-  height: 32px;
-  background: #16a34a;
+  width: 60px;             /* Panjang garis horizontal */
+  height: 4px;             /* Ketebalan garis */
+  background: #16a34a;     /* Tetap hijau */
   border-radius: 6px;
+  margin-top: 6px;         /* Jarak dari teks ke garis */
 }
-.beranda-page .title-text h2 { font-size: 22px; font-weight: 700; color: #1f2937; }
-.beranda-page .title-text p { font-size: 13px; color: #6b7280; }
+
+.beranda-page .title-text h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 2px;
+}
+
+.beranda-page .title-text p {
+  font-size: 13px;
+  color: #6b7280;
+}
 .beranda-page .game-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
