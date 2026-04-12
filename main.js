@@ -41,8 +41,9 @@ function loadPage(page) {
 
 // ==================== BERANDA ====================
 // ==================== INITIALIZATION ====================
+// ==================== INISIALISASI BERANDA ====================
 function initBeranda() {
-  // Slider otomatis
+  // Slider otomatis (jika ada di halaman beranda)
   let slides = document.querySelectorAll('.beranda-page .slide');
   let slideIndex = 0;
   if (slides.length) {
@@ -52,7 +53,7 @@ function initBeranda() {
       slides[slideIndex].classList.add('active');
     }, 4000);
   }
-  
+
   // Search event
   const searchInput = document.getElementById('searchGame');
   if (searchInput) {
@@ -64,10 +65,11 @@ function initBeranda() {
       });
     });
   }
-  
+
   loadGameGrids();
 }
 
+// ==================== LOAD DATA KE GRID ====================
 function loadGameGrids() {
   // Game Grid
   const gameGrid = document.getElementById('gameGrid');
@@ -83,8 +85,8 @@ function loadGameGrids() {
       </div>`;
     });
   }
-  
-  // Other Grid
+
+  // Other Grid (Produk Tambahan)
   const otherGrid = document.getElementById('otherGrid');
   if (otherGrid && typeof databaseOther !== 'undefined') {
     otherGrid.innerHTML = '';
@@ -97,8 +99,8 @@ function loadGameGrids() {
       </div>`;
     });
   }
-  
-  // Panel Grid
+
+  // Panel Grid (Hosting)
   const panelGrid = document.getElementById('panelGrid');
   if (panelGrid && typeof databasePanel !== 'undefined') {
     panelGrid.innerHTML = '';
@@ -111,8 +113,8 @@ function loadGameGrids() {
       </div>`;
     });
   }
-  
-  // Hiburan Grid
+
+  // Hiburan Grid (Akun Premium)
   const hiburanGrid = document.getElementById('hiburanGrid');
   if (hiburanGrid && typeof databaseHiburan !== 'undefined') {
     hiburanGrid.innerHTML = '';
@@ -127,38 +129,80 @@ function loadGameGrids() {
   }
 }
 
-// ==================== CATEGORY & NAVIGATION ====================
+// ==================== KATEGORI & NAVIGASI (REVISI) ====================
 window.openCategory = function(type) {
-  const elementsToHide = ['menuGrid', 'gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid', 'titleGame', 'titleHosting', 'titleOther', 'titleLayanan', 'titleHiburan'];
-  elementsToHide.forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.style.display = 'none';
+  // Sembunyikan menu utama dan tambahan
+  const menuUtama = document.getElementById('menuGridUtama');
+  const menuTambahan = document.getElementById('menuGridTambahan');
+  const titleUtama = document.getElementById('titleLayananUtama');
+  const titleTambahan = document.getElementById('titleLayananTambahan');
+  if (menuUtama) menuUtama.style.display = 'none';
+  if (menuTambahan) menuTambahan.style.display = 'none';
+  if (titleUtama) titleUtama.style.display = 'none';
+  if (titleTambahan) titleTambahan.style.display = 'none';
+
+  // Sembunyikan semua grid konten dan judulnya
+  const contents = ['game', 'hosting', 'hiburan', 'other'];
+  contents.forEach(cat => {
+    const titleEl = document.getElementById(`title${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
+    const gridEl = document.getElementById(cat === 'hosting' ? 'panelGrid' : cat + 'Grid');
+    if (titleEl) titleEl.style.display = 'none';
+    if (gridEl) gridEl.style.display = 'none';
   });
 
+  // Tampilkan backBtn dan searchArea
   document.getElementById('backBtn').style.display = 'block';
-  document.getElementById('searchArea').style.display = 'flex';
-  
+  const searchArea = document.getElementById('searchArea');
+  if (searchArea) searchArea.style.display = 'flex';
+
+  // Tampilkan grid sesuai kategori
   let grid, title;
-  if (type === 'game') { grid = document.getElementById('gameGrid'); title = document.getElementById('titleGame'); } 
-  else if (type === 'hosting') { grid = document.getElementById('panelGrid'); title = document.getElementById('titleHosting'); } 
-  else if (type === 'hiburan') { grid = document.getElementById('hiburanGrid'); title = document.getElementById('titleHiburan'); } 
-  else { grid = document.getElementById('otherGrid'); title = document.getElementById('titleOther'); }
+  if (type === 'game') {
+    grid = document.getElementById('gameGrid');
+    title = document.getElementById('titleGame');
+  } else if (type === 'hosting') {
+    grid = document.getElementById('panelGrid');
+    title = document.getElementById('titleHosting');
+  } else if (type === 'hiburan') {
+    grid = document.getElementById('hiburanGrid');
+    title = document.getElementById('titleHiburan');
+  } else if (type === 'other') {
+    grid = document.getElementById('otherGrid');
+    title = document.getElementById('titleOther');
+  }
 
   if (grid && title) {
     grid.style.display = 'grid';
-    title.style.display = 'flex';
+    title.style.display = 'flex'; // atau 'block' sesuai CSS kamu
     grid.classList.add('fade');
   }
 };
 
 window.goBack = function() {
-  const elementsToHide = ['gameGrid', 'panelGrid', 'otherGrid', 'hiburanGrid', 'titleGame', 'titleHosting', 'titleOther', 'titleHiburan', 'backBtn', 'searchArea'];
-  elementsToHide.forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.style.display = 'none';
+  // Sembunyikan semua grid konten dan judulnya
+  const contents = ['game', 'hosting', 'hiburan', 'other'];
+  contents.forEach(cat => {
+    const titleEl = document.getElementById(`title${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
+    const gridEl = document.getElementById(cat === 'hosting' ? 'panelGrid' : cat + 'Grid');
+    if (titleEl) titleEl.style.display = 'none';
+    if (gridEl) gridEl.style.display = 'none';
   });
-  document.getElementById('menuGrid').style.display = 'grid';
-  document.getElementById('titleLayanan').style.display = 'flex';
+
+  // Sembunyikan backBtn dan searchArea
+  document.getElementById('backBtn').style.display = 'none';
+  const searchArea = document.getElementById('searchArea');
+  if (searchArea) searchArea.style.display = 'none';
+
+  // Tampilkan kembali menu utama dan tambahan
+  const menuUtama = document.getElementById('menuGridUtama');
+  const menuTambahan = document.getElementById('menuGridTambahan');
+  const titleUtama = document.getElementById('titleLayananUtama');
+  const titleTambahan = document.getElementById('titleLayananTambahan');
+  if (menuUtama) menuUtama.style.display = 'grid';
+  if (menuTambahan) menuTambahan.style.display = 'grid';
+  if (titleUtama) titleUtama.style.display = 'block'; // atau 'flex' sesuai CSS
+  if (titleTambahan) titleTambahan.style.display = 'block';
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
