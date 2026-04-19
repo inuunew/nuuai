@@ -392,7 +392,7 @@ const databasePanel = {
       { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
     ],
     membership: []
-  }
+  }, 
     UpClOud: {
     name: "Upcload",
     require: ["voucher"],
