@@ -42,40 +42,33 @@ function loadPage(page) {
 // ==================== INITIALIZATION ====================
 // ==================== INISIALISASI BERANDA ====================
 function initBeranda() {
-  // 1. Logika Slider Langsung Dijalankan (Tanpa DOMContentLoaded)
   let currentSlide = 0;
-  const sliderContainer = document.querySelector('.beranda-page .slider');
+  const pageContainer = document.querySelector('.beranda-page');
   
-  if (sliderContainer) {
-    const slides = sliderContainer.querySelectorAll('.slide');
-    
-    // Fungsi internal untuk pindah slide
-    function showSlide(index) {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (index + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
+  if (pageContainer) {
+    const slides = pageContainer.querySelectorAll('.slide');
+    const nextBtn = pageContainer.querySelector('.next');
+    const prevBtn = pageContainer.querySelector('.prev');
 
-    // EXPOSE ke Window agar onclick="changeSlide()" di HTML berfungsi
+    // Fungsi pindah slide
     window.changeSlide = function(step) {
-      showSlide(currentSlide + step);
+      if (slides.length === 0) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + step + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
     };
 
-    // Tombol Next/Prev menggunakan Event Listener (lebih aman)
-    const nextBtn = sliderContainer.querySelector('.next');
-    const prevBtn = sliderContainer.querySelector('.prev');
-
+    // Pasang event klik ke tombol di bawah
     if (nextBtn) nextBtn.onclick = () => window.changeSlide(1);
     if (prevBtn) prevBtn.onclick = () => window.changeSlide(-1);
 
-    // Auto slide setiap 5 detik
-    // Simpan di window agar bisa dibersihkan jika pindah halaman (optional)
+    // Auto slide
     if (window.bannerTimer) clearInterval(window.bannerTimer);
     window.bannerTimer = setInterval(() => {
       window.changeSlide(1);
     }, 5000);
   }
-
+  
   // 2. Search event
   const searchInput = document.getElementById('searchGame');
   if (searchInput) {
