@@ -382,55 +382,46 @@ body {
 }
 
 /* ========== STYLE KHUSUS BERANDA ========== */
-.beranda-page .banner-container { padding: 15px; }
-.beranda-page .slider {
-    position: relative;
+/* Container Utama */
+.banner-container {
+    width: 100%;
     max-width: 1000px;
-    margin: 20px auto; /* Tambah sedikit margin atas bawah agar tidak menempel */
+    margin: auto;
+}
+
+/* Slider tetap seperti biasa */
+.slider {
+    position: relative;
     overflow: hidden;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Tambah bayangan agar banner lebih "pop out" */
-}
-
-.beranda-page .slide {
-    display: none;
-    transition: opacity 0.5s ease-in-out; /* Tambah efek transisi halus saat ganti foto */
-}
-
-.beranda-page .slide.active {
-    display: block;
-}
-
-.beranda-page .slide img {
     width: 100%;
-    height: auto;
-    vertical-align: middle;
-    object-fit: cover; /* Memastikan gambar terisi dengan baik */
 }
 
-/* Style Tombol Navigasi */
-.beranda-page .prev, 
-.beranda-page .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.4);
-    color: white;
-    padding: 12px 16px;
+/* Area Tombol di Bawah Banner */
+.slider-controls {
+    display: flex;
+    justify-content: center; /* Tombol di tengah */
+    gap: 20px;              /* Jarak antar tombol */
+    margin: 10px 0;         /* Jarak dari banner dan info box */
+}
+
+.slider-controls button {
+    background: #1a1a1a;    /* Warna gelap khas Inuu Market */
+    color: #00ff88;         /* Warna hijau neon */
+    border: 1px solid #00ff88;
+    padding: 8px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    border: none;
-    z-index: 10; /* Pastikan tombol di atas gambar */
-    border-radius: 50%; /* Membuat tombol bulat agar lebih modern */
-    transition: background 0.3s;
+    font-size: 18px;
+    transition: 0.3s;
 }
 
-.beranda-page .prev:hover, 
-.beranda-page .next:hover {
-    background-color: rgba(0, 255, 0, 0.3); /* Warna hover hijau transparan agar senada dengan tema Inuu Market */
+.slider-controls button:hover {
+    background: #00ff88;
+    color: #1a1a1a;
+    box-shadow: 0 0 10px #00ff88;
 }
 
-.beranda-page .next { right: 15px; }
-.beranda-page .prev { left: 15px; }
 
 
 .beranda-page .info-box {
