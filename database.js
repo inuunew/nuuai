@@ -393,6 +393,21 @@ const databasePanel = {
     ],
     membership: []
   }
+    UpClOud: {
+    name: "Upcload",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/n8f64z.png",
+    qris: false,
+    qty: true, 
+    desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
+    detail: "NOTE : NO GARANSI, BUY=PAHAM!",
+    items: [
+      { name: "D.O BILL VCC 3 Droplet", price: "100.000", status: "online" }, 
+      { name: "D.O BILL VCC 10 Droplet", price: "130.000", status: "online" }, 
+      { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
+    ],
+    membership: []
+  }
 };
 
 // databaseHiburan
@@ -434,10 +449,10 @@ const databaseHiburan = {
     detail: "",
     items: [
       { name: "Canva Premium 1 bulan", price: "Rp3.000", status: "online" },
-      { name: "Canva Premium 1 tahun", price: "8.000", status: "online" },
-      { name: "Canva Premium Edukasi Lifetime", price: "Rp10.000", status: "online" },
-      { name: "Canva Premium Admin Edukasi Lifetime", price: "Rp15.000", status: "offline" },
-     { name: "Canva Head", price: "Rp20.000", status: "offline" }
+      { name: "Canva Premium 1 tahun", price: "6.000", status: "online" },
+      { name: "Canva Premium Edukasi Lifetime", price: "Rp8.000", status: "online" },
+      { name: "Canva Premium Admin Edukasi Lifetime", price: "Rp10.000", status: "offline" },
+     { name: "Canva Head 1 bulan", price: "Rp12.000", status: "online" }
     ]
   },
   youtube: {
@@ -454,7 +469,7 @@ const databaseHiburan = {
     ]
   }, 
   alighm: {
-    name: "AM PREM EXP 2027",
+    name: "Alight Motion",
     require: ["voucher"],
     image: "https://files.catbox.moe/f4fmn6.png",
     qris: true,
@@ -462,8 +477,8 @@ const databaseHiburan = {
     desc: "berbasis akun bukan apk mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
-      { name: "AM Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
-      { name: "AM Private EXP Januari 2027", price: "Rp5.000", status: "online" }
+      { name: "AM prem Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
+      { name: "AM prem Private EXP Januari 2027", price: "Rp3.000", status: "online" }
     ],
     membership: []
   }, 
@@ -473,14 +488,28 @@ const databaseHiburan = {
     image: "https://files.catbox.moe/5x79aa.png",
     qris: true,
     qty: true, 
-    desc: "berbasis akun bukan apk mod",
-    detail: "bergaransi 3 bulan setelah pembelian",
+    desc: "login pakai telepon+pw dari admin",
+    detail: "bergaransi setelah pembelian",
     items: [
       { name: "Viu 1 bulan Prem", price: "Rp500", status: "online" },
       { name: "Viu 3 bulan Prem", price: "Rp1.000", status: "online" },
       { name: "Viu 4 bulan Prem", price: "Rp1.500", status: "online" },
       { name: "Viu 1 tahun Prem", price: "Rp2.500", status: "online" },
-      { name: "Viu Lifetime (1th+) Prem", price: "Rp5.000", status: "online" },
+      { name: "Viu Lifetime (1th+) Prem", price: "Rp3.000", status: "online" },
+    ],
+    membership: []
+  }, 
+  GemIn1: {
+    name: "Gemini Pro",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/33783p.jpeg",
+    qris: false,
+    qty: true, 
+    desc: "boleh pakai email dari seller/buyer",
+    detail: "bergaransi 1 bulan setelah pembelian",
+    items: [
+      { name: "Gemini Pro 1 bulan", price: "Rp5.000", status: "online" },
+      { name: "Method gemini pro", price: "Rp10.000", status: "online" }
     ],
     membership: []
   }
