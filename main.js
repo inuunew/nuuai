@@ -42,46 +42,41 @@ function loadPage(page) {
 // ==================== INITIALIZATION ====================
 // ==================== INISIALISASI BERANDA ====================
 function initBeranda() {
-  // Slider otomatis (jika ada di halaman beranda)
-document.addEventListener("DOMContentLoaded", function() {
-    let currentSlide = 0;
-    // Mencari slide dan tombol khusus di dalam .beranda-page
-    const sliderContainer = document.querySelector('.beranda-page .slider');
+  // 1. Logika Slider Langsung Dijalankan (Tanpa DOMContentLoaded)
+  let currentSlide = 0;
+  const sliderContainer = document.querySelector('.beranda-page .slider');
+  
+  if (sliderContainer) {
+    const slides = sliderContainer.querySelectorAll('.slide');
     
-    if (sliderContainer) {
-        const slides = sliderContainer.querySelectorAll('.slide');
-        const nextBtn = sliderContainer.querySelector('.next');
-        const prevBtn = sliderContainer.querySelector('.prev');
-
-        function showSlide(index) {
-            // Sembunyikan slide lama
-            slides[currentSlide].classList.remove('active');
-            
-            // Hitung index baru (looping)
-            currentSlide = (index + slides.length) % slides.length;
-            
-            // Tampilkan slide baru
-            slides[currentSlide].classList.add('active');
-        }
-
-        // Hubungkan fungsi ke tombol Klik
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
-        }
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
-        }
-
-        // Auto slide setiap 5 detik
-        setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
+    // Fungsi internal untuk pindah slide
+    function showSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
     }
-});
 
+    // EXPOSE ke Window agar onclick="changeSlide()" di HTML berfungsi
+    window.changeSlide = function(step) {
+      showSlide(currentSlide + step);
+    };
 
+    // Tombol Next/Prev menggunakan Event Listener (lebih aman)
+    const nextBtn = sliderContainer.querySelector('.next');
+    const prevBtn = sliderContainer.querySelector('.prev');
 
-  // Search event
+    if (nextBtn) nextBtn.onclick = () => window.changeSlide(1);
+    if (prevBtn) prevBtn.onclick = () => window.changeSlide(-1);
+
+    // Auto slide setiap 5 detik
+    // Simpan di window agar bisa dibersihkan jika pindah halaman (optional)
+    if (window.bannerTimer) clearInterval(window.bannerTimer);
+    window.bannerTimer = setInterval(() => {
+      window.changeSlide(1);
+    }, 5000);
+  }
+
+  // 2. Search event
   const searchInput = document.getElementById('searchGame');
   if (searchInput) {
     searchInput.addEventListener('keyup', (e) => {
@@ -95,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   loadGameGrids();
 }
+
 
 // ==================== LOAD DATA KE GRID ====================
 function loadGameGrids() {
