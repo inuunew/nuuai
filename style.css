@@ -428,11 +428,27 @@ body {
 /* Tombol tetap di bawah */
 .beranda-page .slider-controls {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 15px 0;
+    justify-content: center; /* Tombol di tengah */
+    gap: 20px;              /* Jarak antar tombol */
+    margin: 10px 0;         /* Jarak dari banner dan info box */
 }
 
+.beranda-page .slider-controls button {
+    background: #1a1a1a;    /* Warna gelap khas Inuu Market */
+    color: #00ff88;         /* Warna hijau neon */
+    border: 1px solid #00ff88;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.beranda-page .slider-controls button:hover {
+    background: #00ff88;
+    color: #1a1a1a;
+    box-shadow: 0 0 10px #00ff88;
+}
 
 
 .beranda-page .info-box {
