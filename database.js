@@ -495,7 +495,7 @@ const databaseHiburan = {
       { name: "Viu 3 bulan Prem", price: "Rp1.000", status: "online" },
       { name: "Viu 4 bulan Prem", price: "Rp1.500", status: "online" },
       { name: "Viu 1 tahun Prem", price: "Rp2.500", status: "online" },
-      { name: "Viu Lifetime (1th+) Prem", price: "Rp3.000", status: "online" },
+      { name: "Viu Lifetime (1th+) Prem", price: "Rp3.000", status: "online" }
     ],
     membership: []
   }, 
