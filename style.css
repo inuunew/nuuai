@@ -383,15 +383,45 @@ body {
 
 /* ========== STYLE KHUSUS BERANDA ========== */
 /* Container Utama */
-.beranda-page .banner-container { padding: 15px; }
+.beranda-page .banner-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
 
 /* Slider tetap seperti biasa */
 .beranda-page .slider {
     position: relative;
-    overflow: hidden;
-    border-radius: 10px;
     width: 100%;
+    max-width: 1000px;
+    margin: auto;
+    overflow: hidden; /* Memotong gambar yang keluar jalur */
+    border-radius: 10px;
+    aspect-ratio: 16 / 9; /* Menjaga tinggi slider tetap konsisten */
 }
+
+.beranda-page .slide {
+    position: absolute; /* Membuat semua slide bertumpuk di satu titik */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Sembunyikan semua */
+    transition: opacity 0.5s ease-in-out; /* Efek transisi halus */
+    display: block !important; /* Pastikan tidak pakai display: none agar transisi jalan */
+}
+
+.beranda-page .slide.active {
+    opacity: 1; /* Hanya tampilkan yang aktif */
+    z-index: 1;
+}
+
+.beranda-page .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Agar gambar tidak gepeng */
+}
+
 
 /* Area Tombol di Bawah Banner */
 .beranda-page .slider-controls {
