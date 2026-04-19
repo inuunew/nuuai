@@ -308,7 +308,7 @@ const database = {
 // databaseOther
 const databaseOther = {
     WalletSS: {
-    name: "E-wallet Suka-Suka",
+    name: " Fee Convert saldo",
     require: ["phone", "nominal"],
     image: "https://files.catbox.moe/2klckj.png",
     qris: false,
@@ -331,7 +331,8 @@ const databaseOther = {
     desc: "Bisa request game apa saja,atur harga produk, free add halaman kalkulator mlbb,halaman music(req music),halaman pengumuman",
     detail: "Kami akan membuat di gmail yang baru, dan jika web selesai dibuat, maka gmail akan kami berikan ke kalian dan bisa kalian otak atik sendiri di github(mendeploy dari vercel)",
     items: [
-      { name: "Buat Website Top Up Mu Sendiri", price: "Rp25.000", status: "online" }
+      { name: "Buat Website Top Up Mu Sendiri", price: "Rp25.000", status: "online" }, 
+      { name: "Buat Website seperti social-information.inuu.my.id", price: "Rp10.000", status: "online" }
     ]
   }
 };
