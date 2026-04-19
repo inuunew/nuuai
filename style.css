@@ -383,11 +383,7 @@ body {
 
 /* ========== STYLE KHUSUS BERANDA ========== */
 /* Container Utama */
-.beranda-page .banner-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: auto;
-}
+.beranda-page .banner-container { padding: 15px; }
 
 /* Slider tetap seperti biasa */
 .beranda-page .slider {
