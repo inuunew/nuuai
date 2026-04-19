@@ -383,7 +383,7 @@ body {
 
 /* ========== STYLE KHUSUS BERANDA ========== */
 .beranda-page .banner-container { padding: 15px; }
-.beranda-page .slider {
+.slider {
     position: relative;
     max-width: 1000px; /* Sesuaikan ukuran */
     margin: auto;
@@ -391,22 +391,22 @@ body {
     border-radius: 10px;
 }
 
-.beranda-page .slide {
+.slide {
     display: none; /* Sembunyikan semua slide secara default */
 }
 
-.beranda-page .slide.active {
+.slide.active {
     display: block; /* Tampilkan slide yang aktif */
 }
 
-.beranda-page .slide img {
+.slide img {
     width: 100%;
     height: auto;
     vertical-align: middle;
 }
 
 /* Style Tombol Navigasi */
-.beranda-page .prev, .next {
+.prev, .next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -416,8 +416,9 @@ body {
     cursor: pointer;
     border: none;
 }
-.beranda-page .next { right: 0; }
-.beranda-page .prev { left: 0; }
+.next { right: 0; }
+.prev { left: 0; }
+
 
 .beranda-page .info-box {
   margin: 10px 15px;
