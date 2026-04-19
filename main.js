@@ -147,7 +147,11 @@ function loadGameGrids() {
 
 // ==================== KATEGORI & NAVIGASI (REVISI) ====================
 window.openCategory = function(type) {
-  // Sembunyikan menu utama dan tambahan
+  // 1. SEMBUNYIKAN BANNER & PENGUMUMAN
+  const banner = document.querySelector('.beranda-page .banner-container');
+  if (banner) banner.style.display = 'none';
+
+  // 2. Sembunyikan menu utama dan tambahan
   const menuUtama = document.getElementById('menuGridUtama');
   const menuTambahan = document.getElementById('menuGridTambahan');
   const titleUtama = document.getElementById('titleLayananUtama');
@@ -195,7 +199,11 @@ window.openCategory = function(type) {
 };
 
 window.goBack = function() {
-  // Sembunyikan semua grid konten & judulnya
+  // 1. TAMPILKAN KEMBALI BANNER & PENGUMUMAN
+  const banner = document.querySelector('.beranda-page .banner-container');
+  if (banner) banner.style.display = 'block';
+
+  // 2. Sembunyikan semua grid konten & judulnya
   const contents = ['game', 'hosting', 'hiburan', 'other'];
   contents.forEach(cat => {
     const titleEl = document.getElementById(`title${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
@@ -204,12 +212,7 @@ window.goBack = function() {
     if (gridEl) gridEl.style.display = 'none';
   });
 
-  // Sembunyikan backBtn & searchArea
-  document.getElementById('backBtn').style.display = 'none';
-  const searchArea = document.getElementById('searchArea');
-  if (searchArea) searchArea.style.display = 'none';
-
-  // ✅ TAMPILKAN KEMBALI MENU UTAMA & TAMBAHAN
+  // 3. Tampilkan kembali menu utama & judulnya
   const menuUtama = document.getElementById('menuGridUtama');
   const menuTambahan = document.getElementById('menuGridTambahan');
   const titleUtama = document.getElementById('titleLayananUtama');
@@ -217,8 +220,13 @@ window.goBack = function() {
 
   if (menuUtama) menuUtama.style.display = 'grid';
   if (menuTambahan) menuTambahan.style.display = 'grid';
-  if (titleUtama) titleUtama.style.display = 'block'; // atau 'flex' sesuai CSS kamu
+  if (titleUtama) titleUtama.style.display = 'block';
   if (titleTambahan) titleTambahan.style.display = 'block';
+
+  // Sembunyikan backBtn & searchArea
+  document.getElementById('backBtn').style.display = 'none';
+  const searchArea = document.getElementById('searchArea');
+  if (searchArea) searchArea.style.display = 'none';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
