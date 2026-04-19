@@ -383,41 +383,54 @@ body {
 
 /* ========== STYLE KHUSUS BERANDA ========== */
 .beranda-page .banner-container { padding: 15px; }
-.slider {
+.beranda-page .slider {
     position: relative;
-    max-width: 1000px; /* Sesuaikan ukuran */
-    margin: auto;
+    max-width: 1000px;
+    margin: 20px auto; /* Tambah sedikit margin atas bawah agar tidak menempel */
     overflow: hidden;
     border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* Tambah bayangan agar banner lebih "pop out" */
 }
 
-.slide {
-    display: none; /* Sembunyikan semua slide secara default */
+.beranda-page .slide {
+    display: none;
+    transition: opacity 0.5s ease-in-out; /* Tambah efek transisi halus saat ganti foto */
 }
 
-.slide.active {
-    display: block; /* Tampilkan slide yang aktif */
+.beranda-page .slide.active {
+    display: block;
 }
 
-.slide img {
+.beranda-page .slide img {
     width: 100%;
     height: auto;
     vertical-align: middle;
+    object-fit: cover; /* Memastikan gambar terisi dengan baik */
 }
 
 /* Style Tombol Navigasi */
-.prev, .next {
+.beranda-page .prev, 
+.beranda-page .next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.4);
     color: white;
-    padding: 10px;
+    padding: 12px 16px;
     cursor: pointer;
     border: none;
+    z-index: 10; /* Pastikan tombol di atas gambar */
+    border-radius: 50%; /* Membuat tombol bulat agar lebih modern */
+    transition: background 0.3s;
 }
-.next { right: 0; }
-.prev { left: 0; }
+
+.beranda-page .prev:hover, 
+.beranda-page .next:hover {
+    background-color: rgba(0, 255, 0, 0.3); /* Warna hover hijau transparan agar senada dengan tema Inuu Market */
+}
+
+.beranda-page .next { right: 15px; }
+.beranda-page .prev { left: 15px; }
 
 
 .beranda-page .info-box {
