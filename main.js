@@ -24,7 +24,6 @@ function loadPage(page) {
       else if (page === 'music') initMusic();
       else if (page === 'kalkulator') initKalkulator();
       else if (page === 'bantuan') initBantuan();
-      else if (page === 'checkout') initCheckout();
       
       // Update active class di sidebar dan bottom nav
       document.querySelectorAll('#sidebar .menu p').forEach(p => p.classList.remove('active'));
@@ -44,23 +43,42 @@ function loadPage(page) {
 // ==================== INISIALISASI BERANDA ====================
 function initBeranda() {
   // Slider otomatis (jika ada di halaman beranda)
-  let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+document.addEventListener("DOMContentLoaded", function() {
+    let currentSlide = 0;
+    // Mencari slide dan tombol khusus di dalam .beranda-page
+    const sliderContainer = document.querySelector('.beranda-page .slider');
+    
+    if (sliderContainer) {
+        const slides = sliderContainer.querySelectorAll('.slide');
+        const nextBtn = sliderContainer.querySelector('.next');
+        const prevBtn = sliderContainer.querySelector('.prev');
 
-function showSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (index + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-}
+        function showSlide(index) {
+            // Sembunyikan slide lama
+            slides[currentSlide].classList.remove('active');
+            
+            // Hitung index baru (looping)
+            currentSlide = (index + slides.length) % slides.length;
+            
+            // Tampilkan slide baru
+            slides[currentSlide].classList.add('active');
+        }
 
-function changeSlide(step) {
-    showSlide(currentSlide + step);
-}
+        // Hubungkan fungsi ke tombol Klik
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+        }
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+        }
 
-// Geser otomatis setiap 5 detik
-setInterval(() => {
-    changeSlide(1);
-}, 5000);
+        // Auto slide setiap 5 detik
+        setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 5000);
+    }
+});
+
 
 
   // Search event
