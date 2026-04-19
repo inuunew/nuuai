@@ -44,15 +44,24 @@ function loadPage(page) {
 // ==================== INISIALISASI BERANDA ====================
 function initBeranda() {
   // Slider otomatis (jika ada di halaman beranda)
-  let slides = document.querySelectorAll('.beranda-page .slide');
-  let slideIndex = 0;
-  if (slides.length) {
-    setInterval(() => {
-      slides.forEach(s => s.classList.remove('active'));
-      slideIndex = (slideIndex + 1) % slides.length;
-      slides[slideIndex].classList.add('active');
-    }, 4000);
-  }
+  let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+function showSlide(index) {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (index + slides.length) % slides.length;
+    slides[currentSlide].classList.add('active');
+}
+
+function changeSlide(step) {
+    showSlide(currentSlide + step);
+}
+
+// Geser otomatis setiap 5 detik
+setInterval(() => {
+    changeSlide(1);
+}, 5000);
+
 
   // Search event
   const searchInput = document.getElementById('searchGame');
