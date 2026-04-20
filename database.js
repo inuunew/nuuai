@@ -12,7 +12,7 @@ const database = {
       { name: "50 Diamond Free Fire", price: "Rp7.500", status: "online" },
       { name: "70 Diamond Free Fire", price: "Rp9.500", status: "online" },
       { name: "100 Diamond Free Fire", price: "Rp13.000", status: "online" },
-      { name: "140 Diamond Free Fire", price: "Rp19.000", status: "online" },
+      { name: "140 Diamond Free Fire", price: "Rp19.500", status: "online" },
       { name: "210 Diamond Free Fire", price: "Rp27.000", status: "online" },
       { name: "300 Diamond Free Fire", price: "Rp41.000", status: "online" },
       { name: "355 Diamond Free Fire", price: "Rp46.000", status: "online" },
@@ -506,11 +506,10 @@ const databaseHiburan = {
     image: "https://files.catbox.moe/33783p.jpeg",
     qris: false,
     qty: true, 
-    desc: "boleh pakai email dari seller/buyer",
+    desc: "email dari seller",
     detail: "bergaransi 1 bulan setelah pembelian",
     items: [
-      { name: "Gemini Pro 1 bulan", price: "Rp5.000", status: "online" },
-      { name: "Method gemini pro", price: "Rp10.000", status: "online" }
+      { name: "Gemini Pro 1 bulan (email dari seller)", price: "Rp4.000", status: "online" }
     ],
     membership: []
   }
