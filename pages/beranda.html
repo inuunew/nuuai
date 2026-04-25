@@ -109,23 +109,3 @@
   </div>
 </div>
 <div class="game-grid" id="otherGrid" style="display:none;"></div>
-
-<!-- Modal Topup (struktur tetap, pastikan ada) -->
-<div id="topupModal" class="modal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <img id="gameIcon" src="" style="width:40px;border-radius:12px;">
-      <span id="gameName" style="font-weight:700;font-size:18px;"></span>
-      <span onclick="closeTopup()" style="cursor:pointer;font-size:24px;">&times;</span>
-    </div>
-    <div class="modal-body">
-      <div id="inputContainer"></div>
-      <div class="tab-container" id="membershipTab" style="display:none;">
-        <button class="tab active" onclick="switchTab('regular', this)">Reguler</button>
-        <button class="tab" onclick="switchTab('membership', this)">Membership</button>
-      </div>
-      <div id="topupItems" class="item-grid"></div>
-      <button id="confirmBtn" class="confirm-btn" disabled onclick="goCheckout()">Pilih & Lanjutkan</button>
-    </div>
-  </div>
-</div>
