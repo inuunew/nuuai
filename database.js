@@ -12,7 +12,7 @@ const database = {
       { name: "50 Diamond Free Fire", price: "Rp7.500", status: "online" },
       { name: "70 Diamond Free Fire", price: "Rp9.500", status: "online" },
       { name: "100 Diamond Free Fire", price: "Rp13.000", status: "online" },
-      { name: "140 Diamond Free Fire", price: "Rp19.500", status: "online" },
+      { name: "140 Diamond Free Fire", price: "Rp19.000", status: "online" },
       { name: "210 Diamond Free Fire", price: "Rp27.000", status: "online" },
       { name: "300 Diamond Free Fire", price: "Rp41.000", status: "online" },
       { name: "355 Diamond Free Fire", price: "Rp46.000", status: "online" },
@@ -254,22 +254,41 @@ const database = {
     membership: []
   },
 
-  codm: {
-    name: "Call of Duty",
-    require: ["userId"],
-    image: "assets/cod.png",
-    qris: false,
-    desc: "Top up CP COD cepat & aman",
-    detail: "Tanpa login akun, layanan 24 jam",
-    regular: [
-      { name: "26+5 CP", price: "Rp5.500", status: "online" },
-      { name: "53+9 CP", price: "Rp10.000", status: "online" },
-      { name: "106+21 CP", price: "Rp20.000", status: "online" },
-      { name: "264+53 CP", price: "Rp45.000", status: "online" },
-      { name: "645 CP", price: "Rp92.000", status: "online" }
-    ],
-    membership: []
-  },
+  BloodStrike: {
+  name: "Blood Strike",
+  require: ["userId"],
+  image: "https://files.catbox.moe/7n9l3i.jpeg",
+  qris: false,
+  desc: "Top up Gold Blood Strike legal & aman",
+  detail: "Proses cepat, 24 jam nonstop",
+  regular: [
+    { name: "100 Gold", price: "Rp12.500", status: "online" },
+    { name: "300 Gold", price: "Rp37.000", status: "online" },
+    { name: "500 Gold", price: "Rp62.000", status: "online" },
+    { name: "1000 Gold", price: "Rp122.000", status: "online" },
+    { name: "2000 Gold", price: "Rp242.000", status: "online" },
+    { name: "5000 Gold", price: "Rp600.000", status: "online" }
+  ],
+  membership: []
+}, 
+codm: {
+  name: "Call of Duty Mobile",
+  require: ["userId"],
+  image: "https://litter.catbox.moe/6vvyam.jpg",
+  qris: false,
+  desc: "Top up CP Call of Duty Mobile legal & aman",
+  detail: "Proses cepat, 24 jam nonstop",
+  regular: [
+    { name: "31 CP", price: "Rp6.000", status: "online" },
+    { name: "62 CP", price: "Rp10.000", status: "online" },
+    { name: "127 CP", price: "Rp20.000", status: "online" },
+    { name: "317 CP", price: "Rp46.000", status: "online" },
+    { name: "634 CP", price: "Rp95.000", status: "online" },
+    { name: "1373 CP", price: "Rp155.000", status: "online" },
+    { name: "2059 CP", price: "Rp216.000", status: "online" }
+  ],
+  membership: []
+}
 
   asphalt9: {
     name: "Asphalt 9",
@@ -287,6 +306,84 @@ const database = {
     ],
     membership: []
   }, 
+magicchess: {
+  name: "Magic Chess",
+  require: ["userId", "serverId"],
+  image: "https://files.catbox.moe/ltaeas.jpeg",
+  qris: false,
+  desc: "Top up Diamond Magic Chess legal & aman",
+  detail: "Proses cepat, 24 jam nonstop",
+  regular: [
+    { name: "5 Diamond", price: "Rp1.734", status: "online" },
+    { name: "12 Diamond (11+1)", price: "Rp3.677", status: "online" },
+    { name: "19 Diamond (17+2)", price: "Rp5.621", status: "online" },
+    { name: "28 Diamond (25+3)", price: "Rp8.238", status: "online" },
+    { name: "44 Diamond (40+4)", price: "Rp12.221", status: "online" },
+    { name: "59 Diamond (53+6)", price: "Rp16.205", status: "online" },
+    { name: "85 Diamond (77+8)", price: "Rp23.178", status: "online" },
+    { name: "170 Diamond (156+16)", price: "Rp46.085", status: "online" },
+    { name: "240 Diamond (217+23)", price: "Rp65.009", status: "online" },
+    { name: "296 Diamond (256+40)", price: "Rp79.974", status: "online" },
+    { name: "408 Diamond (367+41)", price: "Rp109.828", status: "online" },
+    { name: "568 Diamond (503+65)", price: "Rp149.691", status: "online" },
+    { name: "875 Diamond (774+101)", price: "Rp234.363", status: "online" }
+  ],
+  membership: [
+    { name: "Weekly Diamond Pass 1x", price: "Rp29.404", status: "online" }
+  ]
+}, 
+honkai3: {
+  name: "Honkai Impact 3",
+  require: ["userId"],
+  image: "https://files.catbox.moe/cnyij2.jpeg",
+  qris: false,
+  desc: "Top up Crystal Honkai Impact 3 legal & aman",
+  detail: "Proses cepat, 24 jam nonstop",
+  regular: [
+    { name: "65 Crystal", price: "Rp10.885", status: "online" },
+    { name: "330 Crystal", price: "Rp44.735", status: "online" },
+    { name: "710 Crystal", price: "Rp155.280", status: "online" },
+    { name: "1.430 Crystal", price: "Rp320.724", status: "online" },
+    { name: "3.860 Crystal", price: "Rp779.868", status: "online" }
+  ],
+  membership: []
+}, 
+pb: {
+  name: "Point Blank",
+  require: ["userId"],
+  image: "https://files.catbox.moe/ltaeas.jpeg",
+  qris: false,
+  desc: "Top up Cash Point Blank legal & aman",
+  detail: "Proses cepat, 24 jam nonstop",
+  regular: [
+    { name: "1.200 Cash", price: "Rp10.000", status: "online" },
+    { name: "2.400 Cash", price: "Rp20.000", status: "online" },
+    { name: "6.000 Cash", price: "Rp49.000", status: "online" },
+    { name: "12.000 Cash", price: "Rp95.500", status: "online" },
+    { name: "36.000 Cash", price: "Rp293.000", status: "online" },
+    { name: "60.000 Cash", price: "Rp498.000", status: "online" }
+  ],
+  membership: []
+}, 
+honkaisr: {
+  name: "Honkai: Star Rail",
+  require: ["userId", "serverId"],
+  image: "https://files.catbox.moe/ni5glm.jpeg",
+  qris: false,
+  desc: "Top up Oneiric Shard Honkai: Star Rail legal & aman",
+  detail: "Proses cepat, 24 jam nonstop",
+  regular: [
+    { name: "60 Oneiric Shard", price: "Rp13.900", status: "online" },
+    { name: "300 Oneiric Shard", price: "Rp59.602", status: "online" },
+    { name: "980 Oneiric Shard", price: "Rp202.255", status: "online" },
+    { name: "1.980 Oneiric Shard", price: "Rp451.135", status: "online" },
+    { name: "3.280 Oneiric Shard", price: "Rp688.795", status: "online" },
+    { name: "6.480 Oneiric Shard", price: "Rp1.370.155", status: "online" }
+  ],
+  membership: [
+    { name: "Supply Pass", price: "Rp60.306", status: "online" }
+  ]
+}, 
   roblox: {
     name: "Roblox Gift Card",
     require: ["voucher"],
@@ -295,11 +392,10 @@ const database = {
     desc: "Roblox Gift Card",
     detail: "tutorial redeem kunjungi website https://www.roblox.com/redeem dan pastikan masuk dengan akun roblox kalian agar gift card masuk ke akun kamu.",
     regular: [
-      { name: "RGC (IDR)50.000", price: "Rp51.000", status: "online" },
-      { name: "RGC (IDR)65.000", price: "Rp65.000", status: "online" },
-      { name: "RGC (IDR)100.000", price: "Rp100.000", status: "offline" },
-      { name: "RGC (US)$10", price: "Rp175.000", status: "online" },
-      { name: "RGC (IDR)200.000", price: "Rp200.000", status: "online" }
+      { name: "RGC (IDR)50.000", price: "Rp49.000", status: "online" },
+      { name: "RGC (IDR)65.000", price: "Rp64.000", status: "online" },
+      { name: "RGC (IDR)100.000", price: "Rp99.000", status: "offline" },
+      { name: "RGC (IDR)200.000", price: "Rp199.000", status: "online" }
     ],
     membership: []
   }
@@ -369,7 +465,7 @@ const databasePanel = {
     image: "https://files.catbox.moe/n8f64z.png",
     qris: false,
     qty: true, 
-    desc: "VPS LEGAL DO BILL VCC",
+    desc: "VPS Digital Ocean",
     detail: "Aktif 1bulan Garansi 25h,no instalasi apapun(kosongan)",
     items: [
       { name: "VPS R2C2 [LEGAL]", price: "25.000", status: "online" }, 
@@ -388,24 +484,9 @@ const databasePanel = {
     desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
     detail: "NOTE : NO GARANSI, BUY=PAHAM!",
     items: [
-      { name: "D.O BILL VCC 3 Droplet", price: "100.000", status: "online" }, 
-      { name: "D.O BILL VCC 10 Droplet", price: "130.000", status: "online" }, 
-      { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
-    ],
-    membership: []
-  }, 
-    UpClOud: {
-    name: "Upcload",
-    require: ["voucher"],
-    image: "https://files.catbox.moe/n8f64z.png",
-    qris: false,
-    qty: true, 
-    desc: "DIGITAL OCEAN GMAIL MADE AWET TAHAN BANTING",
-    detail: "NOTE : NO GARANSI, BUY=PAHAM!",
-    items: [
-      { name: "D.O BILL VCC 3 Droplet", price: "100.000", status: "online" }, 
-      { name: "D.O BILL VCC 10 Droplet", price: "130.000", status: "online" }, 
-      { name: "D.O BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
+      { name: "D.O Cloud BILL VCC 3 Droplet", price: "100.000", status: "online" }, 
+      { name: "D.O Cloud BILL VCC 10 Droplet", price: "130.000", status: "online" }, 
+      { name: "D.O Cloud BILL GPAY 10 Droplet", price: "120.000", status: "offline" }
     ],
     membership: []
   }
@@ -465,7 +546,8 @@ const databaseHiburan = {
     desc: "Bebas iklan & putar di latar belakang",
     detail: "Sistem invite family atau akun baru.",
     items: [
-      { name: "YT Premium 1 Bulan (Individual)", price: "Rp8.000", status: "online" },
+      { name: "YT Premium 1 Bulan famplan (via inv)", price: "Rp8.000", status: "online" },
+      { name: "YT Premium 1 Bulan Indplan (private)", price: "Rp12.000", status: "online" },
       { name: "YT Premium HEAD", price: "Rp15.000", status: "offline" }
     ]
   }, 
@@ -506,12 +588,28 @@ const databaseHiburan = {
     image: "https://files.catbox.moe/33783p.jpeg",
     qris: false,
     qty: true, 
-    desc: "email dari seller",
+    desc: "boleh pakai email dari seller/buyer",
     detail: "bergaransi 1 bulan setelah pembelian",
     items: [
-      { name: "Gemini Pro 1 bulan (email dari seller)", price: "Rp4.000", status: "online" }
+      { name: "Gemini Pro 1 bulan", price: "Rp5.000", status: "online" },
+      { name: "Method gemini pro", price: "Rp10.000", status: "online" }
+    ],
+    membership: []
+  },
+  iB1sPx: {
+    name: "Ibis Paint Pro",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/e9ft9u.jpg",
+    qris: false,
+    qty: true, 
+    desc: "boleh pakai email dari seller/buyer",
+    detail: "bergaransi 1 bulan setelah pembelian",
+    items: [
+      { name: "Ibis Paint X Pro 7 hari", price: "Rp3.000", status: "online" },
+      { name: "Ibis Paint X Pro 1 bulan", price: "Rp7.000", status: "online" }
     ],
     membership: []
   }
+  
 };
 
