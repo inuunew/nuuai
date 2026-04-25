@@ -400,6 +400,149 @@ honkaisr: {
   }
 };
 
+const databaseSosmed = {
+  foltik: {
+    name: "Followers TikTok",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "Followers TikTok murah & cepat",
+    detail: "Akun bot, tidak dijamin permanen",
+    items: [
+      { name: "100 Followers", price: "Rp5.000", status: "online" },
+      { name: "200 Followers", price: "Rp10.000", status: "online" },
+      { name: "300 Followers", price: "Rp15.000", status: "online" },
+      { name: "400 Followers", price: "Rp20.000", status: "online" },
+      { name: "500 Followers", price: "Rp25.000", status: "online" },
+      { name: "600 Followers", price: "Rp30.000", status: "online" },
+      { name: "700 Followers", price: "Rp35.000", status: "online" },
+      { name: "800 Followers", price: "Rp40.000", status: "online" },
+      { name: "900 Followers", price: "Rp45.000", status: "online" },
+      { name: "1000 Followers", price: "Rp50.000", status: "online" }
+    ]
+  },
+  folig: {
+    name: "Followers Instagram",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "Followers Instagram murah & cepat",
+    detail: "Akun bot, tidak dijamin permanen",
+    items: [
+      { name: "50 Followers", price: "Rp5.000", status: "online" },
+      { name: "100 Followers", price: "Rp10.000", status: "online" },
+      { name: "200 Followers", price: "Rp20.000", status: "online" },
+      { name: "300 Followers", price: "Rp30.000", status: "online" },
+      { name: "400 Followers", price: "Rp40.000", status: "online" },
+      { name: "500 Followers", price: "Rp50.000", status: "online" },
+      { name: "600 Followers", price: "Rp60.000", status: "online" },
+      { name: "700 Followers", price: "Rp70.000", status: "online" },
+      { name: "800 Followers", price: "Rp80.000", status: "online" },
+      { name: "900 Followers", price: "Rp90.000", status: "online" }
+    ]
+  },
+  memberwa: {
+    name: "Saluran WhatsApp",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "Member saluran WhatsApp instan",
+    detail: "Bot/tidak aktif",
+    items: [
+      { name: "100 Member", price: "Rp5.000", status: "online" },
+      { name: "200 Member", price: "Rp10.000", status: "online" },
+      { name: "300 Member", price: "Rp15.000", status: "online" },
+      { name: "400 Member", price: "Rp20.000", status: "online" },
+      { name: "500 Member", price: "Rp25.000", status: "online" },
+      { name: "600 Member", price: "Rp30.000", status: "online" },
+      { name: "700 Member", price: "Rp35.000", status: "online" },
+      { name: "800 Member", price: "Rp40.000", status: "online" },
+      { name: "900 Member", price: "Rp45.000", status: "online" },
+      { name: "1000 Member", price: "Rp50.000", status: "online" }
+    ]
+  },
+  liketik: {
+    name: "Like TikTok",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "Like TikTok murah & cepat",
+    detail: "Bot",
+    items: [
+      { name: "100 Like", price: "Rp1.000", status: "online" },
+      { name: "200 Like", price: "Rp2.000", status: "online" },
+      { name: "300 Like", price: "Rp3.000", status: "online" },
+      { name: "400 Like", price: "Rp4.000", status: "online" },
+      { name: "500 Like", price: "Rp5.000", status: "online" },
+      { name: "600 Like", price: "Rp6.000", status: "online" },
+      { name: "700 Like", price: "Rp7.000", status: "online" },
+      { name: "800 Like", price: "Rp8.000", status: "online" },
+      { name: "900 Like", price: "Rp9.000", status: "online" },
+      { name: "1000 Like", price: "Rp10.000", status: "online" }
+    ]
+  },
+  likeig: {
+    name: "Like Instagram",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "Like Instagram murah & cepat",
+    detail: "Bot",
+    items: [
+      { name: "100 Like", price: "Rp3.000", status: "online" },
+      { name: "200 Like", price: "Rp5.000", status: "online" },
+      { name: "300 Like", price: "Rp8.000", status: "online" },
+      { name: "400 Like", price: "Rp10.000", status: "online" },
+      { name: "500 Like", price: "Rp13.000", status: "online" },
+      { name: "600 Like", price: "Rp15.000", status: "online" },
+      { name: "700 Like", price: "Rp18.000", status: "online" },
+      { name: "800 Like", price: "Rp20.000", status: "online" },
+      { name: "900 Like", price: "Rp23.000", status: "online" },
+      { name: "1000 Like", price: "Rp25.000", status: "online" }
+    ]
+  },
+  viewtik: {
+    name: "View TikTok",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "View TikTok murah & cepat",
+    detail: "Bot",
+    items: [
+      { name: "1000 View", price: "Rp1.000", status: "online" },
+      { name: "2000 View", price: "Rp2.000", status: "online" },
+      { name: "3000 View", price: "Rp3.000", status: "online" },
+      { name: "4000 View", price: "Rp4.000", status: "online" },
+      { name: "5000 View", price: "Rp5.000", status: "online" },
+      { name: "6000 View", price: "Rp6.000", status: "online" },
+      { name: "7000 View", price: "Rp7.000", status: "online" },
+      { name: "8000 View", price: "Rp8.000", status: "online" },
+      { name: "9000 View", price: "Rp9.000", status: "online" },
+      { name: "10000 View", price: "Rp10.000", status: "online" }
+    ]
+  },
+  viewig: {
+    name: "View Instagram",
+    require: ["link"],
+    image: "assets/sosmed.png",
+    qris: false,
+    desc: "View Instagram murah & cepat",
+    detail: "Bot",
+    items: [
+      { name: "500 View", price: "Rp1.000", status: "online" },
+      { name: "1000 View", price: "Rp2.000", status: "online" },
+      { name: "2000 View", price: "Rp4.000", status: "online" },
+      { name: "3000 View", price: "Rp6.000", status: "online" },
+      { name: "4000 View", price: "Rp8.000", status: "online" },
+      { name: "5000 View", price: "Rp10.000", status: "online" },
+      { name: "6000 View", price: "Rp12.000", status: "online" },
+      { name: "7000 View", price: "Rp14.000", status: "online" },
+      { name: "8000 View", price: "Rp16.000", status: "online" },
+      { name: "9000 View", price: "Rp18.000", status: "online" },
+      { name: "10000 View", price: "Rp20.000", status: "online" }
+    ]
+  }
+};
 // databaseOther
 const databaseOther = {
     WalletSS: {
