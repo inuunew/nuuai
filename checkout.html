@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Checkout - Ryuzen</title>
+<title>Checkout - InuuMarket</title>
 
 <!-- Font Awesome 6 & Google Font Outfit -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -617,7 +617,7 @@ body{
 <div class="header">
   <div class="header-left">
     <div class="back" onclick="goHome()"><i class="fas fa-arrow-left"></i></div>
-    <div class="brand">Ryuzen Store</div>
+    <div class="brand">Inuu Market</div>
   </div>
   <div class="header-right">
     <span class="chrome-icon"></span>
@@ -772,6 +772,7 @@ let produk = (typeof database !== 'undefined' && database[key]) ? database[key] 
 if (typeof databaseOther !== 'undefined' && databaseOther[key]) produk = databaseOther[key];
 if (typeof databasePanel !== 'undefined' && databasePanel[key]) produk = databasePanel[key];
 if (typeof databaseHiburan !== 'undefined' && databaseHiburan[key]) produk = databaseHiburan[key];
+if (typeof databaseSosmed !== 'undefined' && databaseSosmed[key]) produk = databaseSosmed[key];.
 if (!produk || Object.keys(produk).length === 0) produk = {};
 
 let required = produk.require || [];
@@ -1017,7 +1018,7 @@ function getPublisher(key) {
     codm: "Activision", asphalt9: "Gameloft", roblox: "Roblox Corporation",
     panel: "Panel Bot", vps1: "Digital Ocean", do1: "Digital Ocean", alighm: "Alight Motion", viu: "Viu"
   };
-  return map[key] || "Ryuzen Store";
+  return map[key] || "Inuu Market";
 }
 
 function openInfo() {
@@ -1030,7 +1031,7 @@ function openInfo() {
   let bulletHtml = '<ul class="bullet-list">' + bulletItems.map(l => `<li><i class="fas fa-check-circle" style="color:#16a34a;"></i> ${l.trim()}</li>`).join('') + '</ul>';
   let descText = produk.desc || "Top up termurah, aman, dan terpercaya. Voucher dikirim otomatis oleh admin setelah pembayaran.";
   const content = `
-    <div class="info-store"><h2>RYUZEN STORE</h2><p>The Most Trusted Platform for TopUp & Voucher</p></div>
+    <div class="info-store"><h2>Inuu Market</h2><p>The Most Trusted Platform for TopUp & Voucher</p></div>
     <div class="info-game"><h3>${gameName.toUpperCase()}</h3><div class="sub"><i class="fas fa-building"></i> ${publisher}</div></div>
     ${bulletHtml}
     <div class="steps">
@@ -1104,7 +1105,7 @@ function lanjutWA(){
   if (linkInfo) linkInfo += "\n";
   
   const message = encodeURIComponent(
-    `*ORDER RYUZEN STORE* 🛒\n\n`+
+    `*ORDER INUU MARKET* 🛒\n\n`+
     `Produk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\n`+
     `Subtotal: ${formatRupiah(subtotalProduk)}\n`+
     `${nominalInfoForWA}\n`+
