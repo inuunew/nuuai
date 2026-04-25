@@ -36,6 +36,10 @@
   <div class="menu-card" onclick="openCategory('game')"><i class="fas fa-gamepad"></i><p>Top Up Games</p></div>
   <div class="menu-card" onclick="openCategory('hosting')"><i class="fas fa-server"></i><p>Hosting Product</p></div>
   <div class="menu-card" onclick="openCategory('hiburan')"><i class="fas fa-crown"></i><p>Akun Premium</p></div>
+  <div class="menu-card" onclick="openCategory('sosmed')">
+  <i class="fas fa-users"></i>
+  <p>Layanan Sosmed</p>
+</div>
 </div>
 
 <!-- JUDUL & MENU TAMBAHAN (1 kartu) -->
@@ -65,12 +69,15 @@
 </div>
 <div class="game-grid" id="gameGrid" style="display:none;"></div>
 
-<!-- Hosting -->
-<div class="game-title" id="titleHosting" style="display:none;">
+<!-- Sosmed (Followers, Likes, Views) -->
+<div class="game-title" id="titleSosmed" style="display:none;">
   <div class="title-bar"></div>
-  <div class="title-text"><h2><i class="fas fa-server"></i> Hosting Area</h2><p>Layanan Hosting Panel Pterodactyl/VPS/Digital Ocean 🌊</p></div>
+  <div class="title-text">
+    <h2><i class="fas fa-users"></i> Layanan Sosmed</h2>
+    <p>Followers, Likes, View, dan Member Saluran</p>
+  </div>
 </div>
-<div class="game-grid" id="panelGrid" style="display:none;"></div>
+<div class="game-grid" id="sosmedGrid" style="display:none;"></div>
 
 <!-- Hiburan (Akun Premium) -->
 <div class="game-title" id="titleHiburan" style="display:none;">
@@ -81,6 +88,15 @@
   </div>
 </div>
 <div class="game-grid" id="hiburanGrid" style="display:none;"></div>
+
+<!-- Hosting -->
+<div class="game-title" id="titleHosting" style="display:none;">
+  <div class="title-bar"></div>
+  <div class="title-text"><h2><i class="fas fa-server"></i> Hosting Area</h2><p>Layanan Hosting Panel Pterodactyl/VPS/Digital Ocean 🌊</p></div>
+</div>
+<div class="game-grid" id="panelGrid" style="display:none;"></div>
+
+
 
 <!-- Other (Produk Tambahan: Pulsa, E-Wallet, dll) -->
 <div class="game-title" id="titleOther" style="display:none;">
