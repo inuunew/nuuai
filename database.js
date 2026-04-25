@@ -288,8 +288,7 @@ codm: {
     { name: "2059 CP", price: "Rp216.000", status: "online" }
   ],
   membership: []
-}
-
+}, 
   asphalt9: {
     name: "Asphalt 9",
     require: ["userId"],
