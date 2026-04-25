@@ -143,6 +143,20 @@ function loadGameGrids() {
       </div>`;
     });
   }
+
+  // Sosmed Grid (Layanan Sosmed) - TAMBAHAN
+  const sosmedGrid = document.getElementById('sosmedGrid');
+  if (sosmedGrid && typeof databaseSosmed !== 'undefined') {
+    sosmedGrid.innerHTML = '';
+    Object.keys(databaseSosmed).forEach(key => {
+      const item = databaseSosmed[key];
+      sosmedGrid.innerHTML += `<div class="game-card" onclick="openSosmed('${key}')">
+        <div class="game-img"><img src="${item.image}"></div>
+        <div class="game-name">${item.name}</div>
+        <div class="game-service">${item.items.length} Produk</div>
+      </div>`;
+    });
+  }
 }
 
 // ==================== KATEGORI & NAVIGASI (REVISI) ====================
@@ -162,10 +176,25 @@ window.openCategory = function(type) {
   if (titleTambahan) titleTambahan.style.display = 'none';
 
   // Sembunyikan semua grid konten dan judulnya
-  const contents = ['game', 'hosting', 'hiburan', 'other'];
+  const contents = ['game', 'hosting', 'hiburan', 'other', 'sosmed']; // ++sosmed
   contents.forEach(cat => {
-    const titleEl = document.getElementById(`title${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
-    const gridEl = document.getElementById(cat === 'hosting' ? 'panelGrid' : cat + 'Grid');
+    let titleEl, gridEl;
+    if (cat === 'game') {
+      titleEl = document.getElementById('titleGame');
+      gridEl = document.getElementById('gameGrid');
+    } else if (cat === 'hosting') {
+      titleEl = document.getElementById('titleHosting');
+      gridEl = document.getElementById('panelGrid');
+    } else if (cat === 'hiburan') {
+      titleEl = document.getElementById('titleHiburan');
+      gridEl = document.getElementById('hiburanGrid');
+    } else if (cat === 'other') {
+      titleEl = document.getElementById('titleOther');
+      gridEl = document.getElementById('otherGrid');
+    } else if (cat === 'sosmed') { // ++sosmed
+      titleEl = document.getElementById('titleSosmed');
+      gridEl = document.getElementById('sosmedGrid');
+    }
     if (titleEl) titleEl.style.display = 'none';
     if (gridEl) gridEl.style.display = 'none';
   });
@@ -189,6 +218,9 @@ window.openCategory = function(type) {
   } else if (type === 'other') {
     grid = document.getElementById('otherGrid');
     title = document.getElementById('titleOther');
+  } else if (type === 'sosmed') { // ++sosmed
+    grid = document.getElementById('sosmedGrid');
+    title = document.getElementById('titleSosmed');
   }
 
   if (grid && title) {
@@ -204,10 +236,25 @@ window.goBack = function() {
   if (banner) banner.style.display = 'block';
 
   // 2. Sembunyikan semua grid konten & judulnya
-  const contents = ['game', 'hosting', 'hiburan', 'other'];
+  const contents = ['game', 'hosting', 'hiburan', 'other', 'sosmed']; // ++sosmed
   contents.forEach(cat => {
-    const titleEl = document.getElementById(`title${cat.charAt(0).toUpperCase() + cat.slice(1)}`);
-    const gridEl = document.getElementById(cat === 'hosting' ? 'panelGrid' : cat + 'Grid');
+    let titleEl, gridEl;
+    if (cat === 'game') {
+      titleEl = document.getElementById('titleGame');
+      gridEl = document.getElementById('gameGrid');
+    } else if (cat === 'hosting') {
+      titleEl = document.getElementById('titleHosting');
+      gridEl = document.getElementById('panelGrid');
+    } else if (cat === 'hiburan') {
+      titleEl = document.getElementById('titleHiburan');
+      gridEl = document.getElementById('hiburanGrid');
+    } else if (cat === 'other') {
+      titleEl = document.getElementById('titleOther');
+      gridEl = document.getElementById('otherGrid');
+    } else if (cat === 'sosmed') { // ++sosmed
+      titleEl = document.getElementById('titleSosmed');
+      gridEl = document.getElementById('sosmedGrid');
+    }
     if (titleEl) titleEl.style.display = 'none';
     if (gridEl) gridEl.style.display = 'none';
   });
@@ -246,6 +293,7 @@ function setupDynamicInputs(data) {
       if (req === 'phone') placeholder = 'Masukkan No. WhatsApp';
       if (req === 'voucher') placeholder = 'Masukkan Email/Voucher/Data Akun';
       if (req === 'nominal') placeholder = 'Masukkan Nominal';
+      if (req === 'link') placeholder = 'Masukkan Link Tujuan'; // ++link
       
       inputContainer.innerHTML += `
         <div class="input-group" style="margin-bottom:10px;">
@@ -356,6 +404,36 @@ window.openOther = function(key) {
   modal.style.display = 'flex'; modal.classList.add('show');
 };
 
+// ++TAMBAHAN: openSosmed
+window.openSosmed = function(key) {
+  const data = databaseSosmed[key];
+  isOtherProduct = true; isPanel = false; currentGame = key; selectedItem = null;
+  document.getElementById('gameName').innerText = data.name;
+  document.getElementById('gameIcon').src = data.image;
+  document.getElementById('membershipTab').style.display = 'none';
+  
+  setupDynamicInputs(data); // Render input link (jika require link)
+  
+  const container = document.getElementById('topupItems');
+  container.innerHTML = '';
+  data.items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = `item ${item.status || 'online'}`;
+    div.innerHTML = `<span class="status ${item.status || 'online'}"></span>${item.name}<div class="price">${item.price}</div>${item.status === 'offline' ? '<div style="color:red;font-size:12px;">Stok Habis</div>' : ''}`;
+    div.onclick = () => {
+      if (item.status === 'offline') return;
+      document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
+      div.classList.add('selected');
+      selectedItem = item;
+      const btn = document.getElementById('confirmBtn');
+      btn.disabled = false; btn.classList.add('active');
+    };
+    container.appendChild(div);
+  });
+  const modal = document.getElementById('topupModal');
+  modal.style.display = 'flex'; modal.classList.add('show');
+};
+
 // ==================== CHECKOUT LOGIC ====================
 // ==================== CHECKOUT LOGIC (FIXED) ====================
 window.goCheckout = function() {
@@ -364,7 +442,7 @@ window.goCheckout = function() {
   let gameName, image, typeValue;
   let inputValues = {}; // Untuk menyimpan data input dinamis
 
-  // Ambil semua nilai dari inputContainer (phone, voucher, nominal, dll)
+  // Ambil semua nilai dari inputContainer (phone, voucher, nominal, link, dll)
   const inputContainer = document.getElementById('inputContainer');
   if (inputContainer) {
     const inputs = inputContainer.querySelectorAll('input');
@@ -393,7 +471,13 @@ window.goCheckout = function() {
     gameName = data.name; 
     image = data.image; 
     typeValue = 'other';
-  } 
+  }
+  else if (databaseSosmed && databaseSosmed[currentGame]) { // ++sosmed
+    const data = databaseSosmed[currentGame];
+    gameName = data.name; 
+    image = data.image; 
+    typeValue = 'sosmed';
+  }
   else {
     const data = database[currentGame];
     gameName = data.name; 
@@ -414,7 +498,7 @@ window.goCheckout = function() {
     key: currentGame
   });
 
-  // Tambahkan inputValues ke params (contoh: phone, voucher, nominal)
+  // Tambahkan inputValues ke params (contoh: phone, voucher, nominal, link)
   for (const [key, value] of Object.entries(inputValues)) {
     params.append(key, value);
   }
