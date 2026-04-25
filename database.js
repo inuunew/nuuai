@@ -308,7 +308,7 @@ codm: {
 magicchess: {
   name: "Magic Chess",
   require: ["userId", "serverId"],
-  image: "https://files.catbox.moe/ltaeas.jpeg",
+  image: "https://files.catbox.moe/nik9nc.jpeg",
   qris: false,
   desc: "Top up Diamond Magic Chess legal & aman",
   detail: "Proses cepat, 24 jam nonstop",
