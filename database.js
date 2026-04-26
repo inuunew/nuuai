@@ -402,7 +402,7 @@ honkaisr: {
 
 const databaseSosmed = {
   foltik: {
-    name: "Followers TikTok",
+    name: "Followers TikTok [reffil 30d]",
     require: ["link"],
     image: "https://files.catbox.moe/ls98j2.png",
     qris: false,
@@ -410,19 +410,19 @@ const databaseSosmed = {
     detail: "Akun bot, tidak dijamin permanen",
     items: [
       { name: "100 Followers", price: "Rp5.000", status: "online" },
-      { name: "200 Followers", price: "Rp10.000", status: "online" },
-      { name: "300 Followers", price: "Rp15.000", status: "online" },
-      { name: "400 Followers", price: "Rp20.000", status: "online" },
-      { name: "500 Followers", price: "Rp25.000", status: "online" },
-      { name: "600 Followers", price: "Rp30.000", status: "online" },
-      { name: "700 Followers", price: "Rp35.000", status: "online" },
-      { name: "800 Followers", price: "Rp40.000", status: "online" },
-      { name: "900 Followers", price: "Rp45.000", status: "online" },
-      { name: "1000 Followers", price: "Rp50.000", status: "online" }
+      { name: "200 Followers", price: "Rp9.000", status: "online" },
+      { name: "300 Followers", price: "Rp13.000", status: "online" },
+      { name: "400 Followers", price: "Rp17.000", status: "online" },
+      { name: "500 Followers", price: "Rp21.000", status: "online" },
+      { name: "600 Followers", price: "Rp24.000", status: "online" },
+      { name: "700 Followers", price: "Rp28.000", status: "online" },
+      { name: "800 Followers", price: "Rp32.000", status: "online" },
+      { name: "900 Followers", price: "Rp36.000", status: "online" },
+      { name: "1000 Followers", price: "Rp40.000", status: "online" }
     ]
   },
   liketik: {
-    name: "Like TikTok",
+    name: "Like TikTok [reffil 30d]",
     require: ["link"],
     image: "https://files.catbox.moe/ls98j2.png",
     qris: false,
@@ -430,19 +430,19 @@ const databaseSosmed = {
     detail: "Bot",
     items: [
       { name: "100 Like", price: "Rp1.000", status: "online" },
-      { name: "200 Like", price: "Rp2.000", status: "online" },
-      { name: "300 Like", price: "Rp3.000", status: "online" },
-      { name: "400 Like", price: "Rp4.000", status: "online" },
-      { name: "500 Like", price: "Rp5.000", status: "online" },
-      { name: "600 Like", price: "Rp6.000", status: "online" },
-      { name: "700 Like", price: "Rp7.000", status: "online" },
-      { name: "800 Like", price: "Rp8.000", status: "online" },
-      { name: "900 Like", price: "Rp9.000", status: "online" },
-      { name: "1000 Like", price: "Rp10.000", status: "online" }
+      { name: "200 Like", price: "Rp1.500", status: "online" },
+      { name: "300 Like", price: "Rp2.000", status: "online" },
+      { name: "400 Like", price: "Rp2.500", status: "online" },
+      { name: "500 Like", price: "Rp3.000", status: "online" },
+      { name: "600 Like", price: "Rp3.500", status: "online" },
+      { name: "700 Like", price: "Rp4.000", status: "online" },
+      { name: "800 Like", price: "Rp4.500", status: "online" },
+      { name: "900 Like", price: "Rp5.000", status: "online" },
+      { name: "1000 Like", price: "Rp5.500", status: "online" }
     ]
   },
   viewtik: {
-    name: "View TikTok",
+    name: "View TikTok [reffil 30d]",
     require: ["link"],
     image: "https://files.catbox.moe/ls98j2.png",
     qris: false,
@@ -450,19 +450,19 @@ const databaseSosmed = {
     detail: "Bot",
     items: [
       { name: "1000 View", price: "Rp1.000", status: "online" },
-      { name: "2000 View", price: "Rp2.000", status: "online" },
-      { name: "3000 View", price: "Rp3.000", status: "online" },
-      { name: "4000 View", price: "Rp4.000", status: "online" },
-      { name: "5000 View", price: "Rp5.000", status: "online" },
-      { name: "6000 View", price: "Rp6.000", status: "online" },
-      { name: "7000 View", price: "Rp7.000", status: "online" },
-      { name: "8000 View", price: "Rp8.000", status: "online" },
-      { name: "9000 View", price: "Rp9.000", status: "online" },
-      { name: "10000 View", price: "Rp10.000", status: "online" }
+  { name: "2000 View", price: "Rp2.000", status: "online" },
+  { name: "3000 View", price: "Rp2.500", status: "online" },
+  { name: "4000 View", price: "Rp3.000", status: "online" },
+  { name: "5000 View", price: "Rp3.500", status: "online" },
+  { name: "6000 View", price: "Rp4.000", status: "online" },
+  { name: "7000 View", price: "Rp4.500", status: "online" },
+  { name: "8000 View", price: "Rp5.000", status: "online" },
+  { name: "9000 View", price: "Rp5.500", status: "online" },
+  { name: "10000 View", price: "Rp6.000", status: "online" }
     ]
   },
   folig: {
-    name: "Followers Instagram",
+    name: "Followers Instagram [reffil 30d]",
     require: ["link"],
     image: "https://files.catbox.moe/b9mez9.jpeg",
     qris: false,
@@ -482,7 +482,7 @@ const databaseSosmed = {
     ]
   },
   likeig: {
-    name: "Like Instagram",
+    name: "Like Instagram [reffil 30d]",
     require: ["link"],
     image: "https://files.catbox.moe/b9mez9.jpeg",
     qris: false,
@@ -502,7 +502,7 @@ const databaseSosmed = {
     ]
   },
   viewig: {
-    name: "View Instagram",
+    name: "View Instagram [reffil 30d]",
     require: ["link"],
     image: "https://files.catbox.moe/b9mez9.jpeg",
     qris: false,
@@ -523,7 +523,7 @@ const databaseSosmed = {
     ]
   }, 
   memberwa: {
-    name: "Saluran WhatsApp",
+    name: "Saluran WhatsApp [no reffil]",
     require: ["link"],
     image: "https://files.catbox.moe/x98ces.png",
     qris: false,
@@ -704,7 +704,7 @@ const databaseHiburan = {
     desc: "berbasis akun bukan apk mod",
     detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
     items: [
-      { name: "AM prem Sharing EXP Januari 2027", price: "Rp500", status: "offline" },
+      { name: "AM prem Sharing EXP Januari 2027", price: "Rp500", status: "online" },
       { name: "AM prem Private EXP Januari 2027", price: "Rp3.000", status: "online" }
     ],
     membership: []
