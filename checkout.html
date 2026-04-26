@@ -241,6 +241,7 @@ body {
   <div class="header-right"><span class="chrome-icon"></span><span>Secure Checkout</span></div>
 </div>
 
+<!-- CARD PRODUK UTAMA -->
 <div class="card">
   <div class="product">
     <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
@@ -253,6 +254,7 @@ body {
   </div>
 </div>
 
+<!-- QUANTITY -->
 <div id="qtyCard" class="card" style="display:none;">
   <div class="qty-card">
     <div class="qty-label"><i class="fas fa-cubes"></i> Jumlah Beli</div>
@@ -274,7 +276,7 @@ body {
       <div><div id="sheetItem" style="font-weight:700;"></div><div id="sheetPrice" style="color:#3b7c4c;"></div></div>
     </div>
     <hr style="margin:15px 0;">
-    <div class="row"><span><i class="fas fa-map-marker-alt"></i> Tujuan / ID :</span><span id="sheetUser"></span></div>
+    <div id="sheetUserContainer" class="row"><span><i class="fas fa-map-marker-alt"></i> Data Tujuan</span><span id="sheetUser"></span></div>
     <div class="row"><span><i class="fas fa-receipt"></i> Total tagihan :</span><span id="sheetHarga" style="font-weight:700;"></span></div>
     <div style="margin-top:18px;background:#f0fdf4;padding:14px;border-radius:20px;font-size:13px;">
       <i class="fas fa-check-circle" style="color:#16a34a;"></i> Pastikan data sudah benar. <br>
@@ -285,6 +287,7 @@ body {
   </div>
 </div>
 
+<!-- INPUT DATA USER (muncul sesuai require) -->
 <div class="card" id="userIdBox"><label class="label"><i class="fas fa-id-card"></i> USER ID / ID PLAYER</label><div class="input-group"><input type="text" placeholder="Contoh: 12345678" id="userId"></div></div>
 <div class="card" id="usernameBox" style="display:none;"><label class="label"><i class="fas fa-user-circle"></i> USERNAME</label><div class="input-group"><input type="text" id="username"></div></div>
 <div class="card" id="phoneBox" style="display:none;"><label class="label"><i class="fas fa-phone-alt"></i> NOMOR TUJUAN</label><div class="input-group"><input type="tel" placeholder="08xxxxxxxx" id="phone"></div></div>
@@ -303,6 +306,7 @@ body {
 
 <div id="detailCard" class="card" style="display:none;"><div id="detailCardContent" class="detail-card-content"></div></div>
 
+<!-- METODE BAYAR -->
 <div class="card">
   <h4><i class="fas fa-credit-card"></i> METODE PEMBAYARAN</h4>
   <div class="payment-select" onclick="togglePayment()"><div id="paymentSelected">Pilih Metode</div><div><i class="fas fa-chevron-down"></i></div></div>
@@ -312,6 +316,7 @@ body {
   </div>
 </div>
 
+<!-- RINCIAN -->
 <div class="card">
   <h4><i class="fas fa-chart-line"></i> RINCIAN TRANSAKSI</h4>
   <div class="row"><span><i class="fas fa-tag"></i> Harga Produk (per unit)</span><span id="hargaSatuan"></span></div>
@@ -408,6 +413,7 @@ if (selectedItemDetail) {
   document.getElementById("detailCardContent").innerHTML = detailHtml;
 }
 
+// Tampilkan hanya field yang dibutuhkan
 document.getElementById("userIdBox").style.display = required.includes("userId") ? "block" : "none";
 document.getElementById("usernameBox").style.display = required.includes("username") ? "block" : "none";
 document.getElementById("phoneBox").style.display = required.includes("phone") ? "block" : "none";
@@ -422,6 +428,7 @@ if (required.includes("voucher")) {
 }
 if (hasNominal) document.getElementById("nominalBox").style.display = "block";
 else document.getElementById("nominalBox").style.display = "none";
+
 if (required.includes("server")) {
   if (produk.serverType === "id") { document.getElementById("mlServer").style.display = "flex"; }
   else if (produk.serverType === "region") { document.getElementById("genshinServer").style.display = "flex"; }
@@ -455,6 +462,20 @@ function showWarning(t) { document.getElementById("warningText").innerText = t; 
 function closeWarning() { document.getElementById("warningPopup").style.display = "none"; }
 function goHome() { window.location.href = "index.html"; }
 
+// Membangun data user untuk sheet & WA hanya yang ada di require
+function getUserData() {
+  const data = [];
+  if (required.includes("userId")) data.push("ID: " + (document.getElementById("userId").value || '-'));
+  if (required.includes("username")) data.push("User: " + (document.getElementById("username").value || '-'));
+  if (required.includes("phone")) data.push("No: " + (document.getElementById("phone").value || '-'));
+  if (required.includes("link")) data.push("Link: " + (document.getElementById("linkInput").value || '-'));
+  if (required.includes("server")) {
+    const sv = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
+    data.push("Server: " + (sv || '-'));
+  }
+  return data;
+}
+
 function openSheet() {
   const subtotal = basePricePerUnit * currentQty;
   const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
@@ -463,16 +484,9 @@ function openSheet() {
   document.getElementById("sheetItem").innerText = game + " " + item + (isQtyActive ? ` (${currentQty}x)` : "");
   document.getElementById("sheetPrice").innerHTML = formatRupiah(basePricePerUnit) + "/unit" + (isQtyActive ? ` × ${currentQty}` : "") + (hasNominal && nominalInput.value ? ` + nominal ${nominalInput.value}` : "");
   document.getElementById("sheetHarga").innerHTML = formatRupiah(total);
-  let user = [];
-  if (document.getElementById("userId").value) user.push("ID: " + document.getElementById("userId").value);
-  if (document.getElementById("username").value) user.push("User: " + document.getElementById("username").value);
-  if (document.getElementById("phone").value) user.push("No: " + document.getElementById("phone").value);
-  if (required.includes("link")) user.push("Link: " + document.getElementById("linkInput").value);
-  if (required.includes("server")) {
-    const sv = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
-    if (sv) user.push("Server: " + sv);
-  }
-  document.getElementById("sheetUser").innerText = user.join(" | ") || "Data dikirim via WA";
+
+  const userData = getUserData();
+  document.getElementById("sheetUser").innerText = userData.length ? userData.join(" | ") : "-";
   document.getElementById("confirmSheet").classList.add("show");
 }
 function closeSheet() { document.getElementById("confirmSheet").classList.remove("show"); }
@@ -484,15 +498,7 @@ function lanjutWA() {
   const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
   const total = subtotal + nominal;
 
-  const userId = document.getElementById("userId")?.value || '-';
-  const username = document.getElementById("username")?.value || '-';
-  const phone = document.getElementById("phone")?.value || '-';
-  const link = document.getElementById("linkInput")?.value || '-';
-  let serverVal = '-';
-  if (required.includes("server")) {
-    serverVal = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
-    if (!serverVal) serverVal = '-';
-  }
+  const userData = getUserData();
   const voucherInfo = required.includes("voucher") ? "✅ Kode akan dikirim setelah pembayaran" : "Tidak ada voucher";
   const nominalInfo = hasNominal ? `Nominal Topup: ${document.getElementById("nominalInput").value || '-'}` : "Tidak ada nominal khusus";
 
@@ -504,11 +510,8 @@ function lanjutWA() {
   msg += `${nominalInfo}\n`;
   msg += `*TOTAL BAYAR: ${formatRupiah(total)}*\n\n`;
   msg += `*Detail Pembayaran*\n`;
-  msg += `User ID: ${userId}\n`;
-  msg += `Username: ${username}\n`;
-  msg += `No. Tujuan: ${phone}\n`;
-  msg += `Server: ${serverVal}\n`;
-  if (required.includes("link")) msg += `Link: ${link}\n`;
+  // Hanya field yang diperlukan
+  userData.forEach(d => msg += d + "\n");
   msg += `Metode: QRIS Manual (WhatsApp)\n`;
   msg += `Keterangan Voucher: ${voucherInfo}\n\n`;
   msg += `*Admin tolong segera kirim QRIS pembayarannya!.*`;
