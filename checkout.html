@@ -227,7 +227,7 @@ body {
   <div class="loading-box"><div class="spinner"></div><p>Menyiapkan pembayaran...</p></div>
 </div>
 <div id="warningPopup" class="popup-warning">
-  <div class="popup-box"><div class="icon">⚠️</div><h3>Perhatian</h3><p id="warningText">Harap lengkapi data terlebih dahulu!</p><button onclick="closeWarning()">Mengerti</button></div>
+  <div class="popup-box"><div class="icon">⚠️</div><h3>Perhatian</h3><p id="warningText"></p><button onclick="closeWarning()">Mengerti</button></div>
 </div>
 
 <div id="infoModal" class="modal">
@@ -242,7 +242,6 @@ body {
   <div class="header-right"><span class="chrome-icon"></span><span>Secure Checkout</span></div>
 </div>
 
-<!-- CARD PRODUK UTAMA -->
 <div class="card">
   <div class="product">
     <img id="gameImage" onerror="this.src='https://placehold.co/70x70?text=Game'">
@@ -255,7 +254,6 @@ body {
   </div>
 </div>
 
-<!-- QUANTITY -->
 <div id="qtyCard" class="card" style="display:none;">
   <div class="qty-card">
     <div class="qty-label"><i class="fas fa-cubes"></i> Jumlah Beli</div>
@@ -277,7 +275,7 @@ body {
       <div><div id="sheetItem" style="font-weight:700;"></div><div id="sheetPrice" style="color:#3b7c4c;"></div></div>
     </div>
     <hr style="margin:15px 0;">
-    <div class="row"><span><i class="fas fa-map-marker-alt"></i> Tujuan / ID :</span><span id="sheetUser" style="color:#b91c1c; font-weight:500;"></span></div>
+    <div class="row"><span><i class="fas fa-map-marker-alt"></i> Tujuan / ID :</span><span id="sheetUser"></span></div>
     <div class="row"><span><i class="fas fa-receipt"></i> Total tagihan :</span><span id="sheetHarga" style="font-weight:700;"></span></div>
     <div style="margin-top:18px;background:#f0fdf4;padding:14px;border-radius:20px;font-size:13px;">
       <i class="fas fa-check-circle" style="color:#16a34a;"></i> Pastikan data sudah benar. <br>
@@ -288,7 +286,6 @@ body {
   </div>
 </div>
 
-<!-- INPUT -->
 <div class="card" id="userIdBox"><label class="label"><i class="fas fa-id-card"></i> USER ID / ID PLAYER</label><div class="input-group"><input type="text" placeholder="Contoh: 12345678" id="userId"></div></div>
 <div class="card" id="usernameBox" style="display:none;"><label class="label"><i class="fas fa-user-circle"></i> USERNAME</label><div class="input-group"><input type="text" id="username"></div></div>
 <div class="card" id="phoneBox" style="display:none;"><label class="label"><i class="fas fa-phone-alt"></i> NOMOR TUJUAN</label><div class="input-group"><input type="tel" placeholder="08xxxxxxxx" id="phone"></div></div>
@@ -307,7 +304,6 @@ body {
 
 <div id="detailCard" class="card" style="display:none;"><div id="detailCardContent" class="detail-card-content"></div></div>
 
-<!-- PEMBAYARAN -->
 <div class="card">
   <h4><i class="fas fa-credit-card"></i> METODE PEMBAYARAN</h4>
   <div class="payment-select" onclick="togglePayment()"><div id="paymentSelected">Pilih Metode</div><div><i class="fas fa-chevron-down"></i></div></div>
@@ -317,12 +313,10 @@ body {
   </div>
 </div>
 
-<!-- RINCIAN -->
 <div class="card">
   <h4><i class="fas fa-chart-line"></i> RINCIAN TRANSAKSI</h4>
   <div class="row"><span><i class="fas fa-tag"></i> Harga Produk (per unit)</span><span id="hargaSatuan"></span></div>
   <div class="row" id="rowSubtotal" style="display:none;"><span><i class="fas fa-calculator"></i> Subtotal</span><span id="subtotalProduk"></span></div>
-  <div class="row" id="rowAdminFee"><span><i class="fas fa-file-invoice"></i> Biaya Admin (1,5%)</span><span id="biayaAdmin"></span></div>
   <div class="row" id="rowNominal" style="display:none;"><span><i class="fas fa-coins"></i> Nominal Topup</span><span id="nominalValue"></span></div>
   <hr>
   <div class="row"><span><i class="fas fa-coins"></i> TOTAL HARUS DIBAYAR</span><span class="total" id="totalAmount"></span></div>
@@ -339,8 +333,8 @@ const params = new URLSearchParams(window.location.search);
 const key = params.get("key") || "-";
 document.getElementById("codeValue").innerText = key;
 
-// === PRODUK DARI BERBAGAI DATABASE ===
-let produk = (typeof database !== 'undefined' && database[key]) ? database[key] : {};
+let produk = {};
+if (typeof database !== 'undefined' && database[key]) produk = database[key];
 if (typeof databaseOther !== 'undefined' && databaseOther[key]) produk = databaseOther[key];
 if (typeof databasePanel !== 'undefined' && databasePanel[key]) produk = databasePanel[key];
 if (typeof databaseHiburan !== 'undefined' && databaseHiburan[key]) produk = databaseHiburan[key];
@@ -353,8 +347,6 @@ const isQtyActive = produk.qty === true || produk.qty === "active";
 let currentQty = 1;
 const basePricePerUnit = Number(params.get("price")) || 0;
 
-function calcAdminFee(subtotal) { return Math.round(subtotal * 0.015); }
-
 const game = params.get("game") || produk.name || "Game";
 const item = params.get("item") || "Item";
 const image = params.get("image") || "https://placehold.co/70x70?text=Item";
@@ -363,12 +355,10 @@ const type = params.get("type") || "";
 function formatRupiah(a) { return "Rp " + a.toLocaleString("id-ID"); }
 function extractNominalValue(t) { if (!t) return 0; const m = t.match(/\d+/); return m ? parseInt(m[0]) : 0; }
 
-// Update total (include admin fee)
 function updateTotal() {
   const subtotal = basePricePerUnit * currentQty;
-  const nominal = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const adminFee = calcAdminFee(subtotal);
-  const total = subtotal + adminFee + nominal;
+  const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
+  const total = subtotal + nominal; // Tanpa biaya admin
 
   document.getElementById("hargaSatuan").innerHTML = formatRupiah(basePricePerUnit);
   if (isQtyActive) {
@@ -377,11 +367,9 @@ function updateTotal() {
   } else {
     document.getElementById("rowSubtotal").style.display = "none";
   }
-  document.getElementById("rowAdminFee").style.display = "flex";
-  document.getElementById("biayaAdmin").innerHTML = formatRupiah(adminFee);
   if (hasNominal) {
     document.getElementById("rowNominal").style.display = "flex";
-    document.getElementById("nominalValue").innerHTML = nominalInput.value || "-";
+    document.getElementById("nominalValue").innerHTML = document.getElementById("nominalInput").value || "-";
   } else {
     document.getElementById("rowNominal").style.display = "none";
   }
@@ -406,22 +394,21 @@ document.getElementById("qtyCard").style.display = isQtyActive ? "block" : "none
 if (!isQtyActive) currentQty = 1;
 updateTotal();
 
-// Detail item
 let selectedItemDetail = null;
 if (produk.regular) selectedItemDetail = produk.regular.find(p => p.name === item);
 if (!selectedItemDetail && produk.items) selectedItemDetail = produk.items.find(p => p.name === item);
 if (!selectedItemDetail && produk.membership) selectedItemDetail = produk.membership.find(p => p.name === item);
 if (selectedItemDetail) {
   document.getElementById("detailCard").style.display = "block";
-  const status = selectedItemDetail.status === 'online' ? '<i class="fas fa-check-circle" style="color:#16a34a;"></i> Tersedia' : '<i class="fas fa-times-circle" style="color:#ef4444;"></i> Habis';
-  let html = `<strong><i class="fas fa-box"></i> Paket:</strong> ${selectedItemDetail.name}<br>`;
-  html += `<strong><i class="fas fa-money-bill-wave"></i> Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
-  html += `<strong><i class="fas fa-file-invoice"></i> Biaya Admin:</strong> 1,5% dari subtotal<br>`;
-  html += `<strong><i class="fas fa-bolt"></i> Status:</strong> ${status}<br>`;
-  document.getElementById("detailCardContent").innerHTML = html;
+  let statusText = selectedItemDetail.status === 'online' ? '<i class="fas fa-check-circle" style="color:#16a34a;"></i> Tersedia' : '<i class="fas fa-times-circle" style="color:#ef4444;"></i> Habis';
+  let detailHtml = `<strong><i class="fas fa-box"></i> Paket:</strong> ${selectedItemDetail.name}<br>`;
+  detailHtml += `<strong><i class="fas fa-money-bill-wave"></i> Harga Satuan:</strong> ${formatRupiah(basePricePerUnit)}<br>`;
+  if (isQtyActive) detailHtml += `<strong><i class="fas fa-cubes"></i> Jumlah beli:</strong> bisa tambah jumlah<br>`;
+  if (hasNominal) detailHtml += `<strong><i class="fas fa-coins"></i> Nominal tambahan:</strong> akan ditambahkan ke total<br>`;
+  detailHtml += `<strong><i class="fas fa-bolt"></i> Status:</strong> ${statusText}<br>`;
+  document.getElementById("detailCardContent").innerHTML = detailHtml;
 }
 
-// Field dinamis
 document.getElementById("userIdBox").style.display = required.includes("userId") ? "block" : "none";
 document.getElementById("usernameBox").style.display = required.includes("username") ? "block" : "none";
 document.getElementById("phoneBox").style.display = required.includes("phone") ? "block" : "none";
@@ -441,7 +428,6 @@ if (required.includes("server")) {
   else if (produk.serverType === "region") { document.getElementById("genshinServer").style.display = "flex"; }
 }
 
-// Pembayaran
 let selectedPayment = "", isManualQRIS = false;
 function togglePayment() { document.getElementById("paymentList").style.display = document.getElementById("paymentList").style.display === "block" ? "none" : "block"; }
 function selectPayment(name) {
@@ -451,18 +437,17 @@ function selectPayment(name) {
   document.getElementById("paymentList").style.display = "none";
   isManualQRIS = name.includes("Manual");
 }
-document.getElementById("qrisAutoItem").addEventListener("click", () => selectPayment("QRIS Otomatis"));
-document.getElementById("manualQrisItem").addEventListener("click", () => selectPayment("QRIS Manual (Order via WA)"));
+document.getElementById("qrisAutoItem")?.addEventListener("click", () => selectPayment("QRIS Otomatis"));
+document.getElementById("manualQrisItem")?.addEventListener("click", () => selectPayment("QRIS Manual (Order via WA)"));
 if (!produk.qris) {
   document.getElementById("qrisAutoItem").classList.add("disabled");
   document.getElementById("qrisAutoItem").innerHTML = '<i class="fas fa-qrcode"></i> QRIS Otomatis (error)';
 }
 
-// Modal info
 function openInfo() {
   document.getElementById("modalBody").innerHTML = `
-    <div class="info-store"><h2>INUU MARKET</h2><p>The Most Trusted Platform for TopUp & Voucher</p></div>
-    <p>Transaksi aman & cepat. Biaya admin 1,5% dari subtotal produk.</p>
+    <div class="info-store"><h2>INUU MARKET</h2><p>Top Up & Layanan Digital Terpercaya</p></div>
+    <p>Transaksi aman, tanpa biaya admin tambahan.</p>
   `;
   document.getElementById("infoModal").style.display = "flex";
 }
@@ -471,15 +456,13 @@ function showWarning(t) { document.getElementById("warningText").innerText = t; 
 function closeWarning() { document.getElementById("warningPopup").style.display = "none"; }
 function goHome() { window.location.href = "index.html"; }
 
-// Sheet
 function openSheet() {
   const subtotal = basePricePerUnit * currentQty;
-  const nominal = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const adminFee = calcAdminFee(subtotal);
-  const total = subtotal + adminFee + nominal;
+  const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
+  const total = subtotal + nominal;
   document.getElementById("sheetImage").src = image;
   document.getElementById("sheetItem").innerText = game + " " + item + (isQtyActive ? ` (${currentQty}x)` : "");
-  document.getElementById("sheetPrice").innerHTML = formatRupiah(basePricePerUnit) + "/unit" + (isQtyActive ? ` × ${currentQty}` : "") + ` + admin ${formatRupiah(adminFee)}`;
+  document.getElementById("sheetPrice").innerHTML = formatRupiah(basePricePerUnit) + "/unit" + (isQtyActive ? ` × ${currentQty}` : "") + (hasNominal && nominalInput.value ? ` + nominal ${nominalInput.value}` : "");
   document.getElementById("sheetHarga").innerHTML = formatRupiah(total);
   let user = [];
   if (document.getElementById("userId").value) user.push("ID: " + document.getElementById("userId").value);
@@ -499,15 +482,14 @@ function lanjutWA() {
   closeSheet();
   const wa = "6287714886908";
   const subtotal = basePricePerUnit * currentQty;
-  const nominal = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const adminFee = calcAdminFee(subtotal);
-  const total = subtotal + adminFee + nominal;
-  let message = `*ORDER INUU MARKET* 🛒\n\nProduk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\nSubtotal: ${formatRupiah(subtotal)}\nBiaya Admin (1,5%): ${formatRupiah(adminFee)}\n`;
-  if (hasNominal) message += `Nominal Topup: ${nominalInput.value} (${formatRupiah(nominal)})\n`;
-  message += `*TOTAL BAYAR: ${formatRupiah(total)}*\n\nDetail:\nID: ${document.getElementById("userId").value || '-'}\nUsername: ${document.getElementById("username").value || '-'}\nNo: ${document.getElementById("phone").value || '-'}\n`;
-  if (required.includes("link")) message += `Link: ${document.getElementById("linkInput").value}\n`;
-  message += `Metode: QRIS Manual\n`;
-  window.location.href = `https://wa.me/${wa}?text=${encodeURIComponent(message)}`;
+  const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
+  const total = subtotal + nominal;
+  let msg = `*ORDER INUU MARKET* 🛒\n\nProduk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\nSubtotal: ${formatRupiah(subtotal)}\n`;
+  if (hasNominal) msg += `Nominal Topup: ${document.getElementById("nominalInput").value} (${formatRupiah(nominal)})\n`;
+  msg += `*TOTAL BAYAR: ${formatRupiah(total)}*\n\nDetail:\nID: ${document.getElementById("userId").value || '-'}\nUsername: ${document.getElementById("username").value || '-'}\nNo: ${document.getElementById("phone").value || '-'}\n`;
+  if (required.includes("link")) msg += `Link: ${document.getElementById("linkInput").value}\n`;
+  msg += `Metode: QRIS Manual\n`;
+  window.location.href = `https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
 }
 
 function bayar() {
@@ -519,7 +501,7 @@ function bayar() {
     const sv = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
     if (!sv) { showWarning("Pilih / masukkan server!"); return; }
   }
-  if (hasNominal && !nominalInput.value.trim()) { showWarning("Masukkan nominal topup!"); return; }
+  if (hasNominal && !document.getElementById("nominalInput").value.trim()) { showWarning("Masukkan nominal topup!"); return; }
   if (!selectedPayment) { showWarning("Pilih metode pembayaran!"); return; }
   if (isManualQRIS) { openSheet(); return; }
 
@@ -529,10 +511,8 @@ function bayar() {
   document.getElementById("loadingPopup").style.display = "flex";
 
   const subtotal = basePricePerUnit * currentQty;
-  const nominal = hasNominal ? extractNominalValue(nominalInput.value) : 0;
-  const adminFee = calcAdminFee(subtotal);
-  const total = subtotal + adminFee + nominal;
-
+  const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
+  const total = subtotal + nominal; // tanpa admin
   let serverVal = "";
   if (required.includes("server")) serverVal = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
   let voucherParam = required.includes("voucher") ? "voucher=admin_kirim_setelah_bayar" : "voucher=" + encodeURIComponent(document.getElementById("voucher")?.value || '');
@@ -543,7 +523,6 @@ function bayar() {
     "&item=" + encodeURIComponent(item) +
     "&price=" + encodeURIComponent(total) +
     "&base_price=" + encodeURIComponent(basePricePerUnit) +
-    "&admin_fee=" + encodeURIComponent(adminFee) +
     "&qty=" + encodeURIComponent(currentQty) +
     "&type=" + encodeURIComponent(type) +
     "&userId=" + encodeURIComponent(document.getElementById("userId").value) +
@@ -552,15 +531,16 @@ function bayar() {
     "&link=" + encodeURIComponent(document.getElementById("linkInput")?.value || '') +
     "&" + voucherParam +
     "&server=" + encodeURIComponent(serverVal) +
-    "&nominal=" + encodeURIComponent(nominalInput.value) +
+    "&nominal=" + encodeURIComponent(document.getElementById("nominalInput").value) +
     "&payment=" + encodeURIComponent(selectedPayment);
+
   setTimeout(() => { window.location.href = url; }, 1300);
 }
-document.getElementById("bayarBtn").addEventListener("click", bayar);
+document.getElementById("bayarBtn")?.addEventListener("click", bayar);
 window.addEventListener("pageshow", () => {
   const btn = document.getElementById("bayarBtn");
   if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-lock"></i> Bayar Sekarang'; }
 });
 </script>
 </body>
-                                                                </html>
+        </html>
