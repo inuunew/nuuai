@@ -1105,6 +1105,12 @@ window.showNotif = function() {
   document.getElementById('adminBox').style.display = 'none';
 };
 
+window.showReffil = function() {
+  document.getElementById('popupOverlay').style.display = 'flex';
+  document.getElementById('reffilBox').style.display = 'block';
+  document.getElementById('adminBox').style.display = 'none';
+};
+
 window.closePopup = function() {
   document.getElementById('popupOverlay').style.display = 'none';
 };
