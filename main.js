@@ -1093,22 +1093,25 @@ window.openAccountMenu = function() {
   alert("Fitur akun akan segera hadir.\nSilakan hubungi admin untuk transaksi.");
 };
 
-window.showAdmin = function() {
+window.showAdmin = function () {
   document.getElementById('popupOverlay').style.display = 'flex';
   document.getElementById('adminBox').style.display = 'block';
   document.getElementById('notifBox').style.display = 'none';
+  document.getElementById('reffilBox').style.display = 'none';
 };
 
-window.showNotif = function() {
+window.showNotif = function () {
   document.getElementById('popupOverlay').style.display = 'flex';
   document.getElementById('notifBox').style.display = 'block';
   document.getElementById('adminBox').style.display = 'none';
+  document.getElementById('reffilBox').style.display = 'none';
 };
 
-window.showReffil = function() {
+window.showReffil = function () {
   document.getElementById('popupOverlay').style.display = 'flex';
   document.getElementById('reffilBox').style.display = 'block';
   document.getElementById('adminBox').style.display = 'none';
+  document.getElementById('notifBox').style.display = 'none';
 };
 
 window.closePopup = function() {
