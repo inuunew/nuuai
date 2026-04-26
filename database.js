@@ -663,7 +663,7 @@ const databaseHiburan = {
     items: [
       { name: "Capcut pro 7 hari", price: "Rp3.000", status: "online" },
       { name: "Capcut Pro 1 Bulan", price: "Rp8.000", status: "online" },
-      { name: "Capcut 6 Bulan", price: "Rp15.000", status: "offline" }
+      { name: "Capcut 6 Bulan", price: "Rp15.000", status: "online" }
     ]
   },
   CanVa: {
@@ -678,7 +678,7 @@ const databaseHiburan = {
       { name: "Canva Premium 1 bulan", price: "Rp3.000", status: "online" },
       { name: "Canva Premium 1 tahun", price: "6.000", status: "online" },
       { name: "Canva Premium Edukasi Lifetime", price: "Rp8.000", status: "online" },
-      { name: "Canva Premium Admin Edukasi Lifetime", price: "Rp10.000", status: "offline" },
+      { name: "Canva Premium Admin Edukasi Lifetime", price: "Rp10.000", status: "online" },
      { name: "Canva Head 1 bulan", price: "Rp12.000", status: "online" }
     ]
   },
@@ -692,8 +692,7 @@ const databaseHiburan = {
     detail: "Sistem invite family atau akun baru.",
     items: [
       { name: "YT Premium 1 Bulan famplan (via inv)", price: "Rp8.000", status: "online" },
-      { name: "YT Premium 1 Bulan Indplan (private)", price: "Rp12.000", status: "online" },
-      { name: "YT Premium HEAD", price: "Rp15.000", status: "offline" }
+      { name: "YT Premium HEAD", price: "Rp15.000", status: "online" }
     ]
   }, 
   alighm: {
@@ -733,11 +732,10 @@ const databaseHiburan = {
     image: "https://files.catbox.moe/33783p.jpeg",
     qris: false,
     qty: true, 
-    desc: "boleh pakai email dari seller/buyer",
+    desc: "pakai email dari seller",
     detail: "bergaransi 1 bulan setelah pembelian",
     items: [
-      { name: "Gemini Pro 1 bulan", price: "Rp5.000", status: "online" },
-      { name: "Method gemini pro", price: "Rp10.000", status: "online" }
+      { name: "Gemini Pro 1 bulan(email dari seller)", price: "Rp4.000", status: "online" }
     ],
     membership: []
   },
@@ -757,4 +755,3 @@ const databaseHiburan = {
   }
   
 };
-
