@@ -229,7 +229,6 @@ body {
 <div id="warningPopup" class="popup-warning">
   <div class="popup-box"><div class="icon">⚠️</div><h3>Perhatian</h3><p id="warningText"></p><button onclick="closeWarning()">Mengerti</button></div>
 </div>
-
 <div id="infoModal" class="modal">
   <div class="modal-content">
     <div class="modal-header"><span>Detail Produk</span><span class="close" onclick="closeInfo()">✕</span></div>
@@ -358,7 +357,7 @@ function extractNominalValue(t) { if (!t) return 0; const m = t.match(/\d+/); re
 function updateTotal() {
   const subtotal = basePricePerUnit * currentQty;
   const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
-  const total = subtotal + nominal; // Tanpa biaya admin
+  const total = subtotal + nominal;
 
   document.getElementById("hargaSatuan").innerHTML = formatRupiah(basePricePerUnit);
   if (isQtyActive) {
@@ -480,15 +479,40 @@ function closeSheet() { document.getElementById("confirmSheet").classList.remove
 
 function lanjutWA() {
   closeSheet();
-  const wa = "6287714886908";
+  const wa = "6283160556330";
   const subtotal = basePricePerUnit * currentQty;
   const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
   const total = subtotal + nominal;
-  let msg = `*ORDER INUU MARKET* 🛒\n\nProduk: ${game}\nItem: ${item}\nJumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\nSubtotal: ${formatRupiah(subtotal)}\n`;
-  if (hasNominal) msg += `Nominal Topup: ${document.getElementById("nominalInput").value} (${formatRupiah(nominal)})\n`;
-  msg += `*TOTAL BAYAR: ${formatRupiah(total)}*\n\nDetail:\nID: ${document.getElementById("userId").value || '-'}\nUsername: ${document.getElementById("username").value || '-'}\nNo: ${document.getElementById("phone").value || '-'}\n`;
-  if (required.includes("link")) msg += `Link: ${document.getElementById("linkInput").value}\n`;
-  msg += `Metode: QRIS Manual\n`;
+
+  const userId = document.getElementById("userId")?.value || '-';
+  const username = document.getElementById("username")?.value || '-';
+  const phone = document.getElementById("phone")?.value || '-';
+  const link = document.getElementById("linkInput")?.value || '-';
+  let serverVal = '-';
+  if (required.includes("server")) {
+    serverVal = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
+    if (!serverVal) serverVal = '-';
+  }
+  const voucherInfo = required.includes("voucher") ? "✅ Kode akan dikirim setelah pembayaran" : "Tidak ada voucher";
+  const nominalInfo = hasNominal ? `Nominal Topup: ${document.getElementById("nominalInput").value || '-'}` : "Tidak ada nominal khusus";
+
+  let msg = `*ORDER INUU MARKET* 🛒\n\n`;
+  msg += `Produk: ${game}\n`;
+  msg += `Item: ${item}\n`;
+  msg += `Jumlah: ${currentQty} x ${formatRupiah(basePricePerUnit)}\n`;
+  msg += `Subtotal: ${formatRupiah(subtotal)}\n`;
+  msg += `${nominalInfo}\n`;
+  msg += `*TOTAL BAYAR: ${formatRupiah(total)}*\n\n`;
+  msg += `*Detail Pembayaran*\n`;
+  msg += `User ID: ${userId}\n`;
+  msg += `Username: ${username}\n`;
+  msg += `No. Tujuan: ${phone}\n`;
+  msg += `Server: ${serverVal}\n`;
+  if (required.includes("link")) msg += `Link: ${link}\n`;
+  msg += `Metode: QRIS Manual (WhatsApp)\n`;
+  msg += `Keterangan Voucher: ${voucherInfo}\n\n`;
+  msg += `*Admin tolong segera kirim QRIS pembayarannya!.*`;
+
   window.location.href = `https://wa.me/${wa}?text=${encodeURIComponent(msg)}`;
 }
 
@@ -512,7 +536,7 @@ function bayar() {
 
   const subtotal = basePricePerUnit * currentQty;
   const nominal = hasNominal ? extractNominalValue(document.getElementById("nominalInput").value) : 0;
-  const total = subtotal + nominal; // tanpa admin
+  const total = subtotal + nominal;
   let serverVal = "";
   if (required.includes("server")) serverVal = produk.serverType === "id" ? document.getElementById("serverId").value : document.getElementById("serverRegion").value;
   let voucherParam = required.includes("voucher") ? "voucher=admin_kirim_setelah_bayar" : "voucher=" + encodeURIComponent(document.getElementById("voucher")?.value || '');
@@ -543,4 +567,4 @@ window.addEventListener("pageshow", () => {
 });
 </script>
 </body>
-        </html>
+  </html>
