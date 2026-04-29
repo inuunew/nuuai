@@ -792,16 +792,15 @@ function showPlaylistSheet() {
       </div>
       <button class="playlist-item-play" data-index="${idx}"><i class="fas fa-play"></i></button>
     `;
-    const playBtn = item.querySelector('.playlist-item-play');
-    playBtn.onclick = (e) => {
-      e.stopPropagation();
-      globalCurrentIndex = idx;
-      loadGlobalSong(globalCurrentIndex);
-      globalAudio.play();
-      isGlobalPlaying = true;
-      updateMusicUI();
-      closeSheet();
-    };
+    const playBtn.onclick = (e) => {
+  e.stopPropagation();
+  globalCurrentIndex = idx;
+  setGlobalSong(globalCurrentIndex);
+  globalAudio.play();
+  isGlobalPlaying = true;
+  updatePlayStateUI(true);  // ✅ perbaiki ini
+  closeSheet();
+};
     container.appendChild(item);
   });
   sheet.style.display = 'flex';
