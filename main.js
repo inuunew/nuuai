@@ -792,13 +792,14 @@ function showPlaylistSheet() {
       </div>
       <button class="playlist-item-play" data-index="${idx}"><i class="fas fa-play"></i></button>
     `;
-    const playBtn.onclick = (e) => {
+    const playBtn = item.querySelector('.playlist-item-play');
+playBtn.onclick = (e) => {
   e.stopPropagation();
   globalCurrentIndex = idx;
   setGlobalSong(globalCurrentIndex);
   globalAudio.play();
   isGlobalPlaying = true;
-  updatePlayStateUI(true);  // ✅ perbaiki ini
+  updatePlayStateUI(true);
   closeSheet();
 };
     container.appendChild(item);
