@@ -2,107 +2,62 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#10302A">
 <title>INUU MARKET - Top Up Game & Hosting</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
+<!-- Layar sambutan -->
 <div id="splash" class="splash">
-  <div class="splash-container">
-    <img src="https://files.catbox.moe/hfc052.png" alt="Logo Inuu Market" class="splash-logo">
+  <div class="sp-box">
+    <img id="spLogo" class="sp-logo" alt="">
     <h1>Welcome!</h1>
-    <div class="sub">Selamat Datang di Inuu Market</div>
-    <div class="desc">Top Up Game • Hosting • Digital Product</div>
-    <button class="btn-login" id="loginBtn">Dashboard <i class="fas fa-arrow-right"></i></button>
+    <div class="sp-sub" id="spSub"></div>
+    <div class="sp-desc" id="spDesc"></div>
+    <button id="masuk" class="btn primary" type="button">Masuk ke toko</button>
   </div>
 </div>
 
-<!-- KONTEN UTAMA (LOADPAGE) -->
-<div id="mainContent" class="main-content">
-  <!-- Navbar: logo & teks kiri, ikon menu kanan -->
-  <div class="navbar">
-    <div class="nav-left">
-      <img src="https://files.catbox.moe/hfc052.png" class="logo">
-      <div class="logo-text">
-        <div class="store">INUU <span>MARKET</span></div>
-        <div class="sub">Menyediakan Berbagai Layanan</div>
-      </div>
-    </div>
-    <div class="nav-right">
-      <div class="icon" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
-      </div>
-    </div>
+<!-- Bar atas -->
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#beranda">
+      <img id="brandLogo" alt="">
+      <div><div class="bn" id="brandName"></div><small id="brandTag"></small></div>
+    </a>
+    <button class="iconbtn cartbtn" type="button" id="cartBtn" aria-label="Keranjang"></button>
   </div>
+</header>
 
-  <!-- TEMPAT KONTEN DINAMIS -->
-  <div id="pageContent" class="page-container fade"></div>
+<!-- Isi halaman (beranda, kategori, musik, kalkulator, info) -->
+<main class="wrap" id="view"></main>
 
-  <div class="footer">Powered by <span>InuuMarket</span><br>© 2026 All rights reserved</div>
+<footer class="foot" id="foot"></footer>
+
+<!-- Bubble musik, muncul saat musik diputar di halaman lain -->
+<div class="mini" id="mini" hidden></div>
+
+<!-- Menu bawah -->
+<nav class="tabbar" aria-label="Menu utama"><div class="tabs" id="tabs"></div></nav>
+
+<!-- Detail produk, checkout, invoice -->
+<div class="sheet" id="sheet" hidden>
+  <div class="scrim"></div>
+  <div class="panel" id="panel" role="dialog" aria-modal="true" aria-label="Detail pesanan"></div>
 </div>
 
-<!-- SIDEBAR -->
-<div id="overlay" onclick="closeMenu()"></div>
-<div id="sidebar">
-  <div class="sidebar-header">
-    <span>INUU MARKET</span>
-    <i class="fas fa-xmark" onclick="closeMenu()"></i>
-  </div>
-  <div class="menu">
-    <p data-page="beranda" class="active"><i class="fas fa-home"></i> Beranda</p>
-    <p data-page="music"><i class="fas fa-music"></i> Music</p>
-    <p data-page="kalkulator"><i class="fas fa-calculator"></i> Kalkulator MLBB</p>
-    <div class="title">Informasi</div>
-    <p data-page="bantuan"><i class="fas fa-headset"></i> Bantuan & Support</p>
-    <p data-page="pengumuman"><i class="fas fa-bullhorn"></i> Pengumuman</p>
-    <p onclick="showNotif()"><i class="fas fa-bell"></i> Sambutan</p>
-    <p onclick="showAdmin()"><i class="fas fa-circle-info"></i> Jam Online</p>
-    <p onclick="showReffil()"><i class="fas fa-question"></i> Apa itu Reffil di layanan sosmed?</p>
-  </div>
-</div>
+<!-- Perbesar QRIS -->
+<div class="zoom" id="zoom" hidden><img id="zimg" alt="QRIS"></div>
 
-<!-- POPUP NOTIF & ADMIN -->
-<div id="popupOverlay" class="popup">
-  <div id="notifBox" class="popup-box" style="display:none;">
-    <h3>🔔 Sambutan</h3>
-    <p>🎉 Selamat datang di Inuu Market!<br>Nikmati layanan transaksi cepat dan aman.</p>
-    <div class="popup-btn"><button onclick="closePopup()">Tutup</button></div>
-  </div>
-  <div id="adminBox" class="popup-box" style="display:none;">
-    <h3>ℹ️ Informasi Web</h3>
-    <p>Admin Top Up<br>Jam Online: 06:00 - 22:00</p>
-    <div class="popup-btn"><button onclick="closePopup()">Tutup</button></div>
-  </div>
-  <div id="reffilBox" class="popup-box" style="display:none;">
-    <h3>Apa Itu Refill di layanan sosmed?</h3>
-    <p>Refill, atau garansi isi ulang, adalah fitur yang memungkinkan Anda mendapatkan pengisian ulang untuk layanan yang telah dipesan jika terjadi penurunan pada layanan tersebut. Harap diperhatikan bahwa tidak semua layanan di InuuMarket memiliki opsi refill. Layanan yang mendukung fitur ini akan mencantumkan keterangan “Refill” dalam nama atau deskripsinya.</p>
-    <div class="popup-btn"><button onclick="closePopup()">Tutup</button></div>
-  </div>
-</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<!-- MODAL TOPUP (untuk beranda) -->
-<div id="topupModal" class="topup-modal">
-  <div class="topup-content">
-    <div class="topup-header">
-      <img id="gameIcon">
-      <div><h2 id="gameName"></h2><span class="instant">Instant Process</span></div>
-      <button class="close-btn" onclick="closeTopup()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('regular',this)">Item Reguler</button>
-      <button id="membershipTab" class="tab" onclick="switchTab('membership',this)">Membership</button>
-    </div>
-    <div id="topupItems" class="topup-grid"></div>
-    <button id="confirmBtn" class="confirm-btn" onclick="goCheckout()" disabled>Konfirmasi</button>
-  </div>
-</div>
-
-<script src="database.js"></script>
-<script src="info.js"></script>
-<script src="main.js"></script>
+<script src="data.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
 </body>
-  </html>
+</html>
