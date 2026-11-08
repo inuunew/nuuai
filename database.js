@@ -1,3 +1,11 @@
+/* =====================================================================
+   DATA.JS : semua produk dan harga.
+   - Satu blok = satu card produk. Satu kumpulan (database, databaseSosmed, dst) = satu kategori.
+   - Ubah harga/status cukup di baris produknya. Status: "online" atau "offline".
+   - Kumpulan baru harus didaftarkan di config.js > kategori.
+   Panduan lengkap ada di README.md
+   ===================================================================== */
+
 const database = {
   ff: {
     name: "Free Fire",
@@ -572,8 +580,20 @@ const databaseOther = {
     desc: "Bisa request game apa saja,atur harga produk, free add halaman kalkulator mlbb,halaman music(req music),halaman pengumuman",
     detail: "Kami akan membuat di gmail yang baru, dan jika web selesai dibuat, maka gmail akan kami berikan ke kalian dan bisa kalian otak atik sendiri di github(mendeploy dari vercel)",
     items: [
-      { name: "Buat Website untuk produk mu", price: "Rp25.000", status: "online" }, 
-      { name: "Buat Website informasi", price: "Rp10.000", status: "online" }
+      { name: "Buat Website untuk produk mu(hanya menerima ubah data)", price: "Rp20.000", status: "online" }, 
+      { name: "Buat Website untuk produk mu(bisa custom sampe jadi yang kalian mau)", price: "Rp25.000", status: "online" }
+    ]
+  }, 
+  WebPor: {
+    name: "Create website portofolio(lihat deskripsi)",
+    require: ["voucher"],
+    image: "https://files.catbox.moe/zdf9ee.jpeg",
+    qris: false,
+    desc: "Bisa request keahlian,detail proyek, blog, dan bisa minta ubah ui/tampilan ke yang kalian mau. preview: inuutyzdev.web.id",
+    detail: "Kami akan membuat di gmail yang baru, dan jika web selesai dibuat, maka gmail akan kami berikan ke kalian dan bisa kalian otak atik sendiri di github(mendeploy dari vercel)",
+    items: [
+      { name: "Buat Website untuk data mu", price: "Rp20.000", status: "online" }, 
+      { name: "Buat Website untuk data mu(bisa custom sampe jadi yang kalian mau)", price: "Rp25.000", status: "online" }
     ]
   }
 };
@@ -702,10 +722,10 @@ const databaseHiburan = {
     qris: true,
     qty: true, 
     desc: "berbasis akun bukan apk mod",
-    detail: "bergaransi 3 bulan setelah pembelian, aktif sampai januari 2027. made by gmail generator",
+    detail: "bergaransi 3 bulan setelah pembelian, aktif sampai 2027. made by gmail generator",
     items: [
-      { name: "AM prem Sharing EXP Januari 2027", price: "Rp500", status: "online" },
-      { name: "AM prem Private EXP Januari 2027", price: "Rp3.000", status: "online" }
+      { name: "AM prem Sharing EXP 2027", price: "Rp500", status: "online" },
+      { name: "AM prem Private EXP 2027", price: "Rp3.000", status: "online" }
     ],
     membership: []
   }, 
