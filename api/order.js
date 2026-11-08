@@ -4,8 +4,8 @@
 // File ini berjalan di server Vercel, tidak ikut dikirim ke browser pembeli.
 // JANGAN upload file ini ke GitHub publik jika token sudah diisi.
 // =====================================================================
-const TELEGRAM_BOT_TOKEN = 'ISI_TOKEN_BOT_DISINI';   // token dari @BotFather
-const TELEGRAM_CHAT_ID = 'ISI_CHAT_ID_DISINI';       // id chat admin
+const TELEGRAM_BOT_TOKEN = '8416791607:AAG6qRAnaGP-bYJUyOFTlCd_XAeEgFi9v1w';   // token dari @BotFather
+const TELEGRAM_CHAT_ID = '7314158034';       // id chat admin
 
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
 const cut = (s, n) => String(s == null ? '' : s).slice(0, n);
